@@ -15,6 +15,7 @@ final class BridgeAppModel: ObservableObject {
     @Published private(set) var bluetoothStateNote: String = "蓝牙状态未知"
     @Published private(set) var advertisingNote: String = "未广播"
     @Published private(set) var activeDisplayName: String = "Claude"
+    @Published private(set) var diagnosticLogs: [String] = []
     @Published private(set) var recentEvents: [String] = []
 
     private let runtime = BridgeRuntime()
@@ -41,6 +42,13 @@ final class BridgeAppModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] note in
                 self?.advertisingNote = note
+            }
+            .store(in: &cancellables)
+
+        peripheral.$diagnostics
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] logs in
+                self?.diagnosticLogs = logs
             }
             .store(in: &cancellables)
 

@@ -23,6 +23,7 @@ public final class BuddyPeripheralService: NSObject, ObservableObject {
     @Published public private(set) var connectionState: NUSConnectionState = .stopped
     @Published public private(set) var bluetoothStateNote: String = "蓝牙状态未知"
     @Published public private(set) var advertisingNote: String = "未广播"
+    @Published public private(set) var diagnostics: [String] = []
 
     public var onLineReceived: ((String) -> Void)?
 
@@ -41,19 +42,23 @@ public final class BuddyPeripheralService: NSObject, ObservableObject {
         self.manager = CBPeripheralManager(delegate: nil, queue: nil)
         super.init()
         self.manager.delegate = self
+        log("INIT manager state=\(manager.state.rawValue)")
     }
 
     public func start(displayName: String) {
         advertisedName = displayName
         isStarted = true
+        log("START requested name=\(displayName)")
         guard manager.state == .poweredOn else {
             bluetoothStateNote = stateNote(for: manager.state)
+            log("START blocked state=\(manager.state.rawValue) note=\(bluetoothStateNote)")
             return
         }
         setupAndAdvertiseIfNeeded()
     }
 
     public func stop() {
+        log("STOP requested")
         isStarted = false
         pendingChunks.removeAll(keepingCapacity: false)
         subscribedCentrals.removeAll(keepingCapacity: false)
@@ -62,6 +67,8 @@ public final class BuddyPeripheralService: NSObject, ObservableObject {
         txCharacteristic = nil
         rxCharacteristic = nil
         connectionState = .stopped
+        advertisingNote = "未广播"
+        log("STOP completed")
     }
 
     @discardableResult
@@ -75,6 +82,7 @@ public final class BuddyPeripheralService: NSObject, ObservableObject {
 
     private func setupAndAdvertiseIfNeeded() {
         guard txCharacteristic == nil, rxCharacteristic == nil else {
+            log("SERVICE reused -> startAdvertising")
             startAdvertising()
             return
         }
@@ -98,11 +106,13 @@ public final class BuddyPeripheralService: NSObject, ObservableObject {
 
         txCharacteristic = tx
         rxCharacteristic = rx
+        log("SERVICE add NUS service=\(NUSUUIDs.serviceString)")
         manager.add(service)
     }
 
     private func startAdvertising() {
         advertisingNote = "请求开始广播"
+        log("ADV start name=\(advertisedName) service=\(NUSUUIDs.serviceString)")
         manager.startAdvertising([
             CBAdvertisementDataLocalNameKey: advertisedName,
             CBAdvertisementDataServiceUUIDsKey: [NUSUUIDs.service]
@@ -147,6 +157,7 @@ public final class BuddyPeripheralService: NSObject, ObservableObject {
 extension BuddyPeripheralService: CBPeripheralManagerDelegate {
     public func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
         bluetoothStateNote = stateNote(for: peripheral.state)
+        log("STATE changed=\(peripheral.state.rawValue) note=\(bluetoothStateNote)")
         if peripheral.state == .poweredOn {
             guard isStarted else { return }
             setupAndAdvertiseIfNeeded()
@@ -160,8 +171,10 @@ extension BuddyPeripheralService: CBPeripheralManagerDelegate {
         if let error {
             connectionState = .stopped
             advertisingNote = "服务注册失败: \(error.localizedDescription)"
+            log("SERVICE add failed error=\(error.localizedDescription)")
             return
         }
+        log("SERVICE add success uuid=\(service.uuid.uuidString)")
         guard isStarted else { return }
         startAdvertising()
     }
@@ -170,17 +183,20 @@ extension BuddyPeripheralService: CBPeripheralManagerDelegate {
         if let error {
             connectionState = .stopped
             advertisingNote = "广播失败: \(error.localizedDescription)"
+            log("ADV failed error=\(error.localizedDescription)")
             return
         }
 
         advertisingNote = "广播中"
         connectionState = subscribedCentrals.isEmpty ? .advertising : .connected(centralCount: subscribedCentrals.count)
+        log("ADV started ok")
     }
 
     public func peripheralManager(_ peripheral: CBPeripheralManager, central: CBCentral, didSubscribeTo characteristic: CBCharacteristic) {
         subscribedCentrals[central.identifier] = central
         connectionState = .connected(centralCount: subscribedCentrals.count)
         advertisingNote = "已连接"
+        log("SUBSCRIBE central=\(central.identifier.uuidString) count=\(subscribedCentrals.count)")
         drainPendingChunks()
     }
 
@@ -188,6 +204,7 @@ extension BuddyPeripheralService: CBPeripheralManagerDelegate {
         subscribedCentrals.removeValue(forKey: central.identifier)
         connectionState = subscribedCentrals.isEmpty ? .advertising : .connected(centralCount: subscribedCentrals.count)
         advertisingNote = subscribedCentrals.isEmpty ? "广播中" : "已连接"
+        log("UNSUBSCRIBE central=\(central.identifier.uuidString) count=\(subscribedCentrals.count)")
     }
 
     public func peripheralManagerIsReady(toUpdateSubscribers peripheral: CBPeripheralManager) {
@@ -195,15 +212,26 @@ extension BuddyPeripheralService: CBPeripheralManagerDelegate {
     }
 
     public func peripheralManager(_ peripheral: CBPeripheralManager, didReceiveWrite requests: [CBATTRequest]) {
+        log("WRITE requests=\(requests.count)")
         for request in requests {
             guard request.characteristic.uuid == NUSUUIDs.rx else {
                 peripheral.respond(to: request, withResult: .requestNotSupported)
+                log("WRITE unsupported characteristic=\(request.characteristic.uuid.uuidString)")
                 continue
             }
             if let value = request.value {
                 handleIncomingChunk(value)
+                log("WRITE rx bytes=\(value.count)")
             }
             peripheral.respond(to: request, withResult: .success)
+        }
+    }
+
+    private func log(_ line: String) {
+        let stamp = ISO8601DateFormatter().string(from: Date())
+        diagnostics.insert("[\(stamp)] \(line)", at: 0)
+        if diagnostics.count > 300 {
+            diagnostics.removeLast(diagnostics.count - 300)
         }
     }
 

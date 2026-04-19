@@ -7,6 +7,7 @@ struct ContentView: View {
     @StateObject private var model = BridgeAppModel()
     @State private var showHelpSheet = false
     @State private var showSettingsSheet = false
+    @State private var showDiagnosticsSheet = false
     @State private var draftDisplayName = ""
 
     @AppStorage("bridge.displayName") private var persistedDisplayName = ""
@@ -41,6 +42,9 @@ struct ContentView: View {
         }
         .sheet(isPresented: $showSettingsSheet) {
             settingsSheet
+        }
+        .sheet(isPresented: $showDiagnosticsSheet) {
+            diagnosticsSheet
         }
         .onAppear {
             draftDisplayName = persistedDisplayName
@@ -100,6 +104,9 @@ struct ContentView: View {
                 .buttonStyle(TerminalHeaderButtonStyle(fill: true))
 
             Button("设置") { showSettingsSheet = true }
+                .buttonStyle(TerminalHeaderButtonStyle(fill: true))
+
+            Button("诊断") { showDiagnosticsSheet = true }
                 .buttonStyle(TerminalHeaderButtonStyle(fill: true))
         }
     }
@@ -402,6 +409,68 @@ struct ContentView: View {
                 )
 
                 Spacer()
+            }
+            .padding(20)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        }
+    }
+
+    private var diagnosticsSheet: some View {
+        ZStack {
+            terminalBackground
+            if showScanline {
+                scanlineOverlay
+            }
+
+            VStack(alignment: .leading, spacing: 12) {
+                Text("$ 诊断日志")
+                    .font(.system(size: 16, weight: .bold, design: .monospaced))
+                    .foregroundStyle(.green)
+
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("蓝牙状态：\(model.bluetoothStateNote)")
+                    Text("广播状态：\(model.advertisingNote)")
+                    Text("广播名称：\(model.activeDisplayName)")
+                }
+                .font(.system(size: 12, weight: .regular, design: .monospaced))
+                .foregroundStyle(.green.opacity(0.88))
+                .padding(10)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(Color.black.opacity(0.45), in: RoundedRectangle(cornerRadius: 10))
+                .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.green.opacity(0.35), lineWidth: 1))
+
+                Text("$ peripheral callbacks")
+                    .font(.system(size: 12, weight: .semibold, design: .monospaced))
+                    .foregroundStyle(.green)
+
+                ScrollView {
+                    LazyVStack(alignment: .leading, spacing: 6) {
+                        if model.diagnosticLogs.isEmpty {
+                            Text("暂无日志")
+                                .font(.system(size: 12, design: .monospaced))
+                                .foregroundStyle(.green.opacity(0.7))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        } else {
+                            ForEach(model.diagnosticLogs.indices, id: \.self) { idx in
+                                Text(model.diagnosticLogs[idx])
+                                    .font(.system(size: 11, weight: .regular, design: .monospaced))
+                                    .foregroundStyle(.green.opacity(0.9))
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                            }
+                        }
+                    }
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .padding(10)
+                .background(Color.black.opacity(0.45), in: RoundedRectangle(cornerRadius: 10))
+                .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.green.opacity(0.35), lineWidth: 1))
+
+                sheetActionBar(
+                    secondaryTitle: "关闭",
+                    secondaryAction: { showDiagnosticsSheet = false },
+                    primaryTitle: "重启广播",
+                    primaryAction: { model.restart(displayName: effectiveDisplayName) }
+                )
             }
             .padding(20)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
