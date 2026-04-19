@@ -42,5 +42,19 @@ targets:
         INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription: Connect to Claude Desktop as Hardware Buddy.
         GENERATE_INFOPLIST_FILE: YES
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
-    scheme:
-      testTargets: []
+  ClaudeBuddyBridgeAppTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - ClaudeBuddyBridgeAppTests
+    dependencies:
+      - target: ClaudeBuddyBridgeApp
+schemes:
+  ClaudeBuddyBridgeApp:
+    build:
+      targets:
+        ClaudeBuddyBridgeApp: all
+        ClaudeBuddyBridgeAppTests: [test]
+    test:
+      targets:
+        - ClaudeBuddyBridgeAppTests

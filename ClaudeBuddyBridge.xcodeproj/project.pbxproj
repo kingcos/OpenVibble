@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5DBD4C1E40D1D622E8AA77DD /* SmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D618613A515C409CDC70B957 /* SmokeTests.swift */; };
 		676D367654C0A23516DB95A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65548935CD489AE7EE50CE1C /* Assets.xcassets */; };
 		6E17FBE03B8F13A3FC186C52 /* ClaudeBuddyBridgeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F2CD3EDE7E8665059A1EFB /* ClaudeBuddyBridgeApp.swift */; };
 		70769E3394701AA5BC933566 /* BridgeRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 8436D7CE6A94DA31EF4BB8C3 /* BridgeRuntime */; };
@@ -17,13 +18,25 @@
 		E16BAEA411C8D111F9E63730 /* BuddyStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 5F3D2FBF347F0FE2945FCEF6 /* BuddyStorage */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		F471E204D734BA21962AF6F6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A720BDC0C74DDF7E2304FB1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1AC16FB8B8EAB24D691DB17B;
+			remoteInfo = ClaudeBuddyBridgeApp;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		08F2CD3EDE7E8665059A1EFB /* ClaudeBuddyBridgeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeBuddyBridgeApp.swift; sourceTree = "<group>"; };
 		34A991368F018E861B46B255 /* ClaudeBuddyBridgeApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = ClaudeBuddyBridgeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B5FCD0F4050D6D146B6329C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		60DE9041705CE3A8112E3A29 /* ClaudeBuddyBridgeAppTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = ClaudeBuddyBridgeAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		63CD167C925FC96F77C8AFB4 /* ClaudeBuddyKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ClaudeBuddyKit; path = Packages/ClaudeBuddyKit; sourceTree = SOURCE_ROOT; };
 		65548935CD489AE7EE50CE1C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8E4C11DC586586DFE2B5E6B9 /* BridgeAppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BridgeAppModel.swift; sourceTree = "<group>"; };
+		D618613A515C409CDC70B957 /* SmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokeTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +58,7 @@
 			isa = PBXGroup;
 			children = (
 				34A991368F018E861B46B255 /* ClaudeBuddyBridgeApp.app */,
+				60DE9041705CE3A8112E3A29 /* ClaudeBuddyBridgeAppTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -64,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				7DF64D0B3C6C2EFFAC5048AE /* ClaudeBuddyBridgeApp */,
+				EC0F48A47BF1DEE76B5F6C1D /* ClaudeBuddyBridgeAppTests */,
 				D8CD4859D0CD70397B21DE48 /* Packages */,
 				07F40A187B533087001080C9 /* Products */,
 			);
@@ -75,6 +90,14 @@
 				63CD167C925FC96F77C8AFB4 /* ClaudeBuddyKit */,
 			);
 			path = Packages;
+			sourceTree = "<group>";
+		};
+		EC0F48A47BF1DEE76B5F6C1D /* ClaudeBuddyBridgeAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				D618613A515C409CDC70B957 /* SmokeTests.swift */,
+			);
+			path = ClaudeBuddyBridgeAppTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -103,6 +126,24 @@
 			productReference = 34A991368F018E861B46B255 /* ClaudeBuddyBridgeApp.app */;
 			productType = "com.apple.product-type.application";
 		};
+		72293D56C1005A2E8D7D917F /* ClaudeBuddyBridgeAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CBDFF2F3CA195A33EF772627 /* Build configuration list for PBXNativeTarget "ClaudeBuddyBridgeAppTests" */;
+			buildPhases = (
+				288EE2496F431FABDE85878B /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1663E6A25976789E1683F442 /* PBXTargetDependency */,
+			);
+			name = ClaudeBuddyBridgeAppTests;
+			packageProductDependencies = (
+			);
+			productName = ClaudeBuddyBridgeAppTests;
+			productReference = 60DE9041705CE3A8112E3A29 /* ClaudeBuddyBridgeAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -113,6 +154,9 @@
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					1AC16FB8B8EAB24D691DB17B = {
+						DevelopmentTeam = "";
+					};
+					72293D56C1005A2E8D7D917F = {
 						DevelopmentTeam = "";
 					};
 				};
@@ -135,6 +179,7 @@
 			projectRoot = "";
 			targets = (
 				1AC16FB8B8EAB24D691DB17B /* ClaudeBuddyBridgeApp */,
+				72293D56C1005A2E8D7D917F /* ClaudeBuddyBridgeAppTests */,
 			);
 		};
 /* End PBXProject section */
@@ -161,7 +206,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		288EE2496F431FABDE85878B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5DBD4C1E40D1D622E8AA77DD /* SmokeTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1663E6A25976789E1683F442 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1AC16FB8B8EAB24D691DB17B /* ClaudeBuddyBridgeApp */;
+			targetProxy = F471E204D734BA21962AF6F6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		44ABE562693E66D7EAD3FE9D /* Release */ = {
@@ -205,6 +266,36 @@
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8A480F2341BC1FFD44E7730F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ClaudeBuddyBridgeApp.app/ClaudeBuddyBridgeApp";
+			};
+			name = Release;
+		};
+		9987FD909746E40E3C7E63AE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ClaudeBuddyBridgeApp.app/ClaudeBuddyBridgeApp";
 			};
 			name = Debug;
 		};
@@ -350,6 +441,15 @@
 			buildConfigurations = (
 				71DA58D0E05A512D3DA59FD0 /* Debug */,
 				44ABE562693E66D7EAD3FE9D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CBDFF2F3CA195A33EF772627 /* Build configuration list for PBXNativeTarget "ClaudeBuddyBridgeAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9987FD909746E40E3C7E63AE /* Debug */,
+				8A480F2341BC1FFD44E7730F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

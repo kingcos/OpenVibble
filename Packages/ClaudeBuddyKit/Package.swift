@@ -32,6 +32,14 @@ let package = Package(
         .testTarget(
             name: "BuddyProtocolTests",
             dependencies: ["BuddyProtocol"]
+        ),
+        .testTarget(
+            name: "BuddyStorageTests",
+            dependencies: ["BuddyStorage", "BuddyProtocol"]
+        ),
+        .testTarget(
+            name: "BridgeRuntimeTests",
+            dependencies: ["BridgeRuntime", "BuddyStorage", "BuddyProtocol"]
         )
     ]
 )

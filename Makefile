@@ -1,7 +1,8 @@
 PROJECT := ClaudeBuddyBridge.xcodeproj
 SCHEME := ClaudeBuddyBridgeApp
 CONFIGURATION := Debug
-DESTINATION := platform=iOS Simulator,name=iPhone 16
+SIMULATOR_NAME ?= iPhone 17
+DESTINATION := platform=iOS Simulator,name=$(SIMULATOR_NAME)
 GENERIC_DESTINATION := generic/platform=iOS Simulator
 PACKAGE_DIR := Packages/ClaudeBuddyKit
 
@@ -30,7 +31,7 @@ test: bootstrap
 		test
 
 run-sim: build
-	xcrun simctl boot "iPhone 16" || true
+	xcrun simctl boot "$(SIMULATOR_NAME)" || true
 	xcrun simctl install booted "$$(xcodebuild -project $(PROJECT) -scheme $(SCHEME) -configuration $(CONFIGURATION) -destination '$(GENERIC_DESTINATION)' -showBuildSettings | awk '/TARGET_BUILD_DIR/ {print $$3; exit}')/$$(xcodebuild -project $(PROJECT) -scheme $(SCHEME) -configuration $(CONFIGURATION) -destination '$(GENERIC_DESTINATION)' -showBuildSettings | awk '/FULL_PRODUCT_NAME/ {print $$3; exit}')"
 	xcrun simctl launch booted com.kingcos.ClaudeBuddyBridge
 
