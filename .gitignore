@@ -1,0 +1,12 @@
+# Reference repo (read-only source of truth)
+claude-desktop-buddy-main/
+
+# Xcode / Swift
+.build/
+DerivedData/
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+*.xcuserstate
+
+# macOS
+.DS_Store
