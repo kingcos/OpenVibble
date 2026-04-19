@@ -28,11 +28,11 @@ final class BridgeAppModel: ObservableObject {
 
         peripheral.onLineReceived = { [weak self] line in
             guard let self else { return }
-            self.recordEvent("RX  \(line)")
+            self.recordEvent("接收  \(line)")
             let outbound = self.runtime.ingestLine(line)
             self.refreshFromRuntime()
             for response in outbound {
-                self.recordEvent("TX  \(response.trimmingCharacters(in: .whitespacesAndNewlines))")
+                self.recordEvent("发送  \(response.trimmingCharacters(in: .whitespacesAndNewlines))")
                 _ = self.peripheral.sendLine(response)
             }
         }
@@ -42,19 +42,19 @@ final class BridgeAppModel: ObservableObject {
         let suffix = UIDevice.current.name.replacingOccurrences(of: " ", with: "-")
         let displayName = "Claude-\(suffix.prefix(8))"
         peripheral.start(displayName: displayName)
-        recordEvent("SYS advertising as \(displayName)")
+        recordEvent("系统 广播中：\(displayName)")
         refreshFromRuntime()
     }
 
     func stop() {
         peripheral.stop()
-        recordEvent("SYS peripheral stopped")
+        recordEvent("系统 BLE 外设已停止")
     }
 
     func respondPermission(_ decision: PermissionDecision) {
         guard let line = runtime.respondPermission(decision) else { return }
-        let direction = decision == .once ? "approve" : "deny"
-        recordEvent("TX  permission \(direction)")
+        let direction = decision == .once ? "允许" : "拒绝"
+        recordEvent("发送  权限\(direction)")
         _ = peripheral.sendLine(line)
     }
 

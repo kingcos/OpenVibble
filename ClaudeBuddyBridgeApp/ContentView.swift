@@ -21,8 +21,11 @@ struct ContentView: View {
                 transferPanel
             }
             .padding(16)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         }
         .preferredColorScheme(.dark)
+        .toolbar(.hidden, for: .navigationBar)
+        .navigationBarBackButtonHidden(true)
         .onAppear { model.start() }
         .onDisappear { model.stop() }
     }
@@ -66,7 +69,7 @@ struct ContentView: View {
 
     private var statusPanel: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("$ snapshot")
+            Text("$ 状态快照")
                 .font(.system(size: 12, weight: .semibold, design: .monospaced))
                 .foregroundStyle(.green)
 
@@ -75,10 +78,10 @@ struct ContentView: View {
                 .foregroundStyle(.green.opacity(0.92))
 
             HStack(spacing: 12) {
-                terminalMetric("total", value: "\(model.snapshot.total)")
-                terminalMetric("running", value: "\(model.snapshot.running)")
-                terminalMetric("waiting", value: "\(model.snapshot.waiting)")
-                terminalMetric("today", value: "\(model.snapshot.tokensToday)")
+                terminalMetric("总会话", value: "\(model.snapshot.total)")
+                terminalMetric("运行中", value: "\(model.snapshot.running)")
+                terminalMetric("待确认", value: "\(model.snapshot.waiting)")
+                terminalMetric("今日", value: "\(model.snapshot.tokensToday)")
             }
         }
         .padding(12)
@@ -111,11 +114,11 @@ struct ContentView: View {
 
     private func promptPanel(_ prompt: PromptRequest) -> some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("$ permission pending")
+            Text("$ 权限待确认")
                 .font(.system(size: 12, weight: .semibold, design: .monospaced))
                 .foregroundStyle(.yellow)
 
-            Text("tool=\(prompt.tool) id=\(prompt.id)")
+            Text("工具=\(prompt.tool) id=\(prompt.id)")
                 .font(.system(size: 12, weight: .regular, design: .monospaced))
                 .foregroundStyle(.yellow.opacity(0.9))
 
@@ -127,12 +130,12 @@ struct ContentView: View {
             }
 
             HStack {
-                Button("approve once") {
+                Button("本次允许") {
                     model.respondPermission(.once)
                 }
                 .buttonStyle(TerminalActionButtonStyle(foreground: .black, background: .green))
 
-                Button("deny") {
+                Button("拒绝") {
                     model.respondPermission(.deny)
                 }
                 .buttonStyle(TerminalActionButtonStyle(foreground: .white, background: .red.opacity(0.8)))
@@ -145,18 +148,18 @@ struct ContentView: View {
 
     private var transferPanel: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("$ xfer")
+            Text("$ 文件传输")
                 .font(.system(size: 12, weight: .semibold, design: .monospaced))
                 .foregroundStyle(.green)
 
-            Text(model.transfer.isActive ? "\(model.transfer.characterName) :: \(model.transfer.currentFile)" : "idle")
+            Text(model.transfer.isActive ? "\(model.transfer.characterName) :: \(model.transfer.currentFile)" : "空闲")
                 .font(.system(size: 12, weight: .regular, design: .monospaced))
                 .foregroundStyle(.green.opacity(0.85))
 
             ProgressView(value: transferValue)
                 .tint(.green)
 
-            Text("\(model.transfer.writtenBytes) / \(model.transfer.totalBytes) bytes")
+            Text("\(model.transfer.writtenBytes) / \(model.transfer.totalBytes) 字节")
                 .font(.system(size: 11, weight: .regular, design: .monospaced))
                 .foregroundStyle(.green.opacity(0.75))
         }
@@ -177,9 +180,9 @@ struct ContentView: View {
     }
 
     private var combinedLogs: [String] {
-        var lines = model.snapshot.entries.map { "LOG \($0)" }
+        var lines = model.snapshot.entries.map { "日志 \($0)" }
         if !model.snapshot.lastTurnPreview.isEmpty {
-            lines.insert("TURN [\(model.snapshot.lastTurnRole)] \(model.snapshot.lastTurnPreview)", at: 0)
+            lines.insert("回合 [\(model.snapshot.lastTurnRole)] \(model.snapshot.lastTurnPreview)", at: 0)
         }
         lines.append(contentsOf: model.recentEvents.prefix(30))
         return Array(lines.prefix(60))
@@ -193,11 +196,11 @@ struct ContentView: View {
     private var connectionTitle: String {
         switch model.connectionState {
         case .stopped:
-            return "BLE stopped"
+            return "BLE 未启动"
         case .advertising:
-            return "BLE advertising"
+            return "BLE 广播中"
         case .connected(let count):
-            return "BLE connected x\(count)"
+            return "BLE 已连接 x\(count)"
         }
     }
 
