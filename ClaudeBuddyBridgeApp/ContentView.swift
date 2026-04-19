@@ -13,6 +13,7 @@ struct ContentView: View {
     @AppStorage("bridge.displayName") private var persistedDisplayName = ""
     @AppStorage("bridge.showScanline") private var showScanline = true
     @AppStorage("bridge.autoStartBLE") private var autoStartBLE = true
+    @AppStorage("bridge.advertiseServiceUUID") private var advertiseServiceUUID = false
 
     var body: some View {
         ZStack {
@@ -49,7 +50,10 @@ struct ContentView: View {
         .onAppear {
             draftDisplayName = persistedDisplayName
             if autoStartBLE {
-                model.start(displayName: effectiveDisplayName)
+                model.start(
+                    displayName: effectiveDisplayName,
+                    includeServiceUUIDInAdvertisement: advertiseServiceUUID
+                )
             }
         }
     }
@@ -95,7 +99,10 @@ struct ContentView: View {
     private var actionBar: some View {
         HStack(spacing: 8) {
             Button("重启广播") {
-                model.restart(displayName: effectiveDisplayName)
+                model.restart(
+                    displayName: effectiveDisplayName,
+                    includeServiceUUIDInAdvertisement: advertiseServiceUUID
+                )
             }
             .buttonStyle(TerminalHeaderButtonStyle(fill: true))
 
@@ -392,6 +399,11 @@ struct ContentView: View {
                     .tint(.green)
                     .foregroundStyle(.green.opacity(0.95))
 
+                Toggle("广播包含 NUS UUID（实验）", isOn: $advertiseServiceUUID)
+                    .font(.system(size: 13, design: .monospaced))
+                    .tint(.green)
+                    .foregroundStyle(.green.opacity(0.95))
+
                 sheetActionBar(
                     secondaryTitle: "取消",
                     secondaryAction: { showSettingsSheet = false },
@@ -399,7 +411,10 @@ struct ContentView: View {
                     primaryAction: {
                         persistedDisplayName = draftDisplayName.trimmingCharacters(in: .whitespacesAndNewlines)
                         if autoStartBLE {
-                            model.restart(displayName: effectiveDisplayName)
+                            model.restart(
+                                displayName: effectiveDisplayName,
+                                includeServiceUUIDInAdvertisement: advertiseServiceUUID
+                            )
                         } else {
                             model.stop()
                         }
@@ -468,7 +483,12 @@ struct ContentView: View {
                     secondaryTitle: "关闭",
                     secondaryAction: { showDiagnosticsSheet = false },
                     primaryTitle: "重启广播",
-                    primaryAction: { model.restart(displayName: effectiveDisplayName) }
+                    primaryAction: {
+                        model.restart(
+                            displayName: effectiveDisplayName,
+                            includeServiceUUIDInAdvertisement: advertiseServiceUUID
+                        )
+                    }
                 )
             }
             .padding(20)

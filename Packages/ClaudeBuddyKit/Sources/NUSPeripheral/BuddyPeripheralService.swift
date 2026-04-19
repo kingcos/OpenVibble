@@ -37,6 +37,7 @@ public final class BuddyPeripheralService: NSObject, ObservableObject {
     private var pendingChunks: [Data] = []
     private var isStarted = false
     private var advertisedName: String = "Claude-iOS"
+    private var includeServiceUUIDInAdvertisement = false
 
     public override init() {
         self.manager = CBPeripheralManager(delegate: nil, queue: nil)
@@ -55,6 +56,11 @@ public final class BuddyPeripheralService: NSObject, ObservableObject {
             return
         }
         setupAndAdvertiseIfNeeded()
+    }
+
+    public func setAdvertisementMode(includeServiceUUID: Bool) {
+        includeServiceUUIDInAdvertisement = includeServiceUUID
+        log("ADV mode includeServiceUUID=\(includeServiceUUID)")
     }
 
     public func stop() {
@@ -112,11 +118,18 @@ public final class BuddyPeripheralService: NSObject, ObservableObject {
 
     private func startAdvertising() {
         advertisingNote = "请求开始广播"
-        log("ADV start name=\(advertisedName) service=\(NUSUUIDs.serviceString)")
-        manager.startAdvertising([
-            CBAdvertisementDataLocalNameKey: advertisedName,
-            CBAdvertisementDataServiceUUIDsKey: [NUSUUIDs.service]
-        ])
+        if includeServiceUUIDInAdvertisement {
+            log("ADV start mode=name+service name=\(advertisedName) service=\(NUSUUIDs.serviceString)")
+            manager.startAdvertising([
+                CBAdvertisementDataLocalNameKey: advertisedName,
+                CBAdvertisementDataServiceUUIDsKey: [NUSUUIDs.service]
+            ])
+        } else {
+            log("ADV start mode=name-only name=\(advertisedName)")
+            manager.startAdvertising([
+                CBAdvertisementDataLocalNameKey: advertisedName
+            ])
+        }
     }
 
     private func enqueueForNotify(_ data: Data) {

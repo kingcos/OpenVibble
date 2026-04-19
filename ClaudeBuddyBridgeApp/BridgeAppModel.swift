@@ -64,19 +64,20 @@ final class BridgeAppModel: ObservableObject {
         }
     }
 
-    func start(displayName: String? = nil) {
+    func start(displayName: String? = nil, includeServiceUUIDInAdvertisement: Bool = false) {
         guard !started else { return }
         let finalName = resolvedDisplayName(displayName)
         activeDisplayName = finalName
+        peripheral.setAdvertisementMode(includeServiceUUID: includeServiceUUIDInAdvertisement)
         peripheral.start(displayName: finalName)
         recordEvent("系统 请求启动广播：\(finalName)")
         refreshFromRuntime()
         started = true
     }
 
-    func restart(displayName: String? = nil) {
+    func restart(displayName: String? = nil, includeServiceUUIDInAdvertisement: Bool = false) {
         stop()
-        start(displayName: displayName)
+        start(displayName: displayName, includeServiceUUIDInAdvertisement: includeServiceUUIDInAdvertisement)
     }
 
     func stop() {
