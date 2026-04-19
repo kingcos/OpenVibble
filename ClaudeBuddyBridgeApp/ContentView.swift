@@ -52,7 +52,6 @@ struct ContentView: View {
                 model.start(displayName: effectiveDisplayName)
             }
         }
-        .onDisappear { model.stop() }
     }
 
     private var terminalBackground: some View {
