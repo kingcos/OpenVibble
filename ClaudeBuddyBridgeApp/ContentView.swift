@@ -128,6 +128,10 @@ struct ContentView: View {
             Text("广播：\(model.advertisingNote)")
                 .font(.system(size: 11, weight: .regular, design: .monospaced))
                 .foregroundStyle(.green.opacity(0.75))
+
+            Text("广播名：\(model.activeDisplayName)")
+                .font(.system(size: 11, weight: .regular, design: .monospaced))
+                .foregroundStyle(.green.opacity(0.75))
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(12)
@@ -355,7 +359,7 @@ struct ContentView: View {
                     .foregroundStyle(.green)
 
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("设备显示名（可选）")
+                    Text("设备显示名（当前固定为 Claude）")
                         .font(.system(size: 12, weight: .regular, design: .monospaced))
                         .foregroundStyle(.green.opacity(0.85))
                     TextField("例如 Claude-iPhone", text: $draftDisplayName)
@@ -366,6 +370,10 @@ struct ContentView: View {
                         .padding(10)
                         .background(Color.black.opacity(0.45), in: RoundedRectangle(cornerRadius: 8))
                         .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.green.opacity(0.35), lineWidth: 1))
+
+                    Text("为提高可发现性，当前版本会强制使用广播名 Claude。")
+                        .font(.system(size: 11, weight: .regular, design: .monospaced))
+                        .foregroundStyle(.green.opacity(0.7))
                 }
 
                 Toggle("自动启动 BLE", isOn: $autoStartBLE)

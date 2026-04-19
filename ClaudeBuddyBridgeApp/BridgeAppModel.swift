@@ -14,6 +14,7 @@ final class BridgeAppModel: ObservableObject {
     @Published private(set) var connectionState: NUSConnectionState = .stopped
     @Published private(set) var bluetoothStateNote: String = "蓝牙状态未知"
     @Published private(set) var advertisingNote: String = "未广播"
+    @Published private(set) var activeDisplayName: String = "Claude"
     @Published private(set) var recentEvents: [String] = []
 
     private let runtime = BridgeRuntime()
@@ -57,11 +58,10 @@ final class BridgeAppModel: ObservableObject {
 
     func start(displayName: String? = nil) {
         guard !started else { return }
-        let defaultSuffix = UIDevice.current.name.replacingOccurrences(of: " ", with: "-")
-        let defaultName = "Claude"
-        let displayName = sanitizedDisplayName(displayName) ?? defaultName
-        peripheral.start(displayName: displayName)
-        recordEvent("系统 请求启动广播：\(displayName)")
+        let finalName = resolvedDisplayName(displayName)
+        activeDisplayName = finalName
+        peripheral.start(displayName: finalName)
+        recordEvent("系统 请求启动广播：\(finalName)")
         refreshFromRuntime()
         started = true
     }
@@ -106,5 +106,12 @@ final class BridgeAppModel: ObservableObject {
             trimmed = "Claude-\(trimmed)"
         }
         return String(trimmed.prefix(12))
+    }
+
+    private func resolvedDisplayName(_ requested: String?) -> String {
+        // Claude Desktop 文档要求以 Claude 开头；这里强制固定成 Claude，
+        // 最大化发现兼容性（避免因扩展名长度或过滤规则导致扫不到）。
+        _ = sanitizedDisplayName(requested)
+        return "Claude"
     }
 }
