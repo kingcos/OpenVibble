@@ -9,7 +9,9 @@ let package = Package(
     ],
     products: [
         .library(name: "BuddyProtocol", targets: ["BuddyProtocol"]),
-        .library(name: "NUSPeripheral", targets: ["NUSPeripheral"])
+        .library(name: "NUSPeripheral", targets: ["NUSPeripheral"]),
+        .library(name: "BuddyStorage", targets: ["BuddyStorage"]),
+        .library(name: "BridgeRuntime", targets: ["BridgeRuntime"])
     ],
     targets: [
         .target(
@@ -18,6 +20,14 @@ let package = Package(
         .target(
             name: "NUSPeripheral",
             dependencies: ["BuddyProtocol"]
+        ),
+        .target(
+            name: "BuddyStorage",
+            dependencies: ["BuddyProtocol"]
+        ),
+        .target(
+            name: "BridgeRuntime",
+            dependencies: ["BuddyProtocol", "BuddyStorage"]
         ),
         .testTarget(
             name: "BuddyProtocolTests",
