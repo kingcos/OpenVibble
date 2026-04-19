@@ -5,11 +5,20 @@ import BridgeRuntime
 
 struct ContentView: View {
     @StateObject private var model = BridgeAppModel()
+    @State private var showHelpSheet = false
+    @State private var showSettingsSheet = false
+    @State private var draftDisplayName = ""
+
+    @AppStorage("bridge.displayName") private var persistedDisplayName = ""
+    @AppStorage("bridge.showScanline") private var showScanline = true
+    @AppStorage("bridge.autoStartBLE") private var autoStartBLE = true
 
     var body: some View {
         ZStack {
             terminalBackground
-            scanlineOverlay
+            if showScanline {
+                scanlineOverlay
+            }
 
             VStack(alignment: .leading, spacing: 14) {
                 topBar
@@ -26,7 +35,18 @@ struct ContentView: View {
         .preferredColorScheme(.dark)
         .toolbar(.hidden, for: .navigationBar)
         .navigationBarBackButtonHidden(true)
-        .onAppear { model.start() }
+        .sheet(isPresented: $showHelpSheet) {
+            helpSheet
+        }
+        .sheet(isPresented: $showSettingsSheet) {
+            settingsSheet
+        }
+        .onAppear {
+            draftDisplayName = persistedDisplayName
+            if autoStartBLE {
+                model.start(displayName: effectiveDisplayName)
+            }
+        }
         .onDisappear { model.stop() }
     }
 
@@ -61,6 +81,10 @@ struct ContentView: View {
                 .font(.system(size: 13, weight: .semibold, design: .monospaced))
                 .foregroundStyle(connectionColor)
             Spacer()
+            Button("帮助") { showHelpSheet = true }
+                .buttonStyle(TerminalHeaderButtonStyle())
+            Button("设置") { showSettingsSheet = true }
+                .buttonStyle(TerminalHeaderButtonStyle())
             Text("NUS 6e40…")
                 .font(.system(size: 12, weight: .regular, design: .monospaced))
                 .foregroundStyle(.green.opacity(0.75))
@@ -225,6 +249,124 @@ struct ContentView: View {
             return .green
         }
     }
+
+    private var effectiveDisplayName: String? {
+        let trimmed = persistedDisplayName.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmed.isEmpty ? nil : trimmed
+    }
+
+    private var helpSheet: some View {
+        ZStack {
+            terminalBackground
+            if showScanline {
+                scanlineOverlay
+            }
+
+            VStack(alignment: .leading, spacing: 12) {
+                Text("$ 帮助")
+                    .font(.system(size: 16, weight: .bold, design: .monospaced))
+                    .foregroundStyle(.green)
+
+                helpBlock(title: "连接 Claude Desktop", lines: [
+                    "1. 在 Claude Desktop 打开开发者模式",
+                    "2. 打开 Developer -> Hardware Buddy",
+                    "3. 选择以 Claude- 开头的本机设备名完成连接"
+                ])
+
+                helpBlock(title: "权限确认", lines: [
+                    "收到 prompt 后可在本页直接点击「本次允许 / 拒绝」",
+                    "响应会通过 BLE 回传给 Claude Desktop"
+                ])
+
+                helpBlock(title: "文件推送", lines: [
+                    "支持 char_begin / file / chunk / file_end / char_end",
+                    "传输进度可在主页面底部实时查看"
+                ])
+
+                Spacer()
+
+                Button("关闭") { showHelpSheet = false }
+                    .buttonStyle(TerminalActionButtonStyle(foreground: .black, background: .green))
+            }
+            .padding(20)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        }
+    }
+
+    private func helpBlock(title: String, lines: [String]) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text("$ \(title)")
+                .font(.system(size: 13, weight: .semibold, design: .monospaced))
+                .foregroundStyle(.green)
+            ForEach(lines, id: \.self) { line in
+                Text(line)
+                    .font(.system(size: 12, weight: .regular, design: .monospaced))
+                    .foregroundStyle(.green.opacity(0.9))
+            }
+        }
+        .padding(12)
+        .background(Color.black.opacity(0.45), in: RoundedRectangle(cornerRadius: 10))
+        .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.green.opacity(0.35), lineWidth: 1))
+    }
+
+    private var settingsSheet: some View {
+        ZStack {
+            terminalBackground
+            if showScanline {
+                scanlineOverlay
+            }
+
+            VStack(alignment: .leading, spacing: 14) {
+                Text("$ 设置")
+                    .font(.system(size: 16, weight: .bold, design: .monospaced))
+                    .foregroundStyle(.green)
+
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("设备显示名（可选）")
+                        .font(.system(size: 12, weight: .regular, design: .monospaced))
+                        .foregroundStyle(.green.opacity(0.85))
+                    TextField("例如 Claude-iPhone", text: $draftDisplayName)
+                        .textInputAutocapitalization(.never)
+                        .autocorrectionDisabled()
+                        .font(.system(size: 13, design: .monospaced))
+                        .foregroundStyle(.green)
+                        .padding(10)
+                        .background(Color.black.opacity(0.45), in: RoundedRectangle(cornerRadius: 8))
+                        .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.green.opacity(0.35), lineWidth: 1))
+                }
+
+                Toggle("自动启动 BLE", isOn: $autoStartBLE)
+                    .font(.system(size: 13, design: .monospaced))
+                    .tint(.green)
+                    .foregroundStyle(.green.opacity(0.95))
+
+                Toggle("显示扫描线效果", isOn: $showScanline)
+                    .font(.system(size: 13, design: .monospaced))
+                    .tint(.green)
+                    .foregroundStyle(.green.opacity(0.95))
+
+                HStack {
+                    Button("保存并应用") {
+                        persistedDisplayName = draftDisplayName.trimmingCharacters(in: .whitespacesAndNewlines)
+                        if autoStartBLE {
+                            model.restart(displayName: effectiveDisplayName)
+                        } else {
+                            model.stop()
+                        }
+                        showSettingsSheet = false
+                    }
+                    .buttonStyle(TerminalActionButtonStyle(foreground: .black, background: .green))
+
+                    Button("取消") { showSettingsSheet = false }
+                        .buttonStyle(TerminalActionButtonStyle(foreground: .white, background: .gray.opacity(0.45)))
+                }
+
+                Spacer()
+            }
+            .padding(20)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        }
+    }
 }
 
 private struct TerminalActionButtonStyle: ButtonStyle {
@@ -239,5 +381,17 @@ private struct TerminalActionButtonStyle: ButtonStyle {
             .padding(.vertical, 8)
             .background(background.opacity(configuration.isPressed ? 0.8 : 1.0), in: RoundedRectangle(cornerRadius: 8))
             .overlay(RoundedRectangle(cornerRadius: 8).stroke(.black.opacity(0.35), lineWidth: 1))
+    }
+}
+
+private struct TerminalHeaderButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .font(.system(size: 11, weight: .semibold, design: .monospaced))
+            .foregroundStyle(.green)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 5)
+            .background(Color.black.opacity(configuration.isPressed ? 0.6 : 0.45), in: RoundedRectangle(cornerRadius: 6))
+            .overlay(RoundedRectangle(cornerRadius: 6).stroke(Color.green.opacity(0.35), lineWidth: 1))
     }
 }

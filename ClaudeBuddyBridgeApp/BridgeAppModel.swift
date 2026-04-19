@@ -17,6 +17,7 @@ final class BridgeAppModel: ObservableObject {
     private let runtime = BridgeRuntime()
     private let peripheral = BuddyPeripheralService()
     private var cancellables: Set<AnyCancellable> = []
+    private var started = false
 
     init() {
         peripheral.$connectionState
@@ -38,17 +39,27 @@ final class BridgeAppModel: ObservableObject {
         }
     }
 
-    func start() {
-        let suffix = UIDevice.current.name.replacingOccurrences(of: " ", with: "-")
-        let displayName = "Claude-\(suffix.prefix(8))"
+    func start(displayName: String? = nil) {
+        guard !started else { return }
+        let defaultSuffix = UIDevice.current.name.replacingOccurrences(of: " ", with: "-")
+        let defaultName = "Claude-\(defaultSuffix.prefix(8))"
+        let displayName = sanitizedDisplayName(displayName) ?? defaultName
         peripheral.start(displayName: displayName)
         recordEvent("系统 广播中：\(displayName)")
         refreshFromRuntime()
+        started = true
+    }
+
+    func restart(displayName: String? = nil) {
+        stop()
+        start(displayName: displayName)
     }
 
     func stop() {
+        guard started else { return }
         peripheral.stop()
         recordEvent("系统 BLE 外设已停止")
+        started = false
     }
 
     func respondPermission(_ decision: PermissionDecision) {
@@ -69,5 +80,12 @@ final class BridgeAppModel: ObservableObject {
         if recentEvents.count > 120 {
             recentEvents.removeLast(recentEvents.count - 120)
         }
+    }
+
+    private func sanitizedDisplayName(_ displayName: String?) -> String? {
+        guard let displayName else { return nil }
+        let trimmed = displayName.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return nil }
+        return String(trimmed.prefix(24))
     }
 }
