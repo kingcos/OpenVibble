@@ -8,11 +8,16 @@ let package = Package(
         .macOS(.v14)
     ],
     products: [
-        .library(name: "BuddyProtocol", targets: ["BuddyProtocol"])
+        .library(name: "BuddyProtocol", targets: ["BuddyProtocol"]),
+        .library(name: "NUSPeripheral", targets: ["NUSPeripheral"])
     ],
     targets: [
         .target(
             name: "BuddyProtocol"
+        ),
+        .target(
+            name: "NUSPeripheral",
+            dependencies: ["BuddyProtocol"]
         ),
         .testTarget(
             name: "BuddyProtocolTests",
