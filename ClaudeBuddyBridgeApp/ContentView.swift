@@ -20,8 +20,9 @@ struct ContentView: View {
                 scanlineOverlay
             }
 
-            VStack(alignment: .leading, spacing: 14) {
+            VStack(alignment: .leading, spacing: 12) {
                 topBar
+                actionBar
                 statusPanel
                 logsPanel
                 if let prompt = model.prompt {
@@ -76,22 +77,30 @@ struct ContentView: View {
     }
 
     private var topBar: some View {
-        HStack(spacing: 10) {
+        HStack(spacing: 8) {
             Label(connectionTitle, systemImage: connectionIcon)
                 .font(.system(size: 13, weight: .semibold, design: .monospaced))
                 .foregroundStyle(connectionColor)
-            Spacer()
-            Button("重启广播") {
-                model.restart(displayName: effectiveDisplayName)
-            }
-            .buttonStyle(TerminalHeaderButtonStyle())
-            Button("帮助") { showHelpSheet = true }
-                .buttonStyle(TerminalHeaderButtonStyle())
-            Button("设置") { showSettingsSheet = true }
-                .buttonStyle(TerminalHeaderButtonStyle())
+            Spacer(minLength: 8)
             Text("NUS 6e40…")
                 .font(.system(size: 12, weight: .regular, design: .monospaced))
                 .foregroundStyle(.green.opacity(0.75))
+        }
+        .frame(maxWidth: .infinity)
+    }
+
+    private var actionBar: some View {
+        HStack(spacing: 8) {
+            Button("重启广播") {
+                model.restart(displayName: effectiveDisplayName)
+            }
+            .buttonStyle(TerminalHeaderButtonStyle(fill: true))
+
+            Button("帮助") { showHelpSheet = true }
+                .buttonStyle(TerminalHeaderButtonStyle(fill: true))
+
+            Button("设置") { showSettingsSheet = true }
+                .buttonStyle(TerminalHeaderButtonStyle(fill: true))
         }
     }
 
@@ -116,6 +125,7 @@ struct ContentView: View {
                 .font(.system(size: 11, weight: .regular, design: .monospaced))
                 .foregroundStyle(.green.opacity(0.75))
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .padding(12)
         .background(Color.black.opacity(0.45), in: RoundedRectangle(cornerRadius: 10))
         .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.green.opacity(0.35), lineWidth: 1))
@@ -137,8 +147,9 @@ struct ContentView: View {
                     }
                 }
             }
-            .frame(maxHeight: 260)
+            .frame(maxHeight: .infinity)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         .padding(12)
         .background(Color.black.opacity(0.45), in: RoundedRectangle(cornerRadius: 10))
         .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.green.opacity(0.35), lineWidth: 1))
@@ -173,6 +184,7 @@ struct ContentView: View {
                 .buttonStyle(TerminalActionButtonStyle(foreground: .white, background: .red.opacity(0.8)))
             }
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .padding(12)
         .background(Color.black.opacity(0.5), in: RoundedRectangle(cornerRadius: 10))
         .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.yellow.opacity(0.45), lineWidth: 1))
@@ -195,6 +207,7 @@ struct ContentView: View {
                 .font(.system(size: 11, weight: .regular, design: .monospaced))
                 .foregroundStyle(.green.opacity(0.75))
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .padding(12)
         .background(Color.black.opacity(0.45), in: RoundedRectangle(cornerRadius: 10))
         .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.green.opacity(0.35), lineWidth: 1))
@@ -294,8 +307,15 @@ struct ContentView: View {
 
                 Spacer()
 
-                Button("关闭") { showHelpSheet = false }
-                    .buttonStyle(TerminalActionButtonStyle(foreground: .black, background: .green))
+                sheetActionBar(
+                    secondaryTitle: "关闭",
+                    secondaryAction: { showHelpSheet = false },
+                    primaryTitle: "前往设置",
+                    primaryAction: {
+                        showHelpSheet = false
+                        showSettingsSheet = true
+                    }
+                )
             }
             .padding(20)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
@@ -354,8 +374,11 @@ struct ContentView: View {
                     .tint(.green)
                     .foregroundStyle(.green.opacity(0.95))
 
-                HStack {
-                    Button("保存并应用") {
+                sheetActionBar(
+                    secondaryTitle: "取消",
+                    secondaryAction: { showSettingsSheet = false },
+                    primaryTitle: "保存并应用",
+                    primaryAction: {
                         persistedDisplayName = draftDisplayName.trimmingCharacters(in: .whitespacesAndNewlines)
                         if autoStartBLE {
                             model.restart(displayName: effectiveDisplayName)
@@ -364,16 +387,29 @@ struct ContentView: View {
                         }
                         showSettingsSheet = false
                     }
-                    .buttonStyle(TerminalActionButtonStyle(foreground: .black, background: .green))
-
-                    Button("取消") { showSettingsSheet = false }
-                        .buttonStyle(TerminalActionButtonStyle(foreground: .white, background: .gray.opacity(0.45)))
-                }
+                )
 
                 Spacer()
             }
             .padding(20)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        }
+    }
+
+    private func sheetActionBar(
+        secondaryTitle: String,
+        secondaryAction: @escaping () -> Void,
+        primaryTitle: String,
+        primaryAction: @escaping () -> Void
+    ) -> some View {
+        HStack(spacing: 10) {
+            Button(secondaryTitle, action: secondaryAction)
+                .buttonStyle(TerminalActionButtonStyle(foreground: .white, background: .gray.opacity(0.45)))
+                .frame(maxWidth: .infinity)
+
+            Button(primaryTitle, action: primaryAction)
+                .buttonStyle(TerminalActionButtonStyle(foreground: .black, background: .green))
+                .frame(maxWidth: .infinity)
         }
     }
 }
@@ -394,12 +430,15 @@ private struct TerminalActionButtonStyle: ButtonStyle {
 }
 
 private struct TerminalHeaderButtonStyle: ButtonStyle {
+    var fill: Bool = false
+
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.system(size: 11, weight: .semibold, design: .monospaced))
             .foregroundStyle(.green)
             .padding(.horizontal, 8)
             .padding(.vertical, 5)
+            .frame(maxWidth: fill ? .infinity : nil)
             .background(Color.black.opacity(configuration.isPressed ? 0.6 : 0.45), in: RoundedRectangle(cornerRadius: 6))
             .overlay(RoundedRectangle(cornerRadius: 6).stroke(Color.green.opacity(0.35), lineWidth: 1))
     }
