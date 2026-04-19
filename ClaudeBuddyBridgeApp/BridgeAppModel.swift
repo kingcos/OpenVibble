@@ -13,6 +13,7 @@ final class BridgeAppModel: ObservableObject {
     @Published private(set) var transfer: TransferProgress = .idle
     @Published private(set) var connectionState: NUSConnectionState = .stopped
     @Published private(set) var bluetoothStateNote: String = "蓝牙状态未知"
+    @Published private(set) var advertisingNote: String = "未广播"
     @Published private(set) var recentEvents: [String] = []
 
     private let runtime = BridgeRuntime()
@@ -35,6 +36,13 @@ final class BridgeAppModel: ObservableObject {
             }
             .store(in: &cancellables)
 
+        peripheral.$advertisingNote
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] note in
+                self?.advertisingNote = note
+            }
+            .store(in: &cancellables)
+
         peripheral.onLineReceived = { [weak self] line in
             guard let self else { return }
             self.recordEvent("接收  \(line)")
@@ -50,10 +58,10 @@ final class BridgeAppModel: ObservableObject {
     func start(displayName: String? = nil) {
         guard !started else { return }
         let defaultSuffix = UIDevice.current.name.replacingOccurrences(of: " ", with: "-")
-        let defaultName = "Claude-\(defaultSuffix.prefix(8))"
+        let defaultName = "Claude"
         let displayName = sanitizedDisplayName(displayName) ?? defaultName
         peripheral.start(displayName: displayName)
-        recordEvent("系统 广播中：\(displayName)")
+        recordEvent("系统 请求启动广播：\(displayName)")
         refreshFromRuntime()
         started = true
     }
@@ -97,6 +105,6 @@ final class BridgeAppModel: ObservableObject {
         if !trimmed.lowercased().hasPrefix("claude") {
             trimmed = "Claude-\(trimmed)"
         }
-        return String(trimmed.prefix(24))
+        return String(trimmed.prefix(12))
     }
 }

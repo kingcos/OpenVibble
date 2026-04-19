@@ -124,6 +124,10 @@ struct ContentView: View {
             Text("蓝牙：\(model.bluetoothStateNote)")
                 .font(.system(size: 11, weight: .regular, design: .monospaced))
                 .foregroundStyle(.green.opacity(0.75))
+
+            Text("广播：\(model.advertisingNote)")
+                .font(.system(size: 11, weight: .regular, design: .monospaced))
+                .foregroundStyle(.green.opacity(0.75))
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(12)

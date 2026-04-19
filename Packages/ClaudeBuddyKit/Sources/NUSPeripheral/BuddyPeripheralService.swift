@@ -22,6 +22,7 @@ public enum NUSUUIDs {
 public final class BuddyPeripheralService: NSObject, ObservableObject {
     @Published public private(set) var connectionState: NUSConnectionState = .stopped
     @Published public private(set) var bluetoothStateNote: String = "蓝牙状态未知"
+    @Published public private(set) var advertisingNote: String = "未广播"
 
     public var onLineReceived: ((String) -> Void)?
 
@@ -101,7 +102,7 @@ public final class BuddyPeripheralService: NSObject, ObservableObject {
     }
 
     private func startAdvertising() {
-        connectionState = subscribedCentrals.isEmpty ? .advertising : .connected(centralCount: subscribedCentrals.count)
+        advertisingNote = "请求开始广播"
         manager.startAdvertising([
             CBAdvertisementDataLocalNameKey: advertisedName,
             CBAdvertisementDataServiceUUIDsKey: [NUSUUIDs.service]
@@ -151,23 +152,42 @@ extension BuddyPeripheralService: CBPeripheralManagerDelegate {
             setupAndAdvertiseIfNeeded()
         } else {
             connectionState = .stopped
+            advertisingNote = "未广播"
         }
     }
 
     public func peripheralManager(_ peripheral: CBPeripheralManager, didAdd service: CBService, error: Error?) {
-        guard error == nil, isStarted else { return }
+        if let error {
+            connectionState = .stopped
+            advertisingNote = "服务注册失败: \(error.localizedDescription)"
+            return
+        }
+        guard isStarted else { return }
         startAdvertising()
+    }
+
+    public func peripheralManagerDidStartAdvertising(_ peripheral: CBPeripheralManager, error: Error?) {
+        if let error {
+            connectionState = .stopped
+            advertisingNote = "广播失败: \(error.localizedDescription)"
+            return
+        }
+
+        advertisingNote = "广播中"
+        connectionState = subscribedCentrals.isEmpty ? .advertising : .connected(centralCount: subscribedCentrals.count)
     }
 
     public func peripheralManager(_ peripheral: CBPeripheralManager, central: CBCentral, didSubscribeTo characteristic: CBCharacteristic) {
         subscribedCentrals[central.identifier] = central
         connectionState = .connected(centralCount: subscribedCentrals.count)
+        advertisingNote = "已连接"
         drainPendingChunks()
     }
 
     public func peripheralManager(_ peripheral: CBPeripheralManager, central: CBCentral, didUnsubscribeFrom characteristic: CBCharacteristic) {
         subscribedCentrals.removeValue(forKey: central.identifier)
         connectionState = subscribedCentrals.isEmpty ? .advertising : .connected(centralCount: subscribedCentrals.count)
+        advertisingNote = subscribedCentrals.isEmpty ? "广播中" : "已连接"
     }
 
     public func peripheralManagerIsReady(toUpdateSubscribers peripheral: CBPeripheralManager) {
