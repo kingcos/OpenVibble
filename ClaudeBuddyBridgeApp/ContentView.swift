@@ -81,6 +81,10 @@ struct ContentView: View {
                 .font(.system(size: 13, weight: .semibold, design: .monospaced))
                 .foregroundStyle(connectionColor)
             Spacer()
+            Button("重启广播") {
+                model.restart(displayName: effectiveDisplayName)
+            }
+            .buttonStyle(TerminalHeaderButtonStyle())
             Button("帮助") { showHelpSheet = true }
                 .buttonStyle(TerminalHeaderButtonStyle())
             Button("设置") { showSettingsSheet = true }
@@ -107,6 +111,10 @@ struct ContentView: View {
                 terminalMetric("待确认", value: "\(model.snapshot.waiting)")
                 terminalMetric("今日", value: "\(model.snapshot.tokensToday)")
             }
+
+            Text("蓝牙：\(model.bluetoothStateNote)")
+                .font(.system(size: 11, weight: .regular, design: .monospaced))
+                .foregroundStyle(.green.opacity(0.75))
         }
         .padding(12)
         .background(Color.black.opacity(0.45), in: RoundedRectangle(cornerRadius: 10))
@@ -270,7 +278,8 @@ struct ContentView: View {
                 helpBlock(title: "连接 Claude Desktop", lines: [
                     "1. 在 Claude Desktop 打开开发者模式",
                     "2. 打开 Developer -> Hardware Buddy",
-                    "3. 选择以 Claude- 开头的本机设备名完成连接"
+                    "3. 选择以 Claude 开头的本机设备名完成连接",
+                    "4. 若搜不到，先检查本页“蓝牙：”状态并点「重启广播」"
                 ])
 
                 helpBlock(title: "权限确认", lines: [

@@ -21,6 +21,7 @@ public enum NUSUUIDs {
 
 public final class BuddyPeripheralService: NSObject, ObservableObject {
     @Published public private(set) var connectionState: NUSConnectionState = .stopped
+    @Published public private(set) var bluetoothStateNote: String = "蓝牙状态未知"
 
     public var onLineReceived: ((String) -> Void)?
 
@@ -44,7 +45,10 @@ public final class BuddyPeripheralService: NSObject, ObservableObject {
     public func start(displayName: String) {
         advertisedName = displayName
         isStarted = true
-        guard manager.state == .poweredOn else { return }
+        guard manager.state == .poweredOn else {
+            bluetoothStateNote = stateNote(for: manager.state)
+            return
+        }
         setupAndAdvertiseIfNeeded()
     }
 
@@ -141,6 +145,7 @@ public final class BuddyPeripheralService: NSObject, ObservableObject {
 
 extension BuddyPeripheralService: CBPeripheralManagerDelegate {
     public func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
+        bluetoothStateNote = stateNote(for: peripheral.state)
         if peripheral.state == .poweredOn {
             guard isStarted else { return }
             setupAndAdvertiseIfNeeded()
@@ -179,6 +184,25 @@ extension BuddyPeripheralService: CBPeripheralManagerDelegate {
                 handleIncomingChunk(value)
             }
             peripheral.respond(to: request, withResult: .success)
+        }
+    }
+
+    private func stateNote(for state: CBManagerState) -> String {
+        switch state {
+        case .unknown:
+            return "蓝牙初始化中"
+        case .resetting:
+            return "蓝牙重置中"
+        case .unsupported:
+            return "设备不支持 BLE 外设"
+        case .unauthorized:
+            return "蓝牙权限被拒绝"
+        case .poweredOff:
+            return "蓝牙已关闭"
+        case .poweredOn:
+            return "蓝牙已开启"
+        @unknown default:
+            return "蓝牙状态未知"
         }
     }
 }

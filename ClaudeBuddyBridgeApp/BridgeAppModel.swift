@@ -12,6 +12,7 @@ final class BridgeAppModel: ObservableObject {
     @Published private(set) var prompt: PromptRequest?
     @Published private(set) var transfer: TransferProgress = .idle
     @Published private(set) var connectionState: NUSConnectionState = .stopped
+    @Published private(set) var bluetoothStateNote: String = "蓝牙状态未知"
     @Published private(set) var recentEvents: [String] = []
 
     private let runtime = BridgeRuntime()
@@ -24,6 +25,13 @@ final class BridgeAppModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
                 self?.connectionState = state
+            }
+            .store(in: &cancellables)
+
+        peripheral.$bluetoothStateNote
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] note in
+                self?.bluetoothStateNote = note
             }
             .store(in: &cancellables)
 
@@ -84,8 +92,11 @@ final class BridgeAppModel: ObservableObject {
 
     private func sanitizedDisplayName(_ displayName: String?) -> String? {
         guard let displayName else { return nil }
-        let trimmed = displayName.trimmingCharacters(in: .whitespacesAndNewlines)
+        var trimmed = displayName.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return nil }
+        if !trimmed.lowercased().hasPrefix("claude") {
+            trimmed = "Claude-\(trimmed)"
+        }
         return String(trimmed.prefix(24))
     }
 }
