@@ -8,84 +8,99 @@ struct PetStatsScreen: View {
     @Environment(\.dismiss) private var dismiss
     @State private var confirmResetStats = false
     @State private var confirmDeleteChars = false
-    @State private var infoMessage: String?
+    @State private var infoMessage: LocalizedStringKey?
 
     var body: some View {
         NavigationStack {
-            List {
-                Section("Progress") {
-                    row(label: "Level", value: "\(stats.stats.level)")
-                    row(label: "Tokens", value: formatTokens(stats.stats.tokens))
-                    row(label: "Fed", value: "\(stats.stats.fedProgress)/10")
+            Form {
+                Section {
+                    row(labelKey: "pet.level", value: "\(stats.stats.level)")
+                    row(labelKey: "pet.tokens", value: formatTokens(stats.stats.tokens))
+                    row(labelKey: "pet.fed", value: "\(stats.stats.fedProgress)/10")
+                } header: {
+                    Text("pet.section.progress")
                 }
-                Section("Responses") {
-                    row(label: "Approvals", value: "\(stats.stats.approvals)")
-                    row(label: "Denials", value: "\(stats.stats.denials)")
-                    row(label: "Median Response", value: formatSeconds(stats.stats.medianVelocitySeconds))
+
+                Section {
+                    row(labelKey: "pet.approvals", value: "\(stats.stats.approvals)")
+                    row(labelKey: "pet.denials", value: "\(stats.stats.denials)")
+                    row(labelKey: "pet.medianResponse", value: formatSeconds(stats.stats.medianVelocitySeconds))
+                } header: {
+                    Text("pet.section.responses")
                 }
-                Section("Rest") {
-                    row(label: "Total Nap", value: formatDuration(stats.stats.napSeconds))
-                    row(label: "Energy", value: "\(stats.energyTier())/5")
-                    row(label: "Mood", value: "\(stats.stats.moodTier)/4")
+
+                Section {
+                    row(labelKey: "pet.totalNap", value: formatDuration(stats.stats.napSeconds))
+                    row(labelKey: "pet.energy", value: "\(stats.energyTier())/5")
+                    row(labelKey: "pet.mood", value: "\(stats.stats.moodTier)/4")
+                } header: {
+                    Text("pet.section.rest")
                 }
-                Section("Danger Zone") {
+
+                Section {
                     Button(role: .destructive) {
                         confirmResetStats = true
                     } label: {
-                        Label("Reset Pet Stats", systemImage: "arrow.counterclockwise")
+                        Label("pet.reset", systemImage: "arrow.counterclockwise")
                     }
                     Button(role: .destructive) {
                         confirmDeleteChars = true
                     } label: {
-                        Label("Delete All Characters", systemImage: "trash")
+                        Label("pet.delete", systemImage: "trash")
                     }
+                } header: {
+                    Text("pet.section.danger")
                 }
             }
-            .navigationTitle("Pet Stats")
+            .scrollContentBackground(.hidden)
+            .background(BuddyTheme.backgroundGradient.ignoresSafeArea())
+            .navigationTitle("pet.stats.title")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Done") { dismiss() }
+                    Button("common.done") { dismiss() }
                 }
             }
             .confirmationDialog(
-                "Reset stats to zero?",
+                Text("pet.reset.confirm"),
                 isPresented: $confirmResetStats,
                 titleVisibility: .visible
             ) {
-                Button("Reset All Stats", role: .destructive) {
+                Button(role: .destructive) {
                     stats.reset()
-                    infoMessage = "Stats reset."
-                }
-                Button("Cancel", role: .cancel) {}
+                    infoMessage = "pet.stats.resetOk"
+                } label: { Text("pet.reset.doIt") }
+                Button(role: .cancel) {} label: { Text("common.cancel") }
             } message: {
-                Text("Approvals, denials, level, tokens, and nap time will all return to zero. This cannot be undone.")
+                Text("pet.reset.message")
             }
             .confirmationDialog(
-                "Delete all installed characters?",
+                Text("pet.delete.confirm"),
                 isPresented: $confirmDeleteChars,
                 titleVisibility: .visible
             ) {
-                Button("Delete All Characters", role: .destructive) {
+                Button(role: .destructive) {
                     let catalog = PersonaCatalog(rootURL: charactersRootURL)
                     let ok = catalog.deleteAll()
                     PersonaSelection.save(.asciiCat)
-                    infoMessage = ok ? "Characters deleted." : "Delete failed."
-                }
-                Button("Cancel", role: .cancel) {}
+                    infoMessage = ok ? "pet.stats.deleteOk" : "pet.stats.deleteFail"
+                } label: { Text("pet.delete.doIt") }
+                Button(role: .cancel) {} label: { Text("common.cancel") }
             } message: {
-                Text("All GIF packs pushed from Claude Desktop will be removed. You'll fall back to the built-in ASCII cat.")
+                Text("pet.delete.message")
             }
-            .alert("Notice", isPresented: Binding(get: { infoMessage != nil }, set: { if !$0 { infoMessage = nil } })) {
-                Button("OK", role: .cancel) { infoMessage = nil }
+            .alert("common.notice", isPresented: Binding(get: { infoMessage != nil }, set: { if !$0 { infoMessage = nil } })) {
+                Button("common.ok", role: .cancel) { infoMessage = nil }
             } message: {
-                Text(infoMessage ?? "")
+                if let m = infoMessage { Text(m) }
             }
+            .preferredColorScheme(.dark)
         }
     }
 
-    private func row(label: String, value: String) -> some View {
+    private func row(labelKey: LocalizedStringKey, value: String) -> some View {
         HStack {
-            Text(label)
+            Text(labelKey)
                 .foregroundStyle(.secondary)
             Spacer()
             Text(value)

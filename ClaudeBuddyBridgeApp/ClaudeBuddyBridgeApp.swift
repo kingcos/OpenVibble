@@ -7,6 +7,7 @@ struct ClaudeBuddyBridgeApp: App {
     @StateObject private var model: BridgeAppModel
     @StateObject private var persona = PersonaController()
     @StateObject private var motion = MotionSensor()
+    @AppStorage("buddy.hasOnboarded") private var hasOnboarded: Bool = false
 
     init() {
         let store = PersonaStatsStore()
@@ -16,12 +17,20 @@ struct ClaudeBuddyBridgeApp: App {
 
     var body: some Scene {
         WindowGroup {
-            RootTabView(model: model, persona: persona, stats: statsStore)
-                .onAppear {
-                    persona.bind(to: model, motion: motion, stats: statsStore)
-                    motion.start()
+            Group {
+                if hasOnboarded {
+                    RootTabView(model: model, persona: persona, stats: statsStore)
+                } else {
+                    OnboardingScreen {
+                        hasOnboarded = true
+                    }
                 }
-                .onDisappear { motion.stop() }
+            }
+            .onAppear {
+                persona.bind(to: model, motion: motion, stats: statsStore)
+                motion.start()
+            }
+            .onDisappear { motion.stop() }
         }
     }
 }
@@ -35,12 +44,17 @@ struct RootTabView: View {
         TabView {
             HomeScreen(model: model, persona: persona, stats: stats)
                 .tabItem {
-                    Label("Buddy", systemImage: "pawprint.fill")
+                    Label("tab.buddy", systemImage: "pawprint.fill")
                 }
 
             ContentView(model: model)
                 .tabItem {
-                    Label("Terminal", systemImage: "terminal.fill")
+                    Label("tab.terminal", systemImage: "terminal.fill")
+                }
+
+            SettingsScreen()
+                .tabItem {
+                    Label("tab.settings", systemImage: "gearshape.fill")
                 }
         }
     }

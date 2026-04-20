@@ -5,82 +5,97 @@ struct InfoScreen: View {
 
     var body: some View {
         NavigationStack {
-            TabView {
-                aboutPage
-                    .tabItem { Label("About", systemImage: "info.circle") }
-                gesturesPage
-                    .tabItem { Label("Gestures", systemImage: "hand.tap") }
-                claudePage
-                    .tabItem { Label("Claude", systemImage: "sparkles") }
-                creditsPage
-                    .tabItem { Label("Credits", systemImage: "heart") }
+            ZStack {
+                BuddyTheme.backgroundGradient.ignoresSafeArea()
+                TabView {
+                    aboutPage
+                        .tabItem { Label("info.tab.about", systemImage: "info.circle") }
+                    gesturesPage
+                        .tabItem { Label("info.tab.gestures", systemImage: "hand.tap") }
+                    claudePage
+                        .tabItem { Label("info.tab.claude", systemImage: "sparkles") }
+                    creditsPage
+                        .tabItem { Label("info.tab.credits", systemImage: "heart") }
+                }
             }
-            .navigationTitle("Info")
+            .navigationTitle("info.title")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Done") { dismiss() }
+                    Button("common.done") { dismiss() }
                 }
             }
         }
+        .preferredColorScheme(.dark)
     }
 
     private var aboutPage: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 12) {
-                Text("Claude Buddy Bridge")
-                    .font(.title2).bold()
-                Text("Your iPhone becomes Claude Desktop's Hardware Buddy over BLE. Watch your buddy react to sessions, approve permissions, and level up as tokens accumulate.")
-                Text("This iOS port replaces the ESP32 firmware — no extra hardware required.")
+                Text("info.about.heading")
+                    .font(.system(.title2, design: .rounded)).bold()
+                Text("info.about.body1")
+                Text("info.about.body2")
                     .foregroundStyle(.secondary)
             }
             .padding()
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 
     private var gesturesPage: some View {
         List {
-            Section("Device Gestures") {
-                row("Shake", "Dizzy animation (2s)")
-                row("Face-down 3s", "Sleep — accumulates nap time")
-                row("Face-up again", "Wake back to idle / busy")
+            Section {
+                row(titleKey: "info.gestures.shake.title", detailKey: "info.gestures.shake.detail")
+                row(titleKey: "info.gestures.facedown.title", detailKey: "info.gestures.facedown.detail")
+                row(titleKey: "info.gestures.wake.title", detailKey: "info.gestures.wake.detail")
+            } header: {
+                Text("info.gestures.device")
             }
-            Section("Screen Gestures") {
-                row("Tap buddy", "Tap feedback")
-                row("Long-press buddy", "Main menu")
-                row("Pawprint icon", "Choose species")
+            Section {
+                row(titleKey: "info.gestures.tap.title", detailKey: "info.gestures.tap.detail")
+                row(titleKey: "info.gestures.long.title", detailKey: "info.gestures.long.detail")
+                row(titleKey: "info.gestures.paw.title", detailKey: "info.gestures.paw.detail")
+            } header: {
+                Text("info.gestures.screen")
             }
         }
+        .scrollContentBackground(.hidden)
     }
 
     private var claudePage: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 12) {
-                Text("Claude Desktop").font(.title2).bold()
-                Text("Pair this app from Claude Desktop's Hardware Buddy panel. Advertising uses the Nordic UART Service. iPhone name must start with \"Claude\" — set it in iOS Settings → General → About → Name.")
-                Text("When the bridge sends a character pack, it lands in Application Support and appears in the species picker automatically.")
+                Text("info.claude.heading")
+                    .font(.system(.title2, design: .rounded)).bold()
+                Text("info.claude.body1")
+                Text("info.claude.body2")
                     .foregroundStyle(.secondary)
             }
             .padding()
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 
     private var creditsPage: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 12) {
-                Text("Credits").font(.title2).bold()
-                Text("Original ESP32 firmware + protocol: claude-desktop-buddy.")
-                Text("ASCII cat sprites ported from the firmware's buddies/cat.cpp.")
-                Text("GIF packs are user-installed through Claude Desktop.")
+                Text("info.credits.heading")
+                    .font(.system(.title2, design: .rounded)).bold()
+                Text("info.credits.body1")
+                Text("info.credits.body2")
+                Text("info.credits.body3")
                     .foregroundStyle(.secondary)
             }
             .padding()
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 
-    private func row(_ title: String, _ detail: String) -> some View {
+    private func row(titleKey: LocalizedStringKey, detailKey: LocalizedStringKey) -> some View {
         VStack(alignment: .leading, spacing: 2) {
-            Text(title).font(.system(.body, design: .monospaced))
-            Text(detail).font(.caption).foregroundStyle(.secondary)
+            Text(titleKey).font(.system(.body, design: .monospaced))
+            Text(detailKey).font(.caption).foregroundStyle(.secondary)
         }
         .padding(.vertical, 2)
     }

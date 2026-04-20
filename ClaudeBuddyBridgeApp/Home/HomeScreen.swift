@@ -18,12 +18,7 @@ struct HomeScreen: View {
 
     var body: some View {
         ZStack {
-            LinearGradient(
-                colors: [Color(red: 0.05, green: 0.07, blue: 0.1), Color(red: 0.02, green: 0.03, blue: 0.05)],
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            .ignoresSafeArea()
+            BuddyTheme.backgroundGradient.ignoresSafeArea()
 
             VStack(spacing: 20) {
                 header
@@ -88,20 +83,20 @@ struct HomeScreen: View {
 
     private var header: some View {
         HStack {
-            Text("Claude Buddy")
-                .font(.system(size: 18, weight: .semibold, design: .monospaced))
+            Text("app.name")
+                .font(.system(size: 20, weight: .bold, design: .rounded))
                 .foregroundStyle(.primary)
             Spacer()
             connectionDot
             Button {
                 showPicker = true
             } label: {
-                Image(systemName: "pawprint.circle")
-                    .font(.system(size: 20))
+                Image(systemName: "pawprint.circle.fill")
+                    .font(.system(size: 22))
             }
-            .tint(.white)
+            .tint(.white.opacity(0.9))
             .buttonStyle(.plain)
-            .accessibilityLabel("选择宠物")
+            .accessibilityLabel(Text("home.a11y.choosePet"))
         }
     }
 
@@ -114,33 +109,39 @@ struct HomeScreen: View {
             Circle()
                 .fill(connected ? Color.green : Color.gray)
                 .frame(width: 8, height: 8)
-            Text(connected ? "connected" : "waiting")
-                .font(.system(size: 11, design: .monospaced))
+            Text(connected ? "home.status.connected" : "home.status.waiting")
+                .font(.system(size: 11, weight: .medium, design: .rounded))
                 .foregroundStyle(.secondary)
         }
+        .padding(.horizontal, 10)
+        .padding(.vertical, 5)
+        .background(Color.white.opacity(0.06), in: Capsule())
     }
 
     private var summaryRow: some View {
-        HStack(spacing: 24) {
-            stat(label: "total", value: model.snapshot.total)
-            stat(label: "run", value: model.snapshot.running)
-            stat(label: "wait", value: model.snapshot.waiting)
+        HStack(spacing: 0) {
+            stat(labelKey: "home.metric.total", value: model.snapshot.total)
+            Divider().frame(height: 30).background(Color.white.opacity(0.1))
+            stat(labelKey: "home.metric.running", value: model.snapshot.running)
+            Divider().frame(height: 30).background(Color.white.opacity(0.1))
+            stat(labelKey: "home.metric.waiting", value: model.snapshot.waiting)
         }
-        .padding(.vertical, 12)
+        .padding(.vertical, 14)
         .frame(maxWidth: .infinity)
-        .background(Color.white.opacity(0.04))
-        .clipShape(RoundedRectangle(cornerRadius: 12))
+        .background(BuddyTheme.cardFill, in: RoundedRectangle(cornerRadius: 14))
+        .overlay(RoundedRectangle(cornerRadius: 14).stroke(BuddyTheme.cardStroke, lineWidth: 1))
     }
 
-    private func stat(label: String, value: Int) -> some View {
-        VStack(spacing: 2) {
+    private func stat(labelKey: LocalizedStringKey, value: Int) -> some View {
+        VStack(spacing: 4) {
             Text("\(value)")
-                .font(.system(size: 20, weight: .semibold, design: .monospaced))
+                .font(.system(size: 22, weight: .bold, design: .rounded))
                 .foregroundStyle(.primary)
-            Text(label)
-                .font(.system(size: 10, design: .monospaced))
+            Text(labelKey)
+                .font(.system(size: 10, weight: .medium, design: .rounded))
                 .foregroundStyle(.secondary)
-                .tracking(2)
+                .textCase(.uppercase)
+                .tracking(1.2)
         }
         .frame(maxWidth: .infinity)
     }

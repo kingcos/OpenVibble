@@ -8,33 +8,39 @@ struct MainMenuSheet: View {
 
     var body: some View {
         NavigationStack {
-            List {
-                Button {
-                    dismiss()
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { onOpenStats() }
-                } label: {
-                    Label("Pet Stats", systemImage: "chart.bar.fill")
+            ZStack {
+                BuddyTheme.backgroundGradient.ignoresSafeArea()
+                List {
+                    Button {
+                        dismiss()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { onOpenStats() }
+                    } label: {
+                        Label("menu.petStats", systemImage: "chart.bar.fill")
+                    }
+                    Button {
+                        dismiss()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { onOpenPicker() }
+                    } label: {
+                        Label("menu.changeSpecies", systemImage: "pawprint.circle")
+                    }
+                    Button {
+                        dismiss()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { onOpenInfo() }
+                    } label: {
+                        Label("menu.info", systemImage: "info.circle")
+                    }
                 }
-                Button {
-                    dismiss()
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { onOpenPicker() }
-                } label: {
-                    Label("Change Species", systemImage: "pawprint.circle")
-                }
-                Button {
-                    dismiss()
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) { onOpenInfo() }
-                } label: {
-                    Label("Info", systemImage: "info.circle")
-                }
+                .scrollContentBackground(.hidden)
             }
-            .navigationTitle("Menu")
+            .navigationTitle("menu.title")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("Close") { dismiss() }
+                    Button("common.close") { dismiss() }
                 }
             }
         }
         .presentationDetents([.medium])
+        .preferredColorScheme(.dark)
     }
 }
