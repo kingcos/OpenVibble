@@ -1,9 +1,14 @@
 import SwiftUI
+import BuddyPersona
 import BuddyStats
 
 struct PetStatsScreen: View {
     @ObservedObject var stats: PersonaStatsStore
+    let charactersRootURL: URL
     @Environment(\.dismiss) private var dismiss
+    @State private var confirmResetStats = false
+    @State private var confirmDeleteChars = false
+    @State private var infoMessage: String?
 
     var body: some View {
         NavigationStack {
@@ -23,12 +28,57 @@ struct PetStatsScreen: View {
                     row(label: "Energy", value: "\(stats.energyTier())/5")
                     row(label: "Mood", value: "\(stats.stats.moodTier)/4")
                 }
+                Section("Danger Zone") {
+                    Button(role: .destructive) {
+                        confirmResetStats = true
+                    } label: {
+                        Label("Reset Pet Stats", systemImage: "arrow.counterclockwise")
+                    }
+                    Button(role: .destructive) {
+                        confirmDeleteChars = true
+                    } label: {
+                        Label("Delete All Characters", systemImage: "trash")
+                    }
+                }
             }
             .navigationTitle("Pet Stats")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Done") { dismiss() }
                 }
+            }
+            .confirmationDialog(
+                "Reset stats to zero?",
+                isPresented: $confirmResetStats,
+                titleVisibility: .visible
+            ) {
+                Button("Reset All Stats", role: .destructive) {
+                    stats.reset()
+                    infoMessage = "Stats reset."
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("Approvals, denials, level, tokens, and nap time will all return to zero. This cannot be undone.")
+            }
+            .confirmationDialog(
+                "Delete all installed characters?",
+                isPresented: $confirmDeleteChars,
+                titleVisibility: .visible
+            ) {
+                Button("Delete All Characters", role: .destructive) {
+                    let catalog = PersonaCatalog(rootURL: charactersRootURL)
+                    let ok = catalog.deleteAll()
+                    PersonaSelection.save(.asciiCat)
+                    infoMessage = ok ? "Characters deleted." : "Delete failed."
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text("All GIF packs pushed from Claude Desktop will be removed. You'll fall back to the built-in ASCII cat.")
+            }
+            .alert("Notice", isPresented: Binding(get: { infoMessage != nil }, set: { if !$0 { infoMessage = nil } })) {
+                Button("OK", role: .cancel) { infoMessage = nil }
+            } message: {
+                Text(infoMessage ?? "")
             }
         }
     }

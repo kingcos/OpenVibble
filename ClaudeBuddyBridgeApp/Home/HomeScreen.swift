@@ -67,7 +67,8 @@ struct HomeScreen: View {
             )
         }
         .sheet(isPresented: $showStats) {
-            PetStatsScreen(stats: stats)
+            PetStatsScreen(stats: stats, charactersRootURL: model.charactersRootURL)
+                .onDisappear { reloadInstalled() }
         }
         .sheet(isPresented: $showInfo) {
             InfoScreen()

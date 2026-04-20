@@ -61,4 +61,15 @@ public struct PersonaCatalog {
         else { return nil }
         return InstalledPersona(name: name, directory: folder, manifest: manifest)
     }
+
+    @discardableResult
+    public func deleteAll() -> Bool {
+        guard fileManager.fileExists(atPath: rootURL.path) else { return true }
+        do {
+            try fileManager.removeItem(at: rootURL)
+            return true
+        } catch {
+            return false
+        }
+    }
 }
