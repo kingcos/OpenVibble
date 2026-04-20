@@ -1,11 +1,13 @@
 import SwiftUI
 import BuddyPersona
+import BuddyStats
 import BuddyUI
 import NUSPeripheral
 
 struct HomeScreen: View {
     @ObservedObject var model: BridgeAppModel
     @ObservedObject var persona: PersonaController
+    @ObservedObject var stats: PersonaStatsStore
 
     @State private var selection: PersonaSpeciesID = PersonaSelection.load()
     @State private var installed: [InstalledPersona] = []
@@ -20,8 +22,9 @@ struct HomeScreen: View {
             )
             .ignoresSafeArea()
 
-            VStack(spacing: 24) {
+            VStack(spacing: 20) {
                 header
+                BuddyHUD(stats: stats.stats, energyTier: stats.energyTier())
                 Spacer()
                 buddyRenderer
                     .frame(maxWidth: .infinity)

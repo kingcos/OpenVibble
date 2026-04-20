@@ -14,6 +14,46 @@ public struct PromptRequest: Equatable, Sendable {
     }
 }
 
+public struct BatterySample: Equatable, Sendable {
+    public var percent: Int
+    public var millivolts: Int
+    public var milliamps: Int
+    public var usb: Bool
+
+    public init(percent: Int, millivolts: Int = 0, milliamps: Int = 0, usb: Bool = false) {
+        self.percent = percent
+        self.millivolts = millivolts
+        self.milliamps = milliamps
+        self.usb = usb
+    }
+}
+
+public struct StatsSample: Equatable, Sendable {
+    public var approvals: Int
+    public var denials: Int
+    public var velocityMedianSeconds: Int
+    public var napSeconds: Int
+    public var level: Int
+
+    public init(approvals: Int, denials: Int, velocityMedianSeconds: Int, napSeconds: Int, level: Int) {
+        self.approvals = approvals
+        self.denials = denials
+        self.velocityMedianSeconds = velocityMedianSeconds
+        self.napSeconds = napSeconds
+        self.level = level
+    }
+}
+
+public struct StatusSample: Equatable, Sendable {
+    public var battery: BatterySample
+    public var stats: StatsSample
+
+    public init(battery: BatterySample, stats: StatsSample) {
+        self.battery = battery
+        self.stats = stats
+    }
+}
+
 public struct BridgeSnapshot: Equatable, Sendable {
     public var total: Int
     public var running: Int
@@ -72,6 +112,7 @@ public final class BridgeRuntime {
     private var snapshotStorage: BridgeSnapshot
     private var promptStorage: PromptRequest?
     private let transferStore: CharacterTransferStore
+    private var lastStatusSample: StatusSample?
 
     public var onCharacterInstalled: ((String) -> Void)?
     public var charactersRootURL: URL { transferStore.charactersRootURL }
@@ -79,6 +120,10 @@ public final class BridgeRuntime {
     public init(initialSnapshot: BridgeSnapshot = .empty, transferStore: CharacterTransferStore = CharacterTransferStore()) {
         self.snapshotStorage = initialSnapshot
         self.transferStore = transferStore
+    }
+
+    public func updateStatusSample(_ sample: StatusSample) {
+        lastStatusSample = sample
     }
 
     public func ingestLine(_ line: String) -> [String] {
@@ -183,27 +228,38 @@ public final class BridgeRuntime {
 
     private func makeStatusAck() -> BridgeAck {
         let transfer = transferStore.progress
+        let battery = lastStatusSample?.battery ?? BatterySample(percent: 100, millivolts: 4000, milliamps: 0, usb: true)
+        let stats: StatsSample = lastStatusSample?.stats ?? StatsSample(
+            approvals: snapshotStorage.running,
+            denials: snapshotStorage.waiting,
+            velocityMedianSeconds: snapshotStorage.total,
+            napSeconds: 0,
+            level: Int(snapshotStorage.tokens / 50_000)
+        )
 
+        // iOS cannot enforce LE Secure Connections bonding via CoreBluetooth
+        // Peripheral — report sec=false so the desktop knows transcripts are
+        // unencrypted in this direction.
         let payload: [String: JSONValue] = [
             "name": .string(snapshotStorage.deviceName),
             "owner": .string(snapshotStorage.ownerName),
-            "sec": .bool(true),
+            "sec": .bool(false),
             "bat": .object([
-                "pct": .number(100),
-                "mV": .number(4000),
-                "mA": .number(0),
-                "usb": .bool(true)
+                "pct": .number(Double(battery.percent)),
+                "mV": .number(Double(battery.millivolts)),
+                "mA": .number(Double(battery.milliamps)),
+                "usb": .bool(battery.usb)
             ]),
             "sys": .object([
                 "up": .number(ProcessInfo.processInfo.systemUptime),
                 "heap": .number(0)
             ]),
             "stats": .object([
-                "appr": .number(Double(snapshotStorage.running)),
-                "deny": .number(Double(snapshotStorage.waiting)),
-                "vel": .number(Double(snapshotStorage.total)),
-                "nap": .number(0),
-                "lvl": .number(Double(snapshotStorage.tokens / 50_000))
+                "appr": .number(Double(stats.approvals)),
+                "deny": .number(Double(stats.denials)),
+                "vel": .number(Double(stats.velocityMedianSeconds)),
+                "nap": .number(Double(stats.napSeconds)),
+                "lvl": .number(Double(stats.level))
             ]),
             "xfer": .object([
                 "active": .bool(transfer.isActive),

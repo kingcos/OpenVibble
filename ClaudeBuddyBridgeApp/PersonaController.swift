@@ -10,16 +10,15 @@ final class PersonaController: ObservableObject {
     private var cancellables: Set<AnyCancellable> = []
 
     func bind(to model: BridgeAppModel) {
-        // Re-derive whenever snapshot or connection state changes.
-        Publishers.CombineLatest(model.$snapshot, model.$connectionState)
-            .map { snapshot, connection in
+        Publishers.CombineLatest3(model.$snapshot, model.$connectionState, model.$recentLevelUp)
+            .map { snapshot, connection, leveled in
                 let connected: Bool
                 if case .connected = connection { connected = true } else { connected = false }
                 return PersonaDeriveInput(
                     connected: connected,
                     sessionsRunning: snapshot.running,
                     sessionsWaiting: snapshot.waiting,
-                    recentlyCompleted: false
+                    recentlyCompleted: leveled
                 )
             }
             .map(derivePersonaState)

@@ -5,6 +5,7 @@ import BridgeRuntime
 import NUSPeripheral
 import BuddyProtocol
 import BuddyStorage
+import BuddyStats
 
 @MainActor
 final class BridgeAppModel: ObservableObject {
@@ -18,21 +19,30 @@ final class BridgeAppModel: ObservableObject {
     @Published private(set) var diagnosticLogs: [String] = []
     @Published private(set) var recentEvents: [String] = []
     @Published private(set) var lastInstalledCharacter: String?
+    @Published private(set) var recentLevelUp: Bool = false
+
+    let statsStore: PersonaStatsStore
 
     private let runtime = BridgeRuntime()
     private let peripheral = BuddyPeripheralService()
     private var cancellables: Set<AnyCancellable> = []
     private var started = false
+    private var lastPromptId: String?
+    private var lastPromptAt: Date?
+    private var statusSampleTimer: Timer?
 
     var charactersRootURL: URL { runtime.charactersRootURL }
 
-    init() {
+    init(statsStore: PersonaStatsStore = PersonaStatsStore()) {
+        self.statsStore = statsStore
         runtime.onCharacterInstalled = { [weak self] name in
             Task { @MainActor [weak self] in
                 self?.lastInstalledCharacter = name
                 self?.recordEvent("系统 已安装宠物：\(name)")
             }
         }
+
+        enableBatteryMonitoring()
 
         peripheral.$connectionState
             .receive(on: DispatchQueue.main)
@@ -97,17 +107,82 @@ final class BridgeAppModel: ObservableObject {
         started = false
     }
 
-    func respondPermission(_ decision: PermissionDecision) {
-        guard let line = runtime.respondPermission(decision) else { return }
+    @discardableResult
+    func respondPermission(_ decision: PermissionDecision) -> TimeInterval? {
+        guard let line = runtime.respondPermission(decision) else { return nil }
         let direction = decision == .once ? "允许" : "拒绝"
         recordEvent("发送  权限\(direction)")
         _ = peripheral.sendLine(line)
+
+        let elapsed = lastPromptAt.map { Date().timeIntervalSince($0) }
+        switch decision {
+        case .once:
+            statsStore.onApproval(secondsToRespond: elapsed ?? 0)
+        case .deny:
+            statsStore.onDenial()
+        }
+        lastPromptAt = nil
+        lastPromptId = nil
+        pushStatusSample()
+        return elapsed
+    }
+
+    func clearLevelUpFlag() {
+        recentLevelUp = false
     }
 
     private func refreshFromRuntime() {
-        snapshot = runtime.currentSnapshot()
-        prompt = runtime.pendingPrompt()
+        let newSnapshot = runtime.currentSnapshot()
+        snapshot = newSnapshot
         transfer = runtime.transferProgress()
+
+        let newPrompt = runtime.pendingPrompt()
+        if let newPrompt, newPrompt.id != lastPromptId {
+            lastPromptId = newPrompt.id
+            lastPromptAt = Date()
+        } else if newPrompt == nil {
+            lastPromptAt = nil
+            lastPromptId = nil
+        }
+        prompt = newPrompt
+
+        let leveledUp = statsStore.onBridgeTokens(newSnapshot.tokens)
+        if leveledUp {
+            recentLevelUp = true
+            recordEvent("系统 升级！等级 \(statsStore.stats.level)")
+            Task { @MainActor [weak self] in
+                try? await Task.sleep(for: .seconds(3))
+                self?.recentLevelUp = false
+            }
+        }
+        pushStatusSample()
+    }
+
+    private func enableBatteryMonitoring() {
+        UIDevice.current.isBatteryMonitoringEnabled = true
+        NotificationCenter.default.publisher(for: UIDevice.batteryLevelDidChangeNotification)
+            .merge(with: NotificationCenter.default.publisher(for: UIDevice.batteryStateDidChangeNotification))
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in self?.pushStatusSample() }
+            .store(in: &cancellables)
+        pushStatusSample()
+    }
+
+    private func pushStatusSample() {
+        let device = UIDevice.current
+        let rawLevel = device.batteryLevel
+        let percent: Int = rawLevel < 0 ? 100 : Int((rawLevel * 100).rounded())
+        let usb = (device.batteryState == .charging || device.batteryState == .full)
+        let battery = BatterySample(percent: percent, millivolts: 0, milliamps: 0, usb: usb)
+        let s = statsStore.stats
+        let stats = StatsSample(
+            approvals: Int(s.approvals),
+            denials: Int(s.denials),
+            velocityMedianSeconds: Int(s.medianVelocitySeconds),
+            napSeconds: Int(s.napSeconds),
+            level: Int(s.level)
+        )
+        runtime.updateStatusSample(StatusSample(battery: battery, stats: stats))
     }
 
     private func recordEvent(_ line: String) {
