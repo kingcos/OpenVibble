@@ -47,6 +47,7 @@ targets:
         INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad: UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight
         INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription: Connect to Claude Desktop as Hardware Buddy.
         INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription: Connect to Claude Desktop as Hardware Buddy.
+        INFOPLIST_KEY_NSMotionUsageDescription: Detect shakes and face-down gestures to animate your Buddy.
         INFOPLIST_KEY_UIBackgroundModes:
           - bluetooth-peripheral
         GENERATE_INFOPLIST_FILE: YES

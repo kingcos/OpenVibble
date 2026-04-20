@@ -6,6 +6,7 @@ struct ClaudeBuddyBridgeApp: App {
     @StateObject private var statsStore: PersonaStatsStore
     @StateObject private var model: BridgeAppModel
     @StateObject private var persona = PersonaController()
+    @StateObject private var motion = MotionSensor()
 
     init() {
         let store = PersonaStatsStore()
@@ -17,8 +18,10 @@ struct ClaudeBuddyBridgeApp: App {
         WindowGroup {
             RootTabView(model: model, persona: persona, stats: statsStore)
                 .onAppear {
-                    persona.bind(to: model)
+                    persona.bind(to: model, motion: motion, stats: statsStore)
+                    motion.start()
                 }
+                .onDisappear { motion.stop() }
         }
     }
 }

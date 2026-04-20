@@ -12,6 +12,9 @@ struct HomeScreen: View {
     @State private var selection: PersonaSpeciesID = PersonaSelection.load()
     @State private var installed: [InstalledPersona] = []
     @State private var showPicker = false
+    @State private var showMenu = false
+    @State private var showStats = false
+    @State private var showInfo = false
 
     var body: some View {
         ZStack {
@@ -29,6 +32,8 @@ struct HomeScreen: View {
                 buddyRenderer
                     .frame(maxWidth: .infinity)
                     .frame(minHeight: 160)
+                    .contentShape(Rectangle())
+                    .onLongPressGesture(minimumDuration: 0.6) { showMenu = true }
                 Text(persona.state.slug.uppercased())
                     .font(.system(size: 12, weight: .semibold, design: .monospaced))
                     .foregroundStyle(.secondary)
@@ -53,6 +58,19 @@ struct HomeScreen: View {
                 installed: installed,
                 onClose: { showPicker = false }
             )
+        }
+        .sheet(isPresented: $showMenu) {
+            MainMenuSheet(
+                onOpenStats: { showStats = true },
+                onOpenInfo: { showInfo = true },
+                onOpenPicker: { showPicker = true }
+            )
+        }
+        .sheet(isPresented: $showStats) {
+            PetStatsScreen(stats: stats)
+        }
+        .sheet(isPresented: $showInfo) {
+            InfoScreen()
         }
     }
 

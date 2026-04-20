@@ -20,6 +20,9 @@ final class BridgeAppModel: ObservableObject {
     @Published private(set) var recentEvents: [String] = []
     @Published private(set) var lastInstalledCharacter: String?
     @Published private(set) var recentLevelUp: Bool = false
+    @Published private(set) var lastQuickApprovalAt: Date?
+
+    private let quickApprovalThreshold: TimeInterval = 5
 
     let statsStore: PersonaStatsStore
 
@@ -118,6 +121,9 @@ final class BridgeAppModel: ObservableObject {
         switch decision {
         case .once:
             statsStore.onApproval(secondsToRespond: elapsed ?? 0)
+            if let elapsed, elapsed < quickApprovalThreshold {
+                lastQuickApprovalAt = Date()
+            }
         case .deny:
             statsStore.onDenial()
         }

@@ -7,15 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		153620805456A88EDD2E3C2C /* MainMenuSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F77DB5AE0B357A75F807AC /* MainMenuSheet.swift */; };
 		271F20D3775CC939692B5768 /* BuddyHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3050CC84F335D5645C0F9C78 /* BuddyHUD.swift */; };
+		2EADED94B7043DDC7DEA4FB7 /* PetStatsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC3BCB5FC811F522D6B519B /* PetStatsScreen.swift */; };
 		3B6C101D8EAA599515AF1788 /* PersonaController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B009D5D10454B61E89963C8 /* PersonaController.swift */; };
 		4C1E3AF4DF5789D4DFF3B873 /* BuddyPersona in Frameworks */ = {isa = PBXBuildFile; productRef = 44F8AFF504D8CA47A444E57C /* BuddyPersona */; };
+		5186CFFDEE956724FA4CD3B7 /* InfoScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D2226F7BDD776AD75443B /* InfoScreen.swift */; };
 		54F87E5C689EC08548350CD7 /* BuddyStats in Frameworks */ = {isa = PBXBuildFile; productRef = 8966AD7A853C35E7677CCBEC /* BuddyStats */; };
 		5DBD4C1E40D1D622E8AA77DD /* SmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D618613A515C409CDC70B957 /* SmokeTests.swift */; };
 		676D367654C0A23516DB95A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65548935CD489AE7EE50CE1C /* Assets.xcassets */; };
 		6E17FBE03B8F13A3FC186C52 /* ClaudeBuddyBridgeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F2CD3EDE7E8665059A1EFB /* ClaudeBuddyBridgeApp.swift */; };
 		6F71D3FC813CED2933F02D34 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F01CC5C23112E959F8BC6D8 /* HomeScreen.swift */; };
 		70769E3394701AA5BC933566 /* BridgeRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 8436D7CE6A94DA31EF4BB8C3 /* BridgeRuntime */; };
+		72ACF9F2B9914D7E16FA8229 /* MotionSensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDC1A2FAF3DC9D3F656F4FC /* MotionSensor.swift */; };
 		73EEA5C38DC91BE6707FB800 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5FCD0F4050D6D146B6329C /* ContentView.swift */; };
 		772E4BCA8435152643F47DA3 /* SpeciesPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C833BFB88AA72D0DF38D1F /* SpeciesPickerSheet.swift */; };
 		857F6A7482A0CE4336A774B7 /* NUSPeripheral in Frameworks */ = {isa = PBXBuildFile; productRef = ECB5D8326B3ABBD99ABAC356 /* NUSPeripheral */; };
@@ -38,6 +42,7 @@
 /* Begin PBXFileReference section */
 		08F2CD3EDE7E8665059A1EFB /* ClaudeBuddyBridgeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeBuddyBridgeApp.swift; sourceTree = "<group>"; };
 		12C833BFB88AA72D0DF38D1F /* SpeciesPickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesPickerSheet.swift; sourceTree = "<group>"; };
+		13F77DB5AE0B357A75F807AC /* MainMenuSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuSheet.swift; sourceTree = "<group>"; };
 		3050CC84F335D5645C0F9C78 /* BuddyHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddyHUD.swift; sourceTree = "<group>"; };
 		34A991368F018E861B46B255 /* ClaudeBuddyBridgeApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = ClaudeBuddyBridgeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B009D5D10454B61E89963C8 /* PersonaController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonaController.swift; sourceTree = "<group>"; };
@@ -45,9 +50,12 @@
 		60DE9041705CE3A8112E3A29 /* ClaudeBuddyBridgeAppTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = ClaudeBuddyBridgeAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		63CD167C925FC96F77C8AFB4 /* ClaudeBuddyKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ClaudeBuddyKit; path = Packages/ClaudeBuddyKit; sourceTree = SOURCE_ROOT; };
 		65548935CD489AE7EE50CE1C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		685D2226F7BDD776AD75443B /* InfoScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoScreen.swift; sourceTree = "<group>"; };
+		6EDC1A2FAF3DC9D3F656F4FC /* MotionSensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionSensor.swift; sourceTree = "<group>"; };
 		7F01CC5C23112E959F8BC6D8 /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
 		8E4C11DC586586DFE2B5E6B9 /* BridgeAppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BridgeAppModel.swift; sourceTree = "<group>"; };
 		D618613A515C409CDC70B957 /* SmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokeTests.swift; sourceTree = "<group>"; };
+		DEC3BCB5FC811F522D6B519B /* PetStatsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetStatsScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +85,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		207E172200A9AB86A0DFDCA6 /* Pet */ = {
+			isa = PBXGroup;
+			children = (
+				DEC3BCB5FC811F522D6B519B /* PetStatsScreen.swift */,
+			);
+			path = Pet;
+			sourceTree = "<group>";
+		};
 		7DF64D0B3C6C2EFFAC5048AE /* ClaudeBuddyBridgeApp */ = {
 			isa = PBXGroup;
 			children = (
@@ -86,8 +102,19 @@
 				5B5FCD0F4050D6D146B6329C /* ContentView.swift */,
 				3B009D5D10454B61E89963C8 /* PersonaController.swift */,
 				F1485681065F20273D91DD29 /* Home */,
+				C8C69AEAB899BA2DD59DF3F0 /* Info */,
+				A6CA90F481BAB18F269E9E97 /* Motion */,
+				207E172200A9AB86A0DFDCA6 /* Pet */,
 			);
 			path = ClaudeBuddyBridgeApp;
+			sourceTree = "<group>";
+		};
+		A6CA90F481BAB18F269E9E97 /* Motion */ = {
+			isa = PBXGroup;
+			children = (
+				6EDC1A2FAF3DC9D3F656F4FC /* MotionSensor.swift */,
+			);
+			path = Motion;
 			sourceTree = "<group>";
 		};
 		BF9CD2CA4019D9287CAD485F = {
@@ -98,6 +125,14 @@
 				D8CD4859D0CD70397B21DE48 /* Packages */,
 				07F40A187B533087001080C9 /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		C8C69AEAB899BA2DD59DF3F0 /* Info */ = {
+			isa = PBXGroup;
+			children = (
+				685D2226F7BDD776AD75443B /* InfoScreen.swift */,
+			);
+			path = Info;
 			sourceTree = "<group>";
 		};
 		D8CD4859D0CD70397B21DE48 /* Packages */ = {
@@ -121,6 +156,7 @@
 			children = (
 				3050CC84F335D5645C0F9C78 /* BuddyHUD.swift */,
 				7F01CC5C23112E959F8BC6D8 /* HomeScreen.swift */,
+				13F77DB5AE0B357A75F807AC /* MainMenuSheet.swift */,
 				12C833BFB88AA72D0DF38D1F /* SpeciesPickerSheet.swift */,
 			);
 			path = Home;
@@ -234,7 +270,11 @@
 				6E17FBE03B8F13A3FC186C52 /* ClaudeBuddyBridgeApp.swift in Sources */,
 				73EEA5C38DC91BE6707FB800 /* ContentView.swift in Sources */,
 				6F71D3FC813CED2933F02D34 /* HomeScreen.swift in Sources */,
+				5186CFFDEE956724FA4CD3B7 /* InfoScreen.swift in Sources */,
+				153620805456A88EDD2E3C2C /* MainMenuSheet.swift in Sources */,
+				72ACF9F2B9914D7E16FA8229 /* MotionSensor.swift in Sources */,
 				3B6C101D8EAA599515AF1788 /* PersonaController.swift in Sources */,
+				2EADED94B7043DDC7DEA4FB7 /* PetStatsScreen.swift in Sources */,
 				772E4BCA8435152643F47DA3 /* SpeciesPickerSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -267,6 +307,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Claude Buddy Bridge";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Connect to Claude Desktop as Hardware Buddy.";
 				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Connect to Claude Desktop as Hardware Buddy.";
+				INFOPLIST_KEY_NSMotionUsageDescription = "Detect shakes and face-down gestures to animate your Buddy.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UIBackgroundModes = (
@@ -293,6 +334,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Claude Buddy Bridge";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Connect to Claude Desktop as Hardware Buddy.";
 				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Connect to Claude Desktop as Hardware Buddy.";
+				INFOPLIST_KEY_NSMotionUsageDescription = "Detect shakes and face-down gestures to animate your Buddy.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UIBackgroundModes = (
