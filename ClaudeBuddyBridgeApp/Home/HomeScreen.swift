@@ -16,23 +16,26 @@ struct HomeScreen: View {
     @State private var showMenu = false
     @State private var showStats = false
     @State private var showInfo = false
+    @AppStorage("buddy.themePreset") private var themePreset = BuddyThemePreset.m5Orange.rawValue
 
     var body: some View {
         ZStack {
-            BuddyTheme.backgroundGradient.ignoresSafeArea()
+            BuddyTheme.backgroundGradient(themePreset).ignoresSafeArea()
 
             VStack(spacing: 20) {
                 header
                 BuddyHUD(stats: stats.stats, energyTier: stats.energyTier())
                 Spacer()
-                buddyRenderer
-                    .frame(maxWidth: .infinity)
-                    .frame(minHeight: 160)
-                    .contentShape(Rectangle())
-                    .onLongPressGesture(minimumDuration: 0.6) { showMenu = true }
+                M5DeviceShell {
+                    buddyRenderer
+                        .frame(maxWidth: .infinity)
+                        .frame(minHeight: 160)
+                        .contentShape(Rectangle())
+                        .onLongPressGesture(minimumDuration: 0.6) { showMenu = true }
+                }
                 Text(persona.state.slug.uppercased())
                     .font(.system(size: 12, weight: .semibold, design: .monospaced))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(BuddyTheme.palette(themePreset).highlight.opacity(0.85))
                     .tracking(3)
                 Spacer()
                 summaryRow
@@ -87,7 +90,7 @@ struct HomeScreen: View {
         HStack {
             Text("app.name")
                 .font(.system(size: 20, weight: .bold, design: .rounded))
-                .foregroundStyle(.primary)
+                .foregroundStyle(BuddyTheme.palette(themePreset).highlight)
             Spacer()
             connectionDot
             Button {

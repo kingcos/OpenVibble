@@ -16,6 +16,8 @@ final class MotionSensor: ObservableObject {
     var isAvailable: Bool { manager.isDeviceMotionAvailable }
 
     func start() {
+        let authorization = CMMotionActivityManager.authorizationStatus()
+        guard authorization != .denied, authorization != .restricted else { return }
         guard manager.isDeviceMotionAvailable, !manager.isDeviceMotionActive else { return }
         manager.deviceMotionUpdateInterval = 1.0 / 30.0
         manager.startDeviceMotionUpdates(to: .main) { [weak self] motion, _ in

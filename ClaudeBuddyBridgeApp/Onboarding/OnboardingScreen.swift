@@ -4,11 +4,12 @@ import UIKit
 struct OnboardingScreen: View {
     let onFinish: () -> Void
     @State private var page: Int = 0
+    @AppStorage("buddy.themePreset") private var themePreset = BuddyThemePreset.m5Orange.rawValue
     private let totalPages = 3
 
     var body: some View {
         ZStack {
-            BuddyTheme.backgroundGradient.ignoresSafeArea()
+            BuddyTheme.backgroundGradient(themePreset).ignoresSafeArea()
 
             VStack(spacing: 0) {
                 header
@@ -52,18 +53,10 @@ struct OnboardingScreen: View {
     private var welcomePage: some View {
         VStack(spacing: 24) {
             Spacer()
-            ZStack {
-                Circle()
-                    .fill(LinearGradient(
-                        colors: [Color(red: 0.32, green: 0.62, blue: 1.0), Color(red: 0.6, green: 0.35, blue: 1.0)],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    ))
-                    .frame(width: 160, height: 160)
-                    .shadow(color: .blue.opacity(0.35), radius: 30, y: 12)
+            M5DeviceShell {
                 Image(systemName: "pawprint.fill")
-                    .font(.system(size: 72, weight: .bold))
-                    .foregroundStyle(.white)
+                    .font(.system(size: 70, weight: .bold))
+                    .foregroundStyle(BuddyTheme.palette(themePreset).highlight)
             }
             VStack(spacing: 12) {
                 Text("onboarding.welcome.title")
@@ -83,9 +76,9 @@ struct OnboardingScreen: View {
     private var renamePage: some View {
         VStack(spacing: 20) {
             Spacer()
-            Image(systemName: "iphone.gen3.badge.checkmark")
+            Image(systemName: "iphone.badge.checkmark")
                 .font(.system(size: 72, weight: .regular))
-                .foregroundStyle(.cyan)
+                .foregroundStyle(BuddyTheme.palette(themePreset).highlight)
                 .padding(.bottom, 4)
             VStack(spacing: 10) {
                 Text("onboarding.rename.title")
@@ -115,7 +108,9 @@ struct OnboardingScreen: View {
             .padding(.horizontal, 28)
 
             Button {
-                if let url = URL(string: UIApplication.openSettingsURLString) {
+                if let url = URL(string: "App-prefs:root=General&path=About") {
+                    UIApplication.shared.open(url)
+                } else if let url = URL(string: UIApplication.openSettingsURLString) {
                     UIApplication.shared.open(url)
                 }
             } label: {
@@ -166,11 +161,7 @@ struct OnboardingScreen: View {
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 14)
                 .background(
-                    LinearGradient(
-                        colors: [Color(red: 0.32, green: 0.62, blue: 1.0), Color(red: 0.6, green: 0.35, blue: 1.0)],
-                        startPoint: .leading,
-                        endPoint: .trailing
-                    ),
+                    BuddyTheme.accentGradient(themePreset),
                     in: Capsule()
                 )
                 .foregroundStyle(.white)

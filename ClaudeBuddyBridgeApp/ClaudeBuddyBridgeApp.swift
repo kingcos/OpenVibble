@@ -44,17 +44,17 @@ struct RootTabView: View {
         TabView {
             HomeScreen(model: model, persona: persona, stats: stats)
                 .tabItem {
-                    Label("tab.buddy", systemImage: "pawprint.fill")
+                    Label("tab.dashboard", systemImage: "display")
                 }
 
             ContentView(model: model)
                 .tabItem {
-                    Label("tab.terminal", systemImage: "terminal.fill")
+                    Label("tab.console", systemImage: "terminal")
                 }
 
             SettingsScreen()
                 .tabItem {
-                    Label("tab.settings", systemImage: "gearshape.fill")
+                    Label("tab.control", systemImage: "slider.horizontal.3")
                 }
         }
     }

@@ -2,11 +2,12 @@ import SwiftUI
 
 struct InfoScreen: View {
     @Environment(\.dismiss) private var dismiss
+    @AppStorage("buddy.themePreset") private var themePreset = BuddyThemePreset.m5Orange.rawValue
 
     var body: some View {
         NavigationStack {
             ZStack {
-                BuddyTheme.backgroundGradient.ignoresSafeArea()
+                BuddyTheme.backgroundGradient(themePreset).ignoresSafeArea()
                 TabView {
                     aboutPage
                         .tabItem { Label("info.tab.about", systemImage: "info.circle") }

@@ -23,6 +23,7 @@ final class BridgeAppModel: ObservableObject {
     @Published private(set) var lastQuickApprovalAt: Date?
 
     private let quickApprovalThreshold: TimeInterval = 5
+    private let liveActivityManager = BuddyLiveActivityManager()
 
     let statsStore: PersonaStatsStore
 
@@ -51,6 +52,14 @@ final class BridgeAppModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
                 self?.connectionState = state
+                guard let self else { return }
+                Task { [snapshot = self.snapshot, hasPrompt = self.prompt != nil] in
+                    await self.liveActivityManager.startOrUpdate(
+                        state: state,
+                        snapshot: snapshot,
+                        hasPrompt: hasPrompt
+                    )
+                }
             }
             .store(in: &cancellables)
 
@@ -89,6 +98,7 @@ final class BridgeAppModel: ObservableObject {
 
     func start(displayName: String? = nil, includeServiceUUIDInAdvertisement: Bool = true) {
         guard !started else { return }
+        Task { _ = await BuddyNotificationCenter.shared.requestAuthorizationIfNeeded() }
         let finalName = resolvedDisplayName(displayName)
         activeDisplayName = finalName
         peripheral.setAdvertisementMode(includeServiceUUID: includeServiceUUIDInAdvertisement)
@@ -96,6 +106,9 @@ final class BridgeAppModel: ObservableObject {
         recordEvent("系统 请求启动广播：\(finalName)")
         refreshFromRuntime()
         started = true
+        Task { [snapshot, prompt] in
+            await liveActivityManager.startOrUpdate(state: connectionState, snapshot: snapshot, hasPrompt: prompt != nil)
+        }
     }
 
     func restart(displayName: String? = nil, includeServiceUUIDInAdvertisement: Bool = true) {
@@ -108,6 +121,9 @@ final class BridgeAppModel: ObservableObject {
         peripheral.stop()
         recordEvent("系统 BLE 外设已停止")
         started = false
+        Task {
+            await liveActivityManager.end()
+        }
     }
 
     @discardableResult
@@ -146,6 +162,11 @@ final class BridgeAppModel: ObservableObject {
         if let newPrompt, newPrompt.id != lastPromptId {
             lastPromptId = newPrompt.id
             lastPromptAt = Date()
+            BuddyNotificationCenter.shared.notifyPromptIfNeeded(
+                promptID: newPrompt.id,
+                tool: newPrompt.tool,
+                enabled: notificationsEnabled
+            )
         } else if newPrompt == nil {
             lastPromptAt = nil
             lastPromptId = nil
@@ -156,12 +177,19 @@ final class BridgeAppModel: ObservableObject {
         if leveledUp {
             recentLevelUp = true
             recordEvent("系统 升级！等级 \(statsStore.stats.level)")
+            BuddyNotificationCenter.shared.notifyLevelUpIfNeeded(
+                level: UInt16(statsStore.stats.level),
+                enabled: notificationsEnabled
+            )
             Task { @MainActor [weak self] in
                 try? await Task.sleep(for: .seconds(3))
                 self?.recentLevelUp = false
             }
         }
         pushStatusSample()
+        Task {
+            await liveActivityManager.startOrUpdate(state: connectionState, snapshot: newSnapshot, hasPrompt: newPrompt != nil)
+        }
     }
 
     private func enableBatteryMonitoring() {
@@ -213,5 +241,12 @@ final class BridgeAppModel: ObservableObject {
         // 最大化发现兼容性（避免因扩展名长度或过滤规则导致扫不到）。
         _ = sanitizedDisplayName(requested)
         return "Claude"
+    }
+
+    private var notificationsEnabled: Bool {
+        if UserDefaults.standard.object(forKey: "buddy.notificationsEnabled") == nil {
+            return true
+        }
+        return UserDefaults.standard.bool(forKey: "buddy.notificationsEnabled")
     }
 }

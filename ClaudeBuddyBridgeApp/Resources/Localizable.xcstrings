@@ -1,614 +1,2023 @@
 {
   "sourceLanguage" : "en",
-  "version" : "1.0",
   "strings" : {
+    "%@" : {
+
+    },
+    "%@ / %@ 字节" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ / %2$@ 字节"
+          }
+        }
+      }
+    },
+    "$ %@" : {
+
+    },
+    "$ peripheral callbacks" : {
+
+    },
+    "$ tail -f buddy.log" : {
+
+    },
+    "$ 帮助" : {
+
+    },
+    "$ 文件传输" : {
+
+    },
+    "$ 权限待确认" : {
+
+    },
+    "$ 状态快照" : {
+
+    },
+    "$ 设置" : {
+
+    },
+    "$ 诊断日志" : {
+
+    },
     "app.name" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Claude Buddy" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "Claude Buddy" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Buddy"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Buddy"
+          }
+        }
       }
     },
-    "tab.buddy" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Buddy" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "宠物" } }
-      }
-    },
-    "tab.terminal" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Terminal" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "终端" } }
-      }
-    },
-    "tab.settings" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Settings" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "设置" } }
-      }
-    },
+    "Claude Buddy Bridge" : {
 
-    "common.ok" : {
+    },
+    "common.back" : {
+      "extractionState" : "stale",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "OK" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "好" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Back"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "返回"
+          }
+        }
       }
     },
     "common.cancel" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Cancel" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "取消" } }
-      }
-    },
-    "common.done" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Done" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "完成" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancel"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
+          }
+        }
       }
     },
     "common.close" : {
+      "extractionState" : "stale",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Close" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "关闭" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Close"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关闭"
+          }
+        }
       }
     },
-    "common.notice" : {
+    "common.done" : {
+      "extractionState" : "stale",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Notice" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "提示" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完成"
+          }
+        }
       }
     },
     "common.next" : {
+      "extractionState" : "stale",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Next" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "下一步" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下一步"
+          }
+        }
       }
     },
-    "common.back" : {
+    "common.notice" : {
+      "extractionState" : "stale",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Back" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "返回" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notice"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "提示"
+          }
+        }
+      }
+    },
+    "common.ok" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "好"
+          }
+        }
       }
     },
     "common.skip" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Skip" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "跳过" } }
-      }
-    },
-
-    "onboarding.welcome.title" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Welcome to Claude Buddy" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "欢迎使用 Claude Buddy" } }
-      }
-    },
-    "onboarding.welcome.body" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Your iPhone becomes Claude Desktop's Hardware Buddy over Bluetooth. Watch your pet react to sessions, level up on tokens, and approve permissions from your phone." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "让你的 iPhone 通过蓝牙成为 Claude Desktop 的硬件伙伴。宠物会跟着会话状态变化、随 Token 升级，也能在手机上一键允许/拒绝权限。" } }
-      }
-    },
-    "onboarding.rename.title" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Rename Your iPhone" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "先重命名你的 iPhone" } }
-      }
-    },
-    "onboarding.rename.body" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Claude Desktop only finds devices whose name starts with \"Claude\". Open iOS Settings → General → About → Name and set it to \"Claude\" (or \"Claude-iPhone\", \"Claude-Air\", etc.)." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "Claude Desktop 只会扫描以 Claude 开头的设备名。请打开 iOS 的 设置 → 通用 → 关于本机 → 名称，把它改成 \"Claude\"（或 \"Claude-iPhone\"、\"Claude-Air\" 等）。" } }
-      }
-    },
-    "onboarding.rename.hint" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "If Claude Desktop still can't find your iPhone after renaming, restart the phone once — iOS caches the Bluetooth broadcast name." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "如果重命名后 Claude Desktop 仍然搜不到，请重启一次 iPhone —— 系统会缓存蓝牙广播名。" } }
-      }
-    },
-    "onboarding.rename.openSettings" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Open Settings" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "打开系统设置" } }
-      }
-    },
-    "onboarding.pair.title" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Pair in Claude Desktop" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "在 Claude Desktop 配对" } }
-      }
-    },
-    "onboarding.pair.body" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Enable Developer Mode in Claude Desktop, then open Developer → Hardware Buddy and pick your iPhone from the list. You can push character packs from the same panel." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "在 Claude Desktop 里打开开发者模式，进入 Developer → Hardware Buddy，在列表里选中你的 iPhone。在同一个面板也能推送宠物包。" } }
-      }
-    },
-    "onboarding.cta.start" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Start" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "开始使用" } }
-      }
-    },
-
-    "home.status.connected" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "connected" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已连接" } }
-      }
-    },
-    "home.status.waiting" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "waiting" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "等待连接" } }
-      }
-    },
-    "home.metric.total" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "total" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "总计" } }
-      }
-    },
-    "home.metric.running" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "running" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "运行中" } }
-      }
-    },
-    "home.metric.waiting" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "waiting" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "待确认" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skip"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "跳过"
+          }
+        }
       }
     },
     "home.a11y.choosePet" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Choose pet" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "选择宠物" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose pet"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择宠物"
+          }
+        }
       }
     },
-
-    "menu.title" : {
+    "home.metric.running" : {
+      "extractionState" : "stale",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Menu" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "菜单" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "running"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "运行中"
+          }
+        }
       }
     },
-    "menu.petStats" : {
+    "home.metric.total" : {
+      "extractionState" : "stale",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Pet Stats" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "宠物数据" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "total"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "总计"
+          }
+        }
       }
     },
-    "menu.changeSpecies" : {
+    "home.metric.waiting" : {
+      "extractionState" : "stale",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Change Species" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "更换宠物" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "waiting"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "待确认"
+          }
+        }
       }
     },
-    "menu.info" : {
+    "home.status.connected" : {
+      "extractionState" : "stale",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Info" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "说明" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "connected"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已连接"
+          }
+        }
       }
     },
-
-    "species.title" : {
+    "home.status.waiting" : {
+      "extractionState" : "stale",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Choose Species" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "选择宠物" } }
-      }
-    },
-    "species.builtin" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Built-in" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "内置" } }
-      }
-    },
-    "species.installed" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Installed" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已安装" } }
-      }
-    },
-    "species.ascii.cat" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "ASCII Cat" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "ASCII 小猫" } }
-      }
-    },
-    "species.empty.installed" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "No characters installed yet. Push one from Claude Desktop's Hardware Buddy panel." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "还没有已安装的宠物。可以在 Claude Desktop 的 Hardware Buddy 面板推送一个。" } }
-      }
-    },
-
-    "pet.stats.title" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Pet Stats" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "宠物数据" } }
-      }
-    },
-    "pet.section.progress" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Progress" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "进度" } }
-      }
-    },
-    "pet.section.responses" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Responses" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "回应" } }
-      }
-    },
-    "pet.section.rest" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Rest" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "休息" } }
-      }
-    },
-    "pet.section.danger" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Danger Zone" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "危险操作" } }
-      }
-    },
-    "pet.level" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Level" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "等级" } }
-      }
-    },
-    "pet.tokens" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Tokens" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "Token" } }
-      }
-    },
-    "pet.fed" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Fed" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "饱食度" } }
-      }
-    },
-    "pet.approvals" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Approvals" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "允许次数" } }
-      }
-    },
-    "pet.denials" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Denials" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "拒绝次数" } }
-      }
-    },
-    "pet.medianResponse" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Median Response" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "平均响应" } }
-      }
-    },
-    "pet.totalNap" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Total Nap" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "午睡时长" } }
-      }
-    },
-    "pet.energy" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Energy" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "精力" } }
-      }
-    },
-    "pet.mood" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Mood" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "心情" } }
-      }
-    },
-    "pet.reset" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Reset Pet Stats" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "重置宠物数据" } }
-      }
-    },
-    "pet.delete" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Delete All Characters" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "删除全部宠物包" } }
-      }
-    },
-    "pet.reset.confirm" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Reset stats to zero?" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "重置所有数据？" } }
-      }
-    },
-    "pet.reset.message" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Approvals, denials, level, tokens, and nap time will all return to zero. This cannot be undone." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "允许/拒绝次数、等级、Token、午睡时长都会归零。此操作不可恢复。" } }
-      }
-    },
-    "pet.reset.doIt" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Reset All Stats" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "确定重置" } }
-      }
-    },
-    "pet.delete.confirm" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Delete all installed characters?" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "删除所有已安装的宠物包？" } }
-      }
-    },
-    "pet.delete.message" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "All GIF packs pushed from Claude Desktop will be removed. You'll fall back to the built-in pet." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "所有从 Claude Desktop 推送的 GIF 包都会被删除，会回退到内置宠物。" } }
-      }
-    },
-    "pet.delete.doIt" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Delete All Characters" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "确定删除" } }
-      }
-    },
-    "pet.stats.resetOk" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Stats reset." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "数据已重置。" } }
-      }
-    },
-    "pet.stats.deleteOk" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Characters deleted." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "宠物包已删除。" } }
-      }
-    },
-    "pet.stats.deleteFail" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Delete failed." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "删除失败。" } }
-      }
-    },
-
-    "info.title" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Info" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "说明" } }
-      }
-    },
-    "info.tab.about" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "About" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "关于" } }
-      }
-    },
-    "info.tab.gestures" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Gestures" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "手势" } }
-      }
-    },
-    "info.tab.claude" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Claude" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "Claude" } }
-      }
-    },
-    "info.tab.credits" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Credits" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "致谢" } }
-      }
-    },
-    "info.about.heading" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Claude Buddy Bridge" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "Claude Buddy Bridge" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "waiting"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "等待连接"
+          }
+        }
       }
     },
     "info.about.body1" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Your iPhone becomes Claude Desktop's Hardware Buddy over BLE. Watch your buddy react to sessions, approve permissions, and level up as tokens accumulate." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "让你的 iPhone 通过蓝牙成为 Claude Desktop 的硬件伙伴。宠物会随会话状态变化，也能在手机上回复权限请求，并随 Token 升级。" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your iPhone becomes Claude Desktop's Hardware Buddy over BLE. Watch your buddy react to sessions, approve permissions, and level up as tokens accumulate."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "让你的 iPhone 通过蓝牙成为 Claude Desktop 的硬件伙伴。宠物会随会话状态变化，也能在手机上回复权限请求，并随 Token 升级。"
+          }
+        }
       }
     },
     "info.about.body2" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "This iOS port replaces the ESP32 firmware — no extra hardware required." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "本 iOS 版本直接替代 ESP32 固件，无需额外硬件。" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This iOS port replaces the ESP32 firmware — no extra hardware required."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本 iOS 版本直接替代 ESP32 固件，无需额外硬件。"
+          }
+        }
       }
     },
-    "info.gestures.device" : {
+    "info.about.heading" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Device Gestures" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "设备手势" } }
-      }
-    },
-    "info.gestures.screen" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Screen Gestures" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "屏幕手势" } }
-      }
-    },
-    "info.gestures.shake.title" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Shake" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "摇一摇" } }
-      }
-    },
-    "info.gestures.shake.detail" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Dizzy animation (2s)" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "晕眩动画（2 秒）" } }
-      }
-    },
-    "info.gestures.facedown.title" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Face-down 3s" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正面朝下 3 秒" } }
-      }
-    },
-    "info.gestures.facedown.detail" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Sleep — accumulates nap time" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "进入睡眠，累计午睡时长" } }
-      }
-    },
-    "info.gestures.wake.title" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Face-up again" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "翻回正面" } }
-      }
-    },
-    "info.gestures.wake.detail" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Wake back to idle / busy" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "醒来回到空闲 / 繁忙状态" } }
-      }
-    },
-    "info.gestures.tap.title" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Tap buddy" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "点击宠物" } }
-      }
-    },
-    "info.gestures.tap.detail" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Tap feedback" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "轻触反馈" } }
-      }
-    },
-    "info.gestures.long.title" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Long-press buddy" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "长按宠物" } }
-      }
-    },
-    "info.gestures.long.detail" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Main menu" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "打开主菜单" } }
-      }
-    },
-    "info.gestures.paw.title" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Pawprint icon" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "爪印按钮" } }
-      }
-    },
-    "info.gestures.paw.detail" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Choose species" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "更换宠物" } }
-      }
-    },
-    "info.claude.heading" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Claude Desktop" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "Claude Desktop" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Buddy Bridge"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Buddy Bridge"
+          }
+        }
       }
     },
     "info.claude.body1" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Pair this app from Claude Desktop's Hardware Buddy panel. Advertising uses the Nordic UART Service. iPhone name must start with \"Claude\" — set it in iOS Settings → General → About → Name." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "在 Claude Desktop 的 Hardware Buddy 面板完成配对。广播使用 Nordic UART Service，iPhone 的名称必须以 Claude 开头 —— 在 设置 → 通用 → 关于本机 → 名称 中修改。" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pair this app from Claude Desktop's Hardware Buddy panel. Advertising uses the Nordic UART Service. iPhone name must start with \"Claude\" — set it in iOS Settings → General → About → Name."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在 Claude Desktop 的 Hardware Buddy 面板完成配对。广播使用 Nordic UART Service，iPhone 的名称必须以 Claude 开头 —— 在 设置 → 通用 → 关于本机 → 名称 中修改。"
+          }
+        }
       }
     },
     "info.claude.body2" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "When the bridge sends a character pack, it lands in Application Support and appears in the species picker automatically." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "Claude Desktop 推送的宠物包会落在 Application Support 目录，宠物选择器会自动显示。" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When the bridge sends a character pack, it lands in Application Support and appears in the species picker automatically."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Desktop 推送的宠物包会落在 Application Support 目录，宠物选择器会自动显示。"
+          }
+        }
       }
     },
-    "info.credits.heading" : {
+    "info.claude.heading" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Credits" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "致谢" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Desktop"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Desktop"
+          }
+        }
       }
     },
     "info.credits.body1" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Original ESP32 firmware + protocol: claude-desktop-buddy." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "原始 ESP32 固件与协议：claude-desktop-buddy。" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Original ESP32 firmware + protocol: claude-desktop-buddy."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "原始 ESP32 固件与协议：claude-desktop-buddy。"
+          }
+        }
       }
     },
     "info.credits.body2" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "ASCII cat sprites ported from the firmware's buddies/cat.cpp." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "ASCII 小猫动画移植自原固件的 buddies/cat.cpp。" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ASCII cat sprites ported from the firmware's buddies/cat.cpp."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ASCII 小猫动画移植自原固件的 buddies/cat.cpp。"
+          }
+        }
       }
     },
     "info.credits.body3" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Built-in Bufo pet and GIF packs are user-installed via Claude Desktop." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "内置 Bufo 宠物以及其他 GIF 包来自 Claude Desktop 推送。" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Built-in Bufo pet and GIF packs are user-installed via Claude Desktop."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "内置 Bufo 宠物以及其他 GIF 包来自 Claude Desktop 推送。"
+          }
+        }
       }
     },
+    "info.credits.heading" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Credits"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "致谢"
+          }
+        }
+      }
+    },
+    "info.gestures.device" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Device Gestures"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设备手势"
+          }
+        }
+      }
+    },
+    "info.gestures.facedown.detail" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep — accumulates nap time"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "进入睡眠，累计午睡时长"
+          }
+        }
+      }
+    },
+    "info.gestures.facedown.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Face-down 3s"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正面朝下 3 秒"
+          }
+        }
+      }
+    },
+    "info.gestures.long.detail" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Main menu"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开主菜单"
+          }
+        }
+      }
+    },
+    "info.gestures.long.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Long-press buddy"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "长按宠物"
+          }
+        }
+      }
+    },
+    "info.gestures.paw.detail" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose species"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更换宠物"
+          }
+        }
+      }
+    },
+    "info.gestures.paw.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pawprint icon"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "爪印按钮"
+          }
+        }
+      }
+    },
+    "info.gestures.screen" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Screen Gestures"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "屏幕手势"
+          }
+        }
+      }
+    },
+    "info.gestures.shake.detail" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dizzy animation (2s)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "晕眩动画（2 秒）"
+          }
+        }
+      }
+    },
+    "info.gestures.shake.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shake"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "摇一摇"
+          }
+        }
+      }
+    },
+    "info.gestures.tap.detail" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap feedback"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "轻触反馈"
+          }
+        }
+      }
+    },
+    "info.gestures.tap.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap buddy"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "点击宠物"
+          }
+        }
+      }
+    },
+    "info.gestures.wake.detail" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wake back to idle / busy"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "醒来回到空闲 / 繁忙状态"
+          }
+        }
+      }
+    },
+    "info.gestures.wake.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Face-up again"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "翻回正面"
+          }
+        }
+      }
+    },
+    "info.tab.about" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关于"
+          }
+        }
+      }
+    },
+    "info.tab.claude" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude"
+          }
+        }
+      }
+    },
+    "info.tab.credits" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Credits"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "致谢"
+          }
+        }
+      }
+    },
+    "info.tab.gestures" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gestures"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "手势"
+          }
+        }
+      }
+    },
+    "info.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Info"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "说明"
+          }
+        }
+      }
+    },
+    "kingcos" : {
 
-    "settings.title" : {
+    },
+    "menu.changeSpecies" : {
+      "extractionState" : "stale",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Settings" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "设置" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Change Species"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更换宠物"
+          }
+        }
       }
     },
-    "settings.section.about" : {
+    "menu.info" : {
+      "extractionState" : "stale",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "About" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "关于" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Info"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "说明"
+          }
+        }
       }
     },
-    "settings.section.guide" : {
+    "menu.petStats" : {
+      "extractionState" : "stale",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Guide" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "引导" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pet Stats"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "宠物数据"
+          }
+        }
+      }
+    },
+    "menu.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menu"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "菜单"
+          }
+        }
+      }
+    },
+    "NUS 6e40…" : {
+
+    },
+    "NUS UUID 广播：固定开启（兼容 Claude Desktop 设备扫描）" : {
+
+    },
+    "onboarding.cta.start" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开始使用"
+          }
+        }
+      }
+    },
+    "onboarding.pair.body" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enable Developer Mode in Claude Desktop, then open Developer → Hardware Buddy and pick your iPhone from the list. You can push character packs from the same panel."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在 Claude Desktop 里打开开发者模式，进入 Developer → Hardware Buddy，在列表里选中你的 iPhone。在同一个面板也能推送宠物包。"
+          }
+        }
+      }
+    },
+    "onboarding.pair.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pair in Claude Desktop"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在 Claude Desktop 配对"
+          }
+        }
+      }
+    },
+    "onboarding.rename.body" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Desktop only finds devices whose name starts with \"Claude\". Open iOS Settings → General → About → Name and set it to \"Claude\" (or \"Claude-iPhone\", \"Claude-Air\", etc.)."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Desktop 只会扫描以 Claude 开头的设备名。请打开 iOS 的 设置 → 通用 → 关于本机 → 名称，把它改成 \"Claude\"（或 \"Claude-iPhone\"、\"Claude-Air\" 等）。"
+          }
+        }
+      }
+    },
+    "onboarding.rename.hint" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If Claude Desktop still can't find your iPhone after renaming, restart the phone once — iOS caches the Bluetooth broadcast name."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "如果重命名后 Claude Desktop 仍然搜不到，请重启一次 iPhone —— 系统会缓存蓝牙广播名。"
+          }
+        }
+      }
+    },
+    "onboarding.rename.openSettings" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Name Settings"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开名称设置"
+          }
+        }
+      }
+    },
+    "onboarding.rename.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rename Your iPhone"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "先重命名你的 iPhone"
+          }
+        }
+      }
+    },
+    "onboarding.welcome.body" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your iPhone becomes Claude Desktop's Hardware Buddy over Bluetooth. Watch your pet react to sessions, level up on tokens, and approve permissions from your phone."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "让你的 iPhone 通过蓝牙成为 Claude Desktop 的硬件伙伴。宠物会跟着会话状态变化、随 Token 升级，也能在手机上一键允许/拒绝权限。"
+          }
+        }
+      }
+    },
+    "onboarding.welcome.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welcome to Claude Buddy"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "欢迎使用 Claude Buddy"
+          }
+        }
+      }
+    },
+    "pet.approvals" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Approvals"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "允许次数"
+          }
+        }
+      }
+    },
+    "pet.delete" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete All Characters"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除全部宠物包"
+          }
+        }
+      }
+    },
+    "pet.delete.confirm" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete all installed characters?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除所有已安装的宠物包？"
+          }
+        }
+      }
+    },
+    "pet.delete.doIt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete All Characters"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "确定删除"
+          }
+        }
+      }
+    },
+    "pet.delete.message" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All GIF packs pushed from Claude Desktop will be removed. You'll fall back to the built-in pet."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所有从 Claude Desktop 推送的 GIF 包都会被删除，会回退到内置宠物。"
+          }
+        }
+      }
+    },
+    "pet.denials" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Denials"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "拒绝次数"
+          }
+        }
+      }
+    },
+    "pet.energy" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Energy"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "精力"
+          }
+        }
+      }
+    },
+    "pet.fed" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fed"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "饱食度"
+          }
+        }
+      }
+    },
+    "pet.level" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Level"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "等级"
+          }
+        }
+      }
+    },
+    "pet.medianResponse" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Median Response"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "平均响应"
+          }
+        }
+      }
+    },
+    "pet.mood" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mood"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "心情"
+          }
+        }
+      }
+    },
+    "pet.reset" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reset Pet Stats"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重置宠物数据"
+          }
+        }
+      }
+    },
+    "pet.reset.confirm" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reset stats to zero?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重置所有数据？"
+          }
+        }
+      }
+    },
+    "pet.reset.doIt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reset All Stats"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "确定重置"
+          }
+        }
+      }
+    },
+    "pet.reset.message" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Approvals, denials, level, tokens, and nap time will all return to zero. This cannot be undone."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "允许/拒绝次数、等级、Token、午睡时长都会归零。此操作不可恢复。"
+          }
+        }
+      }
+    },
+    "pet.section.danger" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Danger Zone"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "危险操作"
+          }
+        }
+      }
+    },
+    "pet.section.progress" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Progress"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "进度"
+          }
+        }
+      }
+    },
+    "pet.section.responses" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Responses"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "回应"
+          }
+        }
+      }
+    },
+    "pet.section.rest" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rest"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "休息"
+          }
+        }
+      }
+    },
+    "pet.stats.deleteFail" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete failed."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除失败。"
+          }
+        }
+      }
+    },
+    "pet.stats.deleteOk" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Characters deleted."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "宠物包已删除。"
+          }
+        }
+      }
+    },
+    "pet.stats.resetOk" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stats reset."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "数据已重置。"
+          }
+        }
+      }
+    },
+    "pet.stats.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pet Stats"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "宠物数据"
+          }
+        }
+      }
+    },
+    "pet.tokens" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tokens"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Token"
+          }
+        }
+      }
+    },
+    "pet.totalNap" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Total Nap"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "午睡时长"
+          }
+        }
       }
     },
     "settings.about.app" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "App" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "应用" } }
-      }
-    },
-    "settings.about.version" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Version" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "版本" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "应用"
+          }
+        }
       }
     },
     "settings.about.author" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Author" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "作者" } }
-      }
-    },
-    "settings.about.repo" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Source Code" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "开源地址" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Author"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "作者"
+          }
+        }
       }
     },
     "settings.about.language" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Language" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "语言" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Language"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "语言"
+          }
+        }
       }
     },
     "settings.about.language.hint" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Follows system language. Supports English and Simplified Chinese." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "跟随系统语言。目前支持简体中文与英文。" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Follows system language. Supports English and Simplified Chinese."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "跟随系统语言。目前支持简体中文与英文。"
+          }
+        }
+      }
+    },
+    "settings.about.repo" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Source Code"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开源地址"
+          }
+        }
+      }
+    },
+    "settings.about.version" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版本"
+          }
+        }
       }
     },
     "settings.guide.show" : {
+      "extractionState" : "stale",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Show Onboarding Again" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "再次查看引导" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show Onboarding Again"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "再次查看引导"
+          }
+        }
       }
+    },
+    "settings.section.about" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关于"
+          }
+        }
+      }
+    },
+    "settings.section.guide" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Guide"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "引导"
+          }
+        }
+      }
+    },
+    "settings.section.notifications" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifications"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通知"
+          }
+        }
+      }
+    },
+    "settings.section.theme" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appearance"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "外观"
+          }
+        }
+      }
+    },
+    "settings.notifications.enable" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enable local notifications"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开启本地通知"
+          }
+        }
+      }
+    },
+    "settings.notifications.request" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Request Notification Permission"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请求通知权限"
+          }
+        }
+      }
+    },
+    "settings.notifications.status" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Permission"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "权限状态"
+          }
+        }
+      }
+    },
+    "settings.notifications.status.denied" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Denied"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已拒绝"
+          }
+        }
+      }
+    },
+    "settings.notifications.status.enabled" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enabled"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已开启"
+          }
+        }
+      }
+    },
+    "settings.notifications.status.notDetermined" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not Determined"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未决定"
+          }
+        }
+      }
+    },
+    "settings.notifications.status.unknown" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unknown"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未知"
+          }
+        }
+      }
+    },
+    "settings.theme.coral" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coral"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "珊瑚"
+          }
+        }
+      }
+    },
+    "settings.theme.graphite" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Graphite"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "石墨"
+          }
+        }
+      }
+    },
+    "settings.theme.mint" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mint"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "薄荷"
+          }
+        }
+      }
+    },
+    "settings.theme.orange" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "M5 Orange"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "M5 橙"
+          }
+        }
+      }
+    },
+    "settings.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设置"
+          }
+        }
+      }
+    },
+    "species.ascii.cat" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ASCII Cat"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ASCII 小猫"
+          }
+        }
+      }
+    },
+    "species.builtin" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Built-in"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "内置"
+          }
+        }
+      }
+    },
+    "species.empty.installed" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No characters installed yet. Push one from Claude Desktop's Hardware Buddy panel."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "还没有已安装的宠物。可以在 Claude Desktop 的 Hardware Buddy 面板推送一个。"
+          }
+        }
+      }
+    },
+    "species.installed" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installed"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已安装"
+          }
+        }
+      }
+    },
+    "species.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose Species"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择宠物"
+          }
+        }
+      }
+    },
+    "tab.console" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Console"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "终端"
+          }
+        }
+      }
+    },
+    "tab.control" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Control"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "控制"
+          }
+        }
+      }
+    },
+    "tab.dashboard" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dashboard"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设备"
+          }
+        }
+      }
+    },
+    "notification.level.body" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your buddy reached level %d."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你的 Buddy 已升到 %d 级。"
+          }
+        }
+      }
+    },
+    "notification.level.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buddy Level Up"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buddy 升级"
+          }
+        }
+      }
+    },
+    "notification.prompt.body" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Desktop requests permission for tool: %@."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Desktop 请求工具权限：%@。"
+          }
+        }
+      }
+    },
+    "notification.prompt.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Permission Needed"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "需要权限确认"
+          }
+        }
+      }
+    },
+    "为提高可发现性，当前版本会强制使用广播名 Claude。" : {
+
+    },
+    "工具=%@ id=%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "工具=%1$@ id=%2$@"
+          }
+        }
+      }
+    },
+    "广播：%@" : {
+
+    },
+    "广播名：%@" : {
+
+    },
+    "广播名称：%@" : {
+
+    },
+    "广播状态：%@" : {
+
+    },
+    "暂无日志" : {
+
+    },
+    "蓝牙：%@" : {
+
+    },
+    "蓝牙状态：%@" : {
+
+    },
+    "设备显示名（当前固定为 Claude）" : {
+
     }
-  }
+  },
+  "version" : "1.0"
 }

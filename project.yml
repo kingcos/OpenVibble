@@ -47,9 +47,12 @@ targets:
         product: BuddyStats
       - package: ClaudeBuddyKit
         product: BuddyUI
+      - target: ClaudeBuddyBridgeLiveActivity
+        embed: true
     settings:
       base:
         INFOPLIST_KEY_CFBundleDisplayName: Claude Buddy Bridge
+        INFOPLIST_KEY_NSSupportsLiveActivities: YES
         INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
         INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents: YES
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
@@ -62,6 +65,22 @@ targets:
           - bluetooth-peripheral
         GENERATE_INFOPLIST_FILE: YES
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+  ClaudeBuddyBridgeLiveActivity:
+    type: app-extension
+    platform: iOS
+    deploymentTarget: "18.0"
+    sources:
+      - path: ClaudeBuddyBridgeLiveActivity
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: kingcos.me.claude.buddy.bridge.liveactivity
+        INFOPLIST_KEY_CFBundleDisplayName: Claude Buddy Live Activity
+        INFOPLIST_KEY_NSExtension:
+          NSExtensionPointIdentifier: com.apple.widgetkit-extension
+        INFOPLIST_KEY_NSSupportsLiveActivities: YES
+        GENERATE_INFOPLIST_FILE: YES
+        SKIP_INSTALL: YES
+        APPLICATION_EXTENSION_API_ONLY: YES
   ClaudeBuddyBridgeAppTests:
     type: bundle.unit-test
     platform: iOS
@@ -69,6 +88,9 @@ targets:
       - ClaudeBuddyBridgeAppTests
     dependencies:
       - target: ClaudeBuddyBridgeApp
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: kingcos.me.claude.buddy.bridge.tests
 schemes:
   ClaudeBuddyBridgeApp:
     build:
@@ -78,6 +100,3 @@ schemes:
     test:
       targets:
         - ClaudeBuddyBridgeAppTests
-    settings:
-      base:
-        PRODUCT_BUNDLE_IDENTIFIER: kingcos.me.claude.buddy.bridge.tests

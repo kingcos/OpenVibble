@@ -9,6 +9,7 @@ struct PetStatsScreen: View {
     @State private var confirmResetStats = false
     @State private var confirmDeleteChars = false
     @State private var infoMessage: LocalizedStringKey?
+    @AppStorage("buddy.themePreset") private var themePreset = BuddyThemePreset.m5Orange.rawValue
 
     var body: some View {
         NavigationStack {
@@ -53,7 +54,7 @@ struct PetStatsScreen: View {
                 }
             }
             .scrollContentBackground(.hidden)
-            .background(BuddyTheme.backgroundGradient.ignoresSafeArea())
+            .background(BuddyTheme.backgroundGradient(themePreset).ignoresSafeArea())
             .navigationTitle("pet.stats.title")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

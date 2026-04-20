@@ -5,11 +5,12 @@ struct MainMenuSheet: View {
     let onOpenInfo: () -> Void
     let onOpenPicker: () -> Void
     @Environment(\.dismiss) private var dismiss
+    @AppStorage("buddy.themePreset") private var themePreset = BuddyThemePreset.m5Orange.rawValue
 
     var body: some View {
         NavigationStack {
             ZStack {
-                BuddyTheme.backgroundGradient.ignoresSafeArea()
+                BuddyTheme.backgroundGradient(themePreset).ignoresSafeArea()
                 List {
                     Button {
                         dismiss()

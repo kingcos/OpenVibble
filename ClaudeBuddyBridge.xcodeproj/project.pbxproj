@@ -8,13 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		153620805456A88EDD2E3C2C /* MainMenuSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13F77DB5AE0B357A75F807AC /* MainMenuSheet.swift */; };
+		253202A33F213D742F334D4E /* BuddyLiveActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E2AEEF3C568CB8D6921F4E /* BuddyLiveActivityManager.swift */; };
 		271F20D3775CC939692B5768 /* BuddyHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3050CC84F335D5645C0F9C78 /* BuddyHUD.swift */; };
 		2EADED94B7043DDC7DEA4FB7 /* PetStatsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC3BCB5FC811F522D6B519B /* PetStatsScreen.swift */; };
 		343D78323800A2EFACEB3D52 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6C622D6CF269E4DBD46366 /* SettingsScreen.swift */; };
 		3B6C101D8EAA599515AF1788 /* PersonaController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B009D5D10454B61E89963C8 /* PersonaController.swift */; };
 		4C1E3AF4DF5789D4DFF3B873 /* BuddyPersona in Frameworks */ = {isa = PBXBuildFile; productRef = 44F8AFF504D8CA47A444E57C /* BuddyPersona */; };
+		516F17121682AB550CC901A7 /* BuddyLiveActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B122A926562D2A34C73B782 /* BuddyLiveActivityAttributes.swift */; };
 		5186CFFDEE956724FA4CD3B7 /* InfoScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D2226F7BDD776AD75443B /* InfoScreen.swift */; };
 		54F87E5C689EC08548350CD7 /* BuddyStats in Frameworks */ = {isa = PBXBuildFile; productRef = 8966AD7A853C35E7677CCBEC /* BuddyStats */; };
+		5680ADABA6886EF8D0088838 /* BuddyLiveActivityBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44CB6D9FCE1B00A4A028A4E0 /* BuddyLiveActivityBundle.swift */; };
 		5DBD4C1E40D1D622E8AA77DD /* SmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D618613A515C409CDC70B957 /* SmokeTests.swift */; };
 		676D367654C0A23516DB95A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65548935CD489AE7EE50CE1C /* Assets.xcassets */; };
 		688EB682572EC8BB6F891EA0 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A4EE341486BD5DAEFD51C47D /* Localizable.xcstrings */; };
@@ -25,16 +28,27 @@
 		72ACF9F2B9914D7E16FA8229 /* MotionSensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDC1A2FAF3DC9D3F656F4FC /* MotionSensor.swift */; };
 		73EEA5C38DC91BE6707FB800 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5FCD0F4050D6D146B6329C /* ContentView.swift */; };
 		772E4BCA8435152643F47DA3 /* SpeciesPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C833BFB88AA72D0DF38D1F /* SpeciesPickerSheet.swift */; };
+		7A8A6E5E0F6552B518977FD4 /* BuddyNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B36EF84E00A748D875ABA92 /* BuddyNotificationCenter.swift */; };
 		857F6A7482A0CE4336A774B7 /* NUSPeripheral in Frameworks */ = {isa = PBXBuildFile; productRef = ECB5D8326B3ABBD99ABAC356 /* NUSPeripheral */; };
+		8B1B6D70431326F79D548D08 /* ClaudeBuddyBridgeLiveActivity.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 17BF067ED483C722B791F5D7 /* ClaudeBuddyBridgeLiveActivity.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A1F2B6B57139B4AA829BB5CA /* BuiltinCharacters in Resources */ = {isa = PBXBuildFile; fileRef = 54DD70B9C8F1675EA19A1ABC /* BuiltinCharacters */; };
+		BF0DDE1BD2A52C3F6899CC17 /* BuddyLiveActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F7C66BFA4D7D069BAA3076 /* BuddyLiveActivityAttributes.swift */; };
 		CD125A99FBE380470ADA7BD4 /* OnboardingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C0002E0C787AB9B8B09629 /* OnboardingScreen.swift */; };
 		D63EF87F59305F858295CC18 /* BridgeAppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C11DC586586DFE2B5E6B9 /* BridgeAppModel.swift */; };
 		DEDE1D177A4F44194E1DC0DA /* BuddyProtocol in Frameworks */ = {isa = PBXBuildFile; productRef = C4A4AB6F3E449B30E1EC3B8D /* BuddyProtocol */; };
 		E16BAEA411C8D111F9E63730 /* BuddyStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 5F3D2FBF347F0FE2945FCEF6 /* BuddyStorage */; };
 		E3574F71508F6528C6FCE6D0 /* BuddyUI in Frameworks */ = {isa = PBXBuildFile; productRef = 5AB6EB5E0E7B794218BDFFD7 /* BuddyUI */; };
+		EA92D9DDB2BC81F9E68F5F92 /* M5DeviceShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C14E1A55B25AC24B54FA64 /* M5DeviceShell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		37FFEC092B821C34281814B2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0A720BDC0C74DDF7E2304FB1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C7EB87A7F32AD74B0B964EAA;
+			remoteInfo = ClaudeBuddyBridgeLiveActivity;
+		};
 		F471E204D734BA21962AF6F6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 0A720BDC0C74DDF7E2304FB1 /* Project object */;
@@ -44,13 +58,31 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		91D9520DB416606EDD0CE799 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				8B1B6D70431326F79D548D08 /* ClaudeBuddyBridgeLiveActivity.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		08F2CD3EDE7E8665059A1EFB /* ClaudeBuddyBridgeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeBuddyBridgeApp.swift; sourceTree = "<group>"; };
+		0B36EF84E00A748D875ABA92 /* BuddyNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddyNotificationCenter.swift; sourceTree = "<group>"; };
 		12C833BFB88AA72D0DF38D1F /* SpeciesPickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesPickerSheet.swift; sourceTree = "<group>"; };
 		13F77DB5AE0B357A75F807AC /* MainMenuSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuSheet.swift; sourceTree = "<group>"; };
+		17BF067ED483C722B791F5D7 /* ClaudeBuddyBridgeLiveActivity.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = ClaudeBuddyBridgeLiveActivity.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		3050CC84F335D5645C0F9C78 /* BuddyHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddyHUD.swift; sourceTree = "<group>"; };
 		34A991368F018E861B46B255 /* ClaudeBuddyBridgeApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = ClaudeBuddyBridgeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		35C14E1A55B25AC24B54FA64 /* M5DeviceShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M5DeviceShell.swift; sourceTree = "<group>"; };
 		3B009D5D10454B61E89963C8 /* PersonaController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonaController.swift; sourceTree = "<group>"; };
+		44CB6D9FCE1B00A4A028A4E0 /* BuddyLiveActivityBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddyLiveActivityBundle.swift; sourceTree = "<group>"; };
 		54DD70B9C8F1675EA19A1ABC /* BuiltinCharacters */ = {isa = PBXFileReference; lastKnownFileType = folder; name = BuiltinCharacters; path = ClaudeBuddyBridgeApp/Resources/BuiltinCharacters; sourceTree = SOURCE_ROOT; };
 		5B5FCD0F4050D6D146B6329C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		5F6C622D6CF269E4DBD46366 /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
@@ -59,8 +91,11 @@
 		65548935CD489AE7EE50CE1C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		685D2226F7BDD776AD75443B /* InfoScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoScreen.swift; sourceTree = "<group>"; };
 		6EDC1A2FAF3DC9D3F656F4FC /* MotionSensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionSensor.swift; sourceTree = "<group>"; };
+		76E2AEEF3C568CB8D6921F4E /* BuddyLiveActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddyLiveActivityManager.swift; sourceTree = "<group>"; };
+		79F7C66BFA4D7D069BAA3076 /* BuddyLiveActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddyLiveActivityAttributes.swift; sourceTree = "<group>"; };
 		7F01CC5C23112E959F8BC6D8 /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
 		87C0002E0C787AB9B8B09629 /* OnboardingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingScreen.swift; sourceTree = "<group>"; };
+		8B122A926562D2A34C73B782 /* BuddyLiveActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddyLiveActivityAttributes.swift; sourceTree = "<group>"; };
 		8E4C11DC586586DFE2B5E6B9 /* BridgeAppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BridgeAppModel.swift; sourceTree = "<group>"; };
 		A4EE341486BD5DAEFD51C47D /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		A98845ED30CCA2FA301D9B13 /* BuddyTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddyTheme.swift; sourceTree = "<group>"; };
@@ -91,8 +126,18 @@
 			children = (
 				34A991368F018E861B46B255 /* ClaudeBuddyBridgeApp.app */,
 				60DE9041705CE3A8112E3A29 /* ClaudeBuddyBridgeAppTests.xctest */,
+				17BF067ED483C722B791F5D7 /* ClaudeBuddyBridgeLiveActivity.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		1CCCB78E846DF7550FAD6923 /* ClaudeBuddyBridgeLiveActivity */ = {
+			isa = PBXGroup;
+			children = (
+				8B122A926562D2A34C73B782 /* BuddyLiveActivityAttributes.swift */,
+				44CB6D9FCE1B00A4A028A4E0 /* BuddyLiveActivityBundle.swift */,
+			);
+			path = ClaudeBuddyBridgeLiveActivity;
 			sourceTree = "<group>";
 		};
 		207E172200A9AB86A0DFDCA6 /* Pet */ = {
@@ -101,6 +146,23 @@
 				DEC3BCB5FC811F522D6B519B /* PetStatsScreen.swift */,
 			);
 			path = Pet;
+			sourceTree = "<group>";
+		};
+		4645F8B372B84D8CC6F8E411 /* LiveActivity */ = {
+			isa = PBXGroup;
+			children = (
+				79F7C66BFA4D7D069BAA3076 /* BuddyLiveActivityAttributes.swift */,
+				76E2AEEF3C568CB8D6921F4E /* BuddyLiveActivityManager.swift */,
+			);
+			path = LiveActivity;
+			sourceTree = "<group>";
+		};
+		61FC81A5D8CA7F283604ED40 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				0B36EF84E00A748D875ABA92 /* BuddyNotificationCenter.swift */,
+			);
+			path = Notifications;
 			sourceTree = "<group>";
 		};
 		7DF64D0B3C6C2EFFAC5048AE /* ClaudeBuddyBridgeApp */ = {
@@ -114,11 +176,14 @@
 				3B009D5D10454B61E89963C8 /* PersonaController.swift */,
 				F1485681065F20273D91DD29 /* Home */,
 				C8C69AEAB899BA2DD59DF3F0 /* Info */,
+				4645F8B372B84D8CC6F8E411 /* LiveActivity */,
 				A6CA90F481BAB18F269E9E97 /* Motion */,
+				61FC81A5D8CA7F283604ED40 /* Notifications */,
 				A4430A3B4F702ACFE4D725AA /* Onboarding */,
 				207E172200A9AB86A0DFDCA6 /* Pet */,
 				F8F40E8D38390B1C7FFA71EF /* Resources */,
 				D1FBC556443C38B0B24C2405 /* Settings */,
+				BDC3B6E79678E5BD934999D5 /* UI */,
 			);
 			path = ClaudeBuddyBridgeApp;
 			sourceTree = "<group>";
@@ -139,12 +204,21 @@
 			path = Motion;
 			sourceTree = "<group>";
 		};
+		BDC3B6E79678E5BD934999D5 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				35C14E1A55B25AC24B54FA64 /* M5DeviceShell.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
 		BF9CD2CA4019D9287CAD485F = {
 			isa = PBXGroup;
 			children = (
 				54DD70B9C8F1675EA19A1ABC /* BuiltinCharacters */,
 				7DF64D0B3C6C2EFFAC5048AE /* ClaudeBuddyBridgeApp */,
 				EC0F48A47BF1DEE76B5F6C1D /* ClaudeBuddyBridgeAppTests */,
+				1CCCB78E846DF7550FAD6923 /* ClaudeBuddyBridgeLiveActivity */,
 				D8CD4859D0CD70397B21DE48 /* Packages */,
 				07F40A187B533087001080C9 /* Products */,
 			);
@@ -211,10 +285,12 @@
 				13B691C7B35FD49C83B561D5 /* Sources */,
 				20C5FFC78D3651D389ABC0BF /* Resources */,
 				FA6988D203C503B21B9F026E /* Frameworks */,
+				91D9520DB416606EDD0CE799 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				40BC43E3DA05DEFB78ED85E3 /* PBXTargetDependency */,
 			);
 			name = ClaudeBuddyBridgeApp;
 			packageProductDependencies = (
@@ -248,6 +324,23 @@
 			productReference = 60DE9041705CE3A8112E3A29 /* ClaudeBuddyBridgeAppTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		C7EB87A7F32AD74B0B964EAA /* ClaudeBuddyBridgeLiveActivity */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5E5582EB5F02D4787FE0FC49 /* Build configuration list for PBXNativeTarget "ClaudeBuddyBridgeLiveActivity" */;
+			buildPhases = (
+				AE8A67DA8FF8A8DB695BAAF7 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ClaudeBuddyBridgeLiveActivity;
+			packageProductDependencies = (
+			);
+			productName = ClaudeBuddyBridgeLiveActivity;
+			productReference = 17BF067ED483C722B791F5D7 /* ClaudeBuddyBridgeLiveActivity.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -261,6 +354,9 @@
 						DevelopmentTeam = "";
 					};
 					72293D56C1005A2E8D7D917F = {
+						DevelopmentTeam = "";
+					};
+					C7EB87A7F32AD74B0B964EAA = {
 						DevelopmentTeam = "";
 					};
 				};
@@ -285,6 +381,7 @@
 			targets = (
 				1AC16FB8B8EAB24D691DB17B /* ClaudeBuddyBridgeApp */,
 				72293D56C1005A2E8D7D917F /* ClaudeBuddyBridgeAppTests */,
+				C7EB87A7F32AD74B0B964EAA /* ClaudeBuddyBridgeLiveActivity */,
 			);
 		};
 /* End PBXProject section */
@@ -309,11 +406,15 @@
 			files = (
 				D63EF87F59305F858295CC18 /* BridgeAppModel.swift in Sources */,
 				271F20D3775CC939692B5768 /* BuddyHUD.swift in Sources */,
+				BF0DDE1BD2A52C3F6899CC17 /* BuddyLiveActivityAttributes.swift in Sources */,
+				253202A33F213D742F334D4E /* BuddyLiveActivityManager.swift in Sources */,
+				7A8A6E5E0F6552B518977FD4 /* BuddyNotificationCenter.swift in Sources */,
 				68C2EBDEB57FC355377BC144 /* BuddyTheme.swift in Sources */,
 				6E17FBE03B8F13A3FC186C52 /* ClaudeBuddyBridgeApp.swift in Sources */,
 				73EEA5C38DC91BE6707FB800 /* ContentView.swift in Sources */,
 				6F71D3FC813CED2933F02D34 /* HomeScreen.swift in Sources */,
 				5186CFFDEE956724FA4CD3B7 /* InfoScreen.swift in Sources */,
+				EA92D9DDB2BC81F9E68F5F92 /* M5DeviceShell.swift in Sources */,
 				153620805456A88EDD2E3C2C /* MainMenuSheet.swift in Sources */,
 				72ACF9F2B9914D7E16FA8229 /* MotionSensor.swift in Sources */,
 				CD125A99FBE380470ADA7BD4 /* OnboardingScreen.swift in Sources */,
@@ -332,6 +433,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AE8A67DA8FF8A8DB695BAAF7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				516F17121682AB550CC901A7 /* BuddyLiveActivityAttributes.swift in Sources */,
+				5680ADABA6886EF8D0088838 /* BuddyLiveActivityBundle.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -339,6 +449,11 @@
 			isa = PBXTargetDependency;
 			target = 1AC16FB8B8EAB24D691DB17B /* ClaudeBuddyBridgeApp */;
 			targetProxy = F471E204D734BA21962AF6F6 /* PBXContainerItemProxy */;
+		};
+		40BC43E3DA05DEFB78ED85E3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C7EB87A7F32AD74B0B964EAA /* ClaudeBuddyBridgeLiveActivity */;
+			targetProxy = 37FFEC092B821C34281814B2 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -353,6 +468,7 @@
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Connect to Claude Desktop as Hardware Buddy.";
 				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Connect to Claude Desktop as Hardware Buddy.";
 				INFOPLIST_KEY_NSMotionUsageDescription = "Detect shakes and face-down gestures to animate your Buddy.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UIBackgroundModes = (
@@ -370,6 +486,27 @@
 			};
 			name = Release;
 		};
+		4F3000596EB57DD66EF02B65 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Claude Buddy Live Activity";
+				INFOPLIST_KEY_NSExtension = "[\"NSExtensionPointIdentifier\": \"com.apple.widgetkit-extension\"]";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = kingcos.me.claude.buddy.bridge.liveactivity;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		71DA58D0E05A512D3DA59FD0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -380,6 +517,7 @@
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Connect to Claude Desktop as Hardware Buddy.";
 				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Connect to Claude Desktop as Hardware Buddy.";
 				INFOPLIST_KEY_NSMotionUsageDescription = "Detect shakes and face-down gestures to animate your Buddy.";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UIBackgroundModes = (
@@ -406,6 +544,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = kingcos.me.claude.buddy.bridge.tests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ClaudeBuddyBridgeApp.app/ClaudeBuddyBridgeApp";
@@ -421,6 +560,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = kingcos.me.claude.buddy.bridge.tests;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ClaudeBuddyBridgeApp.app/ClaudeBuddyBridgeApp";
@@ -552,9 +692,39 @@
 			};
 			name = Release;
 		};
+		E356BAB1A70704934A2B231F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Claude Buddy Live Activity";
+				INFOPLIST_KEY_NSExtension = "[\"NSExtensionPointIdentifier\": \"com.apple.widgetkit-extension\"]";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = kingcos.me.claude.buddy.bridge.liveactivity;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		5E5582EB5F02D4787FE0FC49 /* Build configuration list for PBXNativeTarget "ClaudeBuddyBridgeLiveActivity" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E356BAB1A70704934A2B231F /* Debug */,
+				4F3000596EB57DD66EF02B65 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		AEA23D7C3FE3909F45E02765 /* Build configuration list for PBXProject "ClaudeBuddyBridge" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

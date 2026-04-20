@@ -6,11 +6,12 @@ struct SpeciesPickerSheet: View {
     let builtin: [InstalledPersona]
     let installed: [InstalledPersona]
     let onClose: () -> Void
+    @AppStorage("buddy.themePreset") private var themePreset = BuddyThemePreset.m5Orange.rawValue
 
     var body: some View {
         NavigationStack {
             ZStack {
-                BuddyTheme.backgroundGradient.ignoresSafeArea()
+                BuddyTheme.backgroundGradient(themePreset).ignoresSafeArea()
                 List {
                     Section {
                         row(titleKey: "species.ascii.cat", subtitle: nil, id: .asciiCat)
