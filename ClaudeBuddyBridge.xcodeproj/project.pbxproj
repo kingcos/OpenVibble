@@ -78,6 +78,7 @@
 		12C833BFB88AA72D0DF38D1F /* SpeciesPickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesPickerSheet.swift; sourceTree = "<group>"; };
 		13F77DB5AE0B357A75F807AC /* MainMenuSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuSheet.swift; sourceTree = "<group>"; };
 		17BF067ED483C722B791F5D7 /* ClaudeBuddyBridgeLiveActivity.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = ClaudeBuddyBridgeLiveActivity.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		295BF4F990571CB91064B3DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3050CC84F335D5645C0F9C78 /* BuddyHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddyHUD.swift; sourceTree = "<group>"; };
 		34A991368F018E861B46B255 /* ClaudeBuddyBridgeApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = ClaudeBuddyBridgeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35C14E1A55B25AC24B54FA64 /* M5DeviceShell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = M5DeviceShell.swift; sourceTree = "<group>"; };
@@ -136,6 +137,7 @@
 			children = (
 				8B122A926562D2A34C73B782 /* BuddyLiveActivityAttributes.swift */,
 				44CB6D9FCE1B00A4A028A4E0 /* BuddyLiveActivityBundle.swift */,
+				295BF4F990571CB91064B3DC /* Info.plist */,
 			);
 			path = ClaudeBuddyBridgeLiveActivity;
 			sourceTree = "<group>";
@@ -490,10 +492,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Claude Buddy Live Activity";
-				INFOPLIST_KEY_NSExtension = "[\"NSExtensionPointIdentifier\": \"com.apple.widgetkit-extension\"]";
-				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ClaudeBuddyBridgeLiveActivity/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -696,10 +696,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Claude Buddy Live Activity";
-				INFOPLIST_KEY_NSExtension = "[\"NSExtensionPointIdentifier\": \"com.apple.widgetkit-extension\"]";
-				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = ClaudeBuddyBridgeLiveActivity/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
