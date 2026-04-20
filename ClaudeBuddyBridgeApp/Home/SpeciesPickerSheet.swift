@@ -3,6 +3,7 @@ import BuddyPersona
 
 struct SpeciesPickerSheet: View {
     @Binding var selection: PersonaSpeciesID
+    let builtin: [InstalledPersona]
     let installed: [InstalledPersona]
     let onClose: () -> Void
 
@@ -12,7 +13,14 @@ struct SpeciesPickerSheet: View {
                 BuddyTheme.backgroundGradient.ignoresSafeArea()
                 List {
                     Section {
-                        row(titleKey: "species.ascii.cat", subtitleKey: nil, id: .asciiCat)
+                        row(titleKey: "species.ascii.cat", subtitle: nil, id: .asciiCat)
+                        ForEach(builtin) { persona in
+                            row(
+                                title: persona.manifest.name.capitalized,
+                                subtitle: "\(persona.manifest.states.count) states",
+                                id: .builtin(name: persona.name)
+                            )
+                        }
                     } header: {
                         Text("species.builtin")
                     }
@@ -48,7 +56,7 @@ struct SpeciesPickerSheet: View {
         .preferredColorScheme(.dark)
     }
 
-    private func row(titleKey: LocalizedStringKey, subtitleKey: LocalizedStringKey?, id: PersonaSpeciesID) -> some View {
+    private func row(titleKey: LocalizedStringKey, subtitle: String?, id: PersonaSpeciesID) -> some View {
         Button {
             selection = id
             PersonaSelection.save(id)
@@ -56,8 +64,8 @@ struct SpeciesPickerSheet: View {
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(titleKey).foregroundStyle(.primary)
-                    if let subtitleKey {
-                        Text(subtitleKey).font(.caption).foregroundStyle(.secondary)
+                    if let subtitle {
+                        Text(subtitle).font(.caption).foregroundStyle(.secondary)
                     }
                 }
                 Spacer()

@@ -26,7 +26,12 @@ targets:
     type: application
     platform: iOS
     sources:
-      - ClaudeBuddyBridgeApp
+      - path: ClaudeBuddyBridgeApp
+        excludes:
+          - "Resources/BuiltinCharacters"
+      - path: ClaudeBuddyBridgeApp/Resources/BuiltinCharacters
+        type: folder
+        buildPhase: resources
     dependencies:
       - package: ClaudeBuddyKit
         product: BridgeRuntime

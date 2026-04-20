@@ -43,23 +43,14 @@ public struct PersonaCatalog {
         return entries
             .compactMap { folder -> InstalledPersona? in
                 guard (try? folder.resourceValues(forKeys: [.isDirectoryKey]))?.isDirectory == true else { return nil }
-                let manifestURL = folder.appendingPathComponent("manifest.json", isDirectory: false)
-                guard let data = try? Data(contentsOf: manifestURL),
-                      let manifest = try? JSONDecoder().decode(PersonaManifest.self, from: data)
-                else { return nil }
-                let name = folder.lastPathComponent
-                return InstalledPersona(name: name, directory: folder, manifest: manifest)
+                return Self.load(folder: folder)
             }
             .sorted { $0.name < $1.name }
     }
 
     public func load(name: String) -> InstalledPersona? {
         let folder = rootURL.appendingPathComponent(name, isDirectory: true)
-        let manifestURL = folder.appendingPathComponent("manifest.json", isDirectory: false)
-        guard let data = try? Data(contentsOf: manifestURL),
-              let manifest = try? JSONDecoder().decode(PersonaManifest.self, from: data)
-        else { return nil }
-        return InstalledPersona(name: name, directory: folder, manifest: manifest)
+        return Self.load(folder: folder)
     }
 
     @discardableResult
@@ -71,5 +62,44 @@ public struct PersonaCatalog {
         } catch {
             return false
         }
+    }
+
+    // MARK: - Built-in personas (shipped in the app bundle, read-only)
+
+    public static let builtinDirectoryName = "BuiltinCharacters"
+
+    public static func listBuiltin(bundle: Bundle = .main, fileManager: FileManager = .default) -> [InstalledPersona] {
+        guard let root = builtinRootURL(bundle: bundle) else { return [] }
+        guard let entries = try? fileManager.contentsOfDirectory(
+            at: root,
+            includingPropertiesForKeys: [.isDirectoryKey],
+            options: [.skipsHiddenFiles]
+        ) else { return [] }
+
+        return entries
+            .compactMap { folder -> InstalledPersona? in
+                guard (try? folder.resourceValues(forKeys: [.isDirectoryKey]))?.isDirectory == true else { return nil }
+                return load(folder: folder)
+            }
+            .sorted { $0.name < $1.name }
+    }
+
+    public static func loadBuiltin(name: String, bundle: Bundle = .main) -> InstalledPersona? {
+        guard let root = builtinRootURL(bundle: bundle) else { return nil }
+        let folder = root.appendingPathComponent(name, isDirectory: true)
+        return load(folder: folder)
+    }
+
+    private static func builtinRootURL(bundle: Bundle) -> URL? {
+        bundle.url(forResource: builtinDirectoryName, withExtension: nil)
+    }
+
+    private static func load(folder: URL) -> InstalledPersona? {
+        let manifestURL = folder.appendingPathComponent("manifest.json", isDirectory: false)
+        guard let data = try? Data(contentsOf: manifestURL),
+              let manifest = try? JSONDecoder().decode(PersonaManifest.self, from: data)
+        else { return nil }
+        let name = folder.lastPathComponent
+        return InstalledPersona(name: name, directory: folder, manifest: manifest)
     }
 }

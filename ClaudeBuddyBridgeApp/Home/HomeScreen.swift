@@ -11,6 +11,7 @@ struct HomeScreen: View {
 
     @State private var selection: PersonaSpeciesID = PersonaSelection.load()
     @State private var installed: [InstalledPersona] = []
+    @State private var builtin: [InstalledPersona] = PersonaCatalog.listBuiltin()
     @State private var showPicker = false
     @State private var showMenu = false
     @State private var showStats = false
@@ -50,6 +51,7 @@ struct HomeScreen: View {
         .sheet(isPresented: $showPicker) {
             SpeciesPickerSheet(
                 selection: $selection,
+                builtin: builtin,
                 installed: installed,
                 onClose: { showPicker = false }
             )
@@ -156,6 +158,11 @@ struct HomeScreen: View {
     private func resolvedPersona() -> ResolvedPersona {
         switch selection {
         case .asciiCat:
+            return .ascii
+        case .builtin(let name):
+            if let match = builtin.first(where: { $0.name == name }) {
+                return .gif(match)
+            }
             return .ascii
         case .installed(let name):
             if let match = installed.first(where: { $0.name == name }) {

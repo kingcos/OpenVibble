@@ -82,7 +82,7 @@ struct PetStatsScreen: View {
                 Button(role: .destructive) {
                     let catalog = PersonaCatalog(rootURL: charactersRootURL)
                     let ok = catalog.deleteAll()
-                    PersonaSelection.save(.asciiCat)
+                    PersonaSelection.save(PersonaSelection.defaultSpecies)
                     infoMessage = ok ? "pet.stats.deleteOk" : "pet.stats.deleteFail"
                 } label: { Text("pet.delete.doIt") }
                 Button(role: .cancel) {} label: { Text("common.cancel") }

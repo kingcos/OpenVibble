@@ -26,6 +26,7 @@
 		73EEA5C38DC91BE6707FB800 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5FCD0F4050D6D146B6329C /* ContentView.swift */; };
 		772E4BCA8435152643F47DA3 /* SpeciesPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C833BFB88AA72D0DF38D1F /* SpeciesPickerSheet.swift */; };
 		857F6A7482A0CE4336A774B7 /* NUSPeripheral in Frameworks */ = {isa = PBXBuildFile; productRef = ECB5D8326B3ABBD99ABAC356 /* NUSPeripheral */; };
+		A1F2B6B57139B4AA829BB5CA /* BuiltinCharacters in Resources */ = {isa = PBXBuildFile; fileRef = 54DD70B9C8F1675EA19A1ABC /* BuiltinCharacters */; };
 		CD125A99FBE380470ADA7BD4 /* OnboardingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C0002E0C787AB9B8B09629 /* OnboardingScreen.swift */; };
 		D63EF87F59305F858295CC18 /* BridgeAppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C11DC586586DFE2B5E6B9 /* BridgeAppModel.swift */; };
 		DEDE1D177A4F44194E1DC0DA /* BuddyProtocol in Frameworks */ = {isa = PBXBuildFile; productRef = C4A4AB6F3E449B30E1EC3B8D /* BuddyProtocol */; };
@@ -50,6 +51,7 @@
 		3050CC84F335D5645C0F9C78 /* BuddyHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddyHUD.swift; sourceTree = "<group>"; };
 		34A991368F018E861B46B255 /* ClaudeBuddyBridgeApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = ClaudeBuddyBridgeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B009D5D10454B61E89963C8 /* PersonaController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonaController.swift; sourceTree = "<group>"; };
+		54DD70B9C8F1675EA19A1ABC /* BuiltinCharacters */ = {isa = PBXFileReference; lastKnownFileType = folder; name = BuiltinCharacters; path = ClaudeBuddyBridgeApp/Resources/BuiltinCharacters; sourceTree = SOURCE_ROOT; };
 		5B5FCD0F4050D6D146B6329C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		5F6C622D6CF269E4DBD46366 /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
 		60DE9041705CE3A8112E3A29 /* ClaudeBuddyBridgeAppTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = ClaudeBuddyBridgeAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -140,6 +142,7 @@
 		BF9CD2CA4019D9287CAD485F = {
 			isa = PBXGroup;
 			children = (
+				54DD70B9C8F1675EA19A1ABC /* BuiltinCharacters */,
 				7DF64D0B3C6C2EFFAC5048AE /* ClaudeBuddyBridgeApp */,
 				EC0F48A47BF1DEE76B5F6C1D /* ClaudeBuddyBridgeAppTests */,
 				D8CD4859D0CD70397B21DE48 /* Packages */,
@@ -292,6 +295,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				676D367654C0A23516DB95A0 /* Assets.xcassets in Resources */,
+				A1F2B6B57139B4AA829BB5CA /* BuiltinCharacters in Resources */,
 				688EB682572EC8BB6F891EA0 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
