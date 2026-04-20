@@ -13,7 +13,6 @@ struct ContentView: View {
     @AppStorage("bridge.displayName") private var persistedDisplayName = ""
     @AppStorage("bridge.showScanline") private var showScanline = true
     @AppStorage("bridge.autoStartBLE") private var autoStartBLE = true
-    @AppStorage("bridge.advertiseServiceUUID") private var advertiseServiceUUID = false
 
     var body: some View {
         ZStack {
@@ -52,7 +51,7 @@ struct ContentView: View {
             if autoStartBLE {
                 model.start(
                     displayName: effectiveDisplayName,
-                    includeServiceUUIDInAdvertisement: advertiseServiceUUID
+                    includeServiceUUIDInAdvertisement: true
                 )
             }
         }
@@ -101,7 +100,7 @@ struct ContentView: View {
             Button("重启广播") {
                 model.restart(
                     displayName: effectiveDisplayName,
-                    includeServiceUUIDInAdvertisement: advertiseServiceUUID
+                    includeServiceUUIDInAdvertisement: true
                 )
             }
             .buttonStyle(TerminalHeaderButtonStyle(fill: true))
@@ -313,7 +312,8 @@ struct ContentView: View {
                     "1. 在 Claude Desktop 打开开发者模式",
                     "2. 打开 Developer -> Hardware Buddy",
                     "3. 选择以 Claude 开头的本机设备名完成连接",
-                    "4. 若搜不到，先检查本页“蓝牙：”状态并点「重启广播」"
+                    "4. 若搜不到，先检查本页“蓝牙：”状态并点「重启广播」",
+                    "5. 必须真机运行 iOS App，模拟器不支持 BLE 外设广播"
                 ])
 
                 helpBlock(title: "权限确认", lines: [
@@ -399,10 +399,9 @@ struct ContentView: View {
                     .tint(.green)
                     .foregroundStyle(.green.opacity(0.95))
 
-                Toggle("广播包含 NUS UUID（实验）", isOn: $advertiseServiceUUID)
-                    .font(.system(size: 13, design: .monospaced))
-                    .tint(.green)
-                    .foregroundStyle(.green.opacity(0.95))
+                Text("NUS UUID 广播：固定开启（兼容 Claude Desktop 设备扫描）")
+                    .font(.system(size: 12, weight: .regular, design: .monospaced))
+                    .foregroundStyle(.green.opacity(0.78))
 
                 sheetActionBar(
                     secondaryTitle: "取消",
@@ -413,7 +412,7 @@ struct ContentView: View {
                         if autoStartBLE {
                             model.restart(
                                 displayName: effectiveDisplayName,
-                                includeServiceUUIDInAdvertisement: advertiseServiceUUID
+                                includeServiceUUIDInAdvertisement: true
                             )
                         } else {
                             model.stop()
@@ -486,7 +485,7 @@ struct ContentView: View {
                     primaryAction: {
                         model.restart(
                             displayName: effectiveDisplayName,
-                            includeServiceUUIDInAdvertisement: advertiseServiceUUID
+                            includeServiceUUIDInAdvertisement: true
                         )
                     }
                 )

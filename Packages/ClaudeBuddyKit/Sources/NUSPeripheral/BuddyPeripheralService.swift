@@ -37,7 +37,9 @@ public final class BuddyPeripheralService: NSObject, ObservableObject {
     private var pendingChunks: [Data] = []
     private var isStarted = false
     private var advertisedName: String = "Claude-iOS"
-    private var includeServiceUUIDInAdvertisement = false
+    // Claude Desktop scans for devices that advertise NUS + name prefix "Claude".
+    // Keep this enabled by default for reliable discovery.
+    private var includeServiceUUIDInAdvertisement = true
 
     public override init() {
         self.manager = CBPeripheralManager(delegate: nil, queue: nil)
@@ -255,7 +257,7 @@ extension BuddyPeripheralService: CBPeripheralManagerDelegate {
         case .resetting:
             return "蓝牙重置中"
         case .unsupported:
-            return "设备不支持 BLE 外设"
+            return "设备不支持 BLE 外设（模拟器不支持）"
         case .unauthorized:
             return "蓝牙权限被拒绝"
         case .poweredOff:

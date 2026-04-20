@@ -30,7 +30,7 @@
 
 /* Begin PBXFileReference section */
 		08F2CD3EDE7E8665059A1EFB /* ClaudeBuddyBridgeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeBuddyBridgeApp.swift; sourceTree = "<group>"; };
-		34A991368F018E861B46B255 /* ClaudeBuddyBridgeApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = ClaudeBuddyBridgeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		34A991368F018E861B46B255 /* ClaudeBuddyBridgeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClaudeBuddyBridgeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B5FCD0F4050D6D146B6329C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		60DE9041705CE3A8112E3A29 /* ClaudeBuddyBridgeAppTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = ClaudeBuddyBridgeAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		63CD167C925FC96F77C8AFB4 /* ClaudeBuddyKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ClaudeBuddyKit; path = Packages/ClaudeBuddyKit; sourceTree = SOURCE_ROOT; };
@@ -153,9 +153,6 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
-					1AC16FB8B8EAB24D691DB17B = {
-						DevelopmentTeam = "";
-					};
 					72293D56C1005A2E8D7D917F = {
 						DevelopmentTeam = "";
 					};
@@ -230,15 +227,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = C9JF3B5K5A;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Claude Buddy Bridge";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Connect to Claude Desktop as Hardware Buddy.";
 				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Connect to Claude Desktop as Hardware Buddy.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UIBackgroundModes = (
-					"bluetooth-peripheral",
-				);
+				INFOPLIST_KEY_UIBackgroundModes = "bluetooth-peripheral";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
@@ -246,6 +242,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "kingcos.me.claude.buddy-bridge";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -256,15 +253,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = C9JF3B5K5A;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Claude Buddy Bridge";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Connect to Claude Desktop as Hardware Buddy.";
 				INFOPLIST_KEY_NSBluetoothPeripheralUsageDescription = "Connect to Claude Desktop as Hardware Buddy.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UIBackgroundModes = (
-					"bluetooth-peripheral",
-				);
+				INFOPLIST_KEY_UIBackgroundModes = "bluetooth-peripheral";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
@@ -272,6 +268,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = "kingcos.me.claude.buddy-bridge";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -64,7 +64,7 @@ final class BridgeAppModel: ObservableObject {
         }
     }
 
-    func start(displayName: String? = nil, includeServiceUUIDInAdvertisement: Bool = false) {
+    func start(displayName: String? = nil, includeServiceUUIDInAdvertisement: Bool = true) {
         guard !started else { return }
         let finalName = resolvedDisplayName(displayName)
         activeDisplayName = finalName
@@ -75,7 +75,7 @@ final class BridgeAppModel: ObservableObject {
         started = true
     }
 
-    func restart(displayName: String? = nil, includeServiceUUIDInAdvertisement: Bool = false) {
+    func restart(displayName: String? = nil, includeServiceUUIDInAdvertisement: Bool = true) {
         stop()
         start(displayName: displayName, includeServiceUUIDInAdvertisement: includeServiceUUIDInAdvertisement)
     }
