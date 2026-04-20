@@ -31,6 +31,10 @@ targets:
         product: BuddyStorage
       - package: ClaudeBuddyKit
         product: BuddyProtocol
+      - package: ClaudeBuddyKit
+        product: BuddyPersona
+      - package: ClaudeBuddyKit
+        product: BuddyUI
     settings:
       base:
         INFOPLIST_KEY_CFBundleDisplayName: Claude Buddy Bridge

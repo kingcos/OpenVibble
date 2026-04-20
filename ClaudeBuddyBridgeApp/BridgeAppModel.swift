@@ -17,13 +17,23 @@ final class BridgeAppModel: ObservableObject {
     @Published private(set) var activeDisplayName: String = "Claude"
     @Published private(set) var diagnosticLogs: [String] = []
     @Published private(set) var recentEvents: [String] = []
+    @Published private(set) var lastInstalledCharacter: String?
 
     private let runtime = BridgeRuntime()
     private let peripheral = BuddyPeripheralService()
     private var cancellables: Set<AnyCancellable> = []
     private var started = false
 
+    var charactersRootURL: URL { runtime.charactersRootURL }
+
     init() {
+        runtime.onCharacterInstalled = { [weak self] name in
+            Task { @MainActor [weak self] in
+                self?.lastInstalledCharacter = name
+                self?.recordEvent("系统 已安装宠物：\(name)")
+            }
+        }
+
         peripheral.$connectionState
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in

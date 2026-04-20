@@ -22,7 +22,8 @@ public struct TransferProgress: Equatable, Sendable {
 public final class CharacterTransferStore {
     public private(set) var progress: TransferProgress = .idle
 
-    private let rootURL: URL
+    public let rootURL: URL
+    public var charactersRootURL: URL { rootURL.appendingPathComponent("characters", isDirectory: true) }
     private let fileManager: FileManager
 
     private var currentHandle: FileHandle?

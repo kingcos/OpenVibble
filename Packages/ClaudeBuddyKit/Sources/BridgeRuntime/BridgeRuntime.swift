@@ -73,6 +73,9 @@ public final class BridgeRuntime {
     private var promptStorage: PromptRequest?
     private let transferStore: CharacterTransferStore
 
+    public var onCharacterInstalled: ((String) -> Void)?
+    public var charactersRootURL: URL { transferStore.charactersRootURL }
+
     public init(initialSnapshot: BridgeSnapshot = .empty, transferStore: CharacterTransferStore = CharacterTransferStore()) {
         self.snapshotStorage = initialSnapshot
         self.transferStore = transferStore
@@ -145,7 +148,12 @@ public final class BridgeRuntime {
             return [encodeAck(transferStore.closeFile())]
 
         case .charEnd:
-            return [encodeAck(transferStore.finishCharacter())]
+            let installedName = transferStore.progress.characterName
+            let ack = transferStore.finishCharacter()
+            if ack.ok, !installedName.isEmpty {
+                onCharacterInstalled?(installedName)
+            }
+            return [encodeAck(ack)]
 
         case .permission:
             return []

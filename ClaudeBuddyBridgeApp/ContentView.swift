@@ -4,7 +4,7 @@ import NUSPeripheral
 import BridgeRuntime
 
 struct ContentView: View {
-    @StateObject private var model = BridgeAppModel()
+    @ObservedObject var model: BridgeAppModel
     @State private var showHelpSheet = false
     @State private var showSettingsSheet = false
     @State private var showDiagnosticsSheet = false
