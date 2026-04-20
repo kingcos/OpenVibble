@@ -19,7 +19,7 @@ struct ClaudeBuddyBridgeApp: App {
         WindowGroup {
             Group {
                 if hasOnboarded {
-                    RootPagerView(model: model, persona: persona, stats: statsStore)
+                    RootView(model: model, persona: persona, stats: statsStore)
                 } else {
                     OnboardingScreen {
                         hasOnboarded = true
@@ -35,35 +35,47 @@ struct ClaudeBuddyBridgeApp: App {
     }
 }
 
-struct RootPagerView: View {
+struct RootView: View {
     @ObservedObject var model: BridgeAppModel
     @ObservedObject var persona: PersonaController
     @ObservedObject var stats: PersonaStatsStore
 
+    @State private var currentPage: RootPage = .pet
     @State private var showSettings = false
-    @AppStorage("buddy.themePreset") private var themePreset = BuddyThemePreset.m5Orange.rawValue
 
     var body: some View {
-        ZStack(alignment: .topTrailing) {
-            TabView {
-                PetDeviceScreen(model: model, persona: persona, stats: stats)
-                ContentView(model: model)
+        ZStack {
+            Group {
+                if currentPage == .pet {
+                    PetDeviceScreen(model: model, persona: persona, stats: stats)
+                        .transition(.opacity.combined(with: .scale(scale: 0.98)))
+                } else {
+                    ContentView(model: model)
+                        .transition(.opacity.combined(with: .scale(scale: 0.98)))
+                }
             }
-            .tabViewStyle(.page(indexDisplayMode: .always))
-            .indexViewStyle(.page(backgroundDisplayMode: .always))
+            .animation(.easeInOut(duration: 0.22), value: currentPage)
 
-            Button {
-                showSettings = true
-            } label: {
-                Image(systemName: "gearshape.fill")
-                    .font(.system(size: 18, weight: .semibold))
-                    .foregroundStyle(.white)
-                    .padding(10)
-                    .background(.ultraThinMaterial, in: Circle())
+            VStack {
+                HStack {
+                    Spacer()
+                    Button {
+                        showSettings = true
+                    } label: {
+                        Image(systemName: "gearshape.fill")
+                            .font(.system(size: 18, weight: .semibold))
+                            .foregroundStyle(.white)
+                            .padding(10)
+                            .background(.ultraThinMaterial, in: Circle())
+                    }
+                    .accessibilityLabel(Text("settings.title"))
+                    .padding(.top, 8)
+                    .padding(.trailing, 14)
+                }
+                Spacer()
+                MechanicalSwitch(page: $currentPage)
+                    .padding(.bottom, 18)
             }
-            .accessibilityLabel(Text("settings.title"))
-            .padding(.top, 8)
-            .padding(.trailing, 14)
         }
         .sheet(isPresented: $showSettings) {
             SettingsScreen(model: model, stats: stats)

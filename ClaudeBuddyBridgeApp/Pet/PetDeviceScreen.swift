@@ -19,19 +19,50 @@ struct PetDeviceScreen: View {
     private let pageCount = 2
 
     var body: some View {
+        let palette = BuddyTheme.palette(themePreset)
         ZStack {
-            BuddyTheme.backgroundGradient(themePreset).ignoresSafeArea()
+            palette.screen.ignoresSafeArea()
 
-            VStack(spacing: 14) {
-                M5DeviceShell {
-                    screen
+            VStack(spacing: 0) {
+                // Buddy renderer (top half)
+                buddyRenderer
+                    .frame(maxWidth: .infinity)
+                    .frame(maxHeight: .infinity)
+                    .padding(.top, 24)
+
+                // Header row
+                headerRow
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 6)
+
+                Rectangle()
+                    .fill(Color.white.opacity(0.12))
+                    .frame(height: 1)
+                    .padding(.horizontal, 16)
+
+                // Body (stats or howto)
+                Group {
+                    if page == 0 {
+                        statsPage
+                    } else {
+                        howToPage
+                    }
                 }
+                .padding(.horizontal, 24)
+                .padding(.top, 14)
+                .frame(maxWidth: .infinity, alignment: .topLeading)
+                .frame(height: 260)
+
                 Text(persona.state.slug.uppercased())
                     .font(.system(size: 11, weight: .semibold, design: .monospaced))
-                    .foregroundStyle(BuddyTheme.palette(themePreset).highlight.opacity(0.85))
+                    .foregroundStyle(palette.highlight.opacity(0.85))
                     .tracking(3)
+                    .padding(.top, 6)
+
+                Spacer(minLength: 0)
             }
-            .padding(.vertical, 18)
+            .padding(.top, 44) // room for gear button
+            .padding(.bottom, 100) // room for mechanical switch
         }
         .preferredColorScheme(.dark)
         .onAppear(perform: reloadInstalled)
@@ -44,43 +75,23 @@ struct PetDeviceScreen: View {
         }
     }
 
-    private var screen: some View {
-        VStack(spacing: 6) {
-            buddyRenderer
-                .frame(maxWidth: .infinity)
-                .frame(height: 92)
-
-            headerRow
-
-            Divider().background(Color.white.opacity(0.12))
-
-            Group {
-                if page == 0 {
-                    statsPage
-                } else {
-                    howToPage
-                }
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-        }
-    }
-
     @ViewBuilder
     private var buddyRenderer: some View {
         switch resolvedPersona() {
         case .ascii:
             ASCIIBuddyView(state: persona.state)
-                .scaleEffect(0.55)
+                .scaleEffect(1.0)
         case .gif(let p):
             GIFView(persona: p, state: persona.state)
                 .aspectRatio(contentMode: .fit)
+                .frame(maxHeight: 240)
         }
     }
 
     private var headerRow: some View {
-        HStack(spacing: 4) {
+        HStack(spacing: 8) {
             Text(headerTitle)
-                .font(.system(size: 11, weight: .semibold, design: .monospaced))
+                .font(.system(size: 14, weight: .semibold, design: .monospaced))
                 .foregroundStyle(.white)
                 .lineLimit(1)
                 .truncationMode(.tail)
@@ -89,11 +100,11 @@ struct PetDeviceScreen: View {
                 page = (page + 1) % pageCount
             } label: {
                 Text("\(page + 1)/\(pageCount)")
-                    .font(.system(size: 11, weight: .semibold, design: .monospaced))
-                    .foregroundStyle(Color.white.opacity(0.65))
-                    .padding(.vertical, 2)
-                    .padding(.horizontal, 6)
-                    .background(Color.white.opacity(0.06), in: RoundedRectangle(cornerRadius: 4))
+                    .font(.system(size: 13, weight: .semibold, design: .monospaced))
+                    .foregroundStyle(Color.white.opacity(0.7))
+                    .padding(.vertical, 3)
+                    .padding(.horizontal, 8)
+                    .background(Color.white.opacity(0.08), in: RoundedRectangle(cornerRadius: 5))
             }
             .buttonStyle(.plain)
             .accessibilityLabel(Text("pet.a11y.nextPage"))
@@ -113,23 +124,23 @@ struct PetDeviceScreen: View {
         let mood = Int(s.moodTier)
         let fed = Int(s.fedProgress)
         let energy = Int(stats.energyTier())
-        return VStack(alignment: .leading, spacing: 6) {
+        return VStack(alignment: .leading, spacing: 10) {
             row(label: "mood", pips: pipRow(filled: mood, total: 4, kind: .heart, color: moodColor(mood)))
             row(label: "fed", pips: pipRow(filled: fed, total: 10, kind: .dot, color: Color(red: 0.98, green: 0.68, blue: 0.35)))
             row(label: "energy", pips: pipRow(filled: energy, total: 5, kind: .bar, color: energyColor(energy)))
 
             HStack(spacing: 6) {
                 Text("Lv \(s.level)")
-                    .font(.system(size: 11, weight: .bold, design: .monospaced))
+                    .font(.system(size: 13, weight: .bold, design: .monospaced))
                     .foregroundStyle(.black)
-                    .padding(.horizontal, 6)
-                    .padding(.vertical, 1)
-                    .background(Color(red: 0.98, green: 0.68, blue: 0.35), in: RoundedRectangle(cornerRadius: 3))
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 2)
+                    .background(Color(red: 0.98, green: 0.68, blue: 0.35), in: RoundedRectangle(cornerRadius: 4))
                 Spacer()
             }
-            .padding(.top, 2)
+            .padding(.top, 4)
 
-            VStack(alignment: .leading, spacing: 1) {
+            VStack(alignment: .leading, spacing: 2) {
                 counterLine("approved", value: "\(s.approvals)")
                 counterLine("denied",   value: "\(s.denials)")
                 counterLine("napped",   value: formatNap(s.napSeconds))
@@ -141,11 +152,11 @@ struct PetDeviceScreen: View {
     }
 
     private func row(label: String, pips: some View) -> some View {
-        HStack(alignment: .center, spacing: 8) {
+        HStack(alignment: .center, spacing: 10) {
             Text(label)
-                .font(.system(size: 10, weight: .regular, design: .monospaced))
+                .font(.system(size: 12, weight: .regular, design: .monospaced))
                 .foregroundStyle(Color.white.opacity(0.55))
-                .frame(width: 44, alignment: .leading)
+                .frame(width: 60, alignment: .leading)
             pips
             Spacer(minLength: 0)
         }
@@ -154,7 +165,7 @@ struct PetDeviceScreen: View {
     private enum PipKind { case heart, dot, bar }
 
     private func pipRow(filled: Int, total: Int, kind: PipKind, color: Color) -> some View {
-        HStack(spacing: kind == .dot ? 3 : 4) {
+        HStack(spacing: kind == .dot ? 4 : 5) {
             ForEach(0..<total, id: \.self) { i in
                 pipShape(kind: kind, filled: i < filled, color: color)
             }
@@ -166,30 +177,30 @@ struct PetDeviceScreen: View {
         switch kind {
         case .heart:
             Image(systemName: filled ? "heart.fill" : "heart")
-                .font(.system(size: 10, weight: .bold))
+                .font(.system(size: 13, weight: .bold))
                 .foregroundStyle(filled ? color : Color.white.opacity(0.35))
         case .dot:
             Circle()
                 .fill(filled ? color : Color.clear)
                 .overlay(Circle().stroke(Color.white.opacity(0.35), lineWidth: filled ? 0 : 1))
-                .frame(width: 6, height: 6)
+                .frame(width: 8, height: 8)
         case .bar:
-            RoundedRectangle(cornerRadius: 1)
+            RoundedRectangle(cornerRadius: 1.5)
                 .fill(filled ? color : Color.clear)
-                .overlay(RoundedRectangle(cornerRadius: 1).stroke(Color.white.opacity(0.35), lineWidth: filled ? 0 : 1))
-                .frame(width: 10, height: 7)
+                .overlay(RoundedRectangle(cornerRadius: 1.5).stroke(Color.white.opacity(0.35), lineWidth: filled ? 0 : 1))
+                .frame(width: 14, height: 9)
         }
     }
 
     private func counterLine(_ label: String, value: String) -> some View {
         HStack(spacing: 2) {
             Text(label)
-                .frame(width: 60, alignment: .leading)
+                .frame(width: 86, alignment: .leading)
             Text(value)
             Spacer(minLength: 0)
         }
-        .font(.system(size: 10, weight: .regular, design: .monospaced))
-        .foregroundStyle(Color.white.opacity(0.55))
+        .font(.system(size: 12, weight: .regular, design: .monospaced))
+        .foregroundStyle(Color.white.opacity(0.62))
     }
 
     private func moodColor(_ mood: Int) -> Color {
@@ -219,7 +230,7 @@ struct PetDeviceScreen: View {
     // MARK: - HowTo page
 
     private var howToPage: some View {
-        VStack(alignment: .leading, spacing: 6) {
+        VStack(alignment: .leading, spacing: 10) {
             howToBlock(title: "MOOD", lines: [
                 "approve fast = up",
                 "deny lots = down"
@@ -232,25 +243,25 @@ struct PetDeviceScreen: View {
                 "face-down to nap",
                 "refills to full"
             ])
-            VStack(alignment: .leading, spacing: 1) {
+            VStack(alignment: .leading, spacing: 2) {
                 Text("idle = sleep")
                 Text("tap 1/2 = next page")
             }
-            .font(.system(size: 9, weight: .regular, design: .monospaced))
+            .font(.system(size: 11, weight: .regular, design: .monospaced))
             .foregroundStyle(Color.white.opacity(0.4))
-            .padding(.top, 4)
+            .padding(.top, 6)
         }
     }
 
     private func howToBlock(title: String, lines: [String]) -> some View {
-        VStack(alignment: .leading, spacing: 1) {
+        VStack(alignment: .leading, spacing: 2) {
             Text(title)
-                .font(.system(size: 10, weight: .bold, design: .monospaced))
+                .font(.system(size: 12, weight: .bold, design: .monospaced))
                 .foregroundStyle(.white)
             ForEach(lines, id: \.self) { line in
                 Text(" \(line)")
-                    .font(.system(size: 9, weight: .regular, design: .monospaced))
-                    .foregroundStyle(Color.white.opacity(0.45))
+                    .font(.system(size: 11, weight: .regular, design: .monospaced))
+                    .foregroundStyle(Color.white.opacity(0.5))
             }
         }
     }

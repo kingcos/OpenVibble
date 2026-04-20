@@ -12,6 +12,7 @@
 		343D78323800A2EFACEB3D52 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6C622D6CF269E4DBD46366 /* SettingsScreen.swift */; };
 		3B6C101D8EAA599515AF1788 /* PersonaController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B009D5D10454B61E89963C8 /* PersonaController.swift */; };
 		4C1E3AF4DF5789D4DFF3B873 /* BuddyPersona in Frameworks */ = {isa = PBXBuildFile; productRef = 44F8AFF504D8CA47A444E57C /* BuddyPersona */; };
+		4D1ABB475BCED1DAE60F61C7 /* MechanicalSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F0B4FBDB37C0E8535DED6F /* MechanicalSwitch.swift */; };
 		516F17121682AB550CC901A7 /* BuddyLiveActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B122A926562D2A34C73B782 /* BuddyLiveActivityAttributes.swift */; };
 		5186CFFDEE956724FA4CD3B7 /* InfoScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 685D2226F7BDD776AD75443B /* InfoScreen.swift */; };
 		54F87E5C689EC08548350CD7 /* BuddyStats in Frameworks */ = {isa = PBXBuildFile; productRef = 8966AD7A853C35E7677CCBEC /* BuddyStats */; };
@@ -80,6 +81,7 @@
 		3B009D5D10454B61E89963C8 /* PersonaController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonaController.swift; sourceTree = "<group>"; };
 		44CB6D9FCE1B00A4A028A4E0 /* BuddyLiveActivityBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddyLiveActivityBundle.swift; sourceTree = "<group>"; };
 		54DD70B9C8F1675EA19A1ABC /* BuiltinCharacters */ = {isa = PBXFileReference; lastKnownFileType = folder; name = BuiltinCharacters; path = ClaudeBuddyBridgeApp/Resources/BuiltinCharacters; sourceTree = SOURCE_ROOT; };
+		54F0B4FBDB37C0E8535DED6F /* MechanicalSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MechanicalSwitch.swift; sourceTree = "<group>"; };
 		5B5FCD0F4050D6D146B6329C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		5F6C622D6CF269E4DBD46366 /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
 		60DE9041705CE3A8112E3A29 /* ClaudeBuddyBridgeAppTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = ClaudeBuddyBridgeAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -204,6 +206,7 @@
 			isa = PBXGroup;
 			children = (
 				35C14E1A55B25AC24B54FA64 /* M5DeviceShell.swift */,
+				54F0B4FBDB37C0E8535DED6F /* MechanicalSwitch.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -406,6 +409,7 @@
 				73EEA5C38DC91BE6707FB800 /* ContentView.swift in Sources */,
 				5186CFFDEE956724FA4CD3B7 /* InfoScreen.swift in Sources */,
 				EA92D9DDB2BC81F9E68F5F92 /* M5DeviceShell.swift in Sources */,
+				4D1ABB475BCED1DAE60F61C7 /* MechanicalSwitch.swift in Sources */,
 				72ACF9F2B9914D7E16FA8229 /* MotionSensor.swift in Sources */,
 				CD125A99FBE380470ADA7BD4 /* OnboardingScreen.swift in Sources */,
 				3B6C101D8EAA599515AF1788 /* PersonaController.swift in Sources */,

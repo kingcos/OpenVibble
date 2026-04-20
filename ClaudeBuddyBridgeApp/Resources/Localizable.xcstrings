@@ -1,7 +1,7 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "%@" : {
+    " %@" : {
 
     },
     "%@ / %@ 字节" : {
@@ -10,6 +10,16 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$@ / %2$@ 字节"
+          }
+        }
+      }
+    },
+    "%@/%@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@/%2$@"
           }
         }
       }
@@ -42,6 +52,7 @@
 
     },
     "app.name" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -192,6 +203,7 @@
       }
     },
     "home.a11y.choosePet" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -291,6 +303,9 @@
           }
         }
       }
+    },
+    "idle = sleep" : {
+
     },
     "info.about.body1" : {
       "localizations" : {
@@ -773,6 +788,9 @@
         }
       }
     },
+    "Lv %@" : {
+
+    },
     "menu.changeSpecies" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1061,6 +1079,22 @@
         }
       }
     },
+    "pet.a11y.nextPage" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next page"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下一页"
+          }
+        }
+      }
+    },
     "pet.approvals" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1311,6 +1345,7 @@
       }
     },
     "pet.section.danger" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1327,6 +1362,7 @@
       }
     },
     "pet.section.progress" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1343,6 +1379,7 @@
       }
     },
     "pet.section.responses" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1359,6 +1396,7 @@
       }
     },
     "pet.section.rest" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1713,67 +1751,36 @@
         }
       }
     },
-    "settings.section.about" : {
+    "settings.pet.change" : {
       "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "About"
+            "value" : "Change pet"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "关于"
+            "value" : "更换宠物"
           }
         }
       }
     },
-    "settings.section.pet" : {
+    "settings.pet.info" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pet"
+            "value" : "About this pet"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "宠物"
-          }
-        }
-      }
-    },
-    "settings.section.danger" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Danger Zone"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "危险操作"
-          }
-        }
-      }
-    },
-    "settings.pet.petName" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pet name"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "宠物名"
+            "value" : "宠物说明"
           }
         }
       }
@@ -1795,6 +1802,7 @@
       }
     },
     "settings.pet.ownerPlaceholder" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1810,34 +1818,18 @@
         }
       }
     },
-    "settings.pet.change" : {
+    "settings.pet.petName" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Change pet"
+            "value" : "Pet name"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "更换宠物"
-          }
-        }
-      }
-    },
-    "settings.pet.info" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "About this pet"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "宠物说明"
+            "value" : "宠物名"
           }
         }
       }
@@ -1858,18 +1850,36 @@
         }
       }
     },
-    "pet.a11y.nextPage" : {
+    "settings.section.about" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Next page"
+            "value" : "About"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "下一页"
+            "value" : "关于"
+          }
+        }
+      }
+    },
+    "settings.section.danger" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Danger Zone"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "危险操作"
           }
         }
       }
@@ -1904,6 +1914,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "通知"
+          }
+        }
+      }
+    },
+    "settings.section.pet" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pet"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "宠物"
           }
         }
       }
@@ -1994,7 +2021,6 @@
       }
     },
     "settings.title" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2142,6 +2168,9 @@
           }
         }
       }
+    },
+    "tap 1/2 = next page" : {
+
     },
     "为提高可发现性，当前版本会强制使用广播名 Claude。" : {
 
