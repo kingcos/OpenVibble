@@ -4,6 +4,7 @@ import Combine
 @MainActor
 public final class PersonaStatsStore: ObservableObject {
     @Published public private(set) var stats: PersonaStats
+    @Published public private(set) var tokensToday: UInt32 = 0
 
     // First-sight latch for bridge token sync.
     // On app restart, tokens counter starts back at 0 on our side — but the bridge
@@ -14,10 +15,13 @@ public final class PersonaStatsStore: ObservableObject {
 
     private var lastWakeDate: Date
     private var energyAtWake: UInt8 = 3
+    private var tokensTodayAnchor: Date
     private let defaults: UserDefaults
 
     public static let storageKey = "buddy.stats.v1"
     public static let lastNapEndKey = "buddy.stats.lastNapEnd"
+    public static let tokensTodayKey = "buddy.stats.tokensToday"
+    public static let tokensTodayAnchorKey = "buddy.stats.tokensTodayAnchor"
 
     public init(defaults: UserDefaults = .standard, now: Date = .now) {
         self.defaults = defaults
@@ -39,6 +43,15 @@ public final class PersonaStatsStore: ObservableObject {
             self.lastWakeDate = napEndRaw
         } else {
             self.lastWakeDate = now
+        }
+
+        if let anchor = defaults.object(forKey: Self.tokensTodayAnchorKey) as? Date,
+           Calendar.current.isDate(anchor, inSameDayAs: now) {
+            self.tokensTodayAnchor = anchor
+            self.tokensToday = UInt32(defaults.integer(forKey: Self.tokensTodayKey))
+        } else {
+            self.tokensTodayAnchor = now
+            self.tokensToday = 0
         }
     }
 
@@ -69,7 +82,7 @@ public final class PersonaStatsStore: ObservableObject {
 
     /// Returns true if this delta caused a level-up.
     @discardableResult
-    public func onBridgeTokens(_ bridgeTotal: Int) -> Bool {
+    public func onBridgeTokens(_ bridgeTotal: Int, now: Date = .now) -> Bool {
         let total = UInt32(max(0, bridgeTotal))
         if !tokensSynced {
             lastBridgeTokens = total
@@ -85,6 +98,10 @@ public final class PersonaStatsStore: ObservableObject {
         lastBridgeTokens = total
         if delta == 0 { return false }
 
+        rollTokensTodayIfNeeded(now: now)
+        tokensToday = tokensToday &+ delta
+        defaults.set(Int(tokensToday), forKey: Self.tokensTodayKey)
+
         var s = stats
         let lvlBefore = UInt8(min(UInt32(UInt8.max), s.tokens / PersonaStats.tokensPerLevel))
         s.tokens = s.tokens &+ delta
@@ -99,6 +116,15 @@ public final class PersonaStatsStore: ObservableObject {
         // Don't persist every heartbeat — only persist on level milestones.
         // Non-milestone token accrual is RAM-only here too.
         return false
+    }
+
+    private func rollTokensTodayIfNeeded(now: Date) {
+        if !Calendar.current.isDate(tokensTodayAnchor, inSameDayAs: now) {
+            tokensTodayAnchor = now
+            tokensToday = 0
+            defaults.set(now, forKey: Self.tokensTodayAnchorKey)
+            defaults.set(0, forKey: Self.tokensTodayKey)
+        }
     }
 
     public func onNapEnd(seconds: TimeInterval, now: Date = .now) {
@@ -117,11 +143,15 @@ public final class PersonaStatsStore: ObservableObject {
         return UInt8(max(0, min(5, e)))
     }
 
-    public func reset() {
+    public func reset(now: Date = .now) {
         stats = PersonaStats()
         tokensSynced = false
         lastBridgeTokens = 0
+        tokensToday = 0
+        tokensTodayAnchor = now
         defaults.removeObject(forKey: Self.storageKey)
         defaults.removeObject(forKey: Self.lastNapEndKey)
+        defaults.removeObject(forKey: Self.tokensTodayKey)
+        defaults.removeObject(forKey: Self.tokensTodayAnchorKey)
     }
 }

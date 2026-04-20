@@ -19,7 +19,7 @@ struct ClaudeBuddyBridgeApp: App {
         WindowGroup {
             Group {
                 if hasOnboarded {
-                    RootTabView(model: model, persona: persona, stats: statsStore)
+                    RootPagerView(model: model, persona: persona, stats: statsStore)
                 } else {
                     OnboardingScreen {
                         hasOnboarded = true
@@ -35,27 +35,38 @@ struct ClaudeBuddyBridgeApp: App {
     }
 }
 
-struct RootTabView: View {
+struct RootPagerView: View {
     @ObservedObject var model: BridgeAppModel
     @ObservedObject var persona: PersonaController
     @ObservedObject var stats: PersonaStatsStore
 
+    @State private var showSettings = false
+    @AppStorage("buddy.themePreset") private var themePreset = BuddyThemePreset.m5Orange.rawValue
+
     var body: some View {
-        TabView {
-            HomeScreen(model: model, persona: persona, stats: stats)
-                .tabItem {
-                    Label("tab.dashboard", systemImage: "display")
-                }
+        ZStack(alignment: .topTrailing) {
+            TabView {
+                PetDeviceScreen(model: model, persona: persona, stats: stats)
+                ContentView(model: model)
+            }
+            .tabViewStyle(.page(indexDisplayMode: .always))
+            .indexViewStyle(.page(backgroundDisplayMode: .always))
 
-            ContentView(model: model)
-                .tabItem {
-                    Label("tab.console", systemImage: "terminal")
-                }
-
-            SettingsScreen()
-                .tabItem {
-                    Label("tab.control", systemImage: "slider.horizontal.3")
-                }
+            Button {
+                showSettings = true
+            } label: {
+                Image(systemName: "gearshape.fill")
+                    .font(.system(size: 18, weight: .semibold))
+                    .foregroundStyle(.white)
+                    .padding(10)
+                    .background(.ultraThinMaterial, in: Circle())
+            }
+            .accessibilityLabel(Text("settings.title"))
+            .padding(.top, 8)
+            .padding(.trailing, 14)
+        }
+        .sheet(isPresented: $showSettings) {
+            SettingsScreen(model: model, stats: stats)
         }
     }
 }

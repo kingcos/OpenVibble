@@ -31,7 +31,7 @@ public enum PersonaSpeciesID: Sendable, Equatable, Hashable {
 
 public struct PersonaSelection: Sendable {
     public static let storageKey = "buddy.species.id"
-    public static let defaultSpecies: PersonaSpeciesID = .builtin(name: "bufo")
+    public static let defaultSpecies: PersonaSpeciesID = .asciiCat
 
     public static func load(defaults: UserDefaults = .standard) -> PersonaSpeciesID {
         guard let raw = defaults.string(forKey: storageKey),

@@ -76,6 +76,8 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: kingcos.me.claude.buddy.bridge.liveactivity
         GENERATE_INFOPLIST_FILE: NO
         INFOPLIST_FILE: ClaudeBuddyBridgeLiveActivity/Info.plist
+        MARKETING_VERSION: "1.0"
+        CURRENT_PROJECT_VERSION: "1"
         SKIP_INSTALL: YES
         APPLICATION_EXTENSION_API_ONLY: YES
   ClaudeBuddyBridgeAppTests:
