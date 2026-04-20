@@ -13,7 +13,7 @@ configs:
   Release: release
 settings:
   base:
-    PRODUCT_BUNDLE_IDENTIFIER: com.kingcos.ClaudeBuddyBridge
+    PRODUCT_BUNDLE_IDENTIFIER: kingcos.me.claude.buddy.bridge
     SWIFT_VERSION: 6.0
     DEVELOPMENT_TEAM: ""
     TARGETED_DEVICE_FAMILY: "1,2"
@@ -78,3 +78,6 @@ schemes:
     test:
       targets:
         - ClaudeBuddyBridgeAppTests
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: kingcos.me.claude.buddy.bridge.tests
