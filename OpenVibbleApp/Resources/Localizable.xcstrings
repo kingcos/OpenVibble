@@ -1875,9 +1875,6 @@
     "Lv %@" : {
 
     },
-    "M5" : {
-
-    },
     "menu.changeSpecies" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -3380,7 +3377,6 @@
       }
     },
     "settings.about.author" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

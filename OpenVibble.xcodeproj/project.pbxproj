@@ -80,12 +80,12 @@
 		5F4F84865792A7D52BF73EDD /* SmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokeTests.swift; sourceTree = "<group>"; };
 		5FFF5757CB966F2F1570C019 /* OpenVibbleAppTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = OpenVibbleAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A2424193FA157EBADF7694D /* BuddyLiveActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddyLiveActivityAttributes.swift; sourceTree = "<group>"; };
-		6F785828031A298D5AA52F35 /* OpenVibbleLiveActivity.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = OpenVibbleLiveActivity.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		6F785828031A298D5AA52F35 /* OpenVibbleLiveActivity.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OpenVibbleLiveActivity.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		77B3453FEFE9D00261494A6F /* OpenVibbleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenVibbleApp.swift; sourceTree = "<group>"; };
 		7AA1CBCBA3072723280C1D62 /* BuddyLiveActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddyLiveActivityManager.swift; sourceTree = "<group>"; };
 		91F3C187CB72273ADE7F62D1 /* BuiltinCharacters */ = {isa = PBXFileReference; lastKnownFileType = folder; name = BuiltinCharacters; path = OpenVibbleApp/Resources/BuiltinCharacters; sourceTree = SOURCE_ROOT; };
 		AEE80BFE42253DF8A0777FC9 /* OpenVibbleKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = OpenVibbleKit; path = Packages/OpenVibbleKit; sourceTree = SOURCE_ROOT; };
-		B56B396C1C7E39F53D657B11 /* OpenVibbleApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = OpenVibbleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B56B396C1C7E39F53D657B11 /* OpenVibbleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenVibbleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B99022B5E05DD0DBD7335BEC /* MotionSensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionSensor.swift; sourceTree = "<group>"; };
 		CC3459B4E6022FBD263A1B98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D899283E258F52E976B88875 /* BuddyNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddyNotificationCenter.swift; sourceTree = "<group>"; };
@@ -327,12 +327,6 @@
 					3F8ACEF9EAFFF7D2938DCC74 = {
 						DevelopmentTeam = "";
 					};
-					89FDE76CCB772B8D0ED90AEA = {
-						DevelopmentTeam = "";
-					};
-					B704384976EA2CDEE6ED26D3 = {
-						DevelopmentTeam = "";
-					};
 				};
 			};
 			buildConfigurationList = BD41E83893AB248CFF4D3207 /* Build configuration list for PBXProject "OpenVibble" */;
@@ -499,6 +493,7 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = C9JF3B5K5A;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = OpenVibbleLiveActivity/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
@@ -520,6 +515,7 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = C9JF3B5K5A;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = OpenVibbleLiveActivity/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
@@ -575,6 +571,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = C9JF3B5K5A;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = OpenVibble;
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Connect to Claude Desktop as Hardware Buddy.";
@@ -583,9 +580,7 @@
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UIBackgroundModes = (
-					"bluetooth-peripheral",
-				);
+				INFOPLIST_KEY_UIBackgroundModes = "bluetooth-peripheral";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
@@ -662,6 +657,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = C9JF3B5K5A;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = OpenVibble;
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Connect to Claude Desktop as Hardware Buddy.";
@@ -670,9 +666,7 @@
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UIBackgroundModes = (
-					"bluetooth-peripheral",
-				);
+				INFOPLIST_KEY_UIBackgroundModes = "bluetooth-peripheral";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
