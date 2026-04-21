@@ -24,10 +24,16 @@ public final class BuddyPeripheralService: NSObject, ObservableObject {
     @Published public private(set) var bluetoothStateNote: String = "蓝牙状态未知"
     @Published public private(set) var advertisingNote: String = "未广播"
     @Published public private(set) var diagnostics: [String] = []
+    /// Latest observed authorization state. Reflects `CBPeripheralManager.authorization`
+    /// on init and updates each time `peripheralManagerDidUpdateState` fires.
+    @Published public private(set) var authorizationState: CBManagerAuthorization = .notDetermined
 
     public var onLineReceived: ((String) -> Void)?
 
-    private let manager: CBPeripheralManager
+    /// Lazily constructed so that creating `BuddyPeripheralService` never triggers
+    /// the system BLE permission prompt. The prompt fires only after the caller
+    /// invokes `requestAuthorization()` or `start(...)`.
+    private var manager: CBPeripheralManager?
 
     private var txCharacteristic: CBMutableCharacteristic?
     private var rxCharacteristic: CBMutableCharacteristic?
@@ -42,16 +48,37 @@ public final class BuddyPeripheralService: NSObject, ObservableObject {
     private var includeServiceUUIDInAdvertisement = true
 
     public override init() {
-        self.manager = CBPeripheralManager(delegate: nil, queue: nil)
         super.init()
-        self.manager.delegate = self
-        log("INIT manager state=\(manager.state.rawValue)")
+        authorizationState = CBPeripheralManager.authorization
+    }
+
+    /// Snapshot of the current authorization state without forcing manager creation.
+    public static var currentAuthorization: CBManagerAuthorization {
+        CBPeripheralManager.authorization
+    }
+
+    /// Triggers the system Bluetooth permission prompt when the user has not
+    /// yet decided. Safe to call repeatedly — subsequent calls just re-use
+    /// the existing peripheral manager.
+    public func requestAuthorization() {
+        _ = ensureManager()
+    }
+
+    @discardableResult
+    private func ensureManager() -> CBPeripheralManager {
+        if let manager { return manager }
+        let created = CBPeripheralManager(delegate: self, queue: nil)
+        manager = created
+        authorizationState = CBPeripheralManager.authorization
+        log("MANAGER created state=\(created.state.rawValue) auth=\(authorizationState.rawValue)")
+        return created
     }
 
     public func start(displayName: String) {
         advertisedName = displayName
         isStarted = true
         log("START requested name=\(displayName)")
+        let manager = ensureManager()
         guard manager.state == .poweredOn else {
             bluetoothStateNote = stateNote(for: manager.state)
             log("START blocked state=\(manager.state.rawValue) note=\(bluetoothStateNote)")
@@ -70,8 +97,10 @@ public final class BuddyPeripheralService: NSObject, ObservableObject {
         isStarted = false
         pendingChunks.removeAll(keepingCapacity: false)
         subscribedCentrals.removeAll(keepingCapacity: false)
-        manager.stopAdvertising()
-        manager.removeAllServices()
+        if let manager {
+            manager.stopAdvertising()
+            manager.removeAllServices()
+        }
         txCharacteristic = nil
         rxCharacteristic = nil
         connectionState = .stopped
@@ -115,10 +144,11 @@ public final class BuddyPeripheralService: NSObject, ObservableObject {
         txCharacteristic = tx
         rxCharacteristic = rx
         log("SERVICE add NUS service=\(NUSUUIDs.serviceString)")
-        manager.add(service)
+        manager?.add(service)
     }
 
     private func startAdvertising() {
+        guard let manager else { return }
         advertisingNote = "请求开始广播"
         if includeServiceUUIDInAdvertisement {
             log("ADV start mode=name+service name=\(advertisedName) service=\(NUSUUIDs.serviceString)")
@@ -145,7 +175,7 @@ public final class BuddyPeripheralService: NSObject, ObservableObject {
     }
 
     private func drainPendingChunks() {
-        guard let txCharacteristic else { return }
+        guard let manager, let txCharacteristic else { return }
         while !pendingChunks.isEmpty {
             let chunk = pendingChunks[0]
             let success = manager.updateValue(chunk, for: txCharacteristic, onSubscribedCentrals: nil)
@@ -172,7 +202,8 @@ public final class BuddyPeripheralService: NSObject, ObservableObject {
 extension BuddyPeripheralService: CBPeripheralManagerDelegate {
     public func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
         bluetoothStateNote = stateNote(for: peripheral.state)
-        log("STATE changed=\(peripheral.state.rawValue) note=\(bluetoothStateNote)")
+        authorizationState = CBPeripheralManager.authorization
+        log("STATE changed=\(peripheral.state.rawValue) note=\(bluetoothStateNote) auth=\(authorizationState.rawValue)")
         if peripheral.state == .poweredOn {
             guard isStarted else { return }
             setupAndAdvertiseIfNeeded()

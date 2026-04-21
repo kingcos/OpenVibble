@@ -1,6 +1,7 @@
 import Foundation
 import UIKit
 import Combine
+import CoreBluetooth
 import BridgeRuntime
 import NUSPeripheral
 import BuddyProtocol
@@ -21,6 +22,9 @@ final class BridgeAppModel: ObservableObject {
     @Published private(set) var lastInstalledCharacter: String?
     @Published private(set) var recentLevelUp: Bool = false
     @Published private(set) var lastQuickApprovalAt: Date?
+    /// Mirrors `BuddyPeripheralService.authorizationState` so views can react
+    /// to the user granting/denying the BLE permission.
+    @Published private(set) var bluetoothAuthorization: CBManagerAuthorization = CBPeripheralManager.authorization
 
     private let quickApprovalThreshold: TimeInterval = 5
     private let liveActivityManager = BuddyLiveActivityManager()
@@ -84,6 +88,13 @@ final class BridgeAppModel: ObservableObject {
             }
             .store(in: &cancellables)
 
+        peripheral.$authorizationState
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] auth in
+                self?.bluetoothAuthorization = auth
+            }
+            .store(in: &cancellables)
+
         peripheral.onLineReceived = { [weak self] line in
             guard let self else { return }
             self.recordEvent("接收  \(line)")
@@ -98,7 +109,6 @@ final class BridgeAppModel: ObservableObject {
 
     func start(displayName: String? = nil, includeServiceUUIDInAdvertisement: Bool = true) {
         guard !started else { return }
-        Task { _ = await BuddyNotificationCenter.shared.requestAuthorizationIfNeeded() }
         let finalName = resolvedDisplayName(displayName)
         activeDisplayName = finalName
         peripheral.setAdvertisementMode(includeServiceUUID: includeServiceUUIDInAdvertisement)
@@ -109,6 +119,12 @@ final class BridgeAppModel: ObservableObject {
         Task { [snapshot, prompt] in
             await liveActivityManager.startOrUpdate(state: connectionState, snapshot: snapshot, hasPrompt: prompt != nil)
         }
+    }
+
+    /// Called by onboarding to show the Bluetooth permission sheet after an
+    /// explicit user tap (no auto-prompt at launch).
+    func requestBluetoothAuthorization() {
+        peripheral.requestAuthorization()
     }
 
     func restart(displayName: String? = nil, includeServiceUUIDInAdvertisement: Bool = true) {
