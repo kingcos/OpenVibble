@@ -60,6 +60,12 @@ enum TerminalStyle {
     static func mono(_ size: CGFloat, weight: Font.Weight = .regular) -> Font {
         .system(size: size, weight: weight, design: .monospaced)
     }
+
+    /// Display font for big titles — mimics h5-demo's "Chakra Petch":
+    /// bold + condensed width SF Pro so headline text feels angular and dense.
+    static func display(_ size: CGFloat, weight: Font.Weight = .heavy) -> Font {
+        .system(size: size, weight: weight, design: .default).width(.condensed)
+    }
 }
 
 // MARK: - Background

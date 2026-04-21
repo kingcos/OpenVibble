@@ -851,10 +851,10 @@ private struct InfoBody: View {
                     .foregroundStyle(TerminalStyle.inkDim)
             }
             Text(title)
-                .font(TerminalStyle.mono(15, weight: .heavy))
+                .font(TerminalStyle.display(22))
                 .tracking(3)
                 .foregroundStyle(TerminalStyle.accent)
-                .shadow(color: TerminalStyle.accent.opacity(0.35), radius: 0, x: 1, y: 1)
+                .shadow(color: TerminalStyle.accentSoft.opacity(0.55), radius: 0, x: 2, y: 2)
             Divider().background(TerminalStyle.lcdDivider)
 
             VStack(alignment: .leading, spacing: 4) {
