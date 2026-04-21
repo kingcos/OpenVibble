@@ -43,7 +43,6 @@ struct HomeScreen: View {
     @AppStorage("bridge.displayName") private var persistedDisplayName = ""
     @AppStorage("bridge.autoStartBLE") private var autoStartBLE = true
     @AppStorage("buddy.petName") private var petName: String = "Buddy"
-    @AppStorage("buddy.ownerName") private var ownerName: String = ""
     @AppStorage("buddy.showScanline") private var showScanline = true
 
     private let appStart = Date()
@@ -186,13 +185,6 @@ struct HomeScreen: View {
                         .background(Color.black.opacity(0.5), in: Capsule())
                         .overlay(Capsule().stroke(TerminalStyle.inkDim.opacity(0.35), lineWidth: 1))
                     Spacer()
-                    if mode == .normal {
-                        Text(petHeaderName)
-                            .font(TerminalStyle.mono(10))
-                            .foregroundStyle(TerminalStyle.inkDim)
-                            .lineLimit(1)
-                            .truncationMode(.tail)
-                    }
                 }
                 .padding(.horizontal, 12)
                 .padding(.top, 6)
@@ -227,7 +219,6 @@ struct HomeScreen: View {
                 page: infoPage,
                 appStart: appStart,
                 petName: petName,
-                ownerName: ownerName,
                 showScanline: showScanline
             )
         }
@@ -322,12 +313,6 @@ struct HomeScreen: View {
     // MARK: - Derived UI state
 
     private var petAreaHeight: CGFloat { 220 }
-
-    private var petHeaderName: String {
-        let trimmedOwner = ownerName.trimmingCharacters(in: .whitespacesAndNewlines)
-        let name = petName.isEmpty ? "Buddy" : petName
-        return trimmedOwner.isEmpty ? name : "\(trimmedOwner)'s \(name)"
-    }
 
     private var effectiveDisplayName: String? {
         let trimmed = persistedDisplayName.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -831,7 +816,6 @@ private struct InfoBody: View {
     let page: Int
     let appStart: Date
     let petName: String
-    let ownerName: String
     let showScanline: Bool
 
     static let pages: [String] = ["ABOUT", "BUTTONS", "CLAUDE", "DEVICE", "BLE", "CREDITS"]
