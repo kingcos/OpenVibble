@@ -12,6 +12,13 @@
 </p>
 
 OpenVibble is an iPhone app that pairs with Claude Desktop over BLE (Nordic UART Service) and acts as a "hardware buddy" on iOS.
+M5Stack dev board still on the way? Start with OpenVibble first.
+
+## Screenshots
+
+| Claude Desktop Connected | iPhone Running |
+| --- | --- |
+| ![Claude Desktop connected](./docs/readme/connected.png) | _Pending screenshot (`./docs/readme/iphone-running.png`)_ |
 
 It keeps the buddy runtime on your phone and supports:
 - BLE pairing with Claude Desktop Hardware Buddy mode
