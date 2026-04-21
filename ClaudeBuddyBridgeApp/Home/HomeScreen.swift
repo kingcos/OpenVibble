@@ -222,6 +222,7 @@ struct HomeScreen: View {
             Rectangle()
                 .fill(Color.black)
             buddyRenderer
+                .frame(maxWidth: 200, maxHeight: 200)
                 .padding(.horizontal, 24)
             VStack {
                 HStack {
