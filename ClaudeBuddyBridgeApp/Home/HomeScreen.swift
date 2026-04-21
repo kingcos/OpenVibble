@@ -109,12 +109,13 @@ struct HomeScreen: View {
                 .presentationDragIndicator(.visible)
         }
         .onAppear {
-            if autoStartBLE, model.bluetoothAuthorization == .allowedAlways {
-                model.start(
-                    displayName: effectiveDisplayName,
-                    includeServiceUUIDInAdvertisement: true
-                )
-            }
+            startBLEIfAllowed()
+        }
+        .onChange(of: model.bluetoothAuthorization) { _, _ in
+            // Covers the case where the user grants BLE in Settings after
+            // already skipping past onboarding — onAppear won't fire again
+            // but this will, so advertising kicks in as soon as they return.
+            startBLEIfAllowed()
         }
         .onReceive(promptTimer) { _ in
             if promptArrivedAt != nil { promptTick &+= 1 }
@@ -313,6 +314,14 @@ struct HomeScreen: View {
     // MARK: - Derived UI state
 
     private var petAreaHeight: CGFloat { 220 }
+
+    private func startBLEIfAllowed() {
+        guard autoStartBLE, model.bluetoothAuthorization == .allowedAlways else { return }
+        model.start(
+            displayName: effectiveDisplayName,
+            includeServiceUUIDInAdvertisement: true
+        )
+    }
 
     private var effectiveDisplayName: String? {
         let trimmed = persistedDisplayName.trimmingCharacters(in: .whitespacesAndNewlines)
