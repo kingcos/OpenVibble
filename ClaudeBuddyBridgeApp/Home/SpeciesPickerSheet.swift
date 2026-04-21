@@ -6,94 +6,114 @@ struct SpeciesPickerSheet: View {
     let builtin: [InstalledPersona]
     let installed: [InstalledPersona]
     let onClose: () -> Void
-    @AppStorage("buddy.themePreset") private var themePreset = BuddyThemePreset.m5Orange.rawValue
+    @AppStorage("buddy.showScanline") private var showScanline = true
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                BuddyTheme.backgroundGradient(themePreset).ignoresSafeArea()
-                List {
-                    Section {
-                        row(titleKey: "species.ascii.cat", subtitle: nil, id: .asciiCat)
-                        ForEach(builtin) { persona in
-                            row(
-                                title: persona.manifest.name.capitalized,
-                                subtitle: "\(persona.manifest.states.count) states",
-                                id: .builtin(name: persona.name)
-                            )
-                        }
-                    } header: {
-                        Text("species.builtin")
-                    }
+        ZStack {
+            TerminalBackground(showScanline: showScanline)
 
-                    Section {
-                        if installed.isEmpty {
-                            Text("species.empty.installed")
-                                .font(.footnote)
-                                .foregroundStyle(.secondary)
-                        } else {
-                            ForEach(installed) { persona in
-                                row(
-                                    title: persona.manifest.name,
+            ScrollView {
+                VStack(alignment: .leading, spacing: 12) {
+                    header
+
+                    TerminalPanel("species --builtin") {
+                        VStack(spacing: 6) {
+                            rowButton(titleKey: "species.ascii.cat", subtitle: nil, id: .asciiCat)
+                            ForEach(builtin) { persona in
+                                rowButton(
+                                    title: persona.manifest.name.capitalized,
                                     subtitle: "\(persona.manifest.states.count) states",
-                                    id: .installed(name: persona.name)
+                                    id: .builtin(name: persona.name)
                                 )
                             }
                         }
-                    } header: {
-                        Text("species.installed")
+                    }
+
+                    TerminalPanel("species --installed") {
+                        if installed.isEmpty {
+                            Text("species.empty.installed")
+                                .font(TerminalStyle.mono(12))
+                                .foregroundStyle(.green.opacity(0.55))
+                        } else {
+                            VStack(spacing: 6) {
+                                ForEach(installed) { persona in
+                                    rowButton(
+                                        title: persona.manifest.name,
+                                        subtitle: "\(persona.manifest.states.count) states",
+                                        id: .installed(name: persona.name)
+                                    )
+                                }
+                            }
+                        }
                     }
                 }
-                .scrollContentBackground(.hidden)
-            }
-            .navigationTitle("species.title")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("common.done", action: onClose)
-                }
+                .padding(16)
             }
         }
         .preferredColorScheme(.dark)
     }
 
-    private func row(titleKey: LocalizedStringKey, subtitle: String?, id: PersonaSpeciesID) -> some View {
-        Button {
-            selection = id
-            PersonaSelection.save(id)
-        } label: {
-            HStack {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(titleKey).foregroundStyle(.primary)
-                    if let subtitle {
-                        Text(subtitle).font(.caption).foregroundStyle(.secondary)
-                    }
-                }
-                Spacer()
-                if id == selection {
-                    Image(systemName: "checkmark")
-                        .foregroundStyle(.tint)
-                }
+    private var header: some View {
+        HStack {
+            Text("$ species")
+                .font(TerminalStyle.mono(16, weight: .bold))
+                .foregroundStyle(.green)
+            Spacer()
+            Button(action: onClose) {
+                Text("common.done")
             }
+            .buttonStyle(TerminalHeaderButtonStyle())
         }
     }
 
-    private func row(title: String, subtitle: String, id: PersonaSpeciesID) -> some View {
+    private func rowButton(titleKey: LocalizedStringKey, subtitle: String?, id: PersonaSpeciesID) -> some View {
         Button {
             selection = id
             PersonaSelection.save(id)
         } label: {
-            HStack {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(title).foregroundStyle(.primary)
-                    Text(subtitle).font(.caption).foregroundStyle(.secondary)
-                }
-                Spacer()
-                if id == selection {
-                    Image(systemName: "checkmark")
-                        .foregroundStyle(.tint)
+            rowBody(titleView: Text(titleKey), subtitle: subtitle, selected: id == selection)
+        }
+        .buttonStyle(.plain)
+    }
+
+    private func rowButton(title: String, subtitle: String, id: PersonaSpeciesID) -> some View {
+        Button {
+            selection = id
+            PersonaSelection.save(id)
+        } label: {
+            rowBody(titleView: Text(title), subtitle: subtitle, selected: id == selection)
+        }
+        .buttonStyle(.plain)
+    }
+
+    private func rowBody(titleView: Text, subtitle: String?, selected: Bool) -> some View {
+        HStack {
+            VStack(alignment: .leading, spacing: 2) {
+                titleView
+                    .font(TerminalStyle.mono(13, weight: .semibold))
+                    .foregroundStyle(.green)
+                if let subtitle {
+                    Text(subtitle)
+                        .font(TerminalStyle.mono(10))
+                        .foregroundStyle(.green.opacity(0.55))
                 }
             }
+            Spacer()
+            if selected {
+                Image(systemName: "checkmark")
+                    .font(.system(size: 12, weight: .bold))
+                    .foregroundStyle(.green)
+            }
         }
+        .padding(.horizontal, 10)
+        .padding(.vertical, 8)
+        .background(
+            Color.black.opacity(selected ? 0.55 : 0.35),
+            in: RoundedRectangle(cornerRadius: 8)
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(Color.green.opacity(selected ? 0.6 : 0.25), lineWidth: 1)
+        )
     }
 }

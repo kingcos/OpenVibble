@@ -9,14 +9,15 @@ struct SettingsScreen: View {
 
     @Environment(\.dismiss) private var dismiss
     @AppStorage("buddy.hasOnboarded") private var hasOnboarded: Bool = false
-    @AppStorage("buddy.themePreset") private var themePreset = BuddyThemePreset.m5Orange.rawValue
     @AppStorage("buddy.notificationsEnabled") private var notificationsEnabled = true
+    @AppStorage("buddy.showScanline") private var showScanline = true
     @AppStorage("buddy.petName") private var petName: String = "Buddy"
     @AppStorage("buddy.ownerName") private var ownerName: String = ""
+    @AppStorage("bridge.displayName") private var bridgeDisplayName: String = ""
+    @AppStorage("bridge.autoStartBLE") private var autoStartBLE: Bool = true
 
-    @State private var notificationStatus = "Unknown"
+    @State private var notificationStatus = "?"
     @State private var showPicker = false
-    @State private var showInfo = false
     @State private var confirmResetStats = false
     @State private var confirmDeleteChars = false
     @State private var infoMessage: LocalizedStringKey?
@@ -27,280 +28,266 @@ struct SettingsScreen: View {
     private let repoURL = URL(string: "https://github.com/kingcos/claude-buddy-bridge-ios")!
 
     var body: some View {
-        NavigationStack {
-            ZStack {
-                BuddyTheme.backgroundGradient(themePreset).ignoresSafeArea()
+        ZStack {
+            TerminalBackground(showScanline: showScanline)
 
-                ScrollView {
-                    VStack(spacing: 14) {
-                        petCard
-                        themeCard
-                        notificationCard
-                        aboutCard
-                        guideCard
-                        dangerCard
-                    }
-                    .padding(16)
+            ScrollView {
+                VStack(alignment: .leading, spacing: 12) {
+                    headerBar
+
+                    TerminalPanel("buddy --profile") { profileContent }
+                    TerminalPanel("buddy --display") { displayContent }
+                    TerminalPanel("about") { aboutContent }
+                    TerminalPanel("danger", accent: .red) { dangerContent }
                 }
+                .padding(16)
             }
-            .navigationTitle("settings.title")
-            .navigationBarTitleDisplayMode(.large)
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("common.done") { dismiss() }
+        }
+        .preferredColorScheme(.dark)
+        .task { await refreshNotificationStatus() }
+        .onAppear(perform: reloadInstalled)
+        .sheet(isPresented: $showPicker) {
+            SpeciesPickerSheet(
+                selection: $selection,
+                builtin: builtin,
+                installed: installed,
+                onClose: { showPicker = false }
+            )
+        }
+        .confirmationDialog(
+            Text("pet.reset.confirm"),
+            isPresented: $confirmResetStats,
+            titleVisibility: .visible
+        ) {
+            Button(role: .destructive) {
+                stats.reset()
+                infoMessage = "pet.stats.resetOk"
+            } label: { Text("pet.reset.doIt") }
+            Button(role: .cancel) {} label: { Text("common.cancel") }
+        } message: {
+            Text("pet.reset.message")
+        }
+        .confirmationDialog(
+            Text("pet.delete.confirm"),
+            isPresented: $confirmDeleteChars,
+            titleVisibility: .visible
+        ) {
+            Button(role: .destructive) {
+                let catalog = PersonaCatalog(rootURL: model.charactersRootURL)
+                let ok = catalog.deleteAll()
+                PersonaSelection.save(PersonaSelection.defaultSpecies)
+                selection = PersonaSelection.defaultSpecies
+                reloadInstalled()
+                infoMessage = ok ? "pet.stats.deleteOk" : "pet.stats.deleteFail"
+            } label: { Text("pet.delete.doIt") }
+            Button(role: .cancel) {} label: { Text("common.cancel") }
+        } message: {
+            Text("pet.delete.message")
+        }
+        .alert(
+            "common.notice",
+            isPresented: Binding(
+                get: { infoMessage != nil },
+                set: { if !$0 { infoMessage = nil } }
+            )
+        ) {
+            Button("common.ok", role: .cancel) { infoMessage = nil }
+        } message: {
+            if let m = infoMessage { Text(m) }
+        }
+    }
+
+    // MARK: - Header
+
+    private var headerBar: some View {
+        HStack {
+            Text("$ settings")
+                .font(TerminalStyle.mono(16, weight: .bold))
+                .foregroundStyle(.green)
+            Spacer()
+            Button {
+                dismiss()
+            } label: {
+                Text("common.done")
+            }
+            .buttonStyle(TerminalHeaderButtonStyle())
+        }
+    }
+
+    // MARK: - Profile panel (identity + bridge)
+
+    private var profileContent: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            labeledField("pet", text: $petName, placeholder: "Buddy")
+            labeledField("owner", text: $ownerName, placeholder: String(localized: "settings.pet.ownerPlaceholder"))
+            labeledField("ble",   text: $bridgeDisplayName, placeholder: "Claude-iPhone")
+
+            Button {
+                showPicker = true
+            } label: {
+                HStack(spacing: 6) {
+                    Text("species")
+                        .foregroundStyle(.green.opacity(0.6))
+                    Text(currentSpeciesLabel)
+                        .foregroundStyle(.green)
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 11, weight: .bold))
+                        .foregroundStyle(.green.opacity(0.6))
                 }
-            }
-            .preferredColorScheme(.dark)
-            .task { await refreshNotificationStatus() }
-            .onAppear(perform: reloadInstalled)
-            .sheet(isPresented: $showPicker) {
-                SpeciesPickerSheet(
-                    selection: $selection,
-                    builtin: builtin,
-                    installed: installed,
-                    onClose: { showPicker = false }
+                .font(TerminalStyle.mono(12))
+                .padding(.horizontal, 10)
+                .padding(.vertical, 8)
+                .background(Color.black.opacity(0.45), in: RoundedRectangle(cornerRadius: 8))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.green.opacity(0.35), lineWidth: 1)
                 )
             }
-            .sheet(isPresented: $showInfo) {
-                InfoScreen()
+            .buttonStyle(.plain)
+
+            Toggle(isOn: $autoStartBLE) {
+                Text("auto-advertise")
+                    .font(TerminalStyle.mono(12))
+                    .foregroundStyle(.green)
             }
-            .confirmationDialog(
-                Text("pet.reset.confirm"),
-                isPresented: $confirmResetStats,
-                titleVisibility: .visible
-            ) {
-                Button(role: .destructive) {
-                    stats.reset()
-                    infoMessage = "pet.stats.resetOk"
-                } label: { Text("pet.reset.doIt") }
-                Button(role: .cancel) {} label: { Text("common.cancel") }
-            } message: {
-                Text("pet.reset.message")
-            }
-            .confirmationDialog(
-                Text("pet.delete.confirm"),
-                isPresented: $confirmDeleteChars,
-                titleVisibility: .visible
-            ) {
-                Button(role: .destructive) {
-                    let catalog = PersonaCatalog(rootURL: model.charactersRootURL)
-                    let ok = catalog.deleteAll()
-                    PersonaSelection.save(PersonaSelection.defaultSpecies)
-                    selection = PersonaSelection.defaultSpecies
-                    reloadInstalled()
-                    infoMessage = ok ? "pet.stats.deleteOk" : "pet.stats.deleteFail"
-                } label: { Text("pet.delete.doIt") }
-                Button(role: .cancel) {} label: { Text("common.cancel") }
-            } message: {
-                Text("pet.delete.message")
-            }
-            .alert("common.notice", isPresented: Binding(get: { infoMessage != nil }, set: { if !$0 { infoMessage = nil } })) {
-                Button("common.ok", role: .cancel) { infoMessage = nil }
-            } message: {
-                if let m = infoMessage { Text(m) }
-            }
+            .tint(.green)
         }
     }
 
-    // MARK: - Cards
+    private func labeledField(_ tag: String, text: Binding<String>, placeholder: String) -> some View {
+        HStack(spacing: 8) {
+            Text(tag)
+                .frame(width: 56, alignment: .leading)
+                .foregroundStyle(.green.opacity(0.6))
+            TextField(placeholder, text: text)
+                .textInputAutocapitalization(.words)
+                .autocorrectionDisabled()
+                .foregroundStyle(.green)
+                .tint(.green)
+        }
+        .font(TerminalStyle.mono(12))
+        .padding(.horizontal, 10)
+        .padding(.vertical, 8)
+        .background(Color.black.opacity(0.45), in: RoundedRectangle(cornerRadius: 8))
+        .overlay(
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(Color.green.opacity(0.35), lineWidth: 1)
+        )
+    }
 
-    private var petCard: some View {
-        BuddyCard {
-            VStack(alignment: .leading, spacing: 12) {
-                Label("settings.section.pet", systemImage: "pawprint.circle.fill")
-                    .font(.system(size: 16, weight: .semibold, design: .rounded))
+    // MARK: - Display (scanline + notifications merged)
 
+    private var displayContent: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Toggle(isOn: $showScanline) {
+                Text("scanline")
+                    .font(TerminalStyle.mono(12))
+                    .foregroundStyle(.green)
+            }
+            .tint(.green)
+
+            Toggle(isOn: $notificationsEnabled) {
                 HStack {
-                    Text("settings.pet.petName")
-                    Spacer()
-                    TextField("Buddy", text: $petName)
-                        .multilineTextAlignment(.trailing)
-                        .textInputAutocapitalization(.words)
-                        .autocorrectionDisabled()
-                        .font(.system(.body, design: .monospaced))
-                        .frame(maxWidth: 140)
-                }
-
-                HStack {
-                    Text("settings.pet.ownerName")
-                    Spacer()
-                    TextField("settings.pet.ownerPlaceholder", text: $ownerName)
-                        .multilineTextAlignment(.trailing)
-                        .textInputAutocapitalization(.words)
-                        .autocorrectionDisabled()
-                        .font(.system(.body, design: .monospaced))
-                        .frame(maxWidth: 140)
-                }
-
-                Button {
-                    showPicker = true
-                } label: {
-                    HStack {
-                        Label("settings.pet.change", systemImage: "pawprint")
-                        Spacer()
-                        Text(currentSpeciesLabel)
-                            .foregroundStyle(.secondary)
-                            .font(.system(.caption, design: .monospaced))
-                    }
-                }
-                .buttonStyle(.plain)
-
-                Button {
-                    showInfo = true
-                } label: {
-                    Label("settings.pet.info", systemImage: "info.circle")
-                }
-                .buttonStyle(.plain)
-
-                statsSummary
-            }
-        }
-    }
-
-    private var statsSummary: some View {
-        let s = stats.stats
-        return VStack(alignment: .leading, spacing: 4) {
-            Text("settings.pet.summary")
-                .font(.caption.weight(.semibold))
-                .foregroundStyle(.secondary)
-            HStack {
-                statPill(label: "Lv", value: "\(s.level)")
-                statPill(label: "approved", value: "\(s.approvals)")
-                statPill(label: "denied", value: "\(s.denials)")
-            }
-        }
-        .padding(.top, 4)
-    }
-
-    private func statPill(label: String, value: String) -> some View {
-        VStack(spacing: 2) {
-            Text(value)
-                .font(.system(.callout, design: .monospaced).weight(.semibold))
-            Text(label)
-                .font(.system(size: 9, design: .monospaced))
-                .foregroundStyle(.secondary)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 6)
-        .background(Color.white.opacity(0.05), in: RoundedRectangle(cornerRadius: 8))
-    }
-
-    private var themeCard: some View {
-        BuddyCard {
-            VStack(alignment: .leading, spacing: 12) {
-                Label("settings.section.theme", systemImage: "paintpalette")
-                    .font(.system(size: 16, weight: .semibold, design: .rounded))
-
-                ForEach(BuddyThemePreset.allCases) { preset in
-                    Button {
-                        themePreset = preset.rawValue
-                    } label: {
-                        HStack {
-                            Circle()
-                                .fill(BuddyTheme.palette(preset.rawValue).shell)
-                                .frame(width: 16, height: 16)
-                            Text(themeName(for: preset))
-                            Spacer()
-                            if themePreset == preset.rawValue {
-                                Image(systemName: "checkmark.circle.fill")
-                                    .foregroundStyle(BuddyTheme.palette(themePreset).highlight)
-                            }
-                        }
-                    }
-                    .buttonStyle(.plain)
-                }
-            }
-        }
-    }
-
-    private var notificationCard: some View {
-        BuddyCard {
-            VStack(alignment: .leading, spacing: 12) {
-                Label("settings.section.notifications", systemImage: "bell.badge")
-                    .font(.system(size: 16, weight: .semibold, design: .rounded))
-
-                Toggle("settings.notifications.enable", isOn: $notificationsEnabled)
-                    .tint(BuddyTheme.palette(themePreset).highlight)
-
-                HStack {
-                    Text("settings.notifications.status")
+                    Text("notifications")
                     Spacer()
                     Text(notificationStatus)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(.green.opacity(0.6))
+                        .font(TerminalStyle.mono(10))
                 }
-
-                Button {
-                    Task {
-                        _ = await BuddyNotificationCenter.shared.requestAuthorizationIfNeeded()
-                        await refreshNotificationStatus()
-                    }
-                } label: {
-                    Label("settings.notifications.request", systemImage: "hand.raised")
-                        .frame(maxWidth: .infinity)
-                }
-                .buttonStyle(.borderedProminent)
-                .tint(BuddyTheme.palette(themePreset).button)
+                .font(TerminalStyle.mono(12))
+                .foregroundStyle(.green)
             }
+            .tint(.green)
+
+            Button {
+                Task {
+                    _ = await BuddyNotificationCenter.shared.requestAuthorizationIfNeeded()
+                    await refreshNotificationStatus()
+                }
+            } label: {
+                Text("settings.notifications.request")
+                    .frame(maxWidth: .infinity)
+            }
+            .buttonStyle(TerminalHeaderButtonStyle(fill: true))
         }
     }
 
-    private var aboutCard: some View {
-        BuddyCard {
-            VStack(alignment: .leading, spacing: 10) {
-                Label("settings.section.about", systemImage: "info.circle")
-                    .font(.system(size: 16, weight: .semibold, design: .rounded))
+    // MARK: - About
 
-                keyValue("settings.about.app", "Claude Buddy Bridge")
-                keyValue("settings.about.version", appVersion)
-                keyValue("settings.about.author", "kingcos")
-                keyValue("settings.about.language", currentLanguageLabel)
+    private var aboutContent: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            aboutRow("name", "Claude Buddy Bridge")
+            aboutRow("ver", appVersion)
+            aboutRow("by",  "kingcos")
+            aboutRow("lang", currentLanguageLabel)
 
-                Link(destination: repoURL) {
-                    Label("settings.about.repo", systemImage: "arrow.up.right.square")
-                        .frame(maxWidth: .infinity, alignment: .leading)
+            Link(destination: repoURL) {
+                HStack {
+                    Text("github →")
+                        .foregroundStyle(.green)
+                    Spacer()
                 }
-                .foregroundStyle(BuddyTheme.palette(themePreset).highlight)
+                .font(TerminalStyle.mono(12, weight: .semibold))
+                .padding(.top, 4)
             }
+
+            Button {
+                hasOnboarded = false
+            } label: {
+                HStack {
+                    Text("settings.guide.show")
+                    Spacer()
+                    Image(systemName: "arrow.up.right")
+                        .font(.system(size: 11, weight: .bold))
+                }
+                .foregroundStyle(.green.opacity(0.8))
+                .font(TerminalStyle.mono(12))
+            }
+            .buttonStyle(.plain)
         }
     }
 
-    private var guideCard: some View {
-        BuddyCard {
-            VStack(alignment: .leading, spacing: 8) {
-                Label("settings.section.guide", systemImage: "book")
-                    .font(.system(size: 16, weight: .semibold, design: .rounded))
-
-                Button {
-                    hasOnboarded = false
-                } label: {
-                    Label("settings.guide.show", systemImage: "sparkles")
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                }
-            }
+    private func aboutRow(_ key: String, _ value: String) -> some View {
+        HStack {
+            Text(key)
+                .foregroundStyle(.green.opacity(0.6))
+            Spacer()
+            Text(value)
+                .foregroundStyle(.green.opacity(0.9))
         }
+        .font(TerminalStyle.mono(12))
     }
 
-    private var dangerCard: some View {
-        BuddyCard {
-            VStack(alignment: .leading, spacing: 10) {
-                Label("settings.section.danger", systemImage: "exclamationmark.triangle")
-                    .font(.system(size: 16, weight: .semibold, design: .rounded))
-                    .foregroundStyle(.red)
+    // MARK: - Danger
 
-                Button(role: .destructive) {
-                    confirmResetStats = true
-                } label: {
-                    Label("pet.reset", systemImage: "arrow.counterclockwise")
-                        .frame(maxWidth: .infinity, alignment: .leading)
+    private var dangerContent: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Button(role: .destructive) {
+                confirmResetStats = true
+            } label: {
+                HStack {
+                    Text("pet.reset")
+                    Spacer()
+                    Image(systemName: "arrow.counterclockwise")
                 }
-
-                Button(role: .destructive) {
-                    confirmDeleteChars = true
-                } label: {
-                    Label("pet.delete", systemImage: "trash")
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                }
+                .font(TerminalStyle.mono(12, weight: .semibold))
+                .foregroundStyle(.red.opacity(0.9))
             }
+            .buttonStyle(.plain)
+
+            Button(role: .destructive) {
+                confirmDeleteChars = true
+            } label: {
+                HStack {
+                    Text("pet.delete")
+                    Spacer()
+                    Image(systemName: "trash")
+                }
+                .font(TerminalStyle.mono(12, weight: .semibold))
+                .foregroundStyle(.red.opacity(0.9))
+            }
+            .buttonStyle(.plain)
         }
     }
 
@@ -315,16 +302,6 @@ struct SettingsScreen: View {
         }
     }
 
-    private func keyValue(_ key: LocalizedStringKey, _ value: String) -> some View {
-        HStack {
-            Text(key)
-            Spacer()
-            Text(value)
-                .foregroundStyle(.secondary)
-                .font(.system(.body, design: .monospaced))
-        }
-    }
-
     private var appVersion: String {
         let info = Bundle.main.infoDictionary ?? [:]
         let short = (info["CFBundleShortVersionString"] as? String) ?? "—"
@@ -335,15 +312,6 @@ struct SettingsScreen: View {
     private var currentLanguageLabel: String {
         let code = Locale.current.language.languageCode?.identifier ?? "en"
         return code.hasPrefix("zh") ? "中文" : "English"
-    }
-
-    private func themeName(for preset: BuddyThemePreset) -> String {
-        switch preset {
-        case .m5Orange: return String(localized: "settings.theme.orange")
-        case .mint:     return String(localized: "settings.theme.mint")
-        case .graphite: return String(localized: "settings.theme.graphite")
-        case .coral:    return String(localized: "settings.theme.coral")
-        }
     }
 
     private func reloadInstalled() {

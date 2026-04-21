@@ -23,35 +23,35 @@ enum RootPage: String, CaseIterable, Identifiable {
 
 struct MechanicalSwitch: View {
     @Binding var page: RootPage
-    @AppStorage("buddy.themePreset") private var themePreset = BuddyThemePreset.m5Orange.rawValue
 
     private let thumbWidth: CGFloat = 72
     private let trackHeight: CGFloat = 48
     private let padding: CGFloat = 4
+    private let thumb = Color.green
+    private let thumbShadow = Color(red: 0.05, green: 0.35, blue: 0.15)
 
     var body: some View {
-        let palette = BuddyTheme.palette(themePreset)
         HStack(spacing: 0) {
-            half(.pet, palette: palette)
-            half(.terminal, palette: palette)
+            half(.pet)
+            half(.terminal)
         }
         .frame(width: thumbWidth * 2 + padding * 2, height: trackHeight)
         .background(
             RoundedRectangle(cornerRadius: trackHeight / 2, style: .continuous)
-                .fill(Color.black.opacity(0.6))
+                .fill(Color.black.opacity(0.75))
                 .overlay(
                     RoundedRectangle(cornerRadius: trackHeight / 2, style: .continuous)
-                        .stroke(Color.white.opacity(0.12), lineWidth: 1)
+                        .stroke(Color.green.opacity(0.3), lineWidth: 1)
                 )
         )
         .overlay(alignment: .leading) {
             RoundedRectangle(cornerRadius: (trackHeight - padding * 2) / 2, style: .continuous)
-                .fill(palette.shell)
+                .fill(thumb)
                 .overlay(
                     RoundedRectangle(cornerRadius: (trackHeight - padding * 2) / 2, style: .continuous)
                         .stroke(Color.white.opacity(0.22), lineWidth: 1)
                 )
-                .shadow(color: palette.shellShadow.opacity(0.6), radius: 6, y: 3)
+                .shadow(color: thumbShadow.opacity(0.6), radius: 6, y: 3)
                 .padding(padding)
                 .frame(width: thumbWidth + padding * 2)
                 .offset(x: page == .pet ? 0 : thumbWidth)
@@ -61,7 +61,7 @@ struct MechanicalSwitch: View {
         .shadow(color: Color.black.opacity(0.45), radius: 10, y: 4)
     }
 
-    private func half(_ target: RootPage, palette: BuddyPalette) -> some View {
+    private func half(_ target: RootPage) -> some View {
         let selected = page == target
         return Button {
             if page != target { page = target }
@@ -73,7 +73,7 @@ struct MechanicalSwitch: View {
                     .font(.system(size: 11, weight: .bold, design: .monospaced))
                     .tracking(1.2)
             }
-            .foregroundStyle(selected ? Color.black : Color.white.opacity(0.7))
+            .foregroundStyle(selected ? Color.black : Color.green.opacity(0.7))
             .frame(width: thumbWidth, height: trackHeight)
             .contentShape(Rectangle())
         }

@@ -1,54 +1,73 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    " %@" : {
+    "·" : {
 
     },
-    "%@ / %@ 字节" : {
+    "[%@]" : {
+
+    },
+    "[adv]  %@" : {
+
+    },
+    "[ble]  %@" : {
+
+    },
+    "[name] %@" : {
+
+    },
+    "%@ :: %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "%1$@ / %2$@ 字节"
+            "value" : "%1$@ :: %2$@"
           }
         }
       }
     },
-    "%@/%@" : {
+    "%@ / %@ B" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "%1$@/%2$@"
+            "value" : "%1$@ / %2$@ B"
           }
         }
       }
+    },
+    "↓ %@ :: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "↓ %1$@ :: %2$@"
+          }
+        }
+      }
+    },
+    "⚠ %@ 待确认" : {
+
+    },
+    "⚠ prompt" : {
+
     },
     "$ %@" : {
 
     },
-    "$ peripheral callbacks" : {
+    "$ ble --advertise" : {
 
     },
-    "$ tail -f buddy.log" : {
+    "$ buddy --init" : {
 
     },
-    "$ 帮助" : {
+    "$ settings" : {
 
     },
-    "$ 文件传输" : {
+    "$ species" : {
 
     },
-    "$ 权限待确认" : {
-
-    },
-    "$ 状态快照" : {
-
-    },
-    "$ 设置" : {
-
-    },
-    "$ 诊断日志" : {
+    "$ system.setDeviceName" : {
 
     },
     "app.name" : {
@@ -67,6 +86,9 @@
           }
         }
       }
+    },
+    "auto-advertise" : {
+
     },
     "common.back" : {
       "extractionState" : "stale",
@@ -119,7 +141,6 @@
       }
     },
     "common.done" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -201,6 +222,9 @@
           }
         }
       }
+    },
+    "github →" : {
+
     },
     "home.a11y.choosePet" : {
       "extractionState" : "stale",
@@ -304,10 +328,8 @@
         }
       }
     },
-    "idle = sleep" : {
-
-    },
     "info.about.body1" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -324,6 +346,7 @@
       }
     },
     "info.about.body2" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -340,6 +363,7 @@
       }
     },
     "info.about.heading" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -356,6 +380,7 @@
       }
     },
     "info.claude.body1" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -372,6 +397,7 @@
       }
     },
     "info.claude.body2" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -388,6 +414,7 @@
       }
     },
     "info.claude.heading" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -404,6 +431,7 @@
       }
     },
     "info.credits.body1" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -420,6 +448,7 @@
       }
     },
     "info.credits.body2" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -436,6 +465,7 @@
       }
     },
     "info.credits.body3" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -452,6 +482,7 @@
       }
     },
     "info.credits.heading" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -468,6 +499,7 @@
       }
     },
     "info.gestures.device" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -586,6 +618,7 @@
       }
     },
     "info.gestures.screen" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -927,10 +960,10 @@
         }
       }
     },
-    "NUS 6e40…" : {
+    "notifications" : {
 
     },
-    "NUS UUID 广播：固定开启（兼容 Claude Desktop 设备扫描）" : {
+    "NUS 6e40…" : {
 
     },
     "onboarding.cta.start" : {
@@ -1015,7 +1048,6 @@
       }
     },
     "onboarding.rename.openSettings" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1079,7 +1111,11 @@
         }
       }
     },
+    "pet:%@" : {
+
+    },
     "pet.a11y.nextPage" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1113,7 +1149,6 @@
       }
     },
     "pet.delete" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1280,7 +1315,6 @@
       }
     },
     "pet.reset" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1514,6 +1548,9 @@
         }
       }
     },
+    "scanline" : {
+
+    },
     "settings.about.app" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1617,7 +1654,6 @@
       }
     },
     "settings.guide.show" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1651,7 +1687,6 @@
       }
     },
     "settings.notifications.request" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1668,6 +1703,7 @@
       }
     },
     "settings.notifications.status" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1786,6 +1822,7 @@
       }
     },
     "settings.pet.ownerName" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1819,6 +1856,7 @@
       }
     },
     "settings.pet.petName" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1835,6 +1873,7 @@
       }
     },
     "settings.pet.summary" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2036,6 +2075,9 @@
         }
       }
     },
+    "species" : {
+
+    },
     "species.ascii.cat" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2054,6 +2096,7 @@
       }
     },
     "species.builtin" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2086,6 +2129,7 @@
       }
     },
     "species.installed" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2168,46 +2212,6 @@
           }
         }
       }
-    },
-    "tap 1/2 = next page" : {
-
-    },
-    "为提高可发现性，当前版本会强制使用广播名 Claude。" : {
-
-    },
-    "工具=%@ id=%@" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "工具=%1$@ id=%2$@"
-          }
-        }
-      }
-    },
-    "广播：%@" : {
-
-    },
-    "广播名：%@" : {
-
-    },
-    "广播名称：%@" : {
-
-    },
-    "广播状态：%@" : {
-
-    },
-    "暂无日志" : {
-
-    },
-    "蓝牙：%@" : {
-
-    },
-    "蓝牙状态：%@" : {
-
-    },
-    "设备显示名（当前固定为 Claude）" : {
-
     }
   },
   "version" : "1.0"

@@ -4,12 +4,12 @@ import UIKit
 struct OnboardingScreen: View {
     let onFinish: () -> Void
     @State private var page: Int = 0
-    @AppStorage("buddy.themePreset") private var themePreset = BuddyThemePreset.m5Orange.rawValue
+    @AppStorage("buddy.showScanline") private var showScanline = true
     private let totalPages = 3
 
     var body: some View {
         ZStack {
-            BuddyTheme.backgroundGradient(themePreset).ignoresSafeArea()
+            TerminalBackground(showScanline: showScanline)
 
             VStack(spacing: 0) {
                 header
@@ -30,7 +30,7 @@ struct OnboardingScreen: View {
         HStack(spacing: 8) {
             ForEach(0..<totalPages, id: \.self) { i in
                 Capsule()
-                    .fill(i == page ? Color.white : Color.white.opacity(0.25))
+                    .fill(i == page ? Color.green : Color.green.opacity(0.25))
                     .frame(width: i == page ? 22 : 8, height: 6)
                     .animation(.easeInOut(duration: 0.25), value: page)
             }
@@ -40,8 +40,8 @@ struct OnboardingScreen: View {
                     onFinish()
                 } label: {
                     Text("common.skip")
-                        .font(.system(size: 13, weight: .medium, design: .rounded))
-                        .foregroundStyle(.white.opacity(0.7))
+                        .font(TerminalStyle.mono(12, weight: .semibold))
+                        .foregroundStyle(.green.opacity(0.7))
                 }
             }
         }
@@ -51,61 +51,76 @@ struct OnboardingScreen: View {
     }
 
     private var welcomePage: some View {
-        VStack(spacing: 24) {
+        VStack(spacing: 20) {
             Spacer()
-            M5DeviceShell {
-                Image(systemName: "pawprint.fill")
-                    .font(.system(size: 70, weight: .bold))
-                    .foregroundStyle(BuddyTheme.palette(themePreset).highlight)
-            }
-            VStack(spacing: 12) {
+            Text("$ buddy --init")
+                .font(TerminalStyle.mono(14, weight: .bold))
+                .foregroundStyle(.green.opacity(0.7))
+
+            Image(systemName: "pawprint.fill")
+                .font(.system(size: 60, weight: .bold))
+                .foregroundStyle(.green)
+                .padding(24)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 14)
+                        .stroke(Color.green.opacity(0.5), lineWidth: 1)
+                )
+
+            VStack(spacing: 10) {
                 Text("onboarding.welcome.title")
-                    .font(.system(size: 28, weight: .bold, design: .rounded))
-                    .foregroundStyle(.white)
+                    .font(TerminalStyle.mono(22, weight: .bold))
+                    .foregroundStyle(.green)
                     .multilineTextAlignment(.center)
                 Text("onboarding.welcome.body")
-                    .font(.system(size: 15, design: .rounded))
-                    .foregroundStyle(.white.opacity(0.72))
+                    .font(TerminalStyle.mono(13))
+                    .foregroundStyle(.green.opacity(0.75))
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 32)
             }
             Spacer()
         }
+        .padding(.horizontal, 16)
     }
 
     private var renamePage: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 16) {
             Spacer()
+            Text("$ system.setDeviceName")
+                .font(TerminalStyle.mono(14, weight: .bold))
+                .foregroundStyle(.green.opacity(0.7))
+
             Image(systemName: "iphone.badge.checkmark")
-                .font(.system(size: 72, weight: .regular))
-                .foregroundStyle(BuddyTheme.palette(themePreset).highlight)
-                .padding(.bottom, 4)
-            VStack(spacing: 10) {
+                .font(.system(size: 60, weight: .regular))
+                .foregroundStyle(.green)
+
+            VStack(spacing: 8) {
                 Text("onboarding.rename.title")
-                    .font(.system(size: 24, weight: .bold, design: .rounded))
-                    .foregroundStyle(.white)
+                    .font(TerminalStyle.mono(20, weight: .bold))
+                    .foregroundStyle(.green)
                     .multilineTextAlignment(.center)
                 Text("onboarding.rename.body")
-                    .font(.system(size: 14, design: .rounded))
-                    .foregroundStyle(.white.opacity(0.72))
+                    .font(TerminalStyle.mono(12))
+                    .foregroundStyle(.green.opacity(0.75))
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 28)
             }
-            VStack(alignment: .leading, spacing: 6) {
-                Label {
-                    Text("onboarding.rename.hint")
-                        .font(.system(size: 13, design: .rounded))
-                        .foregroundStyle(.yellow.opacity(0.95))
-                } icon: {
-                    Image(systemName: "exclamationmark.triangle.fill")
-                        .foregroundStyle(.yellow)
-                }
+
+            HStack(alignment: .top, spacing: 8) {
+                Image(systemName: "exclamationmark.triangle.fill")
+                    .foregroundStyle(.yellow)
+                Text("onboarding.rename.hint")
+                    .font(TerminalStyle.mono(12))
+                    .foregroundStyle(.yellow.opacity(0.95))
+                Spacer(minLength: 0)
             }
-            .padding(14)
+            .padding(12)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color.yellow.opacity(0.08), in: RoundedRectangle(cornerRadius: 12))
-            .overlay(RoundedRectangle(cornerRadius: 12).stroke(Color.yellow.opacity(0.35), lineWidth: 1))
-            .padding(.horizontal, 28)
+            .background(Color.black.opacity(0.45), in: RoundedRectangle(cornerRadius: 10))
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(Color.yellow.opacity(0.4), lineWidth: 1)
+            )
+            .padding(.horizontal, 24)
 
             Button {
                 if let url = URL(string: "App-prefs:root=General&path=About") {
@@ -114,38 +129,45 @@ struct OnboardingScreen: View {
                     UIApplication.shared.open(url)
                 }
             } label: {
-                Label("onboarding.rename.openSettings", systemImage: "gear")
-                    .font(.system(size: 14, weight: .semibold, design: .rounded))
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 12)
-                    .background(Color.white.opacity(0.12), in: Capsule())
-                    .foregroundStyle(.white)
+                HStack {
+                    Image(systemName: "gear")
+                    Text("onboarding.rename.openSettings")
+                }
+                .frame(maxWidth: .infinity)
             }
-            .padding(.horizontal, 28)
+            .buttonStyle(TerminalHeaderButtonStyle(fill: true))
+            .padding(.horizontal, 24)
+
             Spacer()
         }
+        .padding(.horizontal, 16)
     }
 
     private var pairPage: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 16) {
             Spacer()
+            Text("$ ble --advertise")
+                .font(TerminalStyle.mono(14, weight: .bold))
+                .foregroundStyle(.green.opacity(0.7))
+
             Image(systemName: "dot.radiowaves.left.and.right")
-                .font(.system(size: 72, weight: .regular))
+                .font(.system(size: 60, weight: .regular))
                 .foregroundStyle(.green)
-                .padding(.bottom, 4)
-            VStack(spacing: 10) {
+
+            VStack(spacing: 8) {
                 Text("onboarding.pair.title")
-                    .font(.system(size: 24, weight: .bold, design: .rounded))
-                    .foregroundStyle(.white)
+                    .font(TerminalStyle.mono(20, weight: .bold))
+                    .foregroundStyle(.green)
                     .multilineTextAlignment(.center)
                 Text("onboarding.pair.body")
-                    .font(.system(size: 14, design: .rounded))
-                    .foregroundStyle(.white.opacity(0.72))
+                    .font(TerminalStyle.mono(12))
+                    .foregroundStyle(.green.opacity(0.75))
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 28)
             }
             Spacer()
         }
+        .padding(.horizontal, 16)
     }
 
     private var footer: some View {
@@ -157,16 +179,17 @@ struct OnboardingScreen: View {
             }
         } label: {
             Text(page < totalPages - 1 ? "common.next" : "onboarding.cta.start")
-                .font(.system(size: 16, weight: .semibold, design: .rounded))
+                .font(TerminalStyle.mono(14, weight: .bold))
                 .frame(maxWidth: .infinity)
-                .padding(.vertical, 14)
-                .background(
-                    BuddyTheme.accentGradient(themePreset),
-                    in: Capsule()
+                .padding(.vertical, 12)
+                .foregroundStyle(.black)
+                .background(Color.green, in: RoundedRectangle(cornerRadius: 10))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Color.green.opacity(0.6), lineWidth: 1)
                 )
-                .foregroundStyle(.white)
         }
-        .padding(.horizontal, 28)
+        .padding(.horizontal, 24)
         .padding(.bottom, 24)
     }
 }
