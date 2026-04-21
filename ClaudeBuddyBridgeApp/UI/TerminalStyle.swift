@@ -71,14 +71,10 @@ enum TerminalStyle {
 // MARK: - Background
 
 struct TerminalBackground: View {
-    var showScanline: Bool = true
-
     var body: some View {
         ZStack {
             TerminalStyle.background.ignoresSafeArea()
-            if showScanline {
-                ScanlineOverlay()
-            }
+            ScanlineOverlay()
         }
     }
 }

@@ -44,7 +44,6 @@ struct HomeScreen: View {
     @AppStorage("bridge.displayName") private var persistedDisplayName = ""
     @AppStorage("bridge.autoStartBLE") private var autoStartBLE = true
     @AppStorage("buddy.petName") private var petName: String = "Buddy"
-    @AppStorage("buddy.showScanline") private var showScanline = true
 
     private let appStart = Date()
     private let promptTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
@@ -72,7 +71,7 @@ struct HomeScreen: View {
             // Pure black — h5-demo uses #000 for .lcd-body, and the spec
             // calls out "黑色背景色" explicitly.
             Color.black.ignoresSafeArea()
-            if showScanline { ScanlineOverlay() }
+            ScanlineOverlay()
 
             GeometryReader { proxy in
                 VStack(spacing: 0) {
@@ -268,8 +267,7 @@ struct HomeScreen: View {
                 persona: persona,
                 page: infoPage,
                 appStart: appStart,
-                petName: petName,
-                showScanline: showScanline
+                petName: petName
             )
         }
     }
@@ -912,7 +910,6 @@ private struct InfoBody: View {
     let page: Int
     let appStart: Date
     let petName: String
-    let showScanline: Bool
 
     static let pages: [String] = ["ABOUT", "BUTTONS", "CLAUDE", "DEVICE", "BLE", "CREDITS"]
 
@@ -1002,14 +999,10 @@ private struct InfoBody: View {
             let usb = (device.batteryState == .charging || device.batteryState == .full)
                 ? String(localized: "info.device.on")
                 : String(localized: "info.device.off")
-            let scan = showScanline
-                ? String(localized: "info.device.on")
-                : String(localized: "info.device.off")
             return [
                 .pair("info.device.battery", batt),
                 .pair("info.device.usb", usb),
                 .pair("info.device.uptime", formatUptime(uptime)),
-                .pair("info.device.scan", scan),
                 .pair("info.device.pet", petName.isEmpty ? "Buddy" : petName)
             ]
         case "BLE": return [

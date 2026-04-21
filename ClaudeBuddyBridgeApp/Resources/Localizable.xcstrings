@@ -2650,18 +2650,17 @@
       }
     },
     "pet.delete" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete All Characters"
+            "value" : "Delete Uploaded Pet Packs"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "删除全部宠物包"
+            "value" : "删除上传的宠物包"
           }
         }
       }
@@ -2671,13 +2670,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete all installed characters?"
+            "value" : "Delete uploaded pet packs?"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "删除所有已安装的宠物包？"
+            "value" : "删除上传的宠物包？"
           }
         }
       }
@@ -2687,13 +2686,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete All Characters"
+            "value" : "Delete"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "确定删除"
+            "value" : "删除"
           }
         }
       }
@@ -2703,13 +2702,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "All GIF packs pushed from Claude Desktop will be removed. You'll fall back to the built-in pet."
+            "value" : "All pet packs uploaded from Claude Desktop will be removed. You'll fall back to the built-in pet."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "所有从 Claude Desktop 推送的 GIF 包都会被删除，会回退到内置宠物。"
+            "value" : "所有从 Claude Desktop 上传的宠物包会被删除，应用会回退到内置宠物。"
           }
         }
       }
@@ -3107,13 +3106,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Reset App to Defaults"
+            "value" : "Reset"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "恢复出厂设置"
+            "value" : "重置"
           }
         }
       }
@@ -3123,13 +3122,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Reset app to defaults?"
+            "value" : "Reset this app?"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "恢复出厂设置？"
+            "value" : "重置此应用？"
           }
         }
       }
@@ -3139,13 +3138,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Reset App"
+            "value" : "Reset"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "确定恢复"
+            "value" : "重置"
           }
         }
       }
@@ -3155,13 +3154,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "All preferences, pet selection, cached stats, and the onboarding flag will be cleared. Installed pet packs are kept. The app will return to its first-launch state."
+            "value" : "Preferences, pet selection, cached stats, and the onboarding flag will be cleared. Uploaded pet packs are kept. The app returns to its first-launch state."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "所有偏好设置、宠物选择、缓存数据和引导状态都会清除，已安装的宠物包保留。应用会回到首次启动状态。"
+            "value" : "偏好设置、宠物选择、缓存数据与引导状态都会被清除，上传的宠物包会保留。应用会回到首次启动状态。"
           }
         }
       }

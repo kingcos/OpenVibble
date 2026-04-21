@@ -11,10 +11,10 @@ struct SettingsScreen: View {
     @AppStorage("buddy.hasOnboarded") private var hasOnboarded: Bool = false
     @AppStorage("buddy.notificationsEnabled") private var notificationsEnabled = true
     @AppStorage("buddy.liveActivityEnabled") private var liveActivityEnabled = true
-    @AppStorage("buddy.showScanline") private var showScanline = true
     @AppStorage("bridge.autoStartBLE") private var autoStartBLE: Bool = true
 
     @State private var notificationStatus = "?"
+    @State private var notificationsAuthorized = false
     @State private var showPicker = false
     @State private var confirmResetStats = false
     @State private var confirmDeleteChars = false
@@ -27,7 +27,7 @@ struct SettingsScreen: View {
 
     var body: some View {
         ZStack {
-            TerminalBackground(showScanline: showScanline)
+            TerminalBackground()
 
             ScrollView {
                 VStack(alignment: .leading, spacing: 12) {
@@ -35,7 +35,6 @@ struct SettingsScreen: View {
 
                     TerminalPanel("settings.section.pet.lower") { petContent }
                     TerminalPanel("settings.section.bluetooth.lower") { bluetoothContent }
-                    TerminalPanel("settings.section.display.lower") { displayContent }
                     TerminalPanel("settings.section.alerts.lower") { alertsContent }
                     TerminalPanel("settings.section.guide.lower") { guideContent }
                     TerminalPanel("settings.section.about.lower") { aboutContent }
@@ -55,33 +54,25 @@ struct SettingsScreen: View {
                 onClose: { showPicker = false }
             )
         }
-        .confirmationDialog(
-            Text("pet.reset.confirm"),
-            isPresented: $confirmResetStats,
-            titleVisibility: .visible
-        ) {
-            Button(role: .destructive) {
+        .alert("pet.reset.confirm", isPresented: $confirmResetStats) {
+            Button("common.cancel", role: .cancel) {}
+            Button("pet.reset.doIt", role: .destructive) {
                 performFactoryReset()
                 infoMessage = "pet.stats.resetOk"
-            } label: { Text("pet.reset.doIt") }
-            Button(role: .cancel) {} label: { Text("common.cancel") }
+            }
         } message: {
             Text("pet.reset.message")
         }
-        .confirmationDialog(
-            Text("pet.delete.confirm"),
-            isPresented: $confirmDeleteChars,
-            titleVisibility: .visible
-        ) {
-            Button(role: .destructive) {
+        .alert("pet.delete.confirm", isPresented: $confirmDeleteChars) {
+            Button("common.cancel", role: .cancel) {}
+            Button("pet.delete.doIt", role: .destructive) {
                 let catalog = PersonaCatalog(rootURL: model.charactersRootURL)
                 let ok = catalog.deleteAll()
                 PersonaSelection.save(PersonaSelection.defaultSpecies)
                 selection = PersonaSelection.defaultSpecies
                 reloadInstalled()
                 infoMessage = ok ? "pet.stats.deleteOk" : "pet.stats.deleteFail"
-            } label: { Text("pet.delete.doIt") }
-            Button(role: .cancel) {} label: { Text("common.cancel") }
+            }
         } message: {
             Text("pet.delete.message")
         }
@@ -159,17 +150,6 @@ struct SettingsScreen: View {
         .tint(TerminalStyle.accent)
     }
 
-    // MARK: - Display
-
-    private var displayContent: some View {
-        Toggle(isOn: $showScanline) {
-            Text("settings.scanline")
-                .font(TerminalStyle.mono(12))
-                .foregroundStyle(TerminalStyle.ink)
-        }
-        .tint(TerminalStyle.accent)
-    }
-
     // MARK: - Alerts (notifications + live activity)
 
     private var alertsContent: some View {
@@ -187,16 +167,18 @@ struct SettingsScreen: View {
             }
             .tint(TerminalStyle.accent)
 
-            Button {
-                Task {
-                    _ = await BuddyNotificationCenter.shared.requestAuthorizationIfNeeded()
-                    await refreshNotificationStatus()
+            if !notificationsAuthorized {
+                Button {
+                    Task {
+                        _ = await BuddyNotificationCenter.shared.requestAuthorizationIfNeeded()
+                        await refreshNotificationStatus()
+                    }
+                } label: {
+                    Text("settings.notifications.request")
+                        .frame(maxWidth: .infinity)
                 }
-            } label: {
-                Text("settings.notifications.request")
-                    .frame(maxWidth: .infinity)
+                .buttonStyle(TerminalHeaderButtonStyle(fill: true))
             }
-            .buttonStyle(TerminalHeaderButtonStyle(fill: true))
 
             Divider()
                 .overlay(TerminalStyle.inkDim.opacity(0.3))
@@ -306,10 +288,11 @@ struct SettingsScreen: View {
                 rowLabel(
                     text: "pet.delete",
                     trailing: "trash",
-                    tint: TerminalStyle.bad
+                    tint: installed.isEmpty ? TerminalStyle.inkDim : TerminalStyle.bad
                 )
             }
             .buttonStyle(.plain)
+            .disabled(installed.isEmpty)
         }
     }
 
@@ -348,7 +331,6 @@ struct SettingsScreen: View {
             "buddy.hasOnboarded",
             "buddy.notificationsEnabled",
             "buddy.liveActivityEnabled",
-            "buddy.showScanline",
             "bridge.autoStartBLE",
             "bridge.displayName",
             "buddy.petName"
@@ -366,12 +348,16 @@ struct SettingsScreen: View {
         switch settings.authorizationStatus {
         case .authorized, .provisional, .ephemeral:
             notificationStatus = String(localized: "settings.notifications.status.enabled")
+            notificationsAuthorized = true
         case .denied:
             notificationStatus = String(localized: "settings.notifications.status.denied")
+            notificationsAuthorized = false
         case .notDetermined:
             notificationStatus = String(localized: "settings.notifications.status.notDetermined")
+            notificationsAuthorized = false
         @unknown default:
             notificationStatus = String(localized: "settings.notifications.status.unknown")
+            notificationsAuthorized = false
         }
     }
 }

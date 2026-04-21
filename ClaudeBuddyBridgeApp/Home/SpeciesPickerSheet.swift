@@ -6,11 +6,10 @@ struct SpeciesPickerSheet: View {
     let builtin: [InstalledPersona]
     let installed: [InstalledPersona]
     let onClose: () -> Void
-    @AppStorage("buddy.showScanline") private var showScanline = true
 
     var body: some View {
         ZStack {
-            TerminalBackground(showScanline: showScanline)
+            TerminalBackground()
 
             ScrollView {
                 VStack(alignment: .leading, spacing: 12) {
