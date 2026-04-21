@@ -606,20 +606,26 @@ private struct NormalBody: View {
             }
             .animation(.easeInOut(duration: 0.22), value: model.prompt?.id)
 
-            ScrollView(.vertical, showsIndicators: false) {
-                VStack(alignment: .leading, spacing: 4) {
-                    ForEach(parsedLog.indices, id: \.self) { idx in
-                        parsedLogRow(parsedLog[idx])
-                    }
-                    if parsedLog.isEmpty {
-                        Text("home.log.empty")
-                            .font(TerminalStyle.mono(11))
-                            .foregroundStyle(TerminalStyle.inkDim.opacity(0.6))
-                            .frame(maxWidth: .infinity, alignment: .leading)
+            if parsedLog.isEmpty {
+                VStack {
+                    Spacer()
+                    Text("home.log.empty")
+                        .font(TerminalStyle.mono(11))
+                        .foregroundStyle(TerminalStyle.inkDim.opacity(0.6))
+                        .frame(maxWidth: .infinity, alignment: .center)
+                    Spacer()
+                }
+                .frame(maxHeight: .infinity)
+            } else {
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack(alignment: .leading, spacing: 4) {
+                        ForEach(parsedLog.indices, id: \.self) { idx in
+                            parsedLogRow(parsedLog[idx])
+                        }
                     }
                 }
+                .frame(maxHeight: .infinity)
             }
-            .frame(maxHeight: .infinity)
         }
         .onReceive(spinTimer) { _ in
             spinPhase = (spinPhase + 1) % spinGlyphs.count
@@ -737,6 +743,15 @@ private struct NormalBody: View {
                 .lineLimit(2)
                 .truncationMode(.tail)
             Spacer(minLength: 0)
+        }
+        .contentShape(Rectangle())
+        .contextMenu {
+            Button {
+                UIPasteboard.general.string = "\(line.time) \(line.message)"
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            } label: {
+                Label("home.log.copy", systemImage: "doc.on.doc")
+            }
         }
     }
 
@@ -1101,42 +1116,71 @@ struct HomeLogSheet: View {
                 }
                 Spacer()
                 Button(action: copyCurrentLog) {
-                    HStack(spacing: 4) {
-                        Image(systemName: copied ? "checkmark" : "doc.on.doc")
-                        Text(copied ? "onboarding.rename.copied" : "home.logs.copy")
-                    }
-                    .font(TerminalStyle.mono(11, weight: .semibold))
-                    .foregroundStyle(copied ? TerminalStyle.good : TerminalStyle.ink)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 6)
-                    .background(TerminalStyle.lcdPanel.opacity(0.6), in: Capsule())
-                    .overlay(Capsule().stroke(TerminalStyle.inkDim.opacity(0.45), lineWidth: 1))
+                    iconButton(icon: copied ? "checkmark" : "doc.on.doc",
+                               tint: copied ? TerminalStyle.good : TerminalStyle.ink)
                 }
+                Button(action: clearCurrentLog) {
+                    iconButton(icon: "trash", tint: TerminalStyle.bad)
+                }
+                .disabled(currentLog.isEmpty)
+                .opacity(currentLog.isEmpty ? 0.4 : 1)
             }
             .padding(.horizontal, 16)
             .padding(.top, 12)
             .padding(.bottom, 8)
 
-            ScrollView {
-                VStack(alignment: .leading, spacing: 3) {
-                    ForEach(currentLog.indices, id: \.self) { i in
-                        Text(currentLog[i])
-                            .font(TerminalStyle.mono(11))
-                            .foregroundStyle(TerminalStyle.ink.opacity(0.92))
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .textSelection(.enabled)
-                    }
-                    if currentLog.isEmpty {
-                        Text("home.log.empty")
-                            .font(TerminalStyle.mono(11))
-                            .foregroundStyle(TerminalStyle.inkDim)
-                    }
+            if currentLog.isEmpty {
+                VStack {
+                    Spacer()
+                    Text("home.log.empty")
+                        .font(TerminalStyle.mono(11))
+                        .foregroundStyle(TerminalStyle.inkDim)
+                    Spacer()
                 }
-                .padding(.horizontal, 16)
-                .padding(.bottom, 40)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else {
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 3) {
+                        ForEach(currentLog.indices, id: \.self) { i in
+                            Text(currentLog[i])
+                                .font(TerminalStyle.mono(11))
+                                .foregroundStyle(TerminalStyle.ink.opacity(0.92))
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .textSelection(.enabled)
+                                .contentShape(Rectangle())
+                                .contextMenu {
+                                    Button {
+                                        UIPasteboard.general.string = currentLog[i]
+                                        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+                                    } label: {
+                                        Label("home.log.copy", systemImage: "doc.on.doc")
+                                    }
+                                }
+                        }
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 40)
+                }
             }
         }
         .preferredColorScheme(.dark)
+    }
+
+    private func iconButton(icon: String, tint: Color) -> some View {
+        Image(systemName: icon)
+            .font(TerminalStyle.mono(11, weight: .semibold))
+            .foregroundStyle(tint)
+            .frame(width: 30, height: 26)
+            .background(TerminalStyle.lcdPanel.opacity(0.6), in: Capsule())
+            .overlay(Capsule().stroke(TerminalStyle.inkDim.opacity(0.45), lineWidth: 1))
+    }
+
+    private func clearCurrentLog() {
+        switch tab {
+        case .run, .ble:
+            model.clearLogs()
+        }
+        UIImpactFeedbackGenerator(style: .rigid).impactOccurred()
     }
 
     private var currentLog: [String] { lines(for: tab) }

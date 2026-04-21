@@ -216,6 +216,22 @@
         }
       }
     },
+    "home.log.copy" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copy"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "复制"
+          }
+        }
+      }
+    },
     "home.log.empty" : {
       "localizations" : {
         "en" : {
@@ -1860,6 +1876,40 @@
         }
       }
     },
+    "live.alert.body" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tap to approve or deny."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "点击以允许或拒绝。"
+          }
+        }
+      }
+    },
+    "live.alert.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New Claude Request"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude 新请求"
+          }
+        }
+      }
+    },
     "Lv %@" : {
 
     },
@@ -1930,38 +1980,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "菜单"
-          }
-        }
-      }
-    },
-    "live.alert.body" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tap to approve or deny."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "点击以允许或拒绝。"
-          }
-        }
-      }
-    },
-    "live.alert.title" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "New Claude Request"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Claude 新请求"
           }
         }
       }

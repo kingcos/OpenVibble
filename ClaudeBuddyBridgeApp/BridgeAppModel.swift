@@ -63,18 +63,17 @@ final class BridgeAppModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
                 self?.connectionState = state
-                guard let self else { return }
-                let slug = self.currentPersonaSlug(connection: state, snapshot: self.snapshot)
-                let preview = self.prompt.map(self.previewFor(prompt:))
-                Task { [snapshot = self.snapshot, hasPrompt = self.prompt != nil] in
-                    await self.liveActivityManager.startOrUpdate(
-                        state: state,
-                        snapshot: snapshot,
-                        hasPrompt: hasPrompt,
-                        personaSlug: slug,
-                        messagePreview: preview
-                    )
-                }
+                self?.pushLiveActivity()
+            }
+            .store(in: &cancellables)
+
+        // React to the user toggling the Live Activity preference in Settings:
+        // flipping it off mid-session should tear down any running activity
+        // immediately instead of waiting for the next heartbeat.
+        NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.pushLiveActivity()
             }
             .store(in: &cancellables)
 
@@ -134,17 +133,7 @@ final class BridgeAppModel: ObservableObject {
         recordEvent("系统 请求启动广播：\(finalName)")
         refreshFromRuntime()
         started = true
-        let slug = currentPersonaSlug(connection: connectionState, snapshot: snapshot)
-        let preview = prompt.map(previewFor(prompt:))
-        Task { [snapshot, prompt] in
-            await liveActivityManager.startOrUpdate(
-                state: connectionState,
-                snapshot: snapshot,
-                hasPrompt: prompt != nil,
-                personaSlug: slug,
-                messagePreview: preview
-            )
-        }
+        pushLiveActivity()
     }
 
     /// Called by onboarding to show the Bluetooth permission sheet after an
@@ -196,6 +185,16 @@ final class BridgeAppModel: ObservableObject {
         recentLevelUp = false
     }
 
+    /// Wipes the log surfaces visible in the home log sheet — heartbeat
+    /// entries, BLE wire events, and diagnostic logs. Remote sources
+    /// (heartbeat.entries) will refill on the next desktop tick; the intent is
+    /// to give the user a clean slate, not to permanently suppress logs.
+    func clearLogs() {
+        recentEvents.removeAll()
+        diagnosticLogs.removeAll()
+        snapshot.entries.removeAll()
+    }
+
     private func refreshFromRuntime() {
         let newSnapshot = runtime.currentSnapshot()
         snapshot = newSnapshot
@@ -232,12 +231,26 @@ final class BridgeAppModel: ObservableObject {
             }
         }
         pushStatusSample()
-        let slug = currentPersonaSlug(connection: connectionState, snapshot: newSnapshot)
-        let preview = newPrompt.map(previewFor(prompt:))
-        Task { [connectionState, hasPrompt = newPrompt != nil] in
+        pushLiveActivity()
+    }
+
+    /// Single chokepoint for Live Activity updates. Honours the user's
+    /// `buddy.liveActivityEnabled` toggle and the "only show when connected"
+    /// rule — anything else tears the activity down instead of updating it.
+    private func pushLiveActivity() {
+        guard liveActivityEnabled, case .connected = connectionState else {
+            Task { await liveActivityManager.end() }
+            return
+        }
+        let slug = currentPersonaSlug(connection: connectionState, snapshot: snapshot)
+        let preview = prompt.map(previewFor(prompt:))
+        let state = connectionState
+        let snap = snapshot
+        let hasPrompt = prompt != nil
+        Task {
             await liveActivityManager.startOrUpdate(
-                state: connectionState,
-                snapshot: newSnapshot,
+                state: state,
+                snapshot: snap,
                 hasPrompt: hasPrompt,
                 personaSlug: slug,
                 messagePreview: preview
@@ -322,5 +335,12 @@ final class BridgeAppModel: ObservableObject {
             return true
         }
         return UserDefaults.standard.bool(forKey: "buddy.notificationsEnabled")
+    }
+
+    private var liveActivityEnabled: Bool {
+        if UserDefaults.standard.object(forKey: "buddy.liveActivityEnabled") == nil {
+            return true
+        }
+        return UserDefaults.standard.bool(forKey: "buddy.liveActivityEnabled")
     }
 }
