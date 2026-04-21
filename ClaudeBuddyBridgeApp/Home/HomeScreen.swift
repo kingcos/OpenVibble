@@ -926,10 +926,9 @@ private struct InfoBody: View {
                     .foregroundStyle(TerminalStyle.inkDim)
             }
             Text(titleKey(for: title))
-                .font(TerminalStyle.display(22))
-                .tracking(3)
-                .foregroundStyle(TerminalStyle.accent)
-                .shadow(color: TerminalStyle.accentSoft.opacity(0.55), radius: 0, x: 2, y: 2)
+                .font(TerminalStyle.mono(12, weight: .bold))
+                .tracking(2)
+                .foregroundStyle(TerminalStyle.ink)
             Divider().background(TerminalStyle.lcdDivider)
 
             VStack(alignment: .leading, spacing: 4) {
