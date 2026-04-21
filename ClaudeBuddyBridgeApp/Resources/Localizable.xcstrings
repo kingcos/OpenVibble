@@ -3544,6 +3544,38 @@
         }
       }
     },
+    "settings.liveActivity" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Live Activity"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "灵动岛与实时活动"
+          }
+        }
+      }
+    },
+    "settings.liveActivity.hint" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shown only when Claude Desktop is connected."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仅在连接 Claude 桌面端时显示。"
+          }
+        }
+      }
+    },
     "settings.notifications.enable" : {
       "extractionState" : "stale",
       "localizations" : {

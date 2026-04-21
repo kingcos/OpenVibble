@@ -10,10 +10,8 @@ struct SettingsScreen: View {
     @Environment(\.dismiss) private var dismiss
     @AppStorage("buddy.hasOnboarded") private var hasOnboarded: Bool = false
     @AppStorage("buddy.notificationsEnabled") private var notificationsEnabled = true
+    @AppStorage("buddy.liveActivityEnabled") private var liveActivityEnabled = true
     @AppStorage("buddy.showScanline") private var showScanline = true
-    @AppStorage("buddy.petName") private var petName: String = "Buddy"
-    @AppStorage("buddy.ownerName") private var ownerName: String = ""
-    @AppStorage("bridge.displayName") private var bridgeDisplayName: String = ""
     @AppStorage("bridge.autoStartBLE") private var autoStartBLE: Bool = true
 
     @State private var notificationStatus = "?"
@@ -35,8 +33,10 @@ struct SettingsScreen: View {
                 VStack(alignment: .leading, spacing: 12) {
                     headerBar
 
-                    TerminalPanel("buddy --profile") { profileContent }
-                    TerminalPanel("buddy --display") { displayContent }
+                    TerminalPanel("pet") { petContent }
+                    TerminalPanel("bluetooth") { bluetoothContent }
+                    TerminalPanel("display") { displayContent }
+                    TerminalPanel("alerts") { alertsContent }
                     TerminalPanel("about") { aboutContent }
                     TerminalPanel("danger", accent: .red) { dangerContent }
                 }
@@ -114,79 +114,60 @@ struct SettingsScreen: View {
         }
     }
 
-    // MARK: - Profile panel (identity + bridge)
+    // MARK: - Pet
 
-    private var profileContent: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            labeledField("pet", text: $petName, placeholder: "Buddy")
-            labeledField("owner", text: $ownerName, placeholder: String(localized: "settings.pet.ownerPlaceholder"))
-            labeledField("ble",   text: $bridgeDisplayName, placeholder: "Claude-iPhone")
-
-            Button {
-                showPicker = true
-            } label: {
-                HStack(spacing: 6) {
-                    Text("settings.species")
-                        .foregroundStyle(TerminalStyle.inkDim)
-                    Text(currentSpeciesLabel)
-                        .foregroundStyle(TerminalStyle.ink)
-                    Spacer()
-                    Image(systemName: "chevron.right")
-                        .font(.system(size: 11, weight: .bold))
-                        .foregroundStyle(TerminalStyle.inkDim)
-                }
-                .font(TerminalStyle.mono(12))
-                .padding(.horizontal, 10)
-                .padding(.vertical, 8)
-                .background(TerminalStyle.lcdPanel.opacity(0.7), in: RoundedRectangle(cornerRadius: 8))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(TerminalStyle.inkDim.opacity(0.5), lineWidth: 1)
-                )
-            }
-            .buttonStyle(.plain)
-
-            Toggle(isOn: $autoStartBLE) {
-                Text("settings.autoAdvertise")
-                    .font(TerminalStyle.mono(12))
+    private var petContent: some View {
+        Button {
+            showPicker = true
+        } label: {
+            HStack(spacing: 6) {
+                Text("settings.species")
+                    .foregroundStyle(TerminalStyle.inkDim)
+                Text(currentSpeciesLabel)
                     .foregroundStyle(TerminalStyle.ink)
+                Spacer()
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 11, weight: .bold))
+                    .foregroundStyle(TerminalStyle.inkDim)
             }
-            .tint(TerminalStyle.accent)
+            .font(TerminalStyle.mono(12))
+            .padding(.horizontal, 10)
+            .padding(.vertical, 8)
+            .background(TerminalStyle.lcdPanel.opacity(0.7), in: RoundedRectangle(cornerRadius: 8))
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(TerminalStyle.inkDim.opacity(0.5), lineWidth: 1)
+            )
         }
+        .buttonStyle(.plain)
     }
 
-    private func labeledField(_ tag: String, text: Binding<String>, placeholder: String) -> some View {
-        HStack(spacing: 8) {
-            Text(tag)
-                .frame(width: 56, alignment: .leading)
-                .foregroundStyle(TerminalStyle.inkDim)
-            TextField(placeholder, text: text)
-                .textInputAutocapitalization(.words)
-                .autocorrectionDisabled()
+    // MARK: - Bluetooth
+
+    private var bluetoothContent: some View {
+        Toggle(isOn: $autoStartBLE) {
+            Text("settings.autoAdvertise")
+                .font(TerminalStyle.mono(12))
                 .foregroundStyle(TerminalStyle.ink)
-                .tint(TerminalStyle.accent)
         }
-        .font(TerminalStyle.mono(12))
-        .padding(.horizontal, 10)
-        .padding(.vertical, 8)
-        .background(TerminalStyle.lcdPanel.opacity(0.7), in: RoundedRectangle(cornerRadius: 8))
-        .overlay(
-            RoundedRectangle(cornerRadius: 8)
-                .stroke(TerminalStyle.inkDim.opacity(0.5), lineWidth: 1)
-        )
+        .tint(TerminalStyle.accent)
     }
 
-    // MARK: - Display (scanline + notifications merged)
+    // MARK: - Display
 
     private var displayContent: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Toggle(isOn: $showScanline) {
-                Text("settings.scanline")
-                    .font(TerminalStyle.mono(12))
-                    .foregroundStyle(TerminalStyle.ink)
-            }
-            .tint(TerminalStyle.accent)
+        Toggle(isOn: $showScanline) {
+            Text("settings.scanline")
+                .font(TerminalStyle.mono(12))
+                .foregroundStyle(TerminalStyle.ink)
+        }
+        .tint(TerminalStyle.accent)
+    }
 
+    // MARK: - Alerts (notifications + live activity)
+
+    private var alertsContent: some View {
+        VStack(alignment: .leading, spacing: 10) {
             Toggle(isOn: $notificationsEnabled) {
                 HStack {
                     Text("settings.notifications.label")
@@ -210,6 +191,20 @@ struct SettingsScreen: View {
                     .frame(maxWidth: .infinity)
             }
             .buttonStyle(TerminalHeaderButtonStyle(fill: true))
+
+            Divider()
+                .overlay(TerminalStyle.inkDim.opacity(0.3))
+
+            Toggle(isOn: $liveActivityEnabled) {
+                Text("settings.liveActivity")
+                    .font(TerminalStyle.mono(12))
+                    .foregroundStyle(TerminalStyle.ink)
+            }
+            .tint(TerminalStyle.accent)
+
+            Text("settings.liveActivity.hint")
+                .font(TerminalStyle.mono(10))
+                .foregroundStyle(TerminalStyle.inkDim)
         }
     }
 
@@ -217,10 +212,10 @@ struct SettingsScreen: View {
 
     private var aboutContent: some View {
         VStack(alignment: .leading, spacing: 4) {
-            aboutRow("name", "Claude Buddy Bridge")
-            aboutRow("ver", appVersion)
-            aboutRow("by",  "kingcos")
-            aboutRow("lang", currentLanguageLabel)
+            aboutRow("settings.about.app", "Claude Buddy Bridge")
+            aboutRow("settings.about.version", appVersion)
+            aboutRow("settings.about.author", "kingcos")
+            aboutRow("settings.about.language", currentLanguageLabel)
 
             Link(destination: repoURL) {
                 HStack {
@@ -248,7 +243,7 @@ struct SettingsScreen: View {
         }
     }
 
-    private func aboutRow(_ key: String, _ value: String) -> some View {
+    private func aboutRow(_ key: LocalizedStringKey, _ value: String) -> some View {
         HStack {
             Text(key)
                 .foregroundStyle(TerminalStyle.inkDim)
