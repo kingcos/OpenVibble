@@ -20,6 +20,7 @@ struct OnboardingScreen: View {
     @State private var copied: Bool = false
     @State private var copyResetTask: Task<Void, Never>?
     @State private var renameAcknowledged: Bool = false
+    @Environment(\.scenePhase) private var scenePhase
     @AppStorage("bridge.displayName") private var persistedDisplayName = ""
 
     var body: some View {
@@ -61,6 +62,13 @@ struct OnboardingScreen: View {
         .task { await refreshNotificationStatus() }
         .onChange(of: model.bluetoothAuthorization) { _, _ in
             // re-render when permission resolves
+        }
+        .onChange(of: scenePhase) { _, phase in
+            // User may have flipped notification permission in Settings while
+            // we were backgrounded — re-read the status so the step card
+            // updates without needing a fresh app launch.
+            guard phase == .active else { return }
+            Task { await refreshNotificationStatus() }
         }
     }
 
