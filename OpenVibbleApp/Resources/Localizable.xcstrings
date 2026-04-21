@@ -14,7 +14,7 @@
         }
       }
     },
-    "$ buddy --init" : {
+    "$ openvibble --init" : {
 
     },
     "$ species" : {
@@ -29,13 +29,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Claude Buddy"
+            "value" : "OpenVibble"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Claude Buddy"
+            "value" : "OpenVibble"
           }
         }
       }
@@ -61,6 +61,7 @@
       }
     },
     "common.cancel" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -722,7 +723,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Your iPhone becomes Claude Desktop's Hardware Buddy over BLE. Watch your buddy react to sessions, approve permissions, and level up as tokens accumulate."
+            "value" : "Your iPhone becomes Claude Desktop's Hardware Buddy over BLE. Watch your pet react to sessions, approve permissions, and level up as tokens accumulate."
           }
         },
         "zh-Hans" : {
@@ -756,18 +757,19 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Claude Buddy Bridge"
+            "value" : "OpenVibble"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Claude Buddy Bridge"
+            "value" : "OpenVibble"
           }
         }
       }
     },
     "info.about.line1" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1022,6 +1024,7 @@
       }
     },
     "info.buttons.line5" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1242,6 +1245,7 @@
       }
     },
     "info.credits.line1" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1258,6 +1262,7 @@
       }
     },
     "info.credits.line2" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1274,6 +1279,7 @@
       }
     },
     "info.credits.line4" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1482,7 +1488,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Long-press buddy"
+            "value" : "Long-press pet"
           }
         },
         "zh-Hans" : {
@@ -1601,7 +1607,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tap buddy"
+            "value" : "Tap pet"
           }
         },
         "zh-Hans" : {
@@ -1946,13 +1952,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Your buddy reached level %d."
+            "value" : "Your pet reached level %d."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "你的 Buddy 已升到 %d 级。"
+            "value" : "你的宠物已升到 %d 级。"
           }
         }
       }
@@ -1963,13 +1969,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Buddy Level Up"
+            "value" : "Pet Level Up"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Buddy 升级"
+            "value" : "宠物升级"
           }
         }
       }
@@ -2503,13 +2509,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Button cheat-sheet"
+            "value" : "Help"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "按键速查"
+            "value" : "帮助"
           }
         }
       }
@@ -2520,13 +2526,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Buddy needs Bluetooth to connect to Claude Desktop. Notifications let you approve tools while Buddy is in the background."
+            "value" : "OpenVibble needs Bluetooth to connect to Claude Desktop. Notifications let you approve tools while OpenVibble is in the background."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Buddy 需要蓝牙才能连接 Claude Desktop；通知用于在后台时提示权限请求。"
+            "value" : "OpenVibble 需要蓝牙才能连接 Claude Desktop；通知用于在后台时提示权限请求。"
           }
         }
       }
@@ -2603,13 +2609,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Welcome to Claude Buddy"
+            "value" : "Welcome to OpenVibble"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "欢迎使用 Claude Buddy"
+            "value" : "欢迎使用 OpenVibble"
           }
         }
       }
@@ -2649,6 +2655,7 @@
       }
     },
     "pet.delete" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2665,6 +2672,7 @@
       }
     },
     "pet.delete.confirm" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -2681,6 +2689,7 @@
       }
     },
     "pet.delete.doIt" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -3101,6 +3110,7 @@
       }
     },
     "pet.reset" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -3117,6 +3127,7 @@
       }
     },
     "pet.reset.confirm" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -3133,6 +3144,7 @@
       }
     },
     "pet.reset.doIt" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -3267,6 +3279,7 @@
       }
     },
     "pet.stats.resetOk" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -3770,6 +3783,7 @@
       }
     },
     "settings.scanline" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

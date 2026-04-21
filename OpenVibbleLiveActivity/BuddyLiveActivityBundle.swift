@@ -20,7 +20,7 @@ struct BuddyLiveActivityWidget: Widget {
                 DynamicIslandExpandedRegion(.leading) {
                     VStack(alignment: .leading, spacing: 2) {
                         MiniBuddyView(slug: context.state.personaSlug, size: 28)
-                        Text("Claude Buddy")
+                        Text("OpenVibble")
                             .font(.caption2.monospaced())
                             .foregroundStyle(.secondary)
                     }
@@ -62,7 +62,7 @@ struct BuddyLiveActivityWidget: Widget {
             } minimal: {
                 MiniBuddyView(slug: context.state.personaSlug, size: 16)
             }
-            .widgetURL(URL(string: "claudebuddy://status"))
+            .widgetURL(URL(string: "openvibble://status"))
             .keylineTint(.orange)
         }
     }
@@ -85,7 +85,7 @@ private struct LockScreenLiveActivityView: View {
         HStack(spacing: 12) {
             MiniBuddyView(slug: state.personaSlug, size: 36)
             VStack(alignment: .leading, spacing: 2) {
-                Text("Claude Buddy")
+                Text("OpenVibble")
                     .font(.headline)
                 if state.promptPending {
                     Text(state.messagePreview ?? String(localized: "live.alert.body"))

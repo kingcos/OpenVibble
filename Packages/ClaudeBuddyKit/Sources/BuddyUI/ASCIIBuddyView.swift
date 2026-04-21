@@ -30,7 +30,7 @@ public struct ASCIIBuddyView: View {
                     .fixedSize(horizontal: true, vertical: false)
             }
         }
-        .accessibilityLabel("Claude buddy, state: \(state.slug)")
+        .accessibilityLabel("OpenVibble pet, state: \(state.slug)")
     }
 
     // 0xC2A6 RGB565 ≈ RGB(197, 85, 49). Convert to sRGB.

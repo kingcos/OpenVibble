@@ -76,7 +76,7 @@ struct OnboardingScreen: View {
 
     private var header: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text("$ buddy --init")
+            Text("$ openvibble --init")
                 .font(TerminalStyle.mono(12, weight: .semibold))
                 .foregroundStyle(TerminalStyle.inkDim)
             Text("onboarding.welcome.title")
@@ -257,7 +257,7 @@ struct OnboardingScreen: View {
     }
 
     private func helpRow(badge: HelpBadge, body: LocalizedStringKey) -> some View {
-        HStack(alignment: .firstTextBaseline, spacing: 10) {
+        HStack(alignment: .top, spacing: 10) {
             Group {
                 switch badge {
                 case .text(let s):
@@ -269,13 +269,14 @@ struct OnboardingScreen: View {
             .foregroundStyle(TerminalStyle.lcdBg)
             .frame(width: 28, height: 24)
             .background(TerminalStyle.ink, in: RoundedRectangle(cornerRadius: 5))
-            .alignmentGuide(.firstTextBaseline) { $0[VerticalAlignment.center] + 5 }
 
             Text(body)
                 .font(TerminalStyle.mono(12))
                 .foregroundStyle(TerminalStyle.ink)
+                .lineSpacing(3)
                 .fixedSize(horizontal: false, vertical: true)
-            Spacer(minLength: 0)
+                .frame(minHeight: 24, alignment: .topLeading)
+                .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 

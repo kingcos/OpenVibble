@@ -43,7 +43,7 @@ actor BuddyLiveActivityManager {
             return
         }
 
-        let attributes = BuddyLiveActivityAttributes(title: "Claude Buddy")
+        let attributes = BuddyLiveActivityAttributes(title: "OpenVibble")
         do {
             activity = try Activity.request(
                 attributes: attributes,
