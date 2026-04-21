@@ -39,6 +39,7 @@ struct HomeScreen: View {
     @State private var showLogs = false
     @State private var promptArrivedAt: Date?
     @State private var promptTick: Int = 0
+    @State private var frozenWaitedSeconds: Int?
 
     @AppStorage("bridge.displayName") private var persistedDisplayName = ""
     @AppStorage("bridge.autoStartBLE") private var autoStartBLE = true
@@ -127,8 +128,15 @@ struct HomeScreen: View {
             if newValue != nil {
                 promptArrivedAt = Date()
                 promptTick = 0
+                frozenWaitedSeconds = nil
             } else {
                 promptArrivedAt = nil
+                frozenWaitedSeconds = nil
+            }
+        }
+        .onChange(of: model.responseSent) { _, sent in
+            if sent, frozenWaitedSeconds == nil {
+                frozenWaitedSeconds = promptWaitedSeconds
             }
         }
     }
@@ -338,6 +346,7 @@ struct HomeScreen: View {
 
     private var promptWaitedSeconds: Int {
         _ = promptTick
+        if let frozenWaitedSeconds { return frozenWaitedSeconds }
         guard let promptArrivedAt else { return 0 }
         return max(0, Int(Date().timeIntervalSince(promptArrivedAt)))
     }
