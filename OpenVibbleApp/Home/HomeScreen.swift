@@ -144,22 +144,32 @@ struct HomeScreen: View {
     // MARK: - Top bar (status indicator + gear)
 
     private var topBar: some View {
-        HStack(spacing: 10) {
-            statusIndicator
-            Spacer(minLength: 0)
-            Button {
-                showSettings = true
-            } label: {
-                Image(systemName: "gearshape")
-                    .font(.system(size: 15, weight: .semibold))
-                    .foregroundStyle(TerminalStyle.ink)
-                    .frame(width: 32, height: 32)
-                    .background(TerminalStyle.lcdPanel.opacity(0.7), in: Circle())
-                    .overlay(
-                        Circle().stroke(TerminalStyle.inkDim.opacity(0.45), lineWidth: 1)
-                    )
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(spacing: 10) {
+                statusIndicator
+                Spacer(minLength: 0)
+                Button {
+                    showSettings = true
+                } label: {
+                    Image(systemName: "gearshape")
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundStyle(TerminalStyle.ink)
+                        .frame(width: 32, height: 32)
+                        .background(TerminalStyle.lcdPanel.opacity(0.7), in: Circle())
+                        .overlay(
+                            Circle().stroke(TerminalStyle.inkDim.opacity(0.45), lineWidth: 1)
+                        )
+                }
+                .accessibilityLabel(Text("settings.title"))
             }
-            .accessibilityLabel(Text("settings.title"))
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text("OpenVibble")
+                    .font(TerminalStyle.display(24))
+                    .tracking(2)
+                    .foregroundStyle(TerminalStyle.ink)
+                    .shadow(color: TerminalStyle.accent.opacity(0.45), radius: 0, x: 1.5, y: 1.5)
+            }
         }
     }
 

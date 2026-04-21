@@ -17,9 +17,6 @@
     "$ openvibble --init" : {
 
     },
-    "$ species" : {
-
-    },
     "A" : {
 
     },
@@ -2617,6 +2614,9 @@
         }
       }
     },
+    "OpenVibble" : {
+
+    },
     "pet.a11y.nextPage" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2740,13 +2740,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Energy"
+            "value" : "Energy Score"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "精力"
+            "value" : "精力值"
           }
         }
       }
@@ -2756,13 +2756,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fed"
+            "value" : "Satiety Score"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "饱食度"
+            "value" : "饱腹值"
           }
         }
       }
@@ -2892,13 +2892,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ENERGY"
+            "value" : "ENERGY SCORE"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "精力"
+            "value" : "精力值"
           }
         }
       }
@@ -2909,13 +2909,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "FED"
+            "value" : "SATIETY SCORE"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "饱食"
+            "value" : "饱腹值"
           }
         }
       }
@@ -2943,13 +2943,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "MOOD"
+            "value" : "MOOD SCORE"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "心情"
+            "value" : "心情值"
           }
         }
       }
@@ -3095,13 +3095,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mood"
+            "value" : "Mood Score"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "心情"
+            "value" : "心情值"
           }
         }
       }
@@ -3626,6 +3626,7 @@
       }
     },
     "settings.notifications.status.enabled" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4199,6 +4200,7 @@
       }
     },
     "species.panel.builtin" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4215,6 +4217,7 @@
       }
     },
     "species.panel.installed" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4231,6 +4234,7 @@
       }
     },
     "species.subtitle.states" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
