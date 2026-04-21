@@ -23,7 +23,6 @@ struct SettingsScreen: View {
     @State private var selection: PersonaSpeciesID = PersonaSelection.load()
     @State private var installed: [InstalledPersona] = []
     @State private var builtin: [InstalledPersona] = PersonaCatalog.listBuiltin()
-
     private let repoURL = URL(string: "https://github.com/kingcos/OpenVibble")!
     private let authorURL = URL(string: "https://github.com/kingcos")!
 
@@ -39,9 +38,18 @@ struct SettingsScreen: View {
                     TerminalPanel("settings.section.bluetooth.lower") { bluetoothContent }
                     TerminalPanel("settings.section.interface.lower") { interfaceContent }
                     TerminalPanel("settings.section.alerts.lower") { alertsContent }
-                    TerminalPanel("settings.section.guide.lower") { guideContent }
                     TerminalPanel("settings.section.about.lower") { aboutContent }
-                    TerminalPanel("settings.section.danger.lower", accent: .red) { dangerContent }
+                    TerminalPanel(
+                        "settings.section.guide.lower",
+                        collapsible: true,
+                        collapsedByDefault: true
+                    ) { helpContent }
+                    TerminalPanel(
+                        "settings.section.danger.lower",
+                        accent: .red,
+                        collapsible: true,
+                        collapsedByDefault: true
+                    ) { dangerContent }
                 }
                 .padding(16)
             }
@@ -217,9 +225,9 @@ struct SettingsScreen: View {
         }
     }
 
-    // MARK: - Guide
+    // MARK: - Help
 
-    private var guideContent: some View {
+    private var helpContent: some View {
         VStack(alignment: .leading, spacing: 12) {
             ButtonCheatSheet()
 

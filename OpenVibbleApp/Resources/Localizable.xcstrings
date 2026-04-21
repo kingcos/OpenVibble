@@ -4365,13 +4365,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Show Onboarding Again"
+            "value" : "Show Help Again"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "再次查看引导"
+            "value" : "再次查看帮助"
           }
         }
       }
@@ -4818,13 +4818,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Guide"
+            "value" : "Help"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "引导"
+            "value" : "帮助"
           }
         }
       }
@@ -4835,13 +4835,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "guide"
+            "value" : "help"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "引导"
+            "value" : "帮助"
           }
         }
       }

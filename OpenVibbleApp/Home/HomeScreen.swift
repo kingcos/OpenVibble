@@ -262,12 +262,15 @@ struct HomeScreen: View {
             }
             return nil
         }
-        // Stopped + permission granted + BT on → user has turned auto-advertise
-        // off (or hasn't flipped it on yet). Give them a manual entry point so
-        // "待机" isn't a dead-end.
+        // Stopped + permission granted → user has turned auto-advertise
+        // off (or hasn't flipped it on yet). Keep a manual entry point even
+        // when power state is still `.unknown` before manager bootstraps.
+        // The start path itself will create the manager and re-check power.
         if case .stopped = model.connectionState,
            model.bluetoothAuthorization == .allowedAlways,
-           model.bluetoothPowerState == .poweredOn {
+           model.bluetoothPowerState != .poweredOff,
+           model.bluetoothPowerState != .unsupported,
+           model.bluetoothPowerState != .unauthorized {
             return .startAdvertising
         }
         return nil

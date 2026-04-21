@@ -90,26 +90,64 @@ struct ScanlineOverlay: View {
 struct TerminalPanel<Content: View>: View {
     let title: LocalizedStringKey?
     let accent: Color
+    let collapsible: Bool
     @ViewBuilder var content: Content
+    @State private var isExpanded: Bool
 
-    init(_ title: LocalizedStringKey? = nil, accent: Color = TerminalStyle.ink, @ViewBuilder content: () -> Content) {
+    init(
+        _ title: LocalizedStringKey? = nil,
+        accent: Color = TerminalStyle.ink,
+        collapsible: Bool = false,
+        collapsedByDefault: Bool = false,
+        @ViewBuilder content: () -> Content
+    ) {
         self.title = title
         self.accent = accent
+        self.collapsible = collapsible
         self.content = content()
+        _isExpanded = State(initialValue: !collapsedByDefault)
     }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            if let title {
-                HStack(spacing: 0) {
-                    Text(verbatim: "$ ")
-                    Text(title)
+            if collapsible {
+                Button {
+                    withAnimation(.easeInOut(duration: 0.15)) {
+                        isExpanded.toggle()
+                    }
+                } label: {
+                    HStack(spacing: 0) {
+                        Text(verbatim: "$ ")
+                        if let title {
+                            Text(title)
+                        }
+                        Spacer(minLength: 8)
+                        Image(systemName: isExpanded ? "chevron.down" : "chevron.right")
+                            .font(.system(size: 10, weight: .bold))
+                    }
+                    .font(TerminalStyle.mono(12, weight: .semibold))
+                    .foregroundStyle(accent)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .contentShape(Rectangle())
                 }
-                .font(TerminalStyle.mono(12, weight: .semibold))
-                .foregroundStyle(accent)
+                .buttonStyle(.plain)
+
+                if isExpanded {
+                    content
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+            } else {
+                if let title {
+                    HStack(spacing: 0) {
+                        Text(verbatim: "$ ")
+                        Text(title)
+                    }
+                    .font(TerminalStyle.mono(12, weight: .semibold))
+                    .foregroundStyle(accent)
+                }
+                content
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
-            content
-                .frame(maxWidth: .infinity, alignment: .leading)
         }
         .padding(12)
         .frame(maxWidth: .infinity, alignment: .leading)
