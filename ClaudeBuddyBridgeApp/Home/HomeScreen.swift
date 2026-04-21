@@ -69,10 +69,9 @@ struct HomeScreen: View {
 
     var body: some View {
         ZStack {
-            // Use TerminalStyle.lcdBg (#0f1010) instead of pure black — matches
-            // the h5-demo LCD interior color so the "phone screen = dev-board
-            // LCD" metaphor reads correctly against the mint-green ink.
-            TerminalStyle.lcdBg.ignoresSafeArea()
+            // Pure black — h5-demo uses #000 for .lcd-body, and the spec
+            // calls out "黑色背景色" explicitly.
+            Color.black.ignoresSafeArea()
             if showScanline { ScanlineOverlay() }
 
             GeometryReader { proxy in
@@ -221,7 +220,7 @@ struct HomeScreen: View {
     private var petArea: some View {
         ZStack {
             Rectangle()
-                .fill(TerminalStyle.lcdBg)
+                .fill(Color.black)
             buddyRenderer
                 .padding(.horizontal, 24)
             VStack {
