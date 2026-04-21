@@ -231,6 +231,11 @@ struct SettingsScreen: View {
         VStack(alignment: .leading, spacing: 12) {
             ButtonCheatSheet()
 
+            Text("settings.help.reconnectHint")
+                .font(TerminalStyle.mono(10))
+                .foregroundStyle(TerminalStyle.inkDim)
+                .fixedSize(horizontal: false, vertical: true)
+
             Button {
                 hasOnboarded = false
             } label: {

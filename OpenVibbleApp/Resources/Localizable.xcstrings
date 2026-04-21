@@ -4365,13 +4365,29 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Show Help Again"
+            "value" : "View Onboarding"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "再次查看帮助"
+            "value" : "查看引导"
+          }
+        }
+      }
+    },
+    "settings.help.reconnectHint" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If Claude Desktop still cannot connect after multiple tries, restart the Claude Desktop client."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "如果 Claude Desktop 多次尝试后仍无法正常连接，可重启 Claude Desktop 客户端。"
           }
         }
       }
