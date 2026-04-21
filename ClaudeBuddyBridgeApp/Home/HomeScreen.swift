@@ -58,11 +58,11 @@ struct HomeScreen: View {
             case .info: return .normal
             }
         }
-        var label: String {
+        var labelKey: LocalizedStringKey {
             switch self {
-            case .normal: return "NORMAL"
-            case .pet: return "PET"
-            case .info: return "INFO"
+            case .normal: return "home.mode.normal"
+            case .pet: return "home.mode.pet"
+            case .info: return "home.mode.info"
             }
         }
     }
@@ -188,7 +188,7 @@ struct HomeScreen: View {
                 .padding(.horizontal, 24)
             VStack {
                 HStack {
-                    Text(mode.label)
+                    Text(mode.labelKey)
                         .font(TerminalStyle.display(11, weight: .heavy))
                         .tracking(2)
                         .foregroundStyle(TerminalStyle.inkDim)
@@ -197,7 +197,7 @@ struct HomeScreen: View {
                         .background(Color.black.opacity(0.5), in: Capsule())
                         .overlay(Capsule().stroke(TerminalStyle.inkDim.opacity(0.35), lineWidth: 1))
                     Spacer()
-                    Text(persona.state.slug.uppercased())
+                    Text(personaStateKey(persona.state))
                         .font(TerminalStyle.mono(10, weight: .semibold))
                         .tracking(1)
                         .foregroundStyle(TerminalStyle.ink)
@@ -338,6 +338,18 @@ struct HomeScreen: View {
     // MARK: - Derived UI state
 
     private var petAreaHeight: CGFloat { 300 }
+
+    private func personaStateKey(_ state: PersonaState) -> LocalizedStringKey {
+        switch state {
+        case .sleep: return "state.sleep"
+        case .idle: return "state.idle"
+        case .busy: return "state.busy"
+        case .attention: return "state.attention"
+        case .celebrate: return "state.celebrate"
+        case .dizzy: return "state.dizzy"
+        case .heart: return "state.heart"
+        }
+    }
 
     private func startBLEIfAllowed() {
         guard autoStartBLE, model.bluetoothAuthorization == .allowedAlways else { return }
@@ -787,11 +799,11 @@ private struct PetBody: View {
 
     private var howPage: some View {
         VStack(alignment: .leading, spacing: 10) {
-            howLine("MOOD", "pet.how.mood")
-            howLine("FED", "pet.how.fed")
-            howLine("ENERGY", "pet.how.energy")
-            howLine("SHAKE", "pet.how.shake")
-            howLine("IDLE", "pet.how.idle")
+            howLine("pet.how.tag.mood", "pet.how.mood")
+            howLine("pet.how.tag.fed", "pet.how.fed")
+            howLine("pet.how.tag.energy", "pet.how.energy")
+            howLine("pet.how.tag.shake", "pet.how.shake")
+            howLine("pet.how.tag.idle", "pet.how.idle")
             howLine("A", "pet.how.a")
             howLine("B", "pet.how.b")
             Spacer(minLength: 0)
@@ -810,9 +822,9 @@ private struct PetBody: View {
         .font(TerminalStyle.mono(11))
     }
 
-    private func howLine(_ tag: String, _ bodyKey: LocalizedStringKey) -> some View {
+    private func howLine(_ tagKey: LocalizedStringKey, _ bodyKey: LocalizedStringKey) -> some View {
         HStack(alignment: .top, spacing: 8) {
-            Text(tag)
+            Text(tagKey)
                 .font(TerminalStyle.mono(11, weight: .bold))
                 .foregroundStyle(TerminalStyle.accent)
                 .frame(width: 70, alignment: .leading)
@@ -866,7 +878,7 @@ private struct InfoBody: View {
                     .font(TerminalStyle.mono(11))
                     .foregroundStyle(TerminalStyle.inkDim)
             }
-            Text(title)
+            Text(titleKey(for: title))
                 .font(TerminalStyle.display(22))
                 .tracking(3)
                 .foregroundStyle(TerminalStyle.accent)
@@ -958,6 +970,18 @@ private struct InfoBody: View {
             .body("info.credits.line5")
         ]
         default: return []
+        }
+    }
+
+    private func titleKey(for page: String) -> LocalizedStringKey {
+        switch page {
+        case "ABOUT": return "info.page.about.title"
+        case "BUTTONS": return "info.page.buttons.title"
+        case "CLAUDE": return "info.page.claude.title"
+        case "DEVICE": return "info.page.device.title"
+        case "BLE": return "info.page.ble.title"
+        case "CREDITS": return "info.page.credits.title"
+        default: return LocalizedStringKey(page)
         }
     }
 

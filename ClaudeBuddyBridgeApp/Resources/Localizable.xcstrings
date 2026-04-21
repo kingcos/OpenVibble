@@ -3252,6 +3252,132 @@
         "en" : { "stringUnit" : { "state" : "translated", "value" : "MIT-licensed" } },
         "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "MIT 许可" } }
       }
+    },
+    "home.mode.normal" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "NORMAL" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "普通" } }
+      }
+    },
+    "home.mode.pet" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "PET" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "宠物" } }
+      }
+    },
+    "home.mode.info" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "INFO" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "信息" } }
+      }
+    },
+    "state.sleep" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "SLEEP" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "休眠" } }
+      }
+    },
+    "state.idle" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "IDLE" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "空闲" } }
+      }
+    },
+    "state.busy" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "BUSY" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "忙碌" } }
+      }
+    },
+    "state.attention" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "ATTN" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "待应" } }
+      }
+    },
+    "state.celebrate" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "YAY" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "庆祝" } }
+      }
+    },
+    "state.dizzy" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "DIZZY" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "眩晕" } }
+      }
+    },
+    "state.heart" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "HEART" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "喜爱" } }
+      }
+    },
+    "pet.how.tag.mood" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "MOOD" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "心情" } }
+      }
+    },
+    "pet.how.tag.fed" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "FED" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "饱食" } }
+      }
+    },
+    "pet.how.tag.energy" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "ENERGY" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "精力" } }
+      }
+    },
+    "pet.how.tag.shake" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "SHAKE" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "摇一摇" } }
+      }
+    },
+    "pet.how.tag.idle" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "IDLE" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "空闲" } }
+      }
+    },
+    "info.page.about.title" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "ABOUT" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "关于" } }
+      }
+    },
+    "info.page.buttons.title" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "BUTTONS" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "按键" } }
+      }
+    },
+    "info.page.claude.title" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "CLAUDE" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "CLAUDE" } }
+      }
+    },
+    "info.page.device.title" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "DEVICE" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "设备" } }
+      }
+    },
+    "info.page.ble.title" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "BLE" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "蓝牙" } }
+      }
+    },
+    "info.page.credits.title" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "CREDITS" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "致谢" } }
+      }
     }
   },
   "version" : "1.0"
