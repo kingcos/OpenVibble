@@ -188,6 +188,15 @@ final class DeviceMenuState: ObservableObject {
         menuOpen || settingsOpen || resetOpen
     }
 
+    func closeMenus() {
+        menuOpen = false
+        settingsOpen = false
+        resetOpen = false
+        menuIndex = 0
+        settingsIndex = 0
+        resetIndex = 0
+    }
+
     /// Visual brightness multiplier [0.3 ... 1.0] applied to the LCD body.
     /// Firmware dims the backlight; iOS simulates with an opacity overlay.
     var brightnessMultiplier: Double {

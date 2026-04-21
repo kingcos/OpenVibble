@@ -12,7 +12,6 @@ struct DeviceMenuOverlay: View {
     var body: some View {
         VStack(spacing: 0) {
             ZStack(alignment: .topLeading) {
-                Color.black.opacity(0.96)
                 VStack(alignment: .leading, spacing: 12) {
                     header
                     Divider().background(TerminalStyle.lcdDivider)
@@ -164,11 +163,15 @@ struct DeviceMenuOverlay: View {
     }
 
     private var footer: some View {
-        HStack(spacing: 14) {
-            footerHint("device.menu.hint.aLong",  "device.menu.hint.close")
-            footerHint("device.menu.hint.aShort", "device.menu.hint.next")
-            footerHint("device.menu.hint.bShort", "device.menu.hint.apply")
-            Spacer(minLength: 0)
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(spacing: 14) {
+                footerHint("device.menu.hint.aLong",  "device.menu.hint.close")
+                footerHint("device.menu.hint.aShort", "device.menu.hint.next")
+                footerHint("device.menu.hint.bShort", "device.menu.hint.apply")
+                Spacer(minLength: 0)
+            }
+            Text("device.menu.notice.demoOnly")
+                .foregroundStyle(TerminalStyle.inkDim)
         }
         .font(TerminalStyle.mono(10, weight: .semibold))
     }

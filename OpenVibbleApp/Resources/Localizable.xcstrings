@@ -331,6 +331,22 @@
         }
       }
     },
+    "device.menu.notice.demoOnly" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Some features in this menu are for display only."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "该菜单内部分功能仅供展示。"
+          }
+        }
+      }
+    },
     "device.menu.item.about" : {
       "extractionState" : "stale",
       "localizations" : {

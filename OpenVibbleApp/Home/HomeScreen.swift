@@ -38,6 +38,7 @@ struct HomeScreen: View {
     @State private var infoPage: Int = 0
     @State private var showSettings = false
     @State private var showLogs = false
+    @State private var showDeviceMenuSheet = false
     @State private var promptArrivedAt: Date?
     @State private var promptTick: Int = 0
     @State private var frozenWaitedSeconds: Int?
@@ -109,16 +110,6 @@ struct HomeScreen: View {
                 }
             }
 
-            // Device menu overlay (MENU / SETTINGS / RESET) — h5 parity,
-            // pure local state. Drawn above the LCD body but below the
-            // screen-off mask so power can still force a blackout.
-            // Reserves the bottom-bar height so A/B stay visible+tappable
-            // while the menu is open.
-            if deviceMenu.isAnyMenuVisible {
-                DeviceMenuOverlay(state: deviceMenu, bottomReservedHeight: bottomBarReservedHeight)
-                    .transition(.opacity)
-            }
-
             if deviceMenu.screenOff {
                 ScreenOffMask(onWake: { deviceMenu.wakeScreen() })
                     .transition(.opacity)
@@ -133,6 +124,20 @@ struct HomeScreen: View {
                 .presentationDetents([.medium, .large])
                 .presentationBackground(.ultraThinMaterial)
                 .presentationDragIndicator(.visible)
+        }
+        .sheet(
+            isPresented: $showDeviceMenuSheet,
+            onDismiss: { deviceMenu.closeMenus() }
+        ) {
+            DeviceMenuSheet(
+                state: deviceMenu,
+                onPressA: onPressA,
+                onLongPressA: onLongPressA,
+                onPressB: onPressB
+            )
+            .presentationDetents([.medium, .large])
+            .presentationBackground(.ultraThinMaterial)
+            .presentationDragIndicator(.visible)
         }
         .onAppear {
             startBLEIfAllowed()
@@ -437,6 +442,11 @@ struct HomeScreen: View {
         // on long-press).
         if deviceMenu.screenOff { deviceMenu.wakeScreen() }
         deviceMenu.toggleMenu()
+        if deviceMenu.isAnyMenuVisible {
+            showDeviceMenuSheet = true
+        } else {
+            showDeviceMenuSheet = false
+        }
     }
 
     private func onPressB() {
@@ -473,6 +483,9 @@ struct HomeScreen: View {
                 }
             )
             if let description { model.logDeviceMenuEvent(description) }
+            if !deviceMenu.isAnyMenuVisible {
+                showDeviceMenuSheet = false
+            }
             return
         }
         if mode == .normal, model.prompt != nil {
@@ -523,11 +536,6 @@ struct HomeScreen: View {
     }
 
     // MARK: - Derived UI state
-
-    /// Height of the A/B/log bottom bar plus its vertical padding — used by
-    /// the device-menu overlay to stop short of the handheld buttons so they
-    /// remain visible and tappable while the menu is open.
-    private var bottomBarReservedHeight: CGFloat { 86 }
 
     private func petAreaHeight(in availableHeight: CGFloat) -> CGFloat {
         // GIFs ship at ~160–200px native — beyond ~320pt on iPhone we start
@@ -1273,6 +1281,39 @@ private struct InfoBody: View {
 }
 
 // MARK: - Log bottom sheet
+
+private struct DeviceMenuSheet: View {
+    @ObservedObject var state: DeviceMenuState
+    let onPressA: () -> Void
+    let onLongPressA: () -> Void
+    let onPressB: () -> Void
+
+    var body: some View {
+        VStack(spacing: 12) {
+            DeviceMenuOverlay(state: state, bottomReservedHeight: 0)
+                .clipShape(RoundedRectangle(cornerRadius: 14))
+
+            HStack(spacing: 16) {
+                HandheldButton(
+                    label: "A",
+                    accent: TerminalStyle.good,
+                    action: onPressA,
+                    longPressAction: onLongPressA
+                )
+                HandheldButton(
+                    label: "B",
+                    accent: TerminalStyle.bad,
+                    action: onPressB,
+                    longPressAction: nil
+                )
+                Spacer(minLength: 0)
+            }
+            .padding(.horizontal, 16)
+            .padding(.bottom, 6)
+        }
+        .padding(.top, 10)
+    }
+}
 
 struct HomeLogSheet: View {
     @ObservedObject var model: BridgeAppModel
