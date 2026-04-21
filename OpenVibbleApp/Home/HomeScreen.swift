@@ -1227,7 +1227,7 @@ struct HomeLogSheet: View {
             if !model.snapshot.lastTurnPreview.isEmpty {
                 out.append("[turn:\(model.snapshot.lastTurnRole)] \(model.snapshot.lastTurnPreview)")
             }
-            out.append(contentsOf: model.snapshot.entries)
+            out.append(contentsOf: model.parsedEntries)
             return out
         case .ble:
             var out: [String] = []
