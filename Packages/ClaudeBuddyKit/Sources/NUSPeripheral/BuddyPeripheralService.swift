@@ -22,6 +22,9 @@ public enum NUSUUIDs {
 public final class BuddyPeripheralService: NSObject, ObservableObject {
     @Published public private(set) var connectionState: NUSConnectionState = .stopped
     @Published public private(set) var bluetoothStateNote: String = "蓝牙状态未知"
+    /// Raw `CBManagerState` so UI can branch on power/unsupported without
+    /// string-matching the (locale-specific) `bluetoothStateNote`.
+    @Published public private(set) var bluetoothPowerState: CBManagerState = .unknown
     @Published public private(set) var advertisingNote: String = "未广播"
     @Published public private(set) var diagnostics: [String] = []
     /// Latest observed authorization state. Reflects `CBPeripheralManager.authorization`
@@ -202,6 +205,7 @@ public final class BuddyPeripheralService: NSObject, ObservableObject {
 extension BuddyPeripheralService: CBPeripheralManagerDelegate {
     public func peripheralManagerDidUpdateState(_ peripheral: CBPeripheralManager) {
         bluetoothStateNote = stateNote(for: peripheral.state)
+        bluetoothPowerState = peripheral.state
         authorizationState = CBPeripheralManager.authorization
         log("STATE changed=\(peripheral.state.rawValue) note=\(bluetoothStateNote) auth=\(authorizationState.rawValue)")
         if peripheral.state == .poweredOn {

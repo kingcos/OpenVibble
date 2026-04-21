@@ -15,6 +15,7 @@ final class BridgeAppModel: ObservableObject {
     @Published private(set) var transfer: TransferProgress = .idle
     @Published private(set) var connectionState: NUSConnectionState = .stopped
     @Published private(set) var bluetoothStateNote: String = "蓝牙状态未知"
+    @Published private(set) var bluetoothPowerState: CBManagerState = .unknown
     @Published private(set) var advertisingNote: String = "未广播"
     @Published private(set) var activeDisplayName: String = "Claude"
     @Published private(set) var diagnosticLogs: [String] = []
@@ -71,6 +72,13 @@ final class BridgeAppModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] note in
                 self?.bluetoothStateNote = note
+            }
+            .store(in: &cancellables)
+
+        peripheral.$bluetoothPowerState
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] state in
+                self?.bluetoothPowerState = state
             }
             .store(in: &cancellables)
 

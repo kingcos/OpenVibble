@@ -342,11 +342,12 @@ struct HomeScreen: View {
         case .allowedAlways: break
         @unknown default: break
         }
-        if model.bluetoothStateNote.contains("未开启") || model.bluetoothStateNote.contains("关闭") {
-            return String(localized: "home.status.bluetoothOff")
-        }
-        if model.bluetoothStateNote.contains("不支持") {
-            return String(localized: "home.status.unsupported")
+        switch model.bluetoothPowerState {
+        case .poweredOff: return String(localized: "home.status.bluetoothOff")
+        case .unsupported: return String(localized: "home.status.unsupported")
+        case .unauthorized: return String(localized: "home.status.permissionDenied")
+        case .resetting, .unknown, .poweredOn: break
+        @unknown default: break
         }
         switch model.connectionState {
         case .connected(let n):
@@ -367,10 +368,10 @@ struct HomeScreen: View {
         case .allowedAlways: break
         @unknown default: break
         }
-        if model.bluetoothStateNote.contains("未开启")
-            || model.bluetoothStateNote.contains("关闭")
-            || model.bluetoothStateNote.contains("不支持") {
-            return TerminalStyle.bad
+        switch model.bluetoothPowerState {
+        case .poweredOff, .unsupported, .unauthorized: return TerminalStyle.bad
+        case .resetting, .unknown, .poweredOn: break
+        @unknown default: break
         }
         switch model.connectionState {
         case .connected: return TerminalStyle.good
