@@ -1020,15 +1020,23 @@ struct HomeLogSheet: View {
     private var currentLog: [String] {
         switch tab {
         case .run:
+            // Decoded Claude messages — "received info" in user's words.
             var lines: [String] = []
-            lines.append(contentsOf: model.snapshot.entries.map { "[log] \($0)" })
             if !model.snapshot.lastTurnPreview.isEmpty {
-                lines.insert("[turn:\(model.snapshot.lastTurnRole)] \(model.snapshot.lastTurnPreview)", at: 0)
+                lines.append("[turn:\(model.snapshot.lastTurnRole)] \(model.snapshot.lastTurnPreview)")
             }
-            lines.append(contentsOf: model.recentEvents.prefix(60).map { "[evt] \($0)" })
+            lines.append(contentsOf: model.snapshot.entries)
             return lines
         case .ble:
-            return model.diagnosticLogs
+            // Raw wire events (protocol lines) + peripheral diagnostics —
+            // the "old terminal page" log the user referenced.
+            var lines: [String] = []
+            lines.append(contentsOf: model.recentEvents.prefix(80))
+            if !model.diagnosticLogs.isEmpty {
+                lines.append("— diagnostics —")
+                lines.append(contentsOf: model.diagnosticLogs)
+            }
+            return lines
         }
     }
 
