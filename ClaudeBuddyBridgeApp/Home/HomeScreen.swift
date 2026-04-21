@@ -617,15 +617,10 @@ private struct NormalBody: View {
         )
     }
 
+    // Spec 3.3: NORMAL shows only "解析后日志" (parsed log, time + msg).
+    // Raw BLE wire events live in the BLE tab of the log sheet.
     private var parsedLog: [LogLine] {
-        var result: [LogLine] = []
-        for entry in model.snapshot.entries.prefix(10) {
-            result.append(LogLine(parsed: entry))
-        }
-        for evt in model.recentEvents.prefix(8) {
-            result.append(LogLine(event: evt))
-        }
-        return Array(result.prefix(16))
+        model.snapshot.entries.prefix(16).map(LogLine.init(parsed:))
     }
 
     private func parsedLogRow(_ line: LogLine) -> some View {
@@ -636,7 +631,7 @@ private struct NormalBody: View {
                 .frame(width: 44, alignment: .leading)
             Text(line.message)
                 .font(TerminalStyle.mono(11))
-                .foregroundStyle(line.event ? TerminalStyle.inkDim : TerminalStyle.ink)
+                .foregroundStyle(TerminalStyle.ink)
                 .lineLimit(2)
                 .truncationMode(.tail)
             Spacer(minLength: 0)
@@ -653,7 +648,6 @@ private struct NormalBody: View {
 private struct LogLine {
     let time: String
     let message: String
-    let event: Bool
 
     init(parsed entry: String) {
         let parts = entry.split(separator: " ", maxSplits: 1, omittingEmptySubsequences: true)
@@ -664,13 +658,6 @@ private struct LogLine {
             self.time = LogLine.currentClock()
             self.message = entry
         }
-        self.event = false
-    }
-
-    init(event line: String) {
-        self.time = LogLine.currentClock()
-        self.message = line
-        self.event = true
     }
 
     private static func currentClock() -> String {
