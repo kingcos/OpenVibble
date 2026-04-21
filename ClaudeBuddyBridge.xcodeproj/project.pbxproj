@@ -8,11 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		253202A33F213D742F334D4E /* BuddyLiveActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E2AEEF3C568CB8D6921F4E /* BuddyLiveActivityManager.swift */; };
-		283E193B02D5AAC7512212DC /* PetDeviceScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74007A2166FB05194E11C7B /* PetDeviceScreen.swift */; };
 		343D78323800A2EFACEB3D52 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6C622D6CF269E4DBD46366 /* SettingsScreen.swift */; };
 		3B6C101D8EAA599515AF1788 /* PersonaController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B009D5D10454B61E89963C8 /* PersonaController.swift */; };
 		4C1E3AF4DF5789D4DFF3B873 /* BuddyPersona in Frameworks */ = {isa = PBXBuildFile; productRef = 44F8AFF504D8CA47A444E57C /* BuddyPersona */; };
-		4D1ABB475BCED1DAE60F61C7 /* MechanicalSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F0B4FBDB37C0E8535DED6F /* MechanicalSwitch.swift */; };
 		516F17121682AB550CC901A7 /* BuddyLiveActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B122A926562D2A34C73B782 /* BuddyLiveActivityAttributes.swift */; };
 		54F87E5C689EC08548350CD7 /* BuddyStats in Frameworks */ = {isa = PBXBuildFile; productRef = 8966AD7A853C35E7677CCBEC /* BuddyStats */; };
 		5680ADABA6886EF8D0088838 /* BuddyLiveActivityBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44CB6D9FCE1B00A4A028A4E0 /* BuddyLiveActivityBundle.swift */; };
@@ -20,9 +18,9 @@
 		676D367654C0A23516DB95A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65548935CD489AE7EE50CE1C /* Assets.xcassets */; };
 		688EB682572EC8BB6F891EA0 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = A4EE341486BD5DAEFD51C47D /* Localizable.xcstrings */; };
 		6E17FBE03B8F13A3FC186C52 /* ClaudeBuddyBridgeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08F2CD3EDE7E8665059A1EFB /* ClaudeBuddyBridgeApp.swift */; };
+		6F71D3FC813CED2933F02D34 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F01CC5C23112E959F8BC6D8 /* HomeScreen.swift */; };
 		70769E3394701AA5BC933566 /* BridgeRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 8436D7CE6A94DA31EF4BB8C3 /* BridgeRuntime */; };
 		72ACF9F2B9914D7E16FA8229 /* MotionSensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDC1A2FAF3DC9D3F656F4FC /* MotionSensor.swift */; };
-		73EEA5C38DC91BE6707FB800 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5FCD0F4050D6D146B6329C /* ContentView.swift */; };
 		772E4BCA8435152643F47DA3 /* SpeciesPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C833BFB88AA72D0DF38D1F /* SpeciesPickerSheet.swift */; };
 		7A8A6E5E0F6552B518977FD4 /* BuddyNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B36EF84E00A748D875ABA92 /* BuddyNotificationCenter.swift */; };
 		857F6A7482A0CE4336A774B7 /* NUSPeripheral in Frameworks */ = {isa = PBXBuildFile; productRef = ECB5D8326B3ABBD99ABAC356 /* NUSPeripheral */; };
@@ -72,14 +70,12 @@
 		08F2CD3EDE7E8665059A1EFB /* ClaudeBuddyBridgeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeBuddyBridgeApp.swift; sourceTree = "<group>"; };
 		0B36EF84E00A748D875ABA92 /* BuddyNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddyNotificationCenter.swift; sourceTree = "<group>"; };
 		12C833BFB88AA72D0DF38D1F /* SpeciesPickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesPickerSheet.swift; sourceTree = "<group>"; };
-		17BF067ED483C722B791F5D7 /* ClaudeBuddyBridgeLiveActivity.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ClaudeBuddyBridgeLiveActivity.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		17BF067ED483C722B791F5D7 /* ClaudeBuddyBridgeLiveActivity.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = ClaudeBuddyBridgeLiveActivity.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		295BF4F990571CB91064B3DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		34A991368F018E861B46B255 /* ClaudeBuddyBridgeApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClaudeBuddyBridgeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		34A991368F018E861B46B255 /* ClaudeBuddyBridgeApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = ClaudeBuddyBridgeApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B009D5D10454B61E89963C8 /* PersonaController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonaController.swift; sourceTree = "<group>"; };
 		44CB6D9FCE1B00A4A028A4E0 /* BuddyLiveActivityBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddyLiveActivityBundle.swift; sourceTree = "<group>"; };
 		54DD70B9C8F1675EA19A1ABC /* BuiltinCharacters */ = {isa = PBXFileReference; lastKnownFileType = folder; name = BuiltinCharacters; path = ClaudeBuddyBridgeApp/Resources/BuiltinCharacters; sourceTree = SOURCE_ROOT; };
-		54F0B4FBDB37C0E8535DED6F /* MechanicalSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MechanicalSwitch.swift; sourceTree = "<group>"; };
-		5B5FCD0F4050D6D146B6329C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		5F6C622D6CF269E4DBD46366 /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
 		60DE9041705CE3A8112E3A29 /* ClaudeBuddyBridgeAppTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = ClaudeBuddyBridgeAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		63CD167C925FC96F77C8AFB4 /* ClaudeBuddyKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ClaudeBuddyKit; path = Packages/ClaudeBuddyKit; sourceTree = SOURCE_ROOT; };
@@ -87,11 +83,11 @@
 		6EDC1A2FAF3DC9D3F656F4FC /* MotionSensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionSensor.swift; sourceTree = "<group>"; };
 		76E2AEEF3C568CB8D6921F4E /* BuddyLiveActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddyLiveActivityManager.swift; sourceTree = "<group>"; };
 		79F7C66BFA4D7D069BAA3076 /* BuddyLiveActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddyLiveActivityAttributes.swift; sourceTree = "<group>"; };
+		7F01CC5C23112E959F8BC6D8 /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
 		87C0002E0C787AB9B8B09629 /* OnboardingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingScreen.swift; sourceTree = "<group>"; };
 		8B122A926562D2A34C73B782 /* BuddyLiveActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddyLiveActivityAttributes.swift; sourceTree = "<group>"; };
 		8E4C11DC586586DFE2B5E6B9 /* BridgeAppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BridgeAppModel.swift; sourceTree = "<group>"; };
 		A4EE341486BD5DAEFD51C47D /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
-		C74007A2166FB05194E11C7B /* PetDeviceScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetDeviceScreen.swift; sourceTree = "<group>"; };
 		D618613A515C409CDC70B957 /* SmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokeTests.swift; sourceTree = "<group>"; };
 		ECFFFB7377D3220997A6D987 /* TerminalStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -134,14 +130,6 @@
 			path = ClaudeBuddyBridgeLiveActivity;
 			sourceTree = "<group>";
 		};
-		207E172200A9AB86A0DFDCA6 /* Pet */ = {
-			isa = PBXGroup;
-			children = (
-				C74007A2166FB05194E11C7B /* PetDeviceScreen.swift */,
-			);
-			path = Pet;
-			sourceTree = "<group>";
-		};
 		4645F8B372B84D8CC6F8E411 /* LiveActivity */ = {
 			isa = PBXGroup;
 			children = (
@@ -165,14 +153,12 @@
 				65548935CD489AE7EE50CE1C /* Assets.xcassets */,
 				8E4C11DC586586DFE2B5E6B9 /* BridgeAppModel.swift */,
 				08F2CD3EDE7E8665059A1EFB /* ClaudeBuddyBridgeApp.swift */,
-				5B5FCD0F4050D6D146B6329C /* ContentView.swift */,
 				3B009D5D10454B61E89963C8 /* PersonaController.swift */,
 				F1485681065F20273D91DD29 /* Home */,
 				4645F8B372B84D8CC6F8E411 /* LiveActivity */,
 				A6CA90F481BAB18F269E9E97 /* Motion */,
 				61FC81A5D8CA7F283604ED40 /* Notifications */,
 				A4430A3B4F702ACFE4D725AA /* Onboarding */,
-				207E172200A9AB86A0DFDCA6 /* Pet */,
 				F8F40E8D38390B1C7FFA71EF /* Resources */,
 				D1FBC556443C38B0B24C2405 /* Settings */,
 				BDC3B6E79678E5BD934999D5 /* UI */,
@@ -199,7 +185,6 @@
 		BDC3B6E79678E5BD934999D5 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				54F0B4FBDB37C0E8535DED6F /* MechanicalSwitch.swift */,
 				ECFFFB7377D3220997A6D987 /* TerminalStyle.swift */,
 			);
 			path = UI;
@@ -244,6 +229,7 @@
 		F1485681065F20273D91DD29 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				7F01CC5C23112E959F8BC6D8 /* HomeScreen.swift */,
 				12C833BFB88AA72D0DF38D1F /* SpeciesPickerSheet.swift */,
 			);
 			path = Home;
@@ -332,7 +318,13 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
+					1AC16FB8B8EAB24D691DB17B = {
+						DevelopmentTeam = "";
+					};
 					72293D56C1005A2E8D7D917F = {
+						DevelopmentTeam = "";
+					};
+					C7EB87A7F32AD74B0B964EAA = {
 						DevelopmentTeam = "";
 					};
 				};
@@ -385,12 +377,10 @@
 				253202A33F213D742F334D4E /* BuddyLiveActivityManager.swift in Sources */,
 				7A8A6E5E0F6552B518977FD4 /* BuddyNotificationCenter.swift in Sources */,
 				6E17FBE03B8F13A3FC186C52 /* ClaudeBuddyBridgeApp.swift in Sources */,
-				73EEA5C38DC91BE6707FB800 /* ContentView.swift in Sources */,
-				4D1ABB475BCED1DAE60F61C7 /* MechanicalSwitch.swift in Sources */,
+				6F71D3FC813CED2933F02D34 /* HomeScreen.swift in Sources */,
 				72ACF9F2B9914D7E16FA8229 /* MotionSensor.swift in Sources */,
 				CD125A99FBE380470ADA7BD4 /* OnboardingScreen.swift in Sources */,
 				3B6C101D8EAA599515AF1788 /* PersonaController.swift in Sources */,
-				283E193B02D5AAC7512212DC /* PetDeviceScreen.swift in Sources */,
 				343D78323800A2EFACEB3D52 /* SettingsScreen.swift in Sources */,
 				772E4BCA8435152643F47DA3 /* SpeciesPickerSheet.swift in Sources */,
 				A59EE1B8344899982A8B2C63 /* TerminalStyle.swift in Sources */,
@@ -435,7 +425,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = C9JF3B5K5A;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Claude Buddy Bridge";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Connect to Claude Desktop as Hardware Buddy.";
@@ -444,7 +433,9 @@
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UIBackgroundModes = "bluetooth-peripheral";
+				INFOPLIST_KEY_UIBackgroundModes = (
+					"bluetooth-peripheral",
+				);
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
@@ -462,7 +453,6 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = C9JF3B5K5A;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = ClaudeBuddyBridgeLiveActivity/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
@@ -484,7 +474,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = C9JF3B5K5A;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Claude Buddy Bridge";
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Connect to Claude Desktop as Hardware Buddy.";
@@ -493,7 +482,9 @@
 				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UIBackgroundModes = "bluetooth-peripheral";
+				INFOPLIST_KEY_UIBackgroundModes = (
+					"bluetooth-peripheral",
+				);
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
@@ -668,7 +659,6 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = C9JF3B5K5A;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = ClaudeBuddyBridgeLiveActivity/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;

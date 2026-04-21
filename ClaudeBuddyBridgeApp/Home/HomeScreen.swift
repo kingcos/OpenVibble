@@ -546,7 +546,7 @@ private struct NormalBody: View {
                 statusPill("sess", "\(model.snapshot.total)")
                 statusPill("run", "\(model.snapshot.running)")
                 statusPill("wait", "\(model.snapshot.waiting)")
-                statusPill("tok/d", formatTokens(model.snapshot.tokensToday))
+                statusPill("tok/d", formatTokens(UInt32(max(0, model.snapshot.tokensToday))))
                 Spacer(minLength: 0)
             }
         }
