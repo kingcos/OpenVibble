@@ -795,9 +795,10 @@ private struct PetBody: View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(alignment: .firstTextBaseline) {
                 Text("pet.title")
-                    .font(TerminalStyle.mono(11, weight: .semibold))
+                    .font(TerminalStyle.display(20))
+                    .tracking(2)
                     .foregroundStyle(TerminalStyle.ink)
-                    .tracking(1)
+                    .shadow(color: TerminalStyle.accent.opacity(0.4), radius: 0, x: 1, y: 1)
                 Spacer()
                 Text("\(page + 1)/\(Self.pageCount)")
                     .font(TerminalStyle.mono(11))
@@ -924,18 +925,19 @@ private struct InfoBody: View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(alignment: .firstTextBaseline) {
                 Text("info.title")
-                    .font(TerminalStyle.mono(11, weight: .semibold))
+                    .font(TerminalStyle.display(20))
+                    .tracking(2)
                     .foregroundStyle(TerminalStyle.ink)
-                    .tracking(1)
+                    .shadow(color: TerminalStyle.accent.opacity(0.4), radius: 0, x: 1, y: 1)
                 Spacer()
                 Text("\(page + 1)/\(Self.pages.count)")
                     .font(TerminalStyle.mono(11))
                     .foregroundStyle(TerminalStyle.inkDim)
             }
             Text(titleKey(for: title))
-                .font(TerminalStyle.mono(12, weight: .bold))
+                .font(TerminalStyle.display(15))
                 .tracking(2)
-                .foregroundStyle(TerminalStyle.ink)
+                .foregroundStyle(TerminalStyle.accentSoft)
             Divider().background(TerminalStyle.lcdDivider)
 
             VStack(alignment: .leading, spacing: 4) {

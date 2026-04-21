@@ -14,13 +14,7 @@
         }
       }
     },
-    "$ %@" : {
-
-    },
     "$ buddy --init" : {
-
-    },
-    "$ settings" : {
 
     },
     "$ species" : {
@@ -2694,6 +2688,7 @@
       }
     },
     "pet.delete" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -3146,6 +3141,7 @@
       }
     },
     "pet.reset" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -3514,6 +3510,7 @@
       }
     },
     "settings.github" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -3530,6 +3527,7 @@
       }
     },
     "settings.guide.show" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -3557,118 +3555,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "灵动岛与实时活动"
-          }
-        }
-      }
-    },
-    "settings.section.alerts.lower" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "alerts"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "通知提醒"
-          }
-        }
-      }
-    },
-    "settings.section.bluetooth.lower" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "bluetooth"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "蓝牙"
-          }
-        }
-      }
-    },
-    "settings.section.display.lower" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "display"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "显示"
-          }
-        }
-      }
-    },
-    "settings.section.pet.lower" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "pet"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "宠物"
-          }
-        }
-      }
-    },
-    "settings.section.guide.lower" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "guide"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "引导"
-          }
-        }
-      }
-    },
-    "settings.section.about.lower" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "about"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "关于"
-          }
-        }
-      }
-    },
-    "settings.section.danger.lower" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "danger"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "危险操作"
           }
         }
       }
@@ -3958,6 +3844,57 @@
         }
       }
     },
+    "settings.section.about.lower" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "about"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关于"
+          }
+        }
+      }
+    },
+    "settings.section.alerts.lower" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "alerts"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通知提醒"
+          }
+        }
+      }
+    },
+    "settings.section.bluetooth.lower" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "bluetooth"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "蓝牙"
+          }
+        }
+      }
+    },
     "settings.section.danger" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -3975,6 +3912,40 @@
         }
       }
     },
+    "settings.section.danger.lower" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "danger"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "危险操作"
+          }
+        }
+      }
+    },
+    "settings.section.display.lower" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "display"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示"
+          }
+        }
+      }
+    },
     "settings.section.guide" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -3982,6 +3953,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Guide"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "引导"
+          }
+        }
+      }
+    },
+    "settings.section.guide.lower" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "guide"
           }
         },
         "zh-Hans" : {
@@ -4016,6 +4004,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pet"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "宠物"
+          }
+        }
+      }
+    },
+    "settings.section.pet.lower" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "pet"
           }
         },
         "zh-Hans" : {

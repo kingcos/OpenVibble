@@ -101,13 +101,15 @@ struct SettingsScreen: View {
     // MARK: - Header
 
     private var headerBar: some View {
-        HStack(spacing: 0) {
-            Text(verbatim: "$ ")
+        HStack(alignment: .firstTextBaseline, spacing: 6) {
+            Text(verbatim: "$")
                 .font(TerminalStyle.mono(16, weight: .bold))
-                .foregroundStyle(TerminalStyle.ink)
+                .foregroundStyle(TerminalStyle.inkDim)
             Text("settings.title")
-                .font(TerminalStyle.mono(16, weight: .bold))
+                .font(TerminalStyle.display(26))
+                .tracking(2)
                 .foregroundStyle(TerminalStyle.ink)
+                .shadow(color: TerminalStyle.accent.opacity(0.45), radius: 0, x: 1.5, y: 1.5)
             Spacer()
             Button {
                 dismiss()
