@@ -610,23 +610,31 @@ private struct NormalBody: View {
                     .truncationMode(.tail)
             }
             HStack(spacing: 14) {
-                Label {
-                    Text("home.prompt.approve")
+                if model.responseSent {
+                    Text("home.prompt.sent")
                         .font(TerminalStyle.mono(11, weight: .bold))
-                } icon: {
-                    Text("A").font(TerminalStyle.mono(11, weight: .bold))
+                        .tracking(1)
+                        .foregroundStyle(TerminalStyle.good)
+                } else {
+                    Label {
+                        Text("home.prompt.approve")
+                            .font(TerminalStyle.mono(11, weight: .bold))
+                    } icon: {
+                        Text("A").font(TerminalStyle.mono(11, weight: .bold))
+                    }
+                    .foregroundStyle(TerminalStyle.good)
+                    Label {
+                        Text("home.prompt.deny")
+                            .font(TerminalStyle.mono(11, weight: .bold))
+                    } icon: {
+                        Text("B").font(TerminalStyle.mono(11, weight: .bold))
+                    }
+                    .foregroundStyle(TerminalStyle.bad)
                 }
-                .foregroundStyle(TerminalStyle.good)
-                Label {
-                    Text("home.prompt.deny")
-                        .font(TerminalStyle.mono(11, weight: .bold))
-                } icon: {
-                    Text("B").font(TerminalStyle.mono(11, weight: .bold))
-                }
-                .foregroundStyle(TerminalStyle.bad)
                 Spacer(minLength: 0)
             }
             .padding(.top, 2)
+            .animation(.easeInOut(duration: 0.18), value: model.responseSent)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(12)

@@ -23,6 +23,11 @@ final class BridgeAppModel: ObservableObject {
     @Published private(set) var lastInstalledCharacter: String?
     @Published private(set) var recentLevelUp: Bool = false
     @Published private(set) var lastQuickApprovalAt: Date?
+    /// True once the user has responded to the current prompt but the desktop
+    /// has not yet cleared it from the next heartbeat. Used by the prompt
+    /// panel to swap the "A approve / B deny" hint for a "SENT" state so
+    /// users see immediate feedback instead of the waited-timer ticking on.
+    @Published private(set) var responseSent: Bool = false
     /// Mirrors `BuddyPeripheralService.authorizationState` so views can react
     /// to the user granting/denying the BLE permission.
     @Published private(set) var bluetoothAuthorization: CBManagerAuthorization = CBPeripheralManager.authorization
@@ -169,6 +174,7 @@ final class BridgeAppModel: ObservableObject {
         }
         lastPromptAt = nil
         lastPromptId = nil
+        responseSent = true
         pushStatusSample()
         return elapsed
     }
@@ -186,6 +192,7 @@ final class BridgeAppModel: ObservableObject {
         if let newPrompt, newPrompt.id != lastPromptId {
             lastPromptId = newPrompt.id
             lastPromptAt = Date()
+            responseSent = false
             BuddyNotificationCenter.shared.notifyPromptIfNeeded(
                 promptID: newPrompt.id,
                 tool: newPrompt.tool,
@@ -194,6 +201,7 @@ final class BridgeAppModel: ObservableObject {
         } else if newPrompt == nil {
             lastPromptAt = nil
             lastPromptId = nil
+            responseSent = false
         }
         prompt = newPrompt
 
