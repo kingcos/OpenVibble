@@ -166,18 +166,54 @@ struct HomeScreen: View {
     }
 
     private var statusIndicator: some View {
-        HStack(spacing: 8) {
+        let actionable = statusActionURL != nil
+        let content = HStack(spacing: 8) {
             BreathingLED(color: statusColor)
             Text(statusLabel)
                 .font(TerminalStyle.mono(11, weight: .semibold))
                 .foregroundStyle(TerminalStyle.ink)
                 .lineLimit(1)
                 .truncationMode(.tail)
+            if actionable {
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 9, weight: .bold))
+                    .foregroundStyle(TerminalStyle.inkDim)
+            }
         }
         .padding(.horizontal, 10)
         .padding(.vertical, 6)
         .background(TerminalStyle.lcdPanel.opacity(0.65), in: Capsule())
-        .overlay(Capsule().stroke(TerminalStyle.inkDim.opacity(0.4), lineWidth: 1))
+        .overlay(Capsule().stroke(
+            (actionable ? statusColor.opacity(0.55) : TerminalStyle.inkDim.opacity(0.4)),
+            lineWidth: 1
+        ))
+
+        return Group {
+            if let url = statusActionURL {
+                Button {
+                    UIApplication.shared.open(url)
+                } label: { content }
+                .buttonStyle(.plain)
+            } else {
+                content
+            }
+        }
+    }
+
+    /// Surface a tap target only when the user can actually do something about
+    /// the current status (e.g. flip denied-permission in Settings). Passive
+    /// states like "advertising" or "connected" have no action, so the pill
+    /// stays non-interactive.
+    private var statusActionURL: URL? {
+        switch model.bluetoothAuthorization {
+        case .denied, .restricted:
+            return URL(string: UIApplication.openSettingsURLString)
+        default: break
+        }
+        if model.bluetoothPowerState == .poweredOff {
+            return URL(string: UIApplication.openSettingsURLString)
+        }
+        return nil
     }
 
     // MARK: - Pet area (fixed size so body content never jitters)
