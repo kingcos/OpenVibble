@@ -178,7 +178,7 @@ struct HomeScreen: View {
             VStack {
                 HStack {
                     Text(mode.label)
-                        .font(TerminalStyle.mono(9, weight: .bold))
+                        .font(TerminalStyle.display(11, weight: .heavy))
                         .tracking(2)
                         .foregroundStyle(TerminalStyle.inkDim)
                         .padding(.horizontal, 6)
