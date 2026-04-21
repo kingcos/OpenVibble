@@ -243,21 +243,34 @@ struct OnboardingScreen: View {
             done: false
         ) {
             VStack(alignment: .leading, spacing: 8) {
-                helpRow(key: "A", body: "onboarding.help.a")
-                helpRow(key: "B", body: "onboarding.help.b")
-                helpRow(key: "Log", body: "onboarding.help.log")
-                helpRow(key: "⚙", body: "onboarding.help.gear")
+                helpRow(badge: .text("A"), body: "onboarding.help.a")
+                helpRow(badge: .text("B"), body: "onboarding.help.b")
+                helpRow(badge: .icon("list.bullet.rectangle"), body: "onboarding.help.log")
+                helpRow(badge: .icon("gearshape"), body: "onboarding.help.gear")
             }
         }
     }
 
-    private func helpRow(key: String, body: LocalizedStringKey) -> some View {
-        HStack(alignment: .top, spacing: 10) {
-            Text(key)
-                .font(TerminalStyle.mono(11, weight: .bold))
-                .foregroundStyle(TerminalStyle.lcdBg)
-                .frame(width: 28, height: 22)
-                .background(TerminalStyle.ink, in: RoundedRectangle(cornerRadius: 5))
+    private enum HelpBadge {
+        case text(String)
+        case icon(String)
+    }
+
+    private func helpRow(badge: HelpBadge, body: LocalizedStringKey) -> some View {
+        HStack(alignment: .firstTextBaseline, spacing: 10) {
+            Group {
+                switch badge {
+                case .text(let s):
+                    Text(s).font(TerminalStyle.mono(12, weight: .bold))
+                case .icon(let name):
+                    Image(systemName: name).font(.system(size: 12, weight: .bold))
+                }
+            }
+            .foregroundStyle(TerminalStyle.lcdBg)
+            .frame(width: 28, height: 24)
+            .background(TerminalStyle.ink, in: RoundedRectangle(cornerRadius: 5))
+            .alignmentGuide(.firstTextBaseline) { $0[VerticalAlignment.center] + 5 }
+
             Text(body)
                 .font(TerminalStyle.mono(12))
                 .foregroundStyle(TerminalStyle.ink)
