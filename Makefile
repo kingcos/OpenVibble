@@ -16,6 +16,7 @@ ASC_ISSUER_ID ?=
 ASC_KEY_FILEPATH ?= $(HOME)/Downloads/AuthKey_$(ASC_KEY_ID).p8
 MARKETING_VERSION ?=
 BUMP_BUILD ?= 1
+DEVELOPMENT_TEAM ?=
 
 .PHONY: bootstrap build test run-sim testflight tf-package clean
 
@@ -61,6 +62,8 @@ testflight: bootstrap
 		'<dict>' \
 		'  <key>method</key>' \
 		'  <string>app-store</string>' \
+		'  <key>signingStyle</key>' \
+		'  <string>automatic</string>' \
 		'  <key>uploadSymbols</key>' \
 		'  <true/>' \
 		'  <key>uploadBitcode</key>' \
@@ -72,12 +75,15 @@ testflight: bootstrap
 		-scheme $(SCHEME) \
 		-configuration Release \
 		-destination '$(ARCHIVE_DESTINATION)' \
+		$(if $(DEVELOPMENT_TEAM),DEVELOPMENT_TEAM=$(DEVELOPMENT_TEAM),) \
+		-allowProvisioningUpdates \
 		archive \
 		-archivePath "$(ARCHIVE_PATH)"
 	xcodebuild \
 		-exportArchive \
 		-archivePath "$(ARCHIVE_PATH)" \
 		-exportPath "$(EXPORT_PATH)" \
+		-allowProvisioningUpdates \
 		-exportOptionsPlist "$(EXPORT_OPTIONS_PLIST)"
 	@if [ -n "$(ASC_KEY_ID)" ] && [ -n "$(ASC_ISSUER_ID)" ]; then \
 		test -f "$(ASC_KEY_FILEPATH)" || (echo "ASC_KEY_FILEPATH not found: $(ASC_KEY_FILEPATH)" && exit 1); \
@@ -116,6 +122,8 @@ tf-package: bootstrap
 		'<dict>' \
 		'  <key>method</key>' \
 		'  <string>app-store</string>' \
+		'  <key>signingStyle</key>' \
+		'  <string>automatic</string>' \
 		'  <key>uploadSymbols</key>' \
 		'  <true/>' \
 		'  <key>uploadBitcode</key>' \
@@ -127,12 +135,15 @@ tf-package: bootstrap
 		-scheme $(SCHEME) \
 		-configuration Release \
 		-destination '$(ARCHIVE_DESTINATION)' \
+		$(if $(DEVELOPMENT_TEAM),DEVELOPMENT_TEAM=$(DEVELOPMENT_TEAM),) \
+		-allowProvisioningUpdates \
 		archive \
 		-archivePath "$(ARCHIVE_PATH)"
 	xcodebuild \
 		-exportArchive \
 		-archivePath "$(ARCHIVE_PATH)" \
 		-exportPath "$(EXPORT_PATH)" \
+		-allowProvisioningUpdates \
 		-exportOptionsPlist "$(EXPORT_OPTIONS_PLIST)"
 	@echo "Exported IPA: $$(find "$(EXPORT_PATH)" -name '*.ipa' -print -quit)"
 

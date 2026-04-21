@@ -66,11 +66,13 @@ targets:
           - UIInterfaceOrientationPortrait
         UISupportedInterfaceOrientations~ipad:
           - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
           - UIInterfaceOrientationLandscapeLeft
           - UIInterfaceOrientationLandscapeRight
         NSBluetoothAlwaysUsageDescription: Connect to Claude Desktop as Hardware Buddy.
         NSBluetoothPeripheralUsageDescription: Connect to Claude Desktop as Hardware Buddy.
         NSMotionUsageDescription: Detect shakes and face-down gestures to animate your Buddy.
+        ITSAppUsesNonExemptEncryption: NO
         UIBackgroundModes:
           - bluetooth-peripheral
         CFBundleURLTypes:

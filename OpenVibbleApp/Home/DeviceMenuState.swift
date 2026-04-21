@@ -77,21 +77,37 @@ final class DeviceMenuState: ObservableObject {
         cycleAsciiSpecies: () -> Void,
         onReset: () -> Void,
         onTurnOff: () -> Void,
-        onDemo: () -> Void
+        onDemo: () -> Void,
+        onHelp: () -> Void,
+        onAbout: () -> Void,
+        onBluetoothChanged: (Bool) -> Void
     ) -> String? {
         if resetOpen {
             return applyReset(onReset: onReset)
         }
         if settingsOpen {
-            return applySettings(cycleAsciiSpecies: cycleAsciiSpecies)
+            return applySettings(
+                cycleAsciiSpecies: cycleAsciiSpecies,
+                onBluetoothChanged: onBluetoothChanged
+            )
         }
         if menuOpen {
-            return applyMenu(onTurnOff: onTurnOff, onDemo: onDemo)
+            return applyMenu(
+                onTurnOff: onTurnOff,
+                onDemo: onDemo,
+                onHelp: onHelp,
+                onAbout: onAbout
+            )
         }
         return nil
     }
 
-    private func applyMenu(onTurnOff: () -> Void, onDemo: () -> Void) -> String? {
+    private func applyMenu(
+        onTurnOff: () -> Void,
+        onDemo: () -> Void,
+        onHelp: () -> Void,
+        onAbout: () -> Void
+    ) -> String? {
         let item = Self.menuItems[menuIndex]
         switch item {
         case "settings":
@@ -105,13 +121,20 @@ final class DeviceMenuState: ObservableObject {
             menuOpen = false
         case "demo":
             onDemo()
+        case "help":
+            onHelp()
+        case "about":
+            onAbout()
         default:
             break
         }
         return "menu → \(item)"
     }
 
-    private func applySettings(cycleAsciiSpecies: () -> Void) -> String? {
+    private func applySettings(
+        cycleAsciiSpecies: () -> Void,
+        onBluetoothChanged: (Bool) -> Void
+    ) -> String? {
         let item = Self.settingsItems[settingsIndex]
         switch item {
         case "brightness":
@@ -120,6 +143,7 @@ final class DeviceMenuState: ObservableObject {
             sound.toggle()
         case "bluetooth":
             bt.toggle()
+            onBluetoothChanged(bt)
         case "wifi":
             wifi.toggle()
         case "led":

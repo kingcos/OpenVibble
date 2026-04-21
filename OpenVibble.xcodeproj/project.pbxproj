@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		039E4515822885B47C1B736F /* NavigationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1D080F23F14DFD50B41E3D /* NavigationCoordinator.swift */; };
 		071D192A3A75DACF6FDA80E8 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF76EBF276FBAD084D5F62C /* HomeScreen.swift */; };
-		DE01CE0A0001A00000000001 /* DeviceMenuState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE01CE0A0001A00000000002 /* DeviceMenuState.swift */; };
-		DE01CE0B0002B00000000001 /* DeviceMenuOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE01CE0B0002B00000000002 /* DeviceMenuOverlay.swift */; };
 		0D63FE5BE7ACEC64AFE7BD16 /* BuddyPersona in Frameworks */ = {isa = PBXBuildFile; productRef = E64C391922BD2DC616D86DB4 /* BuddyPersona */; };
 		0D8BA2FB4E2F32AAA97BB4B7 /* BridgeAppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2382F18941BE0950209AA0E /* BridgeAppModel.swift */; };
 		10C4552150806CEAB534178E /* OpenVibbleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3453FEFE9D00261494A6F /* OpenVibbleApp.swift */; };
@@ -19,6 +17,7 @@
 		2158028287496A33D4016ACC /* BuddyLiveActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A2C706FC0D1C2E7EE4A449 /* BuddyLiveActivityAttributes.swift */; };
 		2461AD8BB652D66EC53FB324 /* TerminalStyleLite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1CD2BA270744D1E216FCFA /* TerminalStyleLite.swift */; };
 		24C74540F6F5CDED17A61CCD /* BuddyUI in Frameworks */ = {isa = PBXBuildFile; productRef = 95466985313AEFA5924180FD /* BuddyUI */; };
+		2DC91727EEFE338A37F532DA /* DeviceMenuOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = B675ED379CED64D51EE4671A /* DeviceMenuOverlay.swift */; };
 		3BA24AC74AB2651F48704C01 /* MiniBuddyGlyphTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B87E2C93760C9540A014BD /* MiniBuddyGlyphTests.swift */; };
 		3E730B9291448CF2115FA322 /* BuddyLiveActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A2C706FC0D1C2E7EE4A449 /* BuddyLiveActivityAttributes.swift */; };
 		4765CE8489545C2B5A0FC55D /* PromptEdgeDetectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA9D2E1EC1BB41E5CA5BF52 /* PromptEdgeDetectorTests.swift */; };
@@ -39,6 +38,7 @@
 		C5F0A7A39BC862623686EA6D /* MotionSensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99022B5E05DD0DBD7335BEC /* MotionSensor.swift */; };
 		C9AC58D301BD3C5F6DEA3BC2 /* BuddyNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D899283E258F52E976B88875 /* BuddyNotificationCenter.swift */; };
 		C9FCFB69BA32C7A0070CBA26 /* PromptIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A40F865CF51C1BCDAA4390 /* PromptIntents.swift */; };
+		D344CC6B9180B1E621663DC0 /* DeviceMenuState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1CFB277C64078012E3D244 /* DeviceMenuState.swift */; };
 		E43EB9951D88D531C22AA846 /* PersonaController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1C9C966DB1D6C2C3E2D7C1 /* PersonaController.swift */; };
 		EDEEE97570EC5BBAA12F0C4E /* LiveActivitySharedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C994DA7F257B43DBEDD2360 /* LiveActivitySharedStore.swift */; };
 		F792FCCA99DC8AF64B9457D5 /* BuddyProtocol in Frameworks */ = {isa = PBXBuildFile; productRef = 2A2889476DF5C751D95EB4FB /* BuddyProtocol */; };
@@ -92,15 +92,17 @@
 		5F4F84865792A7D52BF73EDD /* SmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokeTests.swift; sourceTree = "<group>"; };
 		5FFF5757CB966F2F1570C019 /* OpenVibbleAppTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = OpenVibbleAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D1CD2BA270744D1E216FCFA /* TerminalStyleLite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalStyleLite.swift; sourceTree = "<group>"; };
-		6F785828031A298D5AA52F35 /* OpenVibbleLiveActivity.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OpenVibbleLiveActivity.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		6F785828031A298D5AA52F35 /* OpenVibbleLiveActivity.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = OpenVibbleLiveActivity.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		77B3453FEFE9D00261494A6F /* OpenVibbleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenVibbleApp.swift; sourceTree = "<group>"; };
 		7AA1CBCBA3072723280C1D62 /* BuddyLiveActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddyLiveActivityManager.swift; sourceTree = "<group>"; };
 		7E47C66FD50F78FAD4642669 /* OpenVibbleApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenVibbleApp.entitlements; sourceTree = "<group>"; };
 		91F3C187CB72273ADE7F62D1 /* BuiltinCharacters */ = {isa = PBXFileReference; lastKnownFileType = folder; name = BuiltinCharacters; path = OpenVibbleApp/Resources/BuiltinCharacters; sourceTree = SOURCE_ROOT; };
 		AEE80BFE42253DF8A0777FC9 /* OpenVibbleKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = OpenVibbleKit; path = Packages/OpenVibbleKit; sourceTree = SOURCE_ROOT; };
 		AF72CA7A3AC578E356AF0373 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		B56B396C1C7E39F53D657B11 /* OpenVibbleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenVibbleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B56B396C1C7E39F53D657B11 /* OpenVibbleApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = OpenVibbleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B675ED379CED64D51EE4671A /* DeviceMenuOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMenuOverlay.swift; sourceTree = "<group>"; };
 		B99022B5E05DD0DBD7335BEC /* MotionSensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionSensor.swift; sourceTree = "<group>"; };
+		BD1CFB277C64078012E3D244 /* DeviceMenuState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMenuState.swift; sourceTree = "<group>"; };
 		BF1D080F23F14DFD50B41E3D /* NavigationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCoordinator.swift; sourceTree = "<group>"; };
 		CC3459B4E6022FBD263A1B98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D899283E258F52E976B88875 /* BuddyNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddyNotificationCenter.swift; sourceTree = "<group>"; };
@@ -108,8 +110,6 @@
 		F436D96AA5667C59FFFAD4EE /* TerminalStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalStyle.swift; sourceTree = "<group>"; };
 		FA740647AA30E09599D13094 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FAF76EBF276FBAD084D5F62C /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
-		DE01CE0A0001A00000000002 /* DeviceMenuState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMenuState.swift; sourceTree = "<group>"; };
-		DE01CE0B0002B00000000002 /* DeviceMenuOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMenuOverlay.swift; sourceTree = "<group>"; };
 		FD1C9C966DB1D6C2C3E2D7C1 /* PersonaController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonaController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -234,9 +234,9 @@
 		8DCB1A32783E284EF6E7C5F0 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				B675ED379CED64D51EE4671A /* DeviceMenuOverlay.swift */,
+				BD1CFB277C64078012E3D244 /* DeviceMenuState.swift */,
 				FAF76EBF276FBAD084D5F62C /* HomeScreen.swift */,
-				DE01CE0A0001A00000000002 /* DeviceMenuState.swift */,
-				DE01CE0B0002B00000000002 /* DeviceMenuOverlay.swift */,
 				3081794479729D37C708A0A4 /* SpeciesPickerSheet.swift */,
 			);
 			path = Home;
@@ -361,6 +361,12 @@
 					3F8ACEF9EAFFF7D2938DCC74 = {
 						DevelopmentTeam = "";
 					};
+					89FDE76CCB772B8D0ED90AEA = {
+						DevelopmentTeam = "";
+					};
+					B704384976EA2CDEE6ED26D3 = {
+						DevelopmentTeam = "";
+					};
 				};
 			};
 			buildConfigurationList = BD41E83893AB248CFF4D3207 /* Build configuration list for PBXProject "OpenVibble" */;
@@ -428,9 +434,9 @@
 				2158028287496A33D4016ACC /* BuddyLiveActivityAttributes.swift in Sources */,
 				9F0FA349BABFFC3F2DD69485 /* BuddyLiveActivityManager.swift in Sources */,
 				C9AC58D301BD3C5F6DEA3BC2 /* BuddyNotificationCenter.swift in Sources */,
+				2DC91727EEFE338A37F532DA /* DeviceMenuOverlay.swift in Sources */,
+				D344CC6B9180B1E621663DC0 /* DeviceMenuState.swift in Sources */,
 				071D192A3A75DACF6FDA80E8 /* HomeScreen.swift in Sources */,
-				DE01CE0A0001A00000000001 /* DeviceMenuState.swift in Sources */,
-				DE01CE0B0002B00000000001 /* DeviceMenuOverlay.swift in Sources */,
 				EDEEE97570EC5BBAA12F0C4E /* LiveActivitySharedStore.swift in Sources */,
 				C5F0A7A39BC862623686EA6D /* MotionSensor.swift in Sources */,
 				039E4515822885B47C1B736F /* NavigationCoordinator.swift in Sources */,
@@ -543,8 +549,7 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_ENTITLEMENTS = OpenVibbleLiveActivity/OpenVibbleLiveActivity.entitlements;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = C9JF3B5K5A;
+				CURRENT_PROJECT_VERSION = 2;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = OpenVibbleLiveActivity/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
@@ -566,8 +571,7 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_ENTITLEMENTS = OpenVibbleLiveActivity/OpenVibbleLiveActivity.entitlements;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = C9JF3B5K5A;
+				CURRENT_PROJECT_VERSION = 2;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = OpenVibbleLiveActivity/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
@@ -624,7 +628,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = OpenVibbleApp/OpenVibbleApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = C9JF3B5K5A;
 				INFOPLIST_FILE = OpenVibbleApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -700,7 +703,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = OpenVibbleApp/OpenVibbleApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				DEVELOPMENT_TEAM = C9JF3B5K5A;
 				INFOPLIST_FILE = OpenVibbleApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

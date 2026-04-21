@@ -448,7 +448,26 @@ struct HomeScreen: View {
                 cycleAsciiSpecies: AsciiPetCycler.next,
                 onReset: resetDeviceState,
                 onTurnOff: { deviceMenu.screenOff = true },
-                onDemo: {}
+                onDemo: {},
+                onHelp: {
+                    withAnimation(.easeInOut(duration: 0.25)) {
+                        mode = .info
+                        infoPage = InfoBody.pages.firstIndex(of: "BUTTONS") ?? 0
+                    }
+                },
+                onAbout: {
+                    withAnimation(.easeInOut(duration: 0.25)) {
+                        mode = .info
+                        infoPage = InfoBody.pages.firstIndex(of: "ABOUT") ?? 0
+                    }
+                },
+                onBluetoothChanged: { enabled in
+                    if enabled {
+                        startBLEIfAllowed()
+                    } else {
+                        model.stop()
+                    }
+                }
             )
             if let description { model.logDeviceMenuEvent(description) }
             return
