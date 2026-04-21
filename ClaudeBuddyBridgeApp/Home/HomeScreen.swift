@@ -693,19 +693,15 @@ private struct PetBody: View {
     @ObservedObject var stats: PersonaStatsStore
     let page: Int
 
-    @AppStorage("buddy.petName") private var petName: String = "Buddy"
-
     static let pageCount = 2
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(alignment: .firstTextBaseline) {
-                Text(displayName)
-                    .font(TerminalStyle.mono(12, weight: .semibold))
+                Text("Pet")
+                    .font(TerminalStyle.mono(11, weight: .semibold))
                     .foregroundStyle(TerminalStyle.ink)
                     .tracking(1)
-                    .lineLimit(1)
-                    .truncationMode(.tail)
                 Spacer()
                 Text("\(page + 1)/\(Self.pageCount)")
                     .font(TerminalStyle.mono(11))
@@ -714,10 +710,6 @@ private struct PetBody: View {
             Divider().background(TerminalStyle.lcdDivider)
             if page == 0 { statsPage } else { howPage }
         }
-    }
-
-    private var displayName: String {
-        petName.isEmpty ? "Buddy" : petName
     }
 
     private var statsPage: some View {
