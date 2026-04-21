@@ -23,7 +23,8 @@ struct SettingsScreen: View {
     @State private var installed: [InstalledPersona] = []
     @State private var builtin: [InstalledPersona] = PersonaCatalog.listBuiltin()
 
-    private let repoURL = URL(string: "https://github.com/kingcos/claude-buddy-bridge-ios")!
+    private let repoURL = URL(string: "https://github.com/kingcos/OpenVibble")!
+    private let authorURL = URL(string: "https://github.com/kingcos")!
 
     var body: some View {
         ZStack {
@@ -218,7 +219,7 @@ struct SettingsScreen: View {
             VStack(alignment: .leading, spacing: 4) {
                 aboutRow("settings.about.app", "OpenVibble")
                 aboutRow("settings.about.version", appVersion)
-                aboutRow("settings.about.author", "kingcos")
+                authorRow
                 aboutRow("settings.about.language", currentLanguageLabel)
             }
 
@@ -239,6 +240,24 @@ struct SettingsScreen: View {
             Spacer()
             Text(value)
                 .foregroundStyle(TerminalStyle.ink)
+        }
+        .font(TerminalStyle.mono(12))
+    }
+
+    private var authorRow: some View {
+        HStack {
+            Text("settings.about.author")
+                .foregroundStyle(TerminalStyle.inkDim)
+            Spacer()
+            Link(destination: authorURL) {
+                HStack(spacing: 4) {
+                    Text(verbatim: "kingcos")
+                        .underline()
+                    Image(systemName: "arrow.up.right")
+                        .font(.system(size: 10, weight: .bold))
+                }
+                .foregroundStyle(TerminalStyle.ink)
+            }
         }
         .font(TerminalStyle.mono(12))
     }
