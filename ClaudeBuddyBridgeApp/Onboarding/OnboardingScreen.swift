@@ -19,6 +19,7 @@ struct OnboardingScreen: View {
     @State private var suggestedName: String = OnboardingScreen.makeSuggestedName()
     @State private var copied: Bool = false
     @State private var copyResetTask: Task<Void, Never>?
+    @State private var renameAcknowledged: Bool = false
     @AppStorage("bridge.displayName") private var persistedDisplayName = ""
 
     var body: some View {
@@ -155,8 +156,8 @@ struct OnboardingScreen: View {
             index: 2,
             title: "onboarding.step.rename.title",
             subtitle: "onboarding.step.rename.body",
-            active: permissionStepComplete,
-            done: false
+            active: permissionStepComplete && !renameAcknowledged,
+            done: renameAcknowledged
         ) {
             VStack(alignment: .leading, spacing: 10) {
                 HStack(spacing: 8) {
@@ -227,7 +228,7 @@ struct OnboardingScreen: View {
             index: 3,
             title: "onboarding.step.help.title",
             subtitle: "onboarding.step.help.body",
-            active: permissionStepComplete,
+            active: permissionStepComplete && renameAcknowledged,
             done: false
         ) {
             VStack(alignment: .leading, spacing: 8) {
@@ -307,6 +308,7 @@ struct OnboardingScreen: View {
     private func copyName() {
         UIPasteboard.general.string = suggestedName
         copied = true
+        acknowledgeRename()
         copyResetTask?.cancel()
         copyResetTask = Task { @MainActor in
             try? await Task.sleep(for: .seconds(2))
@@ -316,11 +318,22 @@ struct OnboardingScreen: View {
     }
 
     private func openSettings() {
+        acknowledgeRename()
         if let url = URL(string: "App-prefs:root=General&path=About"),
            UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url)
         } else if let url = URL(string: UIApplication.openSettingsURLString) {
             UIApplication.shared.open(url)
+        }
+    }
+
+    /// Step 2 counts as handled once the user copies the suggested name or
+    /// jumps out to Settings — either action means they've engaged with the
+    /// rename flow, so the help step can light up.
+    private func acknowledgeRename() {
+        guard !renameAcknowledged else { return }
+        withAnimation(.easeInOut(duration: 0.25)) {
+            renameAcknowledged = true
         }
     }
 
@@ -454,6 +467,8 @@ private struct OnboardingStepCard<Content: View>: View {
     let done: Bool
     @ViewBuilder let content: () -> Content
 
+    @State private var pulse: Bool = false
+
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack(alignment: .center, spacing: 10) {
@@ -486,6 +501,8 @@ private struct OnboardingStepCard<Content: View>: View {
 
             content()
                 .padding(.leading, 38)
+                .opacity(active || done ? 1 : 0.45)
+                .allowsHitTesting(active || done)
         }
         .padding(14)
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -494,8 +511,19 @@ private struct OnboardingStepCard<Content: View>: View {
             RoundedRectangle(cornerRadius: 12)
                 .stroke(cardStroke, lineWidth: active ? 1.5 : 1)
         )
+        .shadow(
+            color: active ? TerminalStyle.accent.opacity(pulse ? 0.45 : 0.15) : .clear,
+            radius: active ? (pulse ? 10 : 4) : 0
+        )
         .animation(.easeInOut(duration: 0.2), value: active)
         .animation(.easeInOut(duration: 0.2), value: done)
+        .animation(.easeInOut(duration: 1.3).repeatForever(autoreverses: true), value: pulse)
+        .onAppear {
+            if active { pulse = true }
+        }
+        .onChange(of: active) { _, nowActive in
+            pulse = nowActive
+        }
     }
 
     private var badgeBackground: Color {
