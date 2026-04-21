@@ -194,7 +194,7 @@ struct HomeScreen: View {
                         .background(Color.black.opacity(0.5), in: Capsule())
                         .overlay(Capsule().stroke(TerminalStyle.inkDim.opacity(0.35), lineWidth: 1))
                     Spacer()
-                    Text(petHeaderName)
+                    Text(petHeaderTrailing)
                         .font(TerminalStyle.mono(10))
                         .foregroundStyle(TerminalStyle.inkDim)
                         .lineLimit(1)
@@ -334,6 +334,16 @@ struct HomeScreen: View {
         let trimmedOwner = ownerName.trimmingCharacters(in: .whitespacesAndNewlines)
         let name = petName.isEmpty ? "Buddy" : petName
         return trimmedOwner.isEmpty ? name : "\(trimmedOwner)'s \(name)"
+    }
+
+    /// Pet-area header trailing text — page indicator in PET/INFO, pet name in NORMAL.
+    /// Matches h5-demo's `sim.petPage + 1}/2` pattern.
+    private var petHeaderTrailing: String {
+        switch mode {
+        case .normal: return petHeaderName
+        case .pet: return "\(petPage + 1)/\(PetBody.pageCount)"
+        case .info: return "\(infoPage + 1)/\(InfoBody.pages.count)"
+        }
     }
 
     private var effectiveDisplayName: String? {
@@ -507,6 +517,10 @@ private struct NormalBody: View {
     let promptWaitedSeconds: Int
     let promptTick: Int
 
+    @State private var spinPhase: Int = 0
+    private let spinTimer = Timer.publish(every: 0.45, on: .main, in: .common).autoconnect()
+    private let spinGlyphs: [String] = ["·", "•", "·", "•"]
+
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             if let prompt = model.prompt {
@@ -530,17 +544,26 @@ private struct NormalBody: View {
             }
             .frame(maxHeight: .infinity)
         }
+        .onReceive(spinTimer) { _ in
+            spinPhase = (spinPhase + 1) % spinGlyphs.count
+        }
     }
 
     private var statusLine: some View {
-        VStack(alignment: .leading, spacing: 2) {
-            Text(model.snapshot.msg.isEmpty
-                 ? String(localized: "home.status.noClaude")
-                 : model.snapshot.msg)
-                .font(TerminalStyle.mono(14, weight: .bold))
-                .foregroundStyle(TerminalStyle.ink)
-                .lineLimit(2)
-                .truncationMode(.tail)
+        let msg = model.snapshot.msg.isEmpty
+            ? String(localized: "home.status.noClaude")
+            : model.snapshot.msg
+        return VStack(alignment: .leading, spacing: 2) {
+            HStack(alignment: .firstTextBaseline, spacing: 6) {
+                Text(msg)
+                    .font(TerminalStyle.mono(14, weight: .bold))
+                    .foregroundStyle(TerminalStyle.ink)
+                    .lineLimit(2)
+                    .truncationMode(.tail)
+                Text(spinGlyphs[spinPhase])
+                    .font(TerminalStyle.mono(14, weight: .bold))
+                    .foregroundStyle(TerminalStyle.accentSoft)
+            }
 
             HStack(spacing: 12) {
                 statusPill("sess", "\(model.snapshot.total)")
@@ -566,18 +589,12 @@ private struct NormalBody: View {
         _ = promptTick
         let waited = promptWaitedSeconds
         let timerColor: Color = waited >= 10 ? TerminalStyle.accent : TerminalStyle.accentSoft
-        return VStack(alignment: .leading, spacing: 4) {
-            HStack {
-                Text(String(format: String(localized: "home.prompt.waited"), waited))
-                    .font(TerminalStyle.mono(11, weight: .semibold))
-                    .foregroundStyle(timerColor)
-                Spacer()
-                Text("home.prompt.hint")
-                    .font(TerminalStyle.mono(10))
-                    .foregroundStyle(TerminalStyle.inkDim)
-            }
+        return VStack(alignment: .leading, spacing: 6) {
+            Text(String(format: String(localized: "home.prompt.waited"), waited))
+                .font(TerminalStyle.mono(11, weight: .semibold))
+                .foregroundStyle(timerColor)
             Text(prompt.tool)
-                .font(TerminalStyle.mono(16, weight: .bold))
+                .font(TerminalStyle.mono(18, weight: .bold))
                 .foregroundStyle(TerminalStyle.ink)
                 .lineLimit(1)
                 .truncationMode(.middle)
@@ -588,9 +605,27 @@ private struct NormalBody: View {
                     .lineLimit(2)
                     .truncationMode(.tail)
             }
+            HStack(spacing: 14) {
+                Label {
+                    Text("home.prompt.approve")
+                        .font(TerminalStyle.mono(11, weight: .bold))
+                } icon: {
+                    Text("A").font(TerminalStyle.mono(11, weight: .bold))
+                }
+                .foregroundStyle(TerminalStyle.good)
+                Label {
+                    Text("home.prompt.deny")
+                        .font(TerminalStyle.mono(11, weight: .bold))
+                } icon: {
+                    Text("B").font(TerminalStyle.mono(11, weight: .bold))
+                }
+                .foregroundStyle(TerminalStyle.bad)
+                Spacer(minLength: 0)
+            }
+            .padding(.top, 2)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(10)
+        .padding(12)
         .background(TerminalStyle.lcdPanel.opacity(0.9), in: RoundedRectangle(cornerRadius: 10))
         .overlay(
             RoundedRectangle(cornerRadius: 10)
