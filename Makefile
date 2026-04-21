@@ -11,7 +11,13 @@ ARCHIVE_PATH := $(BUILD_DIR)/$(SCHEME).xcarchive
 EXPORT_PATH := $(BUILD_DIR)/export
 EXPORT_OPTIONS_PLIST := $(BUILD_DIR)/ExportOptions.plist
 
-.PHONY: bootstrap build test run-sim testflight clean
+ASC_KEY_ID ?=
+ASC_ISSUER_ID ?=
+ASC_KEY_FILEPATH ?= $(HOME)/Downloads/AuthKey_$(ASC_KEY_ID).p8
+MARKETING_VERSION ?=
+BUMP_BUILD ?= 1
+
+.PHONY: bootstrap build test run-sim testflight tf-package clean
 
 bootstrap:
 	xcodegen generate
@@ -41,8 +47,12 @@ run-sim: build
 	xcrun simctl launch booted kingcos.me.openvibble
 
 testflight: bootstrap
-	@test -n "$(APPLE_ID)" || (echo "APPLE_ID is required. Example: make testflight APPLE_ID=you@example.com APP_SPECIFIC_PASSWORD=xxxx-xxxx-xxxx-xxxx" && exit 1)
-	@test -n "$(APP_SPECIFIC_PASSWORD)" || (echo "APP_SPECIFIC_PASSWORD is required." && exit 1)
+	@if [ -n "$(MARKETING_VERSION)" ]; then \
+		xcrun agvtool new-marketing-version "$(MARKETING_VERSION)"; \
+	fi
+	@if [ "$(BUMP_BUILD)" = "1" ]; then \
+		xcrun agvtool next-version -all; \
+	fi
 	mkdir -p "$(BUILD_DIR)" "$(EXPORT_PATH)"
 	printf '%s\n' \
 		'<?xml version="1.0" encoding="UTF-8"?>' \
@@ -69,12 +79,62 @@ testflight: bootstrap
 		-archivePath "$(ARCHIVE_PATH)" \
 		-exportPath "$(EXPORT_PATH)" \
 		-exportOptionsPlist "$(EXPORT_OPTIONS_PLIST)"
-	xcrun altool \
-		--upload-app \
-		--type ios \
-		--file "$$(find "$(EXPORT_PATH)" -name '*.ipa' -print -quit)" \
-		--username "$(APPLE_ID)" \
-		--password "$(APP_SPECIFIC_PASSWORD)"
+	@if [ -n "$(ASC_KEY_ID)" ] && [ -n "$(ASC_ISSUER_ID)" ]; then \
+		test -f "$(ASC_KEY_FILEPATH)" || (echo "ASC_KEY_FILEPATH not found: $(ASC_KEY_FILEPATH)" && exit 1); \
+		API_PRIVATE_KEYS_DIR="$$(dirname "$(ASC_KEY_FILEPATH)")" xcrun altool \
+			--upload-app \
+			--type ios \
+			--file "$$(find "$(EXPORT_PATH)" -name '*.ipa' -print -quit)" \
+			--apiKey "$(ASC_KEY_ID)" \
+			--apiIssuer "$(ASC_ISSUER_ID)"; \
+	elif [ -n "$(APPLE_ID)" ] && [ -n "$(APP_SPECIFIC_PASSWORD)" ]; then \
+		xcrun altool \
+			--upload-app \
+			--type ios \
+			--file "$$(find "$(EXPORT_PATH)" -name '*.ipa' -print -quit)" \
+			--username "$(APPLE_ID)" \
+			--password "$(APP_SPECIFIC_PASSWORD)"; \
+	else \
+		echo "Upload credentials are missing."; \
+		echo "Use API Key: make testflight ASC_KEY_ID=... ASC_ISSUER_ID=... ASC_KEY_FILEPATH=..."; \
+		echo "Or Apple ID: make testflight APPLE_ID=you@example.com APP_SPECIFIC_PASSWORD=xxxx-xxxx-xxxx-xxxx"; \
+		exit 1; \
+	fi
+
+tf-package: bootstrap
+	@if [ -n "$(MARKETING_VERSION)" ]; then \
+		xcrun agvtool new-marketing-version "$(MARKETING_VERSION)"; \
+	fi
+	@if [ "$(BUMP_BUILD)" = "1" ]; then \
+		xcrun agvtool next-version -all; \
+	fi
+	mkdir -p "$(BUILD_DIR)" "$(EXPORT_PATH)"
+	printf '%s\n' \
+		'<?xml version="1.0" encoding="UTF-8"?>' \
+		'<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">' \
+		'<plist version="1.0">' \
+		'<dict>' \
+		'  <key>method</key>' \
+		'  <string>app-store</string>' \
+		'  <key>uploadSymbols</key>' \
+		'  <true/>' \
+		'  <key>uploadBitcode</key>' \
+		'  <false/>' \
+		'</dict>' \
+		'</plist>' > "$(EXPORT_OPTIONS_PLIST)"
+	xcodebuild \
+		-project $(PROJECT) \
+		-scheme $(SCHEME) \
+		-configuration Release \
+		-destination '$(ARCHIVE_DESTINATION)' \
+		archive \
+		-archivePath "$(ARCHIVE_PATH)"
+	xcodebuild \
+		-exportArchive \
+		-archivePath "$(ARCHIVE_PATH)" \
+		-exportPath "$(EXPORT_PATH)" \
+		-exportOptionsPlist "$(EXPORT_OPTIONS_PLIST)"
+	@echo "Exported IPA: $$(find "$(EXPORT_PATH)" -name '*.ipa' -print -quit)"
 
 clean:
 	rm -rf .build
