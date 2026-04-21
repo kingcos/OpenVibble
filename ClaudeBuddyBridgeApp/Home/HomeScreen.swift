@@ -105,7 +105,7 @@ struct HomeScreen: View {
         .sheet(isPresented: $showLogs) {
             HomeLogSheet(model: model)
                 .presentationDetents([.medium, .large])
-                .presentationBackground(Color.black.opacity(0.82))
+                .presentationBackground(.ultraThinMaterial)
                 .presentationDragIndicator(.visible)
         }
         .onAppear {
