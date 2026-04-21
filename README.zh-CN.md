@@ -16,9 +16,9 @@ M5Stack 开发板还在路上？先用 OpenVibble 体验起来！
 
 ## 效果图
 
-| Claude Desktop 连接成功 | iPhone 运行截图 |
-| --- | --- |
-| ![Claude Desktop connected](./docs/readme/connected.png) | _待补截图（`./docs/readme/iphone-running.png`）_ |
+| Claude Desktop 连接成功 | iPhone 主界面 | 灵动岛 |
+| --- | --- | --- |
+| ![Claude Desktop connected](./docs/readme/connected.png) | ![OpenVibble App 主界面](./docs/readme/iphone-main.png) | ![OpenVibble 灵动岛 Live Activity](./docs/readme/dynamic-island.jpg) |
 
 核心能力包括：
 - 与 Claude Desktop Hardware Buddy 模式建立 BLE 连接
@@ -84,7 +84,34 @@ make bootstrap
 make build
 make test
 make run-sim
+make tf-package
+make testflight
 make clean
+```
+
+## TestFlight 上传
+
+推荐使用 App Store Connect API Key：
+
+```sh
+make testflight \
+  ASC_KEY_ID=你的KeyID \
+  ASC_ISSUER_ID=你的IssuerID \
+  ASC_KEY_FILEPATH=$HOME/Downloads/AuthKey_你的KeyID.p8
+```
+
+可选版本控制：
+
+```sh
+make testflight MARKETING_VERSION=1.0.1 BUMP_BUILD=1 ...
+```
+
+也支持 Apple ID + 专用密码：
+
+```sh
+make testflight \
+  APPLE_ID=you@example.com \
+  APP_SPECIFIC_PASSWORD=xxxx-xxxx-xxxx-xxxx
 ```
 
 ## 本地化

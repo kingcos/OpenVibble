@@ -16,9 +16,9 @@ M5Stack dev board still on the way? Start with OpenVibble first.
 
 ## Screenshots
 
-| Claude Desktop Connected | iPhone Running |
-| --- | --- |
-| ![Claude Desktop connected](./docs/readme/connected.png) | _Pending screenshot (`./docs/readme/iphone-running.png`)_ |
+| Claude Desktop Connected | iPhone App | Dynamic Island |
+| --- | --- | --- |
+| ![Claude Desktop connected](./docs/readme/connected.png) | ![OpenVibble app main screen](./docs/readme/iphone-main.png) | ![OpenVibble Live Activity in Dynamic Island](./docs/readme/dynamic-island.jpg) |
 
 It keeps the buddy runtime on your phone and supports:
 - BLE pairing with Claude Desktop Hardware Buddy mode
@@ -84,7 +84,34 @@ make bootstrap   # Generate Xcode project from project.yml
 make build       # Build app for simulator target
 make test        # Swift package tests + Xcode tests
 make run-sim     # Install and launch on simulator
+make tf-package  # Build and export App Store IPA (no upload)
+make testflight  # Build, export, and upload to TestFlight
 make clean       # Remove build artifacts
+```
+
+## TestFlight Upload
+
+Use App Store Connect API Key (recommended):
+
+```sh
+make testflight \
+  ASC_KEY_ID=YOUR_KEY_ID \
+  ASC_ISSUER_ID=YOUR_ISSUER_ID \
+  ASC_KEY_FILEPATH=$HOME/Downloads/AuthKey_YOUR_KEY_ID.p8
+```
+
+Optional version controls:
+
+```sh
+make testflight MARKETING_VERSION=1.0.1 BUMP_BUILD=1 ...
+```
+
+Fallback with Apple ID + app-specific password:
+
+```sh
+make testflight \
+  APPLE_ID=you@example.com \
+  APP_SPECIFIC_PASSWORD=xxxx-xxxx-xxxx-xxxx
 ```
 
 ## Localization
