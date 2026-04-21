@@ -218,7 +218,6 @@ struct HomeScreen: View {
                 promptTick: promptTick
             )
         case .pet: PetBody(
-                model: model,
                 stats: stats,
                 page: petPage
             )
@@ -697,7 +696,6 @@ private struct LogLine {
 // MARK: - PET mode body (h5-demo pet-view)
 
 private struct PetBody: View {
-    @ObservedObject var model: BridgeAppModel
     @ObservedObject var stats: PersonaStatsStore
     let page: Int
 
