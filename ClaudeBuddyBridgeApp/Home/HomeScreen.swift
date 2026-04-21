@@ -75,31 +75,33 @@ struct HomeScreen: View {
             TerminalStyle.lcdBg.ignoresSafeArea()
             if showScanline { ScanlineOverlay() }
 
-            VStack(spacing: 0) {
-                topBar
-                    .padding(.horizontal, 16)
-                    .padding(.top, 4)
-                    .padding(.bottom, 8)
+            GeometryReader { proxy in
+                VStack(spacing: 0) {
+                    topBar
+                        .padding(.horizontal, 16)
+                        .padding(.top, 4)
+                        .padding(.bottom, 8)
 
-                petArea
-                    .frame(maxWidth: .infinity)
-                    .frame(height: petAreaHeight)
+                    petArea
+                        .frame(maxWidth: .infinity)
+                        .frame(height: petAreaHeight(in: proxy.size.height))
 
-                Divider()
-                    .background(TerminalStyle.lcdDivider)
-                    .padding(.horizontal, 14)
+                    Divider()
+                        .background(TerminalStyle.lcdDivider)
+                        .padding(.horizontal, 14)
 
-                modeBody
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                    .padding(.horizontal, 16)
-                    .padding(.top, 10)
-                    .contentShape(Rectangle())
-                    .gesture(horizontalSwipe)
+                    modeBody
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                        .padding(.horizontal, 16)
+                        .padding(.top, 10)
+                        .contentShape(Rectangle())
+                        .gesture(horizontalSwipe)
 
-                bottomBar
-                    .padding(.horizontal, 16)
-                    .padding(.bottom, 14)
-                    .padding(.top, 8)
+                    bottomBar
+                        .padding(.horizontal, 16)
+                        .padding(.bottom, 14)
+                        .padding(.top, 8)
+                }
             }
         }
         .preferredColorScheme(.dark)
@@ -337,7 +339,12 @@ struct HomeScreen: View {
 
     // MARK: - Derived UI state
 
-    private var petAreaHeight: CGFloat { 300 }
+    private func petAreaHeight(in availableHeight: CGFloat) -> CGFloat {
+        // Scale with the device: big phones get a roomier pet stage (~42%),
+        // clamped so SE-class screens still leave room for mode body + logs.
+        let target = availableHeight * 0.42
+        return min(360, max(260, target))
+    }
 
     private func personaStateKey(_ state: PersonaState) -> LocalizedStringKey {
         switch state {
