@@ -1,67 +1,20 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "·" : {
+    "%@" : {
 
     },
-    "[%@]" : {
-
-    },
-    "[adv]  %@" : {
-
-    },
-    "[ble]  %@" : {
-
-    },
-    "[name] %@" : {
-
-    },
-    "%@ :: %@" : {
+    "%@/%@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "%1$@ :: %2$@"
+            "value" : "%1$@/%2$@"
           }
         }
       }
-    },
-    "%@ / %@ B" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$@ / %2$@ B"
-          }
-        }
-      }
-    },
-    "↓ %@ :: %@" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "↓ %1$@ :: %2$@"
-          }
-        }
-      }
-    },
-    "▶" : {
-
-    },
-    "◀" : {
-
-    },
-    "⚠ %@ 待确认" : {
-
-    },
-    "⚠ prompt" : {
-
     },
     "$ %@" : {
-
-    },
-    "$ ble --advertise" : {
 
     },
     "$ buddy --init" : {
@@ -73,10 +26,7 @@
     "$ species" : {
 
     },
-    "$ system.setDeviceName" : {
-
-    },
-    "A:approve  B:deny" : {
+    "A" : {
 
     },
     "app.name" : {
@@ -96,10 +46,10 @@
         }
       }
     },
-    "approve? %@s" : {
+    "auto-advertise" : {
 
     },
-    "auto-advertise" : {
+    "B" : {
 
     },
     "common.back" : {
@@ -220,6 +170,7 @@
       }
     },
     "common.skip" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -234,6 +185,12 @@
           }
         }
       }
+    },
+    "energy" : {
+
+    },
+    "fed" : {
+
     },
     "github →" : {
 
@@ -251,6 +208,89 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "选择宠物"
+          }
+        }
+      }
+    },
+    "home.log" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LOG"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "日志"
+          }
+        }
+      }
+    },
+    "home.log.empty" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "— no events yet —"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "— 暂无事件 —"
+          }
+        }
+      }
+    },
+    "home.logs.copy" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copy"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "复制"
+          }
+        }
+      }
+    },
+    "home.logs.tab.ble" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BLE"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "蓝牙"
+          }
+        }
+      }
+    },
+    "home.logs.tab.run" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "RUN"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "运行"
           }
         }
       }
@@ -306,279 +346,6 @@
         }
       }
     },
-    "home.status.connected" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "CONN"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已连接"
-          }
-        }
-      }
-    },
-    "home.status.waiting" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "waiting"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "等待连接"
-          }
-        }
-      }
-    },
-    "home.log" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "LOG"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "日志"
-          }
-        }
-      }
-    },
-    "home.log.empty" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "— no events yet —"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "— 暂无事件 —"
-          }
-        }
-      }
-    },
-    "home.logs.copy" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Copy"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "复制"
-          }
-        }
-      }
-    },
-    "home.logs.tab.run" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "RUN"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "运行"
-          }
-        }
-      }
-    },
-    "home.logs.tab.ble" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "BLE"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "蓝牙"
-          }
-        }
-      }
-    },
-    "home.status.needsPermission" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "BLE:need-perm"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "需要蓝牙权限"
-          }
-        }
-      }
-    },
-    "home.status.permissionDenied" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "BLE:denied"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "蓝牙权限被拒"
-          }
-        }
-      }
-    },
-    "home.status.bluetoothOff" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "BT:off"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "蓝牙已关闭"
-          }
-        }
-      }
-    },
-    "home.status.unsupported" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "BT:unsupported"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "设备不支持"
-          }
-        }
-      }
-    },
-    "home.status.connectedMany" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "CONN ×%d"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已连接 ×%d"
-          }
-        }
-      }
-    },
-    "home.status.advertising" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ADV"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "广播中"
-          }
-        }
-      }
-    },
-    "home.status.idle" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "IDLE"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "待机"
-          }
-        }
-      }
-    },
-    "home.status.noClaude" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "— waiting for Claude —"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "— 等待 Claude 接入 —"
-          }
-        }
-      }
-    },
-    "home.prompt.waited" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "waited %ds"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已等待 %d 秒"
-          }
-        }
-      }
-    },
-    "home.prompt.hint" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "A approve · B deny"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "A 允许 · B 拒绝"
-          }
-        }
-      }
-    },
     "home.prompt.approve" : {
       "localizations" : {
         "en" : {
@@ -611,6 +378,23 @@
         }
       }
     },
+    "home.prompt.hint" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A approve · B deny"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A 允许 · B 拒绝"
+          }
+        }
+      }
+    },
     "home.prompt.sent" : {
       "localizations" : {
         "en" : {
@@ -626,6 +410,187 @@
           }
         }
       }
+    },
+    "home.prompt.waited" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "waited %ds"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已等待 %d 秒"
+          }
+        }
+      }
+    },
+    "home.status.advertising" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ADV"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "广播中"
+          }
+        }
+      }
+    },
+    "home.status.bluetoothOff" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BT:off"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "蓝牙已关闭"
+          }
+        }
+      }
+    },
+    "home.status.connected" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CONN"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已连接"
+          }
+        }
+      }
+    },
+    "home.status.connectedMany" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CONN ×%d"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已连接 ×%d"
+          }
+        }
+      }
+    },
+    "home.status.idle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "IDLE"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "待机"
+          }
+        }
+      }
+    },
+    "home.status.needsPermission" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BLE:need-perm"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "需要蓝牙权限"
+          }
+        }
+      }
+    },
+    "home.status.noClaude" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "— waiting for Claude —"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "— 等待 Claude 接入 —"
+          }
+        }
+      }
+    },
+    "home.status.permissionDenied" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BLE:denied"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "蓝牙权限被拒"
+          }
+        }
+      }
+    },
+    "home.status.unsupported" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BT:unsupported"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设备不支持"
+          }
+        }
+      }
+    },
+    "home.status.waiting" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "waiting"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "等待连接"
+          }
+        }
+      }
+    },
+    "Info" : {
+
     },
     "info.about.body1" : {
       "extractionState" : "stale",
@@ -1194,6 +1159,9 @@
         }
       }
     },
+    "mood" : {
+
+    },
     "notification.level.body" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1265,8 +1233,55 @@
     "notifications" : {
 
     },
-    "NUS 6e40…" : {
-
+    "onboarding.cta.enter" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "进入"
+          }
+        }
+      }
+    },
+    "onboarding.cta.needsPermission" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grant Bluetooth to continue"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请先授予蓝牙权限"
+          }
+        }
+      }
+    },
+    "onboarding.cta.skip" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skip for now"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "跳过"
+          }
+        }
+      }
     },
     "onboarding.cta.start" : {
       "extractionState" : "stale",
@@ -1285,7 +1300,76 @@
         }
       }
     },
+    "onboarding.help.a" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cycle NORMAL → PET → INFO · approve a pending prompt"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "循环 NORMAL → PET → INFO · 允许待处理请求"
+          }
+        }
+      }
+    },
+    "onboarding.help.b" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Flip page in PET / INFO · deny a pending prompt"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在 PET / INFO 翻页 · 拒绝待处理请求"
+          }
+        }
+      }
+    },
+    "onboarding.help.gear" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings · species picker · notification toggle"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设置 · 选择宠物 · 通知开关"
+          }
+        }
+      }
+    },
+    "onboarding.help.log" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open the raw log drawer (run + BLE tabs)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开原始日志面板（运行 + 蓝牙 标签）"
+          }
+        }
+      }
+    },
     "onboarding.pair.body" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1302,6 +1386,7 @@
       }
     },
     "onboarding.pair.title" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1317,7 +1402,178 @@
         }
       }
     },
+    "onboarding.permission.ble" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bluetooth"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "蓝牙"
+          }
+        }
+      }
+    },
+    "onboarding.permission.granted" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Granted"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已授予"
+          }
+        }
+      }
+    },
+    "onboarding.permission.notification" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifications"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通知"
+          }
+        }
+      }
+    },
+    "onboarding.permission.openSettings" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Settings"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开设置"
+          }
+        }
+      }
+    },
+    "onboarding.permission.request" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Request permission"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请求权限"
+          }
+        }
+      }
+    },
+    "onboarding.permission.status.allowed" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "allowed"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已允许"
+          }
+        }
+      }
+    },
+    "onboarding.permission.status.denied" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "denied"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已拒绝"
+          }
+        }
+      }
+    },
+    "onboarding.permission.status.notDetermined" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "not asked"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未请求"
+          }
+        }
+      }
+    },
+    "onboarding.permission.status.restricted" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "restricted"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "受限"
+          }
+        }
+      }
+    },
+    "onboarding.permission.status.unknown" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "unknown"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未知"
+          }
+        }
+      }
+    },
     "onboarding.rename.body" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1333,7 +1589,42 @@
         }
       }
     },
+    "onboarding.rename.copied" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copied"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已复制"
+          }
+        }
+      }
+    },
+    "onboarding.rename.copy" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copy"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "复制"
+          }
+        }
+      }
+    },
     "onboarding.rename.hint" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1345,6 +1636,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "如果重命名后 Claude Desktop 仍然搜不到，请重启一次 iPhone —— 系统会缓存蓝牙广播名。"
+          }
+        }
+      }
+    },
+    "onboarding.rename.manualHint" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Settings → General → About → Name and paste the handle above."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请前往「设置 → 通用 → 关于本机 → 名称」，粘贴上方名称。"
           }
         }
       }
@@ -1365,7 +1672,24 @@
         }
       }
     },
+    "onboarding.rename.shuffle" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shuffle"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "换一个"
+          }
+        }
+      }
+    },
     "onboarding.rename.title" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1377,6 +1701,108 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "先重命名你的 iPhone"
+          }
+        }
+      }
+    },
+    "onboarding.step.help.body" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The home screen is laid out like a handheld. A cycles screens; B flips pages or denies."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "首页采用掌机式布局：A 键切换屏幕，B 键翻页或拒绝。"
+          }
+        }
+      }
+    },
+    "onboarding.step.help.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Button cheat-sheet"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按键速查"
+          }
+        }
+      }
+    },
+    "onboarding.step.permission.body" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buddy needs Bluetooth to connect to Claude Desktop. Notifications let you approve tools while Buddy is in the background."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buddy 需要蓝牙才能连接 Claude Desktop；通知用于在后台时提示权限请求。"
+          }
+        }
+      }
+    },
+    "onboarding.step.permission.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Grant permissions"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "授予权限"
+          }
+        }
+      }
+    },
+    "onboarding.step.rename.body" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Desktop scans for names starting with Claude. Copy the suggested handle and paste it into Settings → General → About → Name."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Desktop 会扫描以 Claude 开头的设备名。复制下方建议名称，粘贴到「设置 → 通用 → 关于本机 → 名称」。"
+          }
+        }
+      }
+    },
+    "onboarding.step.rename.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rename this iPhone"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "修改 iPhone 名称"
           }
         }
       }
@@ -1413,439 +1839,7 @@
         }
       }
     },
-    "onboarding.step.permission.title" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Grant permissions"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "授予权限"
-          }
-        }
-      }
-    },
-    "onboarding.step.permission.body" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Buddy needs Bluetooth to connect to Claude Desktop. Notifications let you approve tools while Buddy is in the background."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Buddy 需要蓝牙才能连接 Claude Desktop；通知用于在后台时提示权限请求。"
-          }
-        }
-      }
-    },
-    "onboarding.step.rename.title" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Rename this iPhone"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "修改 iPhone 名称"
-          }
-        }
-      }
-    },
-    "onboarding.step.rename.body" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Claude Desktop scans for names starting with Claude. Copy the suggested handle and paste it into Settings → General → About → Name."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Claude Desktop 会扫描以 Claude 开头的设备名。复制下方建议名称，粘贴到「设置 → 通用 → 关于本机 → 名称」。"
-          }
-        }
-      }
-    },
-    "onboarding.step.help.title" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Button cheat-sheet"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "按键速查"
-          }
-        }
-      }
-    },
-    "onboarding.step.help.body" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "The home screen is laid out like a handheld. A cycles screens; B flips pages or denies."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "首页采用掌机式布局：A 键切换屏幕，B 键翻页或拒绝。"
-          }
-        }
-      }
-    },
-    "onboarding.permission.ble" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bluetooth"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "蓝牙"
-          }
-        }
-      }
-    },
-    "onboarding.permission.notification" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Notifications"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "通知"
-          }
-        }
-      }
-    },
-    "onboarding.permission.status.notDetermined" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "not asked"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "未请求"
-          }
-        }
-      }
-    },
-    "onboarding.permission.status.allowed" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "allowed"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已允许"
-          }
-        }
-      }
-    },
-    "onboarding.permission.status.restricted" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "restricted"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "受限"
-          }
-        }
-      }
-    },
-    "onboarding.permission.status.denied" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "denied"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已拒绝"
-          }
-        }
-      }
-    },
-    "onboarding.permission.status.unknown" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "unknown"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "未知"
-          }
-        }
-      }
-    },
-    "onboarding.permission.request" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Request permission"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "请求权限"
-          }
-        }
-      }
-    },
-    "onboarding.permission.granted" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Granted"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已授予"
-          }
-        }
-      }
-    },
-    "onboarding.permission.openSettings" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Open Settings"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "打开设置"
-          }
-        }
-      }
-    },
-    "onboarding.rename.shuffle" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Shuffle"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "换一个"
-          }
-        }
-      }
-    },
-    "onboarding.rename.copy" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Copy"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "复制"
-          }
-        }
-      }
-    },
-    "onboarding.rename.copied" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Copied"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已复制"
-          }
-        }
-      }
-    },
-    "onboarding.rename.manualHint" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Open Settings → General → About → Name and paste the handle above."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "请前往「设置 → 通用 → 关于本机 → 名称」，粘贴上方名称。"
-          }
-        }
-      }
-    },
-    "onboarding.help.a" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cycle NORMAL → PET → INFO · approve a pending prompt"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "循环 NORMAL → PET → INFO · 允许待处理请求"
-          }
-        }
-      }
-    },
-    "onboarding.help.b" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Flip page in PET / INFO · deny a pending prompt"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在 PET / INFO 翻页 · 拒绝待处理请求"
-          }
-        }
-      }
-    },
-    "onboarding.help.log" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Open the raw log drawer (run + BLE tabs)"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "打开原始日志面板（运行 + 蓝牙 标签）"
-          }
-        }
-      }
-    },
-    "onboarding.help.gear" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Settings · species picker · notification toggle"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "设置 · 选择宠物 · 通知开关"
-          }
-        }
-      }
-    },
-    "onboarding.cta.enter" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Enter"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "进入"
-          }
-        }
-      }
-    },
-    "onboarding.cta.needsPermission" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Grant Bluetooth to continue"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "请先授予蓝牙权限"
-          }
-        }
-      }
-    },
-    "onboarding.cta.skip" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Skip for now"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "跳过"
-          }
-        }
-      }
-    },
-    "pet:%@" : {
+    "Pet" : {
 
     },
     "pet.a11y.nextPage" : {
@@ -2895,9 +2889,6 @@
           }
         }
       }
-    },
-    "swipe ↔ to page" : {
-
     },
     "tab.console" : {
       "extractionState" : "stale",
