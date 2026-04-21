@@ -70,11 +70,11 @@ struct RootView: View {
                     } label: {
                         Image(systemName: "gearshape.fill")
                             .font(.system(size: 16, weight: .semibold))
-                            .foregroundStyle(.green)
+                            .foregroundStyle(TerminalStyle.ink)
                             .padding(10)
-                            .background(Color.black.opacity(0.55), in: Circle())
+                            .background(TerminalStyle.lcdPanel.opacity(0.8), in: Circle())
                             .overlay(
-                                Circle().stroke(Color.green.opacity(0.4), lineWidth: 1)
+                                Circle().stroke(TerminalStyle.inkDim.opacity(0.55), lineWidth: 1)
                             )
                     }
                     .accessibilityLabel(Text("settings.title"))

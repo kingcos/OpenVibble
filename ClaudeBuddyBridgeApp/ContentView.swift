@@ -51,16 +51,16 @@ struct ContentView: View {
             Spacer(minLength: 8)
             Text("pet:\(persona.state.slug)")
                 .font(TerminalStyle.mono(10, weight: .semibold))
-                .foregroundStyle(.green.opacity(0.75))
+                .foregroundStyle(TerminalStyle.inkDim)
                 .padding(.horizontal, 6)
                 .padding(.vertical, 2)
                 .overlay(
                     RoundedRectangle(cornerRadius: 4)
-                        .stroke(Color.green.opacity(0.3), lineWidth: 1)
+                        .stroke(TerminalStyle.inkDim.opacity(0.55), lineWidth: 1)
                 )
             Text("NUS 6e40…")
                 .font(TerminalStyle.mono(12))
-                .foregroundStyle(.green.opacity(0.75))
+                .foregroundStyle(TerminalStyle.inkDim)
         }
         .frame(maxWidth: .infinity)
     }
@@ -80,7 +80,7 @@ struct ContentView: View {
             VStack(alignment: .leading, spacing: 6) {
                 Text(model.snapshot.msg)
                     .font(TerminalStyle.mono(14))
-                    .foregroundStyle(.green.opacity(0.92))
+                    .foregroundStyle(TerminalStyle.ink)
 
                 HStack(spacing: 12) {
                     terminalMetric("sess",  value: "\(model.snapshot.total)")
@@ -91,15 +91,15 @@ struct ContentView: View {
 
                 Text("[ble]  \(model.bluetoothStateNote)")
                     .font(TerminalStyle.mono(11))
-                    .foregroundStyle(.green.opacity(0.75))
+                    .foregroundStyle(TerminalStyle.inkDim)
 
                 Text("[adv]  \(model.advertisingNote)")
                     .font(TerminalStyle.mono(11))
-                    .foregroundStyle(.green.opacity(0.75))
+                    .foregroundStyle(TerminalStyle.inkDim)
 
                 Text("[name] \(model.activeDisplayName)")
                     .font(TerminalStyle.mono(11))
-                    .foregroundStyle(.green.opacity(0.75))
+                    .foregroundStyle(TerminalStyle.inkDim)
             }
         }
     }
@@ -111,7 +111,7 @@ struct ContentView: View {
                     ForEach(combinedLogs.indices, id: \.self) { idx in
                         Text(combinedLogs[idx])
                             .font(TerminalStyle.mono(12))
-                            .foregroundStyle(.green.opacity(0.9))
+                            .foregroundStyle(TerminalStyle.ink.opacity(0.9))
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
                 }
@@ -122,25 +122,31 @@ struct ContentView: View {
     }
 
     private func promptPanel(_ prompt: PromptRequest) -> some View {
-        TerminalPanel("sudo?", accent: .yellow) {
+        TerminalPanel("sudo?", accent: TerminalStyle.accent) {
             VStack(alignment: .leading, spacing: 10) {
                 Text("⚠ \(prompt.tool) 待确认")
                     .font(TerminalStyle.mono(12, weight: .semibold))
-                    .foregroundStyle(.yellow.opacity(0.95))
+                    .foregroundStyle(TerminalStyle.accent)
 
                 if !prompt.hint.isEmpty {
                     Text(prompt.hint)
                         .font(TerminalStyle.mono(12))
-                        .foregroundStyle(.yellow.opacity(0.85))
+                        .foregroundStyle(TerminalStyle.accentSoft)
                         .lineLimit(2)
                 }
 
                 HStack {
                     Button("允许") { model.respondPermission(.once) }
-                        .buttonStyle(TerminalActionButtonStyle(foreground: .black, background: .green))
+                        .buttonStyle(TerminalActionButtonStyle(
+                            foreground: .white,
+                            background: TerminalStyle.good
+                        ))
 
                     Button("拒绝") { model.respondPermission(.deny) }
-                        .buttonStyle(TerminalActionButtonStyle(foreground: .white, background: .red.opacity(0.8)))
+                        .buttonStyle(TerminalActionButtonStyle(
+                            foreground: .white,
+                            background: TerminalStyle.bad
+                        ))
                 }
             }
         }
@@ -151,14 +157,14 @@ struct ContentView: View {
             VStack(alignment: .leading, spacing: 6) {
                 Text("\(model.transfer.characterName) :: \(model.transfer.currentFile)")
                     .font(TerminalStyle.mono(12))
-                    .foregroundStyle(.green.opacity(0.85))
+                    .foregroundStyle(TerminalStyle.ink)
 
                 ProgressView(value: transferValue)
-                    .tint(.green)
+                    .tint(TerminalStyle.ink)
 
                 Text("\(model.transfer.writtenBytes) / \(model.transfer.totalBytes) B")
                     .font(TerminalStyle.mono(11))
-                    .foregroundStyle(.green.opacity(0.75))
+                    .foregroundStyle(TerminalStyle.inkDim)
             }
         }
     }
@@ -167,10 +173,10 @@ struct ContentView: View {
         HStack(spacing: 4) {
             Text(key)
                 .font(TerminalStyle.mono(11))
-                .foregroundStyle(.green.opacity(0.7))
+                .foregroundStyle(TerminalStyle.inkDim)
             Text(value)
                 .font(TerminalStyle.mono(11, weight: .semibold))
-                .foregroundStyle(.green)
+                .foregroundStyle(TerminalStyle.ink)
         }
     }
 
@@ -214,11 +220,11 @@ struct ContentView: View {
     private var connectionColor: Color {
         switch model.connectionState {
         case .stopped:
-            return .red.opacity(0.9)
+            return TerminalStyle.bad
         case .advertising:
-            return .yellow.opacity(0.9)
+            return TerminalStyle.accentSoft
         case .connected:
-            return .green
+            return TerminalStyle.ink
         }
     }
 

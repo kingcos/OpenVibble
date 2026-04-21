@@ -46,6 +46,12 @@
         }
       }
     },
+    "▶" : {
+
+    },
+    "◀" : {
+
+    },
     "⚠ %@ 待确认" : {
 
     },
@@ -70,6 +76,9 @@
     "$ system.setDeviceName" : {
 
     },
+    "A:approve  B:deny" : {
+
+    },
     "app.name" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -86,6 +95,9 @@
           }
         }
       }
+    },
+    "approve? %@s" : {
+
     },
     "auto-advertise" : {
 
@@ -822,6 +834,9 @@
       }
     },
     "Lv %@" : {
+
+    },
+    "M5" : {
 
     },
     "menu.changeSpecies" : {
@@ -2161,6 +2176,9 @@
           }
         }
       }
+    },
+    "swipe ↔ to page" : {
+
     },
     "tab.console" : {
       "extractionState" : "stale",

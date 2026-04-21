@@ -14,3 +14,4 @@ DerivedData/
 # SwiftPM metadata
 .swiftpm/
 **/.swiftpm/
+h5-demo.html

@@ -30,7 +30,7 @@ struct OnboardingScreen: View {
         HStack(spacing: 8) {
             ForEach(0..<totalPages, id: \.self) { i in
                 Capsule()
-                    .fill(i == page ? Color.green : Color.green.opacity(0.25))
+                    .fill(i == page ? TerminalStyle.accent : TerminalStyle.inkDim.opacity(0.4))
                     .frame(width: i == page ? 22 : 8, height: 6)
                     .animation(.easeInOut(duration: 0.25), value: page)
             }
@@ -41,7 +41,7 @@ struct OnboardingScreen: View {
                 } label: {
                     Text("common.skip")
                         .font(TerminalStyle.mono(12, weight: .semibold))
-                        .foregroundStyle(.green.opacity(0.7))
+                        .foregroundStyle(TerminalStyle.inkDim)
                 }
             }
         }
@@ -55,25 +55,25 @@ struct OnboardingScreen: View {
             Spacer()
             Text("$ buddy --init")
                 .font(TerminalStyle.mono(14, weight: .bold))
-                .foregroundStyle(.green.opacity(0.7))
+                .foregroundStyle(TerminalStyle.inkDim)
 
             Image(systemName: "pawprint.fill")
                 .font(.system(size: 60, weight: .bold))
-                .foregroundStyle(.green)
+                .foregroundStyle(TerminalStyle.ink)
                 .padding(24)
                 .overlay(
                     RoundedRectangle(cornerRadius: 14)
-                        .stroke(Color.green.opacity(0.5), lineWidth: 1)
+                        .stroke(TerminalStyle.inkDim.opacity(0.55), lineWidth: 1)
                 )
 
             VStack(spacing: 10) {
                 Text("onboarding.welcome.title")
                     .font(TerminalStyle.mono(22, weight: .bold))
-                    .foregroundStyle(.green)
+                    .foregroundStyle(TerminalStyle.ink)
                     .multilineTextAlignment(.center)
                 Text("onboarding.welcome.body")
                     .font(TerminalStyle.mono(13))
-                    .foregroundStyle(.green.opacity(0.75))
+                    .foregroundStyle(TerminalStyle.inkDim)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 32)
             }
@@ -87,38 +87,38 @@ struct OnboardingScreen: View {
             Spacer()
             Text("$ system.setDeviceName")
                 .font(TerminalStyle.mono(14, weight: .bold))
-                .foregroundStyle(.green.opacity(0.7))
+                .foregroundStyle(TerminalStyle.inkDim)
 
             Image(systemName: "iphone.badge.checkmark")
                 .font(.system(size: 60, weight: .regular))
-                .foregroundStyle(.green)
+                .foregroundStyle(TerminalStyle.ink)
 
             VStack(spacing: 8) {
                 Text("onboarding.rename.title")
                     .font(TerminalStyle.mono(20, weight: .bold))
-                    .foregroundStyle(.green)
+                    .foregroundStyle(TerminalStyle.ink)
                     .multilineTextAlignment(.center)
                 Text("onboarding.rename.body")
                     .font(TerminalStyle.mono(12))
-                    .foregroundStyle(.green.opacity(0.75))
+                    .foregroundStyle(TerminalStyle.inkDim)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 28)
             }
 
             HStack(alignment: .top, spacing: 8) {
                 Image(systemName: "exclamationmark.triangle.fill")
-                    .foregroundStyle(.yellow)
+                    .foregroundStyle(TerminalStyle.accent)
                 Text("onboarding.rename.hint")
                     .font(TerminalStyle.mono(12))
-                    .foregroundStyle(.yellow.opacity(0.95))
+                    .foregroundStyle(TerminalStyle.accentSoft)
                 Spacer(minLength: 0)
             }
             .padding(12)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color.black.opacity(0.45), in: RoundedRectangle(cornerRadius: 10))
+            .background(TerminalStyle.lcdPanel.opacity(0.7), in: RoundedRectangle(cornerRadius: 10))
             .overlay(
                 RoundedRectangle(cornerRadius: 10)
-                    .stroke(Color.yellow.opacity(0.4), lineWidth: 1)
+                    .stroke(TerminalStyle.accent.opacity(0.45), lineWidth: 1)
             )
             .padding(.horizontal, 24)
 
@@ -148,20 +148,20 @@ struct OnboardingScreen: View {
             Spacer()
             Text("$ ble --advertise")
                 .font(TerminalStyle.mono(14, weight: .bold))
-                .foregroundStyle(.green.opacity(0.7))
+                .foregroundStyle(TerminalStyle.inkDim)
 
             Image(systemName: "dot.radiowaves.left.and.right")
                 .font(.system(size: 60, weight: .regular))
-                .foregroundStyle(.green)
+                .foregroundStyle(TerminalStyle.ink)
 
             VStack(spacing: 8) {
                 Text("onboarding.pair.title")
                     .font(TerminalStyle.mono(20, weight: .bold))
-                    .foregroundStyle(.green)
+                    .foregroundStyle(TerminalStyle.ink)
                     .multilineTextAlignment(.center)
                 Text("onboarding.pair.body")
                     .font(TerminalStyle.mono(12))
-                    .foregroundStyle(.green.opacity(0.75))
+                    .foregroundStyle(TerminalStyle.inkDim)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 28)
             }
@@ -182,11 +182,11 @@ struct OnboardingScreen: View {
                 .font(TerminalStyle.mono(14, weight: .bold))
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 12)
-                .foregroundStyle(.black)
-                .background(Color.green, in: RoundedRectangle(cornerRadius: 10))
+                .foregroundStyle(.white)
+                .background(TerminalStyle.accent, in: RoundedRectangle(cornerRadius: 10))
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.green.opacity(0.6), lineWidth: 1)
+                        .stroke(TerminalStyle.shellBottom.opacity(0.7), lineWidth: 1)
                 )
         }
         .padding(.horizontal, 24)

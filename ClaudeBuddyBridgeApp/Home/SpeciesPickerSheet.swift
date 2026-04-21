@@ -33,7 +33,7 @@ struct SpeciesPickerSheet: View {
                         if installed.isEmpty {
                             Text("species.empty.installed")
                                 .font(TerminalStyle.mono(12))
-                                .foregroundStyle(.green.opacity(0.55))
+                                .foregroundStyle(TerminalStyle.inkDim)
                         } else {
                             VStack(spacing: 6) {
                                 ForEach(installed) { persona in
@@ -57,7 +57,7 @@ struct SpeciesPickerSheet: View {
         HStack {
             Text("$ species")
                 .font(TerminalStyle.mono(16, weight: .bold))
-                .foregroundStyle(.green)
+                .foregroundStyle(TerminalStyle.ink)
             Spacer()
             Button(action: onClose) {
                 Text("common.done")
@@ -91,29 +91,32 @@ struct SpeciesPickerSheet: View {
             VStack(alignment: .leading, spacing: 2) {
                 titleView
                     .font(TerminalStyle.mono(13, weight: .semibold))
-                    .foregroundStyle(.green)
+                    .foregroundStyle(TerminalStyle.ink)
                 if let subtitle {
                     Text(subtitle)
                         .font(TerminalStyle.mono(10))
-                        .foregroundStyle(.green.opacity(0.55))
+                        .foregroundStyle(TerminalStyle.inkDim)
                 }
             }
             Spacer()
             if selected {
                 Image(systemName: "checkmark")
                     .font(.system(size: 12, weight: .bold))
-                    .foregroundStyle(.green)
+                    .foregroundStyle(TerminalStyle.ink)
             }
         }
         .padding(.horizontal, 10)
         .padding(.vertical, 8)
         .background(
-            Color.black.opacity(selected ? 0.55 : 0.35),
+            TerminalStyle.lcdPanel.opacity(selected ? 0.9 : 0.55),
             in: RoundedRectangle(cornerRadius: 8)
         )
         .overlay(
             RoundedRectangle(cornerRadius: 8)
-                .stroke(Color.green.opacity(selected ? 0.6 : 0.25), lineWidth: 1)
+                .stroke(
+                    (selected ? TerminalStyle.accent : TerminalStyle.inkDim).opacity(selected ? 0.85 : 0.35),
+                    lineWidth: 1
+                )
         )
     }
 }

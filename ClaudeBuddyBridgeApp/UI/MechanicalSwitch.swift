@@ -27,8 +27,8 @@ struct MechanicalSwitch: View {
     private let thumbWidth: CGFloat = 72
     private let trackHeight: CGFloat = 48
     private let padding: CGFloat = 4
-    private let thumb = Color.green
-    private let thumbShadow = Color(red: 0.05, green: 0.35, blue: 0.15)
+    private let thumb = TerminalStyle.accent
+    private let thumbShadow = TerminalStyle.shellShadow
 
     var body: some View {
         HStack(spacing: 0) {
@@ -38,10 +38,10 @@ struct MechanicalSwitch: View {
         .frame(width: thumbWidth * 2 + padding * 2, height: trackHeight)
         .background(
             RoundedRectangle(cornerRadius: trackHeight / 2, style: .continuous)
-                .fill(Color.black.opacity(0.75))
+                .fill(TerminalStyle.lcdPanel.opacity(0.9))
                 .overlay(
                     RoundedRectangle(cornerRadius: trackHeight / 2, style: .continuous)
-                        .stroke(Color.green.opacity(0.3), lineWidth: 1)
+                        .stroke(TerminalStyle.inkDim.opacity(0.5), lineWidth: 1)
                 )
         )
         .overlay(alignment: .leading) {
@@ -73,7 +73,7 @@ struct MechanicalSwitch: View {
                     .font(.system(size: 11, weight: .bold, design: .monospaced))
                     .tracking(1.2)
             }
-            .foregroundStyle(selected ? Color.black : Color.green.opacity(0.7))
+            .foregroundStyle(selected ? Color.white : TerminalStyle.ink)
             .frame(width: thumbWidth, height: trackHeight)
             .contentShape(Rectangle())
         }

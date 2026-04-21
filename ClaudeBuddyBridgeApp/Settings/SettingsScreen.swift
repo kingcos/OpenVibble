@@ -103,7 +103,7 @@ struct SettingsScreen: View {
         HStack {
             Text("$ settings")
                 .font(TerminalStyle.mono(16, weight: .bold))
-                .foregroundStyle(.green)
+                .foregroundStyle(TerminalStyle.ink)
             Spacer()
             Button {
                 dismiss()
@@ -127,21 +127,21 @@ struct SettingsScreen: View {
             } label: {
                 HStack(spacing: 6) {
                     Text("species")
-                        .foregroundStyle(.green.opacity(0.6))
+                        .foregroundStyle(TerminalStyle.inkDim)
                     Text(currentSpeciesLabel)
-                        .foregroundStyle(.green)
+                        .foregroundStyle(TerminalStyle.ink)
                     Spacer()
                     Image(systemName: "chevron.right")
                         .font(.system(size: 11, weight: .bold))
-                        .foregroundStyle(.green.opacity(0.6))
+                        .foregroundStyle(TerminalStyle.inkDim)
                 }
                 .font(TerminalStyle.mono(12))
                 .padding(.horizontal, 10)
                 .padding(.vertical, 8)
-                .background(Color.black.opacity(0.45), in: RoundedRectangle(cornerRadius: 8))
+                .background(TerminalStyle.lcdPanel.opacity(0.7), in: RoundedRectangle(cornerRadius: 8))
                 .overlay(
                     RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.green.opacity(0.35), lineWidth: 1)
+                        .stroke(TerminalStyle.inkDim.opacity(0.5), lineWidth: 1)
                 )
             }
             .buttonStyle(.plain)
@@ -149,9 +149,9 @@ struct SettingsScreen: View {
             Toggle(isOn: $autoStartBLE) {
                 Text("auto-advertise")
                     .font(TerminalStyle.mono(12))
-                    .foregroundStyle(.green)
+                    .foregroundStyle(TerminalStyle.ink)
             }
-            .tint(.green)
+            .tint(TerminalStyle.accent)
         }
     }
 
@@ -159,20 +159,20 @@ struct SettingsScreen: View {
         HStack(spacing: 8) {
             Text(tag)
                 .frame(width: 56, alignment: .leading)
-                .foregroundStyle(.green.opacity(0.6))
+                .foregroundStyle(TerminalStyle.inkDim)
             TextField(placeholder, text: text)
                 .textInputAutocapitalization(.words)
                 .autocorrectionDisabled()
-                .foregroundStyle(.green)
-                .tint(.green)
+                .foregroundStyle(TerminalStyle.ink)
+                .tint(TerminalStyle.accent)
         }
         .font(TerminalStyle.mono(12))
         .padding(.horizontal, 10)
         .padding(.vertical, 8)
-        .background(Color.black.opacity(0.45), in: RoundedRectangle(cornerRadius: 8))
+        .background(TerminalStyle.lcdPanel.opacity(0.7), in: RoundedRectangle(cornerRadius: 8))
         .overlay(
             RoundedRectangle(cornerRadius: 8)
-                .stroke(Color.green.opacity(0.35), lineWidth: 1)
+                .stroke(TerminalStyle.inkDim.opacity(0.5), lineWidth: 1)
         )
     }
 
@@ -183,22 +183,22 @@ struct SettingsScreen: View {
             Toggle(isOn: $showScanline) {
                 Text("scanline")
                     .font(TerminalStyle.mono(12))
-                    .foregroundStyle(.green)
+                    .foregroundStyle(TerminalStyle.ink)
             }
-            .tint(.green)
+            .tint(TerminalStyle.accent)
 
             Toggle(isOn: $notificationsEnabled) {
                 HStack {
                     Text("notifications")
                     Spacer()
                     Text(notificationStatus)
-                        .foregroundStyle(.green.opacity(0.6))
+                        .foregroundStyle(TerminalStyle.inkDim)
                         .font(TerminalStyle.mono(10))
                 }
                 .font(TerminalStyle.mono(12))
-                .foregroundStyle(.green)
+                .foregroundStyle(TerminalStyle.ink)
             }
-            .tint(.green)
+            .tint(TerminalStyle.accent)
 
             Button {
                 Task {
@@ -225,7 +225,7 @@ struct SettingsScreen: View {
             Link(destination: repoURL) {
                 HStack {
                     Text("github →")
-                        .foregroundStyle(.green)
+                        .foregroundStyle(TerminalStyle.ink)
                     Spacer()
                 }
                 .font(TerminalStyle.mono(12, weight: .semibold))
@@ -241,7 +241,7 @@ struct SettingsScreen: View {
                     Image(systemName: "arrow.up.right")
                         .font(.system(size: 11, weight: .bold))
                 }
-                .foregroundStyle(.green.opacity(0.8))
+                .foregroundStyle(TerminalStyle.ink)
                 .font(TerminalStyle.mono(12))
             }
             .buttonStyle(.plain)
@@ -251,10 +251,10 @@ struct SettingsScreen: View {
     private func aboutRow(_ key: String, _ value: String) -> some View {
         HStack {
             Text(key)
-                .foregroundStyle(.green.opacity(0.6))
+                .foregroundStyle(TerminalStyle.inkDim)
             Spacer()
             Text(value)
-                .foregroundStyle(.green.opacity(0.9))
+                .foregroundStyle(TerminalStyle.ink)
         }
         .font(TerminalStyle.mono(12))
     }
@@ -272,7 +272,7 @@ struct SettingsScreen: View {
                     Image(systemName: "arrow.counterclockwise")
                 }
                 .font(TerminalStyle.mono(12, weight: .semibold))
-                .foregroundStyle(.red.opacity(0.9))
+                .foregroundStyle(TerminalStyle.bad)
             }
             .buttonStyle(.plain)
 
@@ -285,7 +285,7 @@ struct SettingsScreen: View {
                     Image(systemName: "trash")
                 }
                 .font(TerminalStyle.mono(12, weight: .semibold))
-                .foregroundStyle(.red.opacity(0.9))
+                .foregroundStyle(TerminalStyle.bad)
             }
             .buttonStyle(.plain)
         }
