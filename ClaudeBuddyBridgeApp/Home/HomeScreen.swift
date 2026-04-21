@@ -893,10 +893,15 @@ private struct InfoBody: View {
         ]
         case "DEVICE":
             let uptime = Int(Date().timeIntervalSince(appStart))
+            let device = UIDevice.current
+            let raw = device.batteryLevel
+            let batt = raw < 0 ? "—" : "\(Int((raw * 100).rounded()))%"
+            let usb = (device.batteryState == .charging || device.batteryState == .full) ? "on" : "off"
             return [
+                "battery: \(batt)",
+                "usb:     \(usb)",
                 "uptime:  \(formatUptime(uptime))",
                 "scan:    \(showScanline ? "on" : "off")",
-                "owner:   \(ownerName.isEmpty ? "—" : ownerName)",
                 "pet:     \(petName.isEmpty ? "Buddy" : petName)"
             ]
         case "BLE": return [
