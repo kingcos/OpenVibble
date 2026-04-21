@@ -126,7 +126,7 @@ struct SettingsScreen: View {
                 showPicker = true
             } label: {
                 HStack(spacing: 6) {
-                    Text("species")
+                    Text("settings.species")
                         .foregroundStyle(TerminalStyle.inkDim)
                     Text(currentSpeciesLabel)
                         .foregroundStyle(TerminalStyle.ink)
@@ -147,7 +147,7 @@ struct SettingsScreen: View {
             .buttonStyle(.plain)
 
             Toggle(isOn: $autoStartBLE) {
-                Text("auto-advertise")
+                Text("settings.autoAdvertise")
                     .font(TerminalStyle.mono(12))
                     .foregroundStyle(TerminalStyle.ink)
             }
@@ -181,7 +181,7 @@ struct SettingsScreen: View {
     private var displayContent: some View {
         VStack(alignment: .leading, spacing: 8) {
             Toggle(isOn: $showScanline) {
-                Text("scanline")
+                Text("settings.scanline")
                     .font(TerminalStyle.mono(12))
                     .foregroundStyle(TerminalStyle.ink)
             }
@@ -189,7 +189,7 @@ struct SettingsScreen: View {
 
             Toggle(isOn: $notificationsEnabled) {
                 HStack {
-                    Text("notifications")
+                    Text("settings.notifications.label")
                     Spacer()
                     Text(notificationStatus)
                         .foregroundStyle(TerminalStyle.inkDim)
@@ -224,7 +224,7 @@ struct SettingsScreen: View {
 
             Link(destination: repoURL) {
                 HStack {
-                    Text("github →")
+                    Text("settings.github")
                         .foregroundStyle(TerminalStyle.ink)
                     Spacer()
                 }

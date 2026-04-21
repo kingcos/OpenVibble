@@ -368,10 +368,11 @@ struct HomeScreen: View {
     // MARK: - Derived UI state
 
     private func petAreaHeight(in availableHeight: CGFloat) -> CGFloat {
-        // Scale with the device: big phones get a roomier pet stage (~42%),
-        // clamped so SE-class screens still leave room for mode body + logs.
-        let target = availableHeight * 0.42
-        return min(360, max(260, target))
+        // Give the pet the dominant share of the LCD — the h5-demo mirrors
+        // this with its canvas reserving the top ~60% for drawTopCharacter.
+        // Clamp so SE-class screens still leave room for mode body + A/B.
+        let target = availableHeight * 0.50
+        return min(460, max(300, target))
     }
 
     private func personaStateKey(_ state: PersonaState) -> LocalizedStringKey {
