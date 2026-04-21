@@ -17,6 +17,7 @@ public struct GIFView: View {
             if let image = player.currentImage {
                 Image(decorative: image, scale: 1, orientation: .up)
                     .resizable()
+                    .interpolation(.none)
                     .scaledToFit()
             } else {
                 Rectangle()
