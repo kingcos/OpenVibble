@@ -925,6 +925,8 @@ struct HomeLogSheet: View {
     @ObservedObject var model: BridgeAppModel
     @Environment(\.dismiss) private var dismiss
     @State private var tab: LogTab = .run
+    @State private var copied: Bool = false
+    @State private var copyResetTask: Task<Void, Never>?
 
     enum LogTab: String, CaseIterable {
         case run, ble
@@ -943,30 +945,33 @@ struct HomeLogSheet: View {
                     Button {
                         tab = t
                     } label: {
-                        Text(t.label)
-                            .font(TerminalStyle.mono(12, weight: .bold))
-                            .tracking(1)
-                            .foregroundStyle(tab == t ? TerminalStyle.lcdBg : TerminalStyle.ink)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 6)
-                            .background(
-                                tab == t ? TerminalStyle.ink : TerminalStyle.lcdPanel.opacity(0.6),
-                                in: Capsule()
-                            )
-                            .overlay(Capsule().stroke(TerminalStyle.inkDim.opacity(0.5), lineWidth: 1))
+                        HStack(spacing: 5) {
+                            Text(t.label)
+                                .font(TerminalStyle.mono(12, weight: .bold))
+                                .tracking(1)
+                            Text("\(lines(for: t).count)")
+                                .font(TerminalStyle.mono(10, weight: .semibold))
+                                .foregroundStyle(tab == t ? TerminalStyle.lcdBg.opacity(0.6) : TerminalStyle.inkDim)
+                        }
+                        .foregroundStyle(tab == t ? TerminalStyle.lcdBg : TerminalStyle.ink)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 6)
+                        .background(
+                            tab == t ? TerminalStyle.ink : TerminalStyle.lcdPanel.opacity(0.6),
+                            in: Capsule()
+                        )
+                        .overlay(Capsule().stroke(TerminalStyle.inkDim.opacity(0.5), lineWidth: 1))
                     }
                     .buttonStyle(.plain)
                 }
                 Spacer()
-                Button {
-                    UIPasteboard.general.string = currentLogText
-                } label: {
+                Button(action: copyCurrentLog) {
                     HStack(spacing: 4) {
-                        Image(systemName: "doc.on.doc")
-                        Text("home.logs.copy")
+                        Image(systemName: copied ? "checkmark" : "doc.on.doc")
+                        Text(copied ? "onboarding.rename.copied" : "home.logs.copy")
                     }
                     .font(TerminalStyle.mono(11, weight: .semibold))
-                    .foregroundStyle(TerminalStyle.ink)
+                    .foregroundStyle(copied ? TerminalStyle.good : TerminalStyle.ink)
                     .padding(.horizontal, 10)
                     .padding(.vertical, 6)
                     .background(TerminalStyle.lcdPanel.opacity(0.6), in: Capsule())
@@ -999,30 +1004,38 @@ struct HomeLogSheet: View {
         .preferredColorScheme(.dark)
     }
 
-    private var currentLog: [String] {
+    private var currentLog: [String] { lines(for: tab) }
+
+    private func lines(for tab: LogTab) -> [String] {
         switch tab {
         case .run:
-            // Decoded Claude messages — "received info" in user's words.
-            var lines: [String] = []
+            var out: [String] = []
             if !model.snapshot.lastTurnPreview.isEmpty {
-                lines.append("[turn:\(model.snapshot.lastTurnRole)] \(model.snapshot.lastTurnPreview)")
+                out.append("[turn:\(model.snapshot.lastTurnRole)] \(model.snapshot.lastTurnPreview)")
             }
-            lines.append(contentsOf: model.snapshot.entries)
-            return lines
+            out.append(contentsOf: model.snapshot.entries)
+            return out
         case .ble:
-            // Raw wire events (protocol lines) + peripheral diagnostics —
-            // the "old terminal page" log the user referenced.
-            var lines: [String] = []
-            lines.append(contentsOf: model.recentEvents.prefix(80))
+            var out: [String] = []
+            out.append(contentsOf: model.recentEvents.prefix(80))
             if !model.diagnosticLogs.isEmpty {
-                lines.append("— diagnostics —")
-                lines.append(contentsOf: model.diagnosticLogs)
+                out.append("— diagnostics —")
+                out.append(contentsOf: model.diagnosticLogs)
             }
-            return lines
+            return out
         }
     }
 
-    private var currentLogText: String {
-        currentLog.joined(separator: "\n")
+    private func copyCurrentLog() {
+        let text = currentLog.joined(separator: "\n")
+        guard !text.isEmpty else { return }
+        UIPasteboard.general.string = text
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        copied = true
+        copyResetTask?.cancel()
+        copyResetTask = Task { @MainActor in
+            try? await Task.sleep(for: .seconds(2))
+            if !Task.isCancelled { copied = false }
+        }
     }
 }
