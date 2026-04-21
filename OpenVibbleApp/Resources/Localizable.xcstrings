@@ -3626,18 +3626,17 @@
       }
     },
     "settings.notifications.status.enabled" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Enabled"
+            "value" : "Authorized"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "已开启"
+            "value" : "已授权"
           }
         }
       }
@@ -4021,13 +4020,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Species"
+            "value" : "Type"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "品种"
+            "value" : "类型"
           }
         }
       }
@@ -4166,6 +4165,22 @@
         }
       }
     },
+    "species.header" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "$ species"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "$ 类型"
+          }
+        }
+      }
+    },
     "species.installed" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -4179,6 +4194,54 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "已安装"
+          }
+        }
+      }
+    },
+    "species.panel.builtin" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "species --builtin"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "类型 --内置"
+          }
+        }
+      }
+    },
+    "species.panel.installed" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "species --installed"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "类型 --已安装"
+          }
+        }
+      }
+    },
+    "species.subtitle.states" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld states"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld 个状态"
           }
         }
       }

@@ -15,20 +15,20 @@ struct SpeciesPickerSheet: View {
                 VStack(alignment: .leading, spacing: 12) {
                     header
 
-                    TerminalPanel("species --builtin") {
+                    TerminalPanel("species.panel.builtin") {
                         VStack(spacing: 6) {
                             rowButton(titleKey: "species.ascii.cat", subtitle: nil, id: .asciiCat)
                             ForEach(builtin) { persona in
                                 rowButton(
                                     title: persona.manifest.name.capitalized,
-                                    subtitle: "\(persona.manifest.states.count) states",
+                                    subtitle: statesSubtitle(persona.manifest.states.count),
                                     id: .builtin(name: persona.name)
                                 )
                             }
                         }
                     }
 
-                    TerminalPanel("species --installed") {
+                    TerminalPanel("species.panel.installed") {
                         if installed.isEmpty {
                             Text("species.empty.installed")
                                 .font(TerminalStyle.mono(12))
@@ -38,7 +38,7 @@ struct SpeciesPickerSheet: View {
                                 ForEach(installed) { persona in
                                     rowButton(
                                         title: persona.manifest.name,
-                                        subtitle: "\(persona.manifest.states.count) states",
+                                        subtitle: statesSubtitle(persona.manifest.states.count),
                                         id: .installed(name: persona.name)
                                     )
                                 }
@@ -54,7 +54,7 @@ struct SpeciesPickerSheet: View {
 
     private var header: some View {
         HStack {
-            Text("$ species")
+            Text("species.header")
                 .font(TerminalStyle.mono(16, weight: .bold))
                 .foregroundStyle(TerminalStyle.ink)
             Spacer()
@@ -63,6 +63,10 @@ struct SpeciesPickerSheet: View {
             }
             .buttonStyle(TerminalHeaderButtonStyle())
         }
+    }
+
+    private func statesSubtitle(_ count: Int) -> String {
+        String(format: String(localized: "species.subtitle.states"), count)
     }
 
     private func rowButton(titleKey: LocalizedStringKey, subtitle: String?, id: PersonaSpeciesID) -> some View {
