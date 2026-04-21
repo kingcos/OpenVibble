@@ -270,6 +270,10 @@ struct HomeScreen: View {
     private func onPressA() {
         UIImpactFeedbackGenerator(style: .soft).impactOccurred()
         if mode == .normal, model.prompt != nil {
+            // Ignore repeat taps after the first response — the desktop
+            // hasn't cleared the prompt yet, so another send would double
+            // the approval.
+            guard !model.responseSent else { return }
             model.respondPermission(.once)
             return
         }
@@ -283,6 +287,7 @@ struct HomeScreen: View {
     private func onPressB() {
         UIImpactFeedbackGenerator(style: .rigid).impactOccurred()
         if mode == .normal, model.prompt != nil {
+            guard !model.responseSent else { return }
             model.respondPermission(.deny)
             return
         }
