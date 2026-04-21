@@ -388,9 +388,6 @@ struct HomeScreen: View {
         case .advertising:
             return String(localized: "home.status.advertising")
         case .stopped:
-            if model.bluetoothAuthorization == .allowedAlways, !autoStartBLE {
-                return String(localized: "home.status.idle")
-            }
             return String(localized: "home.status.idle")
         }
     }
@@ -820,19 +817,10 @@ private struct InfoBody: View {
     var body: some View {
         let title = Self.pages[page]
         VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Text(title)
-                    .font(TerminalStyle.mono(13, weight: .bold))
-                    .foregroundStyle(TerminalStyle.accent)
-                Spacer()
-                HStack(spacing: 4) {
-                    ForEach(0..<Self.pages.count, id: \.self) { i in
-                        Circle()
-                            .fill(i == page ? TerminalStyle.accent : TerminalStyle.inkDim.opacity(0.5))
-                            .frame(width: 5, height: 5)
-                    }
-                }
-            }
+            Text(title)
+                .font(TerminalStyle.mono(13, weight: .bold))
+                .tracking(2)
+                .foregroundStyle(TerminalStyle.accent)
             Divider().background(TerminalStyle.lcdDivider)
 
             VStack(alignment: .leading, spacing: 4) {
