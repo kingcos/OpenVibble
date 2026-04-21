@@ -357,10 +357,11 @@ struct OnboardingScreen: View {
             copied = false
         }
         acknowledgeRename()
-        if let url = URL(string: "App-prefs:root=General&path=About"),
-           UIApplication.shared.canOpenURL(url) {
-            UIApplication.shared.open(url)
-        } else if let url = URL(string: UIApplication.openSettingsURLString) {
+        // iOS 10+ blocks the legacy App-prefs:root= scheme, so the Settings
+        // app can't be deep-linked to General → About → Name. Land on the
+        // app's own entry instead; the manualHint breadcrumb tells the user
+        // where to go from there.
+        if let url = URL(string: UIApplication.openSettingsURLString) {
             UIApplication.shared.open(url)
         }
     }
