@@ -337,7 +337,7 @@ struct HomeScreen: View {
 
     // MARK: - Derived UI state
 
-    private var petAreaHeight: CGFloat { 220 }
+    private var petAreaHeight: CGFloat { 300 }
 
     private func startBLEIfAllowed() {
         guard autoStartBLE, model.bluetoothAuthorization == .allowedAlways else { return }
@@ -592,18 +592,18 @@ private struct NormalBody: View {
             }
 
             HStack(spacing: 12) {
-                statusPill("sess", "\(model.snapshot.total)")
-                statusPill("run", "\(model.snapshot.running)")
-                statusPill("wait", "\(model.snapshot.waiting)")
-                statusPill("tok/d", formatTokens(UInt32(max(0, model.snapshot.tokensToday))))
+                statusPill("home.pill.sess", "\(model.snapshot.total)")
+                statusPill("home.pill.run", "\(model.snapshot.running)")
+                statusPill("home.pill.wait", "\(model.snapshot.waiting)")
+                statusPill("home.pill.tokPerDay", formatTokens(UInt32(max(0, model.snapshot.tokensToday))))
                 Spacer(minLength: 0)
             }
         }
     }
 
-    private func statusPill(_ label: String, _ value: String) -> some View {
+    private func statusPill(_ labelKey: LocalizedStringKey, _ value: String) -> some View {
         HStack(spacing: 4) {
-            Text(label)
+            Text(labelKey)
                 .foregroundStyle(TerminalStyle.inkDim)
             Text(value)
                 .foregroundStyle(TerminalStyle.ink)
@@ -728,7 +728,7 @@ private struct PetBody: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(alignment: .firstTextBaseline) {
-                Text("Pet")
+                Text("pet.title")
                     .font(TerminalStyle.mono(11, weight: .semibold))
                     .foregroundStyle(TerminalStyle.ink)
                     .tracking(1)
@@ -750,21 +750,21 @@ private struct PetBody: View {
 
         return VStack(alignment: .leading, spacing: 10) {
             HStack(spacing: 14) {
-                Text("mood")
+                Text("pet.mood")
                     .frame(width: 56, alignment: .leading)
                     .foregroundStyle(TerminalStyle.inkDim)
                 PetIndicator.MoodRow(tier: mood)
                 Spacer(minLength: 0)
             }
             HStack(spacing: 14) {
-                Text("fed")
+                Text("pet.fed")
                     .frame(width: 56, alignment: .leading)
                     .foregroundStyle(TerminalStyle.inkDim)
                 PetIndicator.FedRow(filled: fed)
                 Spacer(minLength: 0)
             }
             HStack(spacing: 14) {
-                Text("energy")
+                Text("pet.energy")
                     .frame(width: 56, alignment: .leading)
                     .foregroundStyle(TerminalStyle.inkDim)
                 PetIndicator.EnergyRow(tier: energy)
@@ -774,11 +774,11 @@ private struct PetBody: View {
             PetIndicator.LevelBadge(level: s.level)
 
             VStack(alignment: .leading, spacing: 2) {
-                metric("approved", "\(s.approvals)")
-                metric("denied", "\(s.denials)")
-                metric("napped", formatNap(s.napSeconds))
-                metric("tokens", formatTokens(s.tokens))
-                metric("today", formatTokens(stats.tokensToday))
+                metric("pet.metric.approved", "\(s.approvals)")
+                metric("pet.metric.denied", "\(s.denials)")
+                metric("pet.metric.napped", formatNap(s.napSeconds))
+                metric("pet.metric.tokens", formatTokens(s.tokens))
+                metric("pet.metric.today", formatTokens(stats.tokensToday))
             }
             Spacer(minLength: 0)
         }
@@ -787,20 +787,20 @@ private struct PetBody: View {
 
     private var howPage: some View {
         VStack(alignment: .leading, spacing: 10) {
-            howLine("MOOD", "approve fast ↑ · deny lots ↓")
-            howLine("FED", "50K tokens = Lv up")
-            howLine("ENERGY", "face-down naps refill")
-            howLine("SHAKE", "shake → dizzy")
-            howLine("IDLE", "no touch → sleep")
-            howLine("A", "cycle screens")
-            howLine("B", "flip pages")
+            howLine("MOOD", "pet.how.mood")
+            howLine("FED", "pet.how.fed")
+            howLine("ENERGY", "pet.how.energy")
+            howLine("SHAKE", "pet.how.shake")
+            howLine("IDLE", "pet.how.idle")
+            howLine("A", "pet.how.a")
+            howLine("B", "pet.how.b")
             Spacer(minLength: 0)
         }
     }
 
-    private func metric(_ label: String, _ value: String) -> some View {
+    private func metric(_ labelKey: LocalizedStringKey, _ value: String) -> some View {
         HStack(spacing: 8) {
-            Text(label)
+            Text(labelKey)
                 .frame(width: 78, alignment: .leading)
                 .foregroundStyle(TerminalStyle.inkDim)
             Text(value)
@@ -810,13 +810,13 @@ private struct PetBody: View {
         .font(TerminalStyle.mono(11))
     }
 
-    private func howLine(_ tag: String, _ text: String) -> some View {
+    private func howLine(_ tag: String, _ bodyKey: LocalizedStringKey) -> some View {
         HStack(alignment: .top, spacing: 8) {
             Text(tag)
                 .font(TerminalStyle.mono(11, weight: .bold))
                 .foregroundStyle(TerminalStyle.accent)
                 .frame(width: 70, alignment: .leading)
-            Text(text)
+            Text(bodyKey)
                 .font(TerminalStyle.mono(12))
                 .foregroundStyle(TerminalStyle.ink)
             Spacer(minLength: 0)
@@ -848,11 +848,16 @@ private struct InfoBody: View {
 
     static let pages: [String] = ["ABOUT", "BUTTONS", "CLAUDE", "DEVICE", "BLE", "CREDITS"]
 
+    enum Row {
+        case body(LocalizedStringKey)
+        case pair(LocalizedStringKey, String)
+    }
+
     var body: some View {
         let title = Self.pages[page]
         VStack(alignment: .leading, spacing: 6) {
             HStack(alignment: .firstTextBaseline) {
-                Text("Info")
+                Text("info.title")
                     .font(TerminalStyle.mono(11, weight: .semibold))
                     .foregroundStyle(TerminalStyle.ink)
                     .tracking(1)
@@ -869,64 +874,88 @@ private struct InfoBody: View {
             Divider().background(TerminalStyle.lcdDivider)
 
             VStack(alignment: .leading, spacing: 4) {
-                ForEach(lines(for: title), id: \.self) { line in
-                    Text(line)
-                        .font(TerminalStyle.mono(12))
-                        .foregroundStyle(TerminalStyle.ink)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                ForEach(Array(rows(for: title).enumerated()), id: \.offset) { _, row in
+                    rowView(row)
                 }
             }
             Spacer(minLength: 0)
         }
     }
 
-    private func lines(for page: String) -> [String] {
+    @ViewBuilder
+    private func rowView(_ row: Row) -> some View {
+        switch row {
+        case .body(let key):
+            Text(key)
+                .font(TerminalStyle.mono(12))
+                .foregroundStyle(TerminalStyle.ink)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        case .pair(let labelKey, let value):
+            HStack(alignment: .firstTextBaseline, spacing: 8) {
+                Text(labelKey)
+                    .font(TerminalStyle.mono(12))
+                    .foregroundStyle(TerminalStyle.inkDim)
+                    .frame(width: 82, alignment: .leading)
+                Text(value)
+                    .font(TerminalStyle.mono(12))
+                    .foregroundStyle(TerminalStyle.ink)
+                Spacer(minLength: 0)
+            }
+        }
+    }
+
+    private func rows(for page: String) -> [Row] {
         switch page {
         case "ABOUT": return [
-            "Claude Buddy Bridge",
-            "iPhone ↔ Claude Desktop",
-            "BLE NUS + pet simulator",
-            "A: cycle screens · B: flip page"
+            .body("info.about.line1"),
+            .body("info.about.line2"),
+            .body("info.about.line3"),
+            .body("info.about.line4")
         ]
         case "BUTTONS": return [
-            "A: NORMAL → PET → INFO",
-            "A (on prompt): approve",
-            "B: page PET / INFO",
-            "B (on prompt): deny",
-            "Log: show raw packets"
+            .body("info.buttons.line1"),
+            .body("info.buttons.line2"),
+            .body("info.buttons.line3"),
+            .body("info.buttons.line4"),
+            .body("info.buttons.line5")
         ]
         case "CLAUDE": return [
-            "sessions: \(model.snapshot.total)",
-            "running:  \(model.snapshot.running)",
-            "waiting:  \(model.snapshot.waiting)",
-            "state:    \(persona.state.slug)",
-            "tok/d:    \(model.snapshot.tokensToday)"
+            .pair("info.claude.sessions", "\(model.snapshot.total)"),
+            .pair("info.claude.running", "\(model.snapshot.running)"),
+            .pair("info.claude.waiting", "\(model.snapshot.waiting)"),
+            .pair("info.claude.state", persona.state.slug),
+            .pair("info.claude.tokPerDay", "\(model.snapshot.tokensToday)")
         ]
         case "DEVICE":
             let uptime = Int(Date().timeIntervalSince(appStart))
             let device = UIDevice.current
             let raw = device.batteryLevel
             let batt = raw < 0 ? "—" : "\(Int((raw * 100).rounded()))%"
-            let usb = (device.batteryState == .charging || device.batteryState == .full) ? "on" : "off"
+            let usb = (device.batteryState == .charging || device.batteryState == .full)
+                ? String(localized: "info.device.on")
+                : String(localized: "info.device.off")
+            let scan = showScanline
+                ? String(localized: "info.device.on")
+                : String(localized: "info.device.off")
             return [
-                "battery: \(batt)",
-                "usb:     \(usb)",
-                "uptime:  \(formatUptime(uptime))",
-                "scan:    \(showScanline ? "on" : "off")",
-                "pet:     \(petName.isEmpty ? "Buddy" : petName)"
+                .pair("info.device.battery", batt),
+                .pair("info.device.usb", usb),
+                .pair("info.device.uptime", formatUptime(uptime)),
+                .pair("info.device.scan", scan),
+                .pair("info.device.pet", petName.isEmpty ? "Buddy" : petName)
             ]
         case "BLE": return [
-            "link:  \(shortConn)",
-            "adv:   \(model.advertisingNote)",
-            "name:  \(model.activeDisplayName)",
-            "uuid:  6e400001-...e9d6"
+            .pair("info.ble.link", shortConn),
+            .pair("info.ble.adv", model.advertisingNote),
+            .pair("info.ble.name", model.activeDisplayName),
+            .pair("info.ble.uuid", "6e400001-...e9d6")
         ]
         case "CREDITS": return [
-            "idea: Felix Rieseberg",
-            "anthropics/",
-            "  claude-desktop-buddy",
-            "iOS bridge: kingcos",
-            "MIT-licensed"
+            .body("info.credits.line1"),
+            .body("info.credits.line2"),
+            .body("info.credits.line3"),
+            .body("info.credits.line4"),
+            .body("info.credits.line5")
         ]
         default: return []
         }
@@ -934,9 +963,9 @@ private struct InfoBody: View {
 
     private var shortConn: String {
         switch model.connectionState {
-        case .stopped: return "off"
-        case .advertising: return "advertising"
-        case .connected(let n): return "conn×\(n)"
+        case .stopped: return String(localized: "info.ble.link.off")
+        case .advertising: return String(localized: "info.ble.link.advertising")
+        case .connected(let n): return String(format: String(localized: "info.ble.link.conn"), n)
         }
     }
 
