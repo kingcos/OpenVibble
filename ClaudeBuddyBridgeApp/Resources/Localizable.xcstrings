@@ -307,12 +307,11 @@
       }
     },
     "home.status.connected" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "connected"
+            "value" : "CONN"
           }
         },
         "zh-Hans" : {
