@@ -518,11 +518,19 @@ private struct NormalBody: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            if let prompt = model.prompt {
-                promptPanel(prompt)
-            } else {
-                statusLine
+            Group {
+                if let prompt = model.prompt {
+                    promptPanel(prompt)
+                        .transition(.asymmetric(
+                            insertion: .opacity.combined(with: .move(edge: .top)),
+                            removal: .opacity
+                        ))
+                } else {
+                    statusLine
+                        .transition(.opacity)
+                }
             }
+            .animation(.easeInOut(duration: 0.22), value: model.prompt?.id)
 
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 4) {
