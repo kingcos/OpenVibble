@@ -637,7 +637,7 @@ private struct NormalBody: View {
             Text(line.time)
                 .font(TerminalStyle.mono(10))
                 .foregroundStyle(TerminalStyle.inkDim)
-                .frame(width: 44, alignment: .leading)
+                .frame(width: 58, alignment: .leading)
             Text(line.message)
                 .font(TerminalStyle.mono(11))
                 .foregroundStyle(TerminalStyle.ink)
@@ -671,7 +671,7 @@ private struct LogLine {
 
     private static func currentClock() -> String {
         let f = DateFormatter()
-        f.dateFormat = "HH:mm"
+        f.dateFormat = "HH:mm:ss"
         return f.string(from: Date())
     }
 }
@@ -760,9 +760,10 @@ private struct PetBody: View {
             howLine("MOOD", "approve fast ↑ · deny lots ↓")
             howLine("FED", "50K tokens = Lv up")
             howLine("ENERGY", "face-down naps refill")
-            howLine("TIP", "idle → sleep")
-            howLine("TIP", "press A to cycle screens")
-            howLine("TIP", "press B to flip pages")
+            howLine("SHAKE", "shake → dizzy")
+            howLine("IDLE", "no touch → sleep")
+            howLine("A", "cycle screens")
+            howLine("B", "flip pages")
             Spacer(minLength: 0)
         }
     }
