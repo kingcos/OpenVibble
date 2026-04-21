@@ -3,6 +3,8 @@ claude-desktop-buddy-main/
 
 # Xcode / Swift
 .build/
+build/
+**/build/
 DerivedData/
 *.xcworkspace/xcuserdata/
 *.xcodeproj/xcuserdata/
