@@ -694,7 +694,6 @@ private struct PetBody: View {
     let page: Int
 
     @AppStorage("buddy.petName") private var petName: String = "Buddy"
-    @AppStorage("buddy.ownerName") private var ownerName: String = ""
 
     static let pageCount = 2
 
@@ -718,9 +717,7 @@ private struct PetBody: View {
     }
 
     private var displayName: String {
-        let owner = ownerName.trimmingCharacters(in: .whitespacesAndNewlines)
-        let name = petName.isEmpty ? "Buddy" : petName
-        return owner.isEmpty ? name : "\(owner)'s \(name)"
+        petName.isEmpty ? "Buddy" : petName
     }
 
     private var statsPage: some View {
