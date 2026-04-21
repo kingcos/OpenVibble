@@ -1021,9 +1021,7 @@ private struct InfoBody: View {
         case "CREDITS": return [
             .body("info.credits.line1"),
             .body("info.credits.line2"),
-            .body("info.credits.line3"),
-            .body("info.credits.line4"),
-            .body("info.credits.line5")
+            .body("info.credits.line4")
         ]
         default: return []
         }

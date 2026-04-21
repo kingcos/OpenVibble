@@ -1023,18 +1023,17 @@
       }
     },
     "info.buttons.line5" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Log: show raw packets"
+            "value" : "LOG: show raw packets"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Log：查看原始数据包"
+            "value" : "日志：查看原始数据包"
           }
         }
       }
@@ -1244,7 +1243,6 @@
       }
     },
     "info.credits.line1" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1261,41 +1259,22 @@
       }
     },
     "info.credits.line2" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "anthropics/"
+            "value" : "anthropics/claude-desktop-buddy"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "anthropics/"
-          }
-        }
-      }
-    },
-    "info.credits.line3" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "  claude-desktop-buddy"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "  claude-desktop-buddy"
+            "value" : "anthropics/claude-desktop-buddy"
           }
         }
       }
     },
     "info.credits.line4" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1307,23 +1286,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "iOS 桥接：kingcos"
-          }
-        }
-      }
-    },
-    "info.credits.line5" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "MIT-licensed"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "MIT 许可"
           }
         }
       }
@@ -3141,18 +3103,17 @@
       }
     },
     "pet.reset" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Reset Pet Stats"
+            "value" : "Reset App to Defaults"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "重置宠物数据"
+            "value" : "恢复出厂设置"
           }
         }
       }
@@ -3162,13 +3123,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Reset stats to zero?"
+            "value" : "Reset app to defaults?"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "重置所有数据？"
+            "value" : "恢复出厂设置？"
           }
         }
       }
@@ -3178,13 +3139,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Reset All Stats"
+            "value" : "Reset App"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "确定重置"
+            "value" : "确定恢复"
           }
         }
       }
@@ -3194,13 +3155,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Approvals, denials, level, tokens, and nap time will all return to zero. This cannot be undone."
+            "value" : "All preferences, pet selection, cached stats, and the onboarding flag will be cleared. Installed pet packs are kept. The app will return to its first-launch state."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "允许/拒绝次数、等级、Token、午睡时长都会归零。此操作不可恢复。"
+            "value" : "所有偏好设置、宠物选择、缓存数据和引导状态都会清除，已安装的宠物包保留。应用会回到首次启动状态。"
           }
         }
       }
@@ -3308,18 +3269,17 @@
       }
     },
     "pet.stats.resetOk" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Stats reset."
+            "value" : "App reset to defaults."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "数据已重置。"
+            "value" : "已恢复出厂设置。"
           }
         }
       }

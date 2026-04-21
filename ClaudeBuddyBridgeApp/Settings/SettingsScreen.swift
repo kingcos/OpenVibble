@@ -61,7 +61,7 @@ struct SettingsScreen: View {
             titleVisibility: .visible
         ) {
             Button(role: .destructive) {
-                stats.reset()
+                performFactoryReset()
                 infoMessage = "pet.stats.resetOk"
             } label: { Text("pet.reset.doIt") }
             Button(role: .cancel) {} label: { Text("common.cancel") }
@@ -340,6 +340,24 @@ struct SettingsScreen: View {
         let catalog = PersonaCatalog(rootURL: model.charactersRootURL)
         installed = catalog.listInstalled()
         selection = PersonaSelection.load()
+    }
+
+    private func performFactoryReset() {
+        let defaults = UserDefaults.standard
+        for key in [
+            "buddy.hasOnboarded",
+            "buddy.notificationsEnabled",
+            "buddy.liveActivityEnabled",
+            "buddy.showScanline",
+            "bridge.autoStartBLE",
+            "bridge.displayName",
+            "buddy.petName"
+        ] {
+            defaults.removeObject(forKey: key)
+        }
+        stats.reset()
+        PersonaSelection.save(PersonaSelection.defaultSpecies)
+        selection = PersonaSelection.defaultSpecies
     }
 
     @MainActor
