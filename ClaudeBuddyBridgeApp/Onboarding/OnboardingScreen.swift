@@ -295,13 +295,30 @@ struct OnboardingScreen: View {
     // MARK: - Actions
 
     private func requestBluetooth() {
-        model.requestBluetoothAuthorization()
+        switch model.bluetoothAuthorization {
+        case .denied, .restricted:
+            // Already refused — only way forward is the system Settings app.
+            openAppSettings()
+        default:
+            model.requestBluetoothAuthorization()
+        }
     }
 
     private func requestNotification() {
-        Task {
-            _ = await BuddyNotificationCenter.shared.requestAuthorizationIfNeeded()
-            await refreshNotificationStatus()
+        switch notificationStatus {
+        case .denied:
+            openAppSettings()
+        default:
+            Task {
+                _ = await BuddyNotificationCenter.shared.requestAuthorizationIfNeeded()
+                await refreshNotificationStatus()
+            }
+        }
+    }
+
+    private func openAppSettings() {
+        if let url = URL(string: UIApplication.openSettingsURLString) {
+            UIApplication.shared.open(url)
         }
     }
 
