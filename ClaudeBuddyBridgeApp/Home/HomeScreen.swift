@@ -37,7 +37,6 @@ struct HomeScreen: View {
     @State private var infoPage: Int = 0
     @State private var showSettings = false
     @State private var showLogs = false
-    @State private var ledPhase: Bool = false
     @State private var promptArrivedAt: Date?
     @State private var promptTick: Int = 0
 
@@ -48,7 +47,6 @@ struct HomeScreen: View {
     @AppStorage("buddy.showScanline") private var showScanline = true
 
     private let appStart = Date()
-    private let ledTimer = Timer.publish(every: 0.9, on: .main, in: .common).autoconnect()
     private let promptTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
 
     enum DisplayMode: Int {
@@ -119,7 +117,6 @@ struct HomeScreen: View {
                 )
             }
         }
-        .onReceive(ledTimer) { _ in ledPhase.toggle() }
         .onReceive(promptTimer) { _ in
             if promptArrivedAt != nil { promptTick &+= 1 }
         }
@@ -157,12 +154,7 @@ struct HomeScreen: View {
 
     private var statusIndicator: some View {
         HStack(spacing: 8) {
-            Circle()
-                .fill(statusColor)
-                .frame(width: 9, height: 9)
-                .shadow(color: statusColor.opacity(0.8), radius: ledPhase ? 6 : 2)
-                .opacity(ledPhase ? 1 : 0.55)
-                .animation(.easeInOut(duration: 0.9), value: ledPhase)
+            BreathingLED(color: statusColor)
             Text(statusLabel)
                 .font(TerminalStyle.mono(11, weight: .semibold))
                 .foregroundStyle(TerminalStyle.ink)
@@ -467,6 +459,23 @@ private struct HomeBuddyRenderer: View {
         let catalog = PersonaCatalog(rootURL: model.charactersRootURL)
         installed = catalog.listInstalled()
         selection = PersonaSelection.load()
+    }
+}
+
+// MARK: - Breathing LED
+
+private struct BreathingLED: View {
+    let color: Color
+    @State private var glow = false
+
+    var body: some View {
+        Circle()
+            .fill(color)
+            .frame(width: 10, height: 10)
+            .shadow(color: color.opacity(glow ? 0.85 : 0.25), radius: glow ? 6 : 2)
+            .opacity(glow ? 1 : 0.55)
+            .animation(.easeInOut(duration: 1.1).repeatForever(autoreverses: true), value: glow)
+            .onAppear { glow = true }
     }
 }
 
