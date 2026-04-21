@@ -335,6 +335,16 @@ struct OnboardingScreen: View {
     }
 
     private func openSettings() {
+        // Seed the clipboard so the user can paste the name right into the
+        // iPhone name field without having to jump back to the app.
+        UIPasteboard.general.string = suggestedName
+        copied = true
+        copyResetTask?.cancel()
+        copyResetTask = Task { @MainActor in
+            try? await Task.sleep(for: .seconds(2))
+            guard !Task.isCancelled else { return }
+            copied = false
+        }
         acknowledgeRename()
         if let url = URL(string: "App-prefs:root=General&path=About"),
            UIApplication.shared.canOpenURL(url) {
