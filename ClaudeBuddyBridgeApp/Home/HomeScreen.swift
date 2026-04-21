@@ -186,11 +186,13 @@ struct HomeScreen: View {
                         .background(Color.black.opacity(0.5), in: Capsule())
                         .overlay(Capsule().stroke(TerminalStyle.inkDim.opacity(0.35), lineWidth: 1))
                     Spacer()
-                    Text(petHeaderTrailing)
-                        .font(TerminalStyle.mono(10))
-                        .foregroundStyle(TerminalStyle.inkDim)
-                        .lineLimit(1)
-                        .truncationMode(.tail)
+                    if mode == .normal {
+                        Text(petHeaderName)
+                            .font(TerminalStyle.mono(10))
+                            .foregroundStyle(TerminalStyle.inkDim)
+                            .lineLimit(1)
+                            .truncationMode(.tail)
+                    }
                 }
                 .padding(.horizontal, 12)
                 .padding(.top, 6)
@@ -326,16 +328,6 @@ struct HomeScreen: View {
         let trimmedOwner = ownerName.trimmingCharacters(in: .whitespacesAndNewlines)
         let name = petName.isEmpty ? "Buddy" : petName
         return trimmedOwner.isEmpty ? name : "\(trimmedOwner)'s \(name)"
-    }
-
-    /// Pet-area header trailing text — page indicator in PET/INFO, pet name in NORMAL.
-    /// Matches h5-demo's `sim.petPage + 1}/2` pattern.
-    private var petHeaderTrailing: String {
-        switch mode {
-        case .normal: return petHeaderName
-        case .pet: return "\(petPage + 1)/\(PetBody.pageCount)"
-        case .info: return "\(infoPage + 1)/\(InfoBody.pages.count)"
-        }
     }
 
     private var effectiveDisplayName: String? {
@@ -709,12 +701,34 @@ private struct PetBody: View {
     @ObservedObject var stats: PersonaStatsStore
     let page: Int
 
+    @AppStorage("buddy.petName") private var petName: String = "Buddy"
+    @AppStorage("buddy.ownerName") private var ownerName: String = ""
+
     static let pageCount = 2
 
     var body: some View {
-        Group {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(alignment: .firstTextBaseline) {
+                Text(displayName)
+                    .font(TerminalStyle.mono(12, weight: .semibold))
+                    .foregroundStyle(TerminalStyle.ink)
+                    .tracking(1)
+                    .lineLimit(1)
+                    .truncationMode(.tail)
+                Spacer()
+                Text("\(page + 1)/\(Self.pageCount)")
+                    .font(TerminalStyle.mono(11))
+                    .foregroundStyle(TerminalStyle.inkDim)
+            }
+            Divider().background(TerminalStyle.lcdDivider)
             if page == 0 { statsPage } else { howPage }
         }
+    }
+
+    private var displayName: String {
+        let owner = ownerName.trimmingCharacters(in: .whitespacesAndNewlines)
+        let name = petName.isEmpty ? "Buddy" : petName
+        return owner.isEmpty ? name : "\(owner)'s \(name)"
     }
 
     private var statsPage: some View {
@@ -825,11 +839,22 @@ private struct InfoBody: View {
 
     var body: some View {
         let title = Self.pages[page]
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(alignment: .firstTextBaseline) {
+                Text("Info")
+                    .font(TerminalStyle.mono(11, weight: .semibold))
+                    .foregroundStyle(TerminalStyle.ink)
+                    .tracking(1)
+                Spacer()
+                Text("\(page + 1)/\(Self.pages.count)")
+                    .font(TerminalStyle.mono(11))
+                    .foregroundStyle(TerminalStyle.inkDim)
+            }
             Text(title)
-                .font(TerminalStyle.mono(13, weight: .bold))
-                .tracking(2)
+                .font(TerminalStyle.mono(15, weight: .heavy))
+                .tracking(3)
                 .foregroundStyle(TerminalStyle.accent)
+                .shadow(color: TerminalStyle.accent.opacity(0.35), radius: 0, x: 1, y: 1)
             Divider().background(TerminalStyle.lcdDivider)
 
             VStack(alignment: .leading, spacing: 4) {
