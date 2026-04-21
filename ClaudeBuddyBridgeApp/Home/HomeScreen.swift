@@ -555,6 +555,7 @@ private struct NormalBody: View {
                 Text(msg)
                     .font(TerminalStyle.mono(14, weight: .bold))
                     .foregroundStyle(TerminalStyle.ink)
+                    .shadow(color: TerminalStyle.ink.opacity(0.35), radius: 3)
                     .lineLimit(2)
                     .truncationMode(.tail)
                 Text(spinGlyphs[spinPhase])
