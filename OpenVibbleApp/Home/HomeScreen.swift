@@ -31,6 +31,7 @@ struct HomeScreen: View {
     @ObservedObject var model: BridgeAppModel
     @ObservedObject var persona: PersonaController
     @ObservedObject var stats: PersonaStatsStore
+    @EnvironmentObject private var navigation: NavigationCoordinator
 
     @State private var mode: DisplayMode = .normal
     @State private var petPage: Int = 0
@@ -138,6 +139,14 @@ struct HomeScreen: View {
             if sent, frozenWaitedSeconds == nil {
                 frozenWaitedSeconds = promptWaitedSeconds
             }
+        }
+        .onChange(of: navigation.pendingRoute) { _, route in
+            guard let route else { return }
+            switch route {
+            case .pet:
+                withAnimation { mode = .pet }
+            }
+            navigation.pendingRoute = nil
         }
     }
 

@@ -122,6 +122,50 @@ final class BridgeAppModel: ObservableObject {
                 _ = self.peripheral.sendLine(response)
             }
         }
+
+        subscribeLiveActivityDecisions()
+    }
+
+    /// Listens for Approve/Deny decisions posted by the Live Activity AppIntent
+    /// (running in the widget process). We register a Darwin notification so we
+    /// hear it regardless of app foreground state, then drain the shared
+    /// `UserDefaults` record on the main actor.
+    private func subscribeLiveActivityDecisions() {
+        let rawName = LiveActivitySharedStore.decisionChangedDarwinName
+        let observer = Unmanaged.passUnretained(self).toOpaque()
+        CFNotificationCenterAddObserver(
+            CFNotificationCenterGetDarwinNotifyCenter(),
+            observer,
+            { _, _, _, _, _ in
+                Task { @MainActor in
+                    NotificationCenter.default.post(
+                        name: .liveActivityDecisionReceived,
+                        object: nil
+                    )
+                }
+            },
+            rawName as CFString,
+            nil,
+            .deliverImmediately
+        )
+
+        NotificationCenter.default.publisher(for: .liveActivityDecisionReceived)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.drainPendingLiveActivityDecision()
+            }
+            .store(in: &cancellables)
+    }
+
+    private func drainPendingLiveActivityDecision() {
+        guard let record = LiveActivitySharedStore.takePendingDecision() else { return }
+        guard let current = prompt, current.id == record.id else {
+            // Stale or already-answered prompt — just refresh the island.
+            pushLiveActivity()
+            return
+        }
+        let decision: PermissionDecision = record.decision == .approve ? .once : .deny
+        respondPermission(decision)
     }
 
     func start(displayName: String? = nil, includeServiceUUIDInAdvertisement: Bool = true) {
@@ -238,13 +282,15 @@ final class BridgeAppModel: ObservableObject {
         let state = connectionState
         let snap = snapshot
         let hasPrompt = prompt != nil
+        let promptID = prompt?.id
         Task {
             await liveActivityManager.startOrUpdate(
                 state: state,
                 snapshot: snap,
                 hasPrompt: hasPrompt,
                 personaSlug: slug,
-                messagePreview: preview
+                messagePreview: preview,
+                promptID: promptID
             )
         }
     }
@@ -324,4 +370,8 @@ final class BridgeAppModel: ObservableObject {
         }
         return UserDefaults.standard.bool(forKey: "buddy.liveActivityEnabled")
     }
+}
+
+extension Notification.Name {
+    static let liveActivityDecisionReceived = Notification.Name("kingcos.me.openvibble.liveActivityDecisionReceived")
 }

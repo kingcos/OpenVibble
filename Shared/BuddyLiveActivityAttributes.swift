@@ -9,6 +9,7 @@ struct BuddyLiveActivityAttributes: ActivityAttributes {
         var promptPending: Bool
         var personaSlug: String
         var messagePreview: String?
+        var promptID: String?
 
         init(
             connection: String,
@@ -16,7 +17,8 @@ struct BuddyLiveActivityAttributes: ActivityAttributes {
             waiting: Int,
             promptPending: Bool,
             personaSlug: String = "idle",
-            messagePreview: String? = nil
+            messagePreview: String? = nil,
+            promptID: String? = nil
         ) {
             self.connection = connection
             self.running = running
@@ -24,6 +26,7 @@ struct BuddyLiveActivityAttributes: ActivityAttributes {
             self.promptPending = promptPending
             self.personaSlug = personaSlug
             self.messagePreview = messagePreview
+            self.promptID = promptID
         }
     }
 

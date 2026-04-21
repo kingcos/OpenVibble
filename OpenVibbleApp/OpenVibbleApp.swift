@@ -7,6 +7,7 @@ struct OpenVibbleApp: App {
     @StateObject private var model: BridgeAppModel
     @StateObject private var persona = PersonaController()
     @StateObject private var motion = MotionSensor()
+    @StateObject private var navigation = NavigationCoordinator()
     @AppStorage("buddy.hasOnboarded") private var hasOnboarded: Bool = false
 
     init() {
@@ -20,6 +21,7 @@ struct OpenVibbleApp: App {
             Group {
                 if hasOnboarded {
                     HomeScreen(model: model, persona: persona, stats: statsStore)
+                        .environmentObject(navigation)
                 } else {
                     OnboardingScreen(model: model) {
                         hasOnboarded = true
@@ -31,6 +33,9 @@ struct OpenVibbleApp: App {
                 motion.start()
             }
             .onDisappear { motion.stop() }
+            .onOpenURL { url in
+                navigation.handle(url: url)
+            }
         }
     }
 }

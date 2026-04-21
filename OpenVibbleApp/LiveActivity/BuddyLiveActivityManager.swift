@@ -12,7 +12,8 @@ actor BuddyLiveActivityManager {
         snapshot: BridgeSnapshot,
         hasPrompt: Bool,
         personaSlug: String,
-        messagePreview: String?
+        messagePreview: String?,
+        promptID: String?
     ) async {
         guard ActivityAuthorizationInfo().areActivitiesEnabled else { return }
 
@@ -22,7 +23,8 @@ actor BuddyLiveActivityManager {
             waiting: snapshot.waiting,
             promptPending: hasPrompt,
             personaSlug: personaSlug,
-            messagePreview: messagePreview
+            messagePreview: messagePreview,
+            promptID: promptID
         )
 
         let wasNewPrompt = hasPrompt && !lastHadPrompt
@@ -43,7 +45,7 @@ actor BuddyLiveActivityManager {
             return
         }
 
-        let attributes = BuddyLiveActivityAttributes(title: "OpenVibble")
+        let attributes = BuddyLiveActivityAttributes(title: String(localized: "live.title"))
         do {
             activity = try Activity.request(
                 attributes: attributes,
@@ -57,12 +59,13 @@ actor BuddyLiveActivityManager {
     func end() async {
         guard let activity else { return }
         let final = BuddyLiveActivityAttributes.ContentState(
-            connection: "Offline",
+            connection: String(localized: "live.status.offline"),
             running: 0,
             waiting: 0,
             promptPending: false,
             personaSlug: "sleep",
-            messagePreview: nil
+            messagePreview: nil,
+            promptID: nil
         )
         await activity.end(ActivityContent(state: final, staleDate: nil), dismissalPolicy: .immediate)
         self.activity = nil
@@ -72,11 +75,11 @@ actor BuddyLiveActivityManager {
     private func connectionTitle(for state: NUSConnectionState) -> String {
         switch state {
         case .stopped:
-            return "Stopped"
+            return String(localized: "live.connection.stopped")
         case .advertising:
-            return "Advertising"
+            return String(localized: "live.connection.advertising")
         case .connected:
-            return "Connected"
+            return String(localized: "live.connection.connected")
         }
     }
 }
