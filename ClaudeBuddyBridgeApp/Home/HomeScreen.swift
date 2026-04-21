@@ -490,6 +490,10 @@ private struct HomeBuddyRenderer: View {
                     PersonaSelection.save(selection)
                 }
             }
+            .onReceive(NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)) { _ in
+                let current = PersonaSelection.load()
+                if current != selection { selection = current }
+            }
     }
 
     @ViewBuilder
