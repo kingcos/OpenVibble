@@ -71,7 +71,7 @@ public struct BridgeSnapshot: Equatable, Sendable {
         total: 0,
         running: 0,
         waiting: 0,
-        msg: "未连接 Claude Desktop",
+        msg: "",
         entries: [],
         tokens: 0,
         tokensToday: 0,
