@@ -4,7 +4,7 @@ CONFIGURATION := Debug
 SIMULATOR_NAME ?= iPhone 17
 DESTINATION := platform=iOS Simulator,name=$(SIMULATOR_NAME)
 GENERIC_DESTINATION := generic/platform=iOS Simulator
-PACKAGE_DIR := Packages/ClaudeBuddyKit
+PACKAGE_DIR := Packages/OpenVibbleKit
 
 .PHONY: bootstrap build test run-sim clean
 

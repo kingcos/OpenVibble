@@ -2,7 +2,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "ClaudeBuddyKit",
+    name: "OpenVibbleKit",
     platforms: [
         .iOS(.v18),
         .macOS(.v14)

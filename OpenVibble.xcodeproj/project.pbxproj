@@ -84,11 +84,11 @@
 		77B3453FEFE9D00261494A6F /* OpenVibbleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenVibbleApp.swift; sourceTree = "<group>"; };
 		7AA1CBCBA3072723280C1D62 /* BuddyLiveActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddyLiveActivityManager.swift; sourceTree = "<group>"; };
 		91F3C187CB72273ADE7F62D1 /* BuiltinCharacters */ = {isa = PBXFileReference; lastKnownFileType = folder; name = BuiltinCharacters; path = OpenVibbleApp/Resources/BuiltinCharacters; sourceTree = SOURCE_ROOT; };
+		AEE80BFE42253DF8A0777FC9 /* OpenVibbleKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = OpenVibbleKit; path = Packages/OpenVibbleKit; sourceTree = SOURCE_ROOT; };
 		B56B396C1C7E39F53D657B11 /* OpenVibbleApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = OpenVibbleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B99022B5E05DD0DBD7335BEC /* MotionSensor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionSensor.swift; sourceTree = "<group>"; };
 		CC3459B4E6022FBD263A1B98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D899283E258F52E976B88875 /* BuddyNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddyNotificationCenter.swift; sourceTree = "<group>"; };
-		E98F19A556484DC61C68B6C4 /* ClaudeBuddyKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ClaudeBuddyKit; path = Packages/ClaudeBuddyKit; sourceTree = SOURCE_ROOT; };
 		F2382F18941BE0950209AA0E /* BridgeAppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BridgeAppModel.swift; sourceTree = "<group>"; };
 		F436D96AA5667C59FFFAD4EE /* TerminalStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalStyle.swift; sourceTree = "<group>"; };
 		FA740647AA30E09599D13094 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -212,7 +212,7 @@
 		8F16019EAA9302DD5B1F9576 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				E98F19A556484DC61C68B6C4 /* ClaudeBuddyKit */,
+				AEE80BFE42253DF8A0777FC9 /* OpenVibbleKit */,
 			);
 			path = Packages;
 			sourceTree = "<group>";
@@ -346,7 +346,7 @@
 			mainGroup = 8051F88B5E19FE291CA78B0B;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				8D18EB52EA6D5217327FFB11 /* XCLocalSwiftPackageReference "Packages/ClaudeBuddyKit" */,
+				FDA7D9305826DD785BB8075C /* XCLocalSwiftPackageReference "Packages/OpenVibbleKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 2F23F08AE4935659630B80B3 /* Products */;
@@ -727,9 +727,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		8D18EB52EA6D5217327FFB11 /* XCLocalSwiftPackageReference "Packages/ClaudeBuddyKit" */ = {
+		FDA7D9305826DD785BB8075C /* XCLocalSwiftPackageReference "Packages/OpenVibbleKit" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = Packages/ClaudeBuddyKit;
+			relativePath = Packages/OpenVibbleKit;
 		};
 /* End XCLocalSwiftPackageReference section */
 

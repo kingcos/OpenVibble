@@ -19,8 +19,8 @@ settings:
     TARGETED_DEVICE_FAMILY: "1,2"
     IPHONEOS_DEPLOYMENT_TARGET: 18.0
 packages:
-  ClaudeBuddyKit:
-    path: Packages/ClaudeBuddyKit
+  OpenVibbleKit:
+    path: Packages/OpenVibbleKit
 targets:
   OpenVibbleApp:
     type: application
@@ -33,19 +33,19 @@ targets:
         type: folder
         buildPhase: resources
     dependencies:
-      - package: ClaudeBuddyKit
+      - package: OpenVibbleKit
         product: BridgeRuntime
-      - package: ClaudeBuddyKit
+      - package: OpenVibbleKit
         product: NUSPeripheral
-      - package: ClaudeBuddyKit
+      - package: OpenVibbleKit
         product: BuddyStorage
-      - package: ClaudeBuddyKit
+      - package: OpenVibbleKit
         product: BuddyProtocol
-      - package: ClaudeBuddyKit
+      - package: OpenVibbleKit
         product: BuddyPersona
-      - package: ClaudeBuddyKit
+      - package: OpenVibbleKit
         product: BuddyStats
-      - package: ClaudeBuddyKit
+      - package: OpenVibbleKit
         product: BuddyUI
       - target: OpenVibbleLiveActivity
         embed: true
