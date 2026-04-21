@@ -66,9 +66,10 @@ public struct HeartbeatSnapshot: Codable, Equatable, Sendable {
     public let tokens: Int?
     public let tokensToday: Int?
     public let prompt: HeartbeatPrompt?
+    public let completed: Bool?
 
     enum CodingKeys: String, CodingKey {
-        case total, running, waiting, msg, entries, tokens, prompt
+        case total, running, waiting, msg, entries, tokens, prompt, completed
         case tokensToday = "tokens_today"
     }
 
@@ -80,7 +81,8 @@ public struct HeartbeatSnapshot: Codable, Equatable, Sendable {
         entries: [String],
         tokens: Int?,
         tokensToday: Int?,
-        prompt: HeartbeatPrompt?
+        prompt: HeartbeatPrompt?,
+        completed: Bool? = nil
     ) {
         self.total = total
         self.running = running
@@ -90,6 +92,7 @@ public struct HeartbeatSnapshot: Codable, Equatable, Sendable {
         self.tokens = tokens
         self.tokensToday = tokensToday
         self.prompt = prompt
+        self.completed = completed
     }
 }
 
@@ -208,6 +211,16 @@ public struct CharEndCommand: Codable, Equatable, Sendable {
     }
 }
 
+public struct SpeciesCommand: Codable, Equatable, Sendable {
+    public let cmd: String
+    public let idx: Int
+
+    public init(idx: Int) {
+        self.cmd = "species"
+        self.idx = idx
+    }
+}
+
 public enum BridgeCommand: Equatable, Sendable {
     case status
     case name(String)
@@ -219,6 +232,7 @@ public enum BridgeCommand: Equatable, Sendable {
     case fileEnd
     case charEnd
     case permission(id: String, decision: PermissionDecision)
+    case species(idx: Int)
     case unknown(String)
 }
 

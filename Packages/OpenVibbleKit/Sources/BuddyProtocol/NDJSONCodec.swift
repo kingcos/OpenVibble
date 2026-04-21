@@ -91,6 +91,14 @@ public enum NDJSONCodec {
             let decisionRaw = object["decision"] as? String ?? "deny"
             let decision = PermissionDecision(rawValue: decisionRaw) ?? .deny
             return .command(.permission(id: object["id"] as? String ?? "", decision: decision))
+        case "species":
+            // Accept both Int and numeric-string idx for resilience; 0xFF (255) = GIF sentinel.
+            let idx: Int
+            if let n = object["idx"] as? Int { idx = n }
+            else if let d = object["idx"] as? Double { idx = Int(d) }
+            else if let s = object["idx"] as? String, let n = Int(s) { idx = n }
+            else { idx = -1 }
+            return .command(.species(idx: idx))
         default:
             return .command(.unknown(cmd))
         }

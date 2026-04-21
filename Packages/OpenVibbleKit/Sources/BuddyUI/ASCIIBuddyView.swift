@@ -4,19 +4,28 @@ import BuddyPersona
 public struct ASCIIBuddyView: View {
     public let state: PersonaState
     public let startDate: Date
+    public let speciesIdx: Int?
 
-    public init(state: PersonaState, startDate: Date = .now) {
+    public init(state: PersonaState, startDate: Date = .now, speciesIdx: Int? = nil) {
         self.state = state
         self.startDate = startDate
+        self.speciesIdx = speciesIdx
     }
 
     public var body: some View {
         TimelineView(.periodic(from: startDate, by: 0.2)) { ctx in
             let tick = Int(ctx.date.timeIntervalSince(startDate) * 5)
-            let animation = CatSpecies.animation(for: state)
+            let animation = resolveAnimation()
             let frame = animation.frame(at: tick)
             renderFrame(frame, state: state, tick: tick)
         }
+    }
+
+    private func resolveAnimation() -> ASCIIAnimation {
+        if let idx = speciesIdx {
+            return SpeciesRegistry.animation(forIdx: idx, state: state)
+        }
+        return CatSpecies.animation(for: state)
     }
 
     @ViewBuilder

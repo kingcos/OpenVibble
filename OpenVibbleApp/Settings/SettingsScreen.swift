@@ -321,6 +321,11 @@ struct SettingsScreen: View {
         switch selection {
         case .asciiCat:
             return String(localized: "species.ascii.cat")
+        case .asciiSpecies(let idx):
+            if let name = PersonaSpeciesCatalog.name(at: idx) {
+                return "ASCII \(name)"
+            }
+            return "ASCII #\(idx)"
         case .builtin(let name), .installed(let name):
             return name.capitalized
         }

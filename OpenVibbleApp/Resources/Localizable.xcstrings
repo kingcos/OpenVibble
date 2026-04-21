@@ -208,6 +208,22 @@
         }
       }
     },
+    "home.power" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Power"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "电源"
+          }
+        }
+      }
+    },
     "home.log.copy" : {
       "extractionState" : "stale",
       "localizations" : {

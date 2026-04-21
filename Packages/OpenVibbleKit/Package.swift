@@ -30,7 +30,7 @@ let package = Package(
         ),
         .target(
             name: "BridgeRuntime",
-            dependencies: ["BuddyProtocol", "BuddyStorage"]
+            dependencies: ["BuddyProtocol", "BuddyStorage", "BuddyPersona"]
         ),
         .target(
             name: "BuddyPersona",
@@ -54,7 +54,7 @@ let package = Package(
         ),
         .testTarget(
             name: "BridgeRuntimeTests",
-            dependencies: ["BridgeRuntime", "BuddyStorage", "BuddyProtocol"]
+            dependencies: ["BridgeRuntime", "BuddyStorage", "BuddyProtocol", "BuddyPersona"]
         ),
         .testTarget(
             name: "BuddyPersonaTests",

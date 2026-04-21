@@ -33,6 +33,11 @@ final class BridgeAppModel: ObservableObject {
     @Published private(set) var lastInstalledCharacter: String?
     @Published private(set) var recentLevelUp: Bool = false
     @Published private(set) var lastQuickApprovalAt: Date?
+    /// Bumped each time a heartbeat with `completed: true` arrives. Drives a
+    /// 3-second celebrate animation via `PersonaController` — matches the h5
+    /// demo's `triggerOneShot("celebrate", 3000)` and the firmware's
+    /// `P_CELEBRATE` state derivation.
+    @Published private(set) var lastCompletedAt: Date?
     /// True once the user has responded to the current prompt but the desktop
     /// has not yet cleared it from the next heartbeat. Used by the prompt
     /// panel to swap the "A approve / B deny" hint for a "SENT" state so
@@ -63,6 +68,22 @@ final class BridgeAppModel: ObservableObject {
             Task { @MainActor [weak self] in
                 self?.lastInstalledCharacter = name
                 self?.recordEvent("系统 已安装宠物：\(name)")
+            }
+        }
+
+        runtime.onSpeciesChanged = { [weak self] idx in
+            Task { @MainActor [weak self] in
+                if idx == PersonaSpeciesCatalog.gifSentinel {
+                    self?.recordEvent("系统 切换宠物 → GIF")
+                } else if let name = PersonaSpeciesCatalog.name(at: idx) {
+                    self?.recordEvent("系统 切换宠物 → \(name) (idx=\(idx))")
+                }
+            }
+        }
+
+        runtime.onTaskCompleted = { [weak self] in
+            Task { @MainActor [weak self] in
+                self?.lastCompletedAt = Date()
             }
         }
 
@@ -238,6 +259,13 @@ final class BridgeAppModel: ObservableObject {
         diagnosticLogs.removeAll()
         parsedEntries.removeAll()
         snapshot.entries.removeAll()
+    }
+
+    /// Records a user-visible device-menu interaction (MENU / SETTINGS /
+    /// RESET apply) into the recent event log. Menu state itself is local —
+    /// this is the only surface the user has to see what changed.
+    func logDeviceMenuEvent(_ description: String) {
+        recordEvent("设备 \(description)")
     }
 
     /// Incoming heartbeat `entries` arrive newest-first. Walk from oldest to

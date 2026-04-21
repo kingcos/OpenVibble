@@ -20,10 +20,12 @@ final class PersonaController: ObservableObject {
     // Overlays (time-gated).
     private var shakeUntil: Date?
     private var heartUntil: Date?
+    private var celebrateUntil: Date?
     private var faceDownSince: Date?
 
     private let shakeDuration: TimeInterval = 2
     private let heartDuration: TimeInterval = 2
+    private let celebrateDuration: TimeInterval = 3
     private let faceDownSleepDelay: TimeInterval = 3
 
     func bind(to model: BridgeAppModel, motion: MotionSensor, stats: PersonaStatsStore) {
@@ -48,6 +50,19 @@ final class PersonaController: ObservableObject {
             self.recompute()
         }
         .store(in: &cancellables)
+
+        // Heartbeat `completed: true` → 3s celebrate overlay. Matches firmware
+        // P_CELEBRATE state derivation (data.h / main.cpp) and h5 demo's
+        // triggerOneShot("celebrate", 3000).
+        model.$lastCompletedAt
+            .compactMap { $0 }
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] at in
+                guard let self else { return }
+                self.celebrateUntil = at.addingTimeInterval(self.celebrateDuration)
+                self.recompute()
+            }
+            .store(in: &cancellables)
 
         motion.shakeSubject
             .receive(on: DispatchQueue.main)
@@ -97,6 +112,9 @@ final class PersonaController: ObservableObject {
         if let since = faceDownSince, now.timeIntervalSince(since) >= faceDownSleepDelay {
             state = .sleep; return
         }
+
+        if let until = celebrateUntil, now < until { state = .celebrate; return }
+        if celebrateUntil != nil { celebrateUntil = nil }
 
         if recentlyCompleted { state = .celebrate; return }
         if !connected { state = .idle; return }

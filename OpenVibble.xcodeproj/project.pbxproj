@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		039E4515822885B47C1B736F /* NavigationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF1D080F23F14DFD50B41E3D /* NavigationCoordinator.swift */; };
 		071D192A3A75DACF6FDA80E8 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF76EBF276FBAD084D5F62C /* HomeScreen.swift */; };
+		DE01CE0A0001A00000000001 /* DeviceMenuState.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE01CE0A0001A00000000002 /* DeviceMenuState.swift */; };
+		DE01CE0B0002B00000000001 /* DeviceMenuOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE01CE0B0002B00000000002 /* DeviceMenuOverlay.swift */; };
 		0D63FE5BE7ACEC64AFE7BD16 /* BuddyPersona in Frameworks */ = {isa = PBXBuildFile; productRef = E64C391922BD2DC616D86DB4 /* BuddyPersona */; };
 		0D8BA2FB4E2F32AAA97BB4B7 /* BridgeAppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2382F18941BE0950209AA0E /* BridgeAppModel.swift */; };
 		10C4552150806CEAB534178E /* OpenVibbleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3453FEFE9D00261494A6F /* OpenVibbleApp.swift */; };
@@ -106,6 +108,8 @@
 		F436D96AA5667C59FFFAD4EE /* TerminalStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalStyle.swift; sourceTree = "<group>"; };
 		FA740647AA30E09599D13094 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FAF76EBF276FBAD084D5F62C /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
+		DE01CE0A0001A00000000002 /* DeviceMenuState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMenuState.swift; sourceTree = "<group>"; };
+		DE01CE0B0002B00000000002 /* DeviceMenuOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMenuOverlay.swift; sourceTree = "<group>"; };
 		FD1C9C966DB1D6C2C3E2D7C1 /* PersonaController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonaController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -231,6 +235,8 @@
 			isa = PBXGroup;
 			children = (
 				FAF76EBF276FBAD084D5F62C /* HomeScreen.swift */,
+				DE01CE0A0001A00000000002 /* DeviceMenuState.swift */,
+				DE01CE0B0002B00000000002 /* DeviceMenuOverlay.swift */,
 				3081794479729D37C708A0A4 /* SpeciesPickerSheet.swift */,
 			);
 			path = Home;
@@ -423,6 +429,8 @@
 				9F0FA349BABFFC3F2DD69485 /* BuddyLiveActivityManager.swift in Sources */,
 				C9AC58D301BD3C5F6DEA3BC2 /* BuddyNotificationCenter.swift in Sources */,
 				071D192A3A75DACF6FDA80E8 /* HomeScreen.swift in Sources */,
+				DE01CE0A0001A00000000001 /* DeviceMenuState.swift in Sources */,
+				DE01CE0B0002B00000000001 /* DeviceMenuOverlay.swift in Sources */,
 				EDEEE97570EC5BBAA12F0C4E /* LiveActivitySharedStore.swift in Sources */,
 				C5F0A7A39BC862623686EA6D /* MotionSensor.swift in Sources */,
 				039E4515822885B47C1B736F /* NavigationCoordinator.swift in Sources */,

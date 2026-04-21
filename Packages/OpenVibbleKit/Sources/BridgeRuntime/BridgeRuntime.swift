@@ -1,5 +1,6 @@
 import Foundation
 import BuddyProtocol
+import BuddyPersona
 import BuddyStorage
 
 public struct PromptRequest: Equatable, Sendable {
@@ -113,8 +114,11 @@ public final class BridgeRuntime {
     private var promptStorage: PromptRequest?
     private let transferStore: CharacterTransferStore
     private var lastStatusSample: StatusSample?
+    private let startDate = Date()
 
     public var onCharacterInstalled: ((String) -> Void)?
+    public var onSpeciesChanged: ((Int) -> Void)?
+    public var onTaskCompleted: (() -> Void)?
     public var charactersRootURL: URL { transferStore.charactersRootURL }
 
     public init(initialSnapshot: BridgeSnapshot = .empty, transferStore: CharacterTransferStore = CharacterTransferStore()) {
@@ -142,6 +146,9 @@ public final class BridgeRuntime {
                     promptStorage = PromptRequest(id: prompt.id, tool: prompt.tool ?? "", hint: prompt.hint ?? "")
                 } else {
                     promptStorage = nil
+                }
+                if heartbeat.completed == true {
+                    onTaskCompleted?()
                 }
                 return []
 
@@ -203,6 +210,27 @@ public final class BridgeRuntime {
         case .permission:
             return []
 
+        case .species(let idx):
+            if idx == PersonaSpeciesCatalog.gifSentinel {
+                // 0xFF = restore GIF; keep current PersonaSelection if it is already
+                // builtin/installed, otherwise fall back to default ascii cat.
+                let current = PersonaSelection.load()
+                switch current {
+                case .builtin, .installed:
+                    break
+                default:
+                    PersonaSelection.save(.asciiCat)
+                }
+                onSpeciesChanged?(idx)
+                return [encodeAck(BridgeAck(ack: "species", ok: true, n: 0))]
+            }
+            guard PersonaSpeciesCatalog.isValid(idx: idx) else {
+                return [encodeAck(BridgeAck(ack: "species", ok: false, n: 0, error: "invalid idx"))]
+            }
+            PersonaSelection.save(.asciiSpecies(idx: idx))
+            onSpeciesChanged?(idx)
+            return [encodeAck(BridgeAck(ack: "species", ok: true, n: 0))]
+
         case .unknown(let command):
             return [encodeAck(BridgeAck(ack: command, ok: false, n: 0, error: "unsupported command"))]
         }
@@ -237,6 +265,14 @@ public final class BridgeRuntime {
             level: Int(snapshotStorage.tokens / 50_000)
         )
 
+        // Session-scoped uptime (seconds since this BridgeRuntime started) —
+        // matches h5-demo's `performance.now()/1000` and firmware's
+        // `millis()/1000` semantics. Using ProcessInfo.systemUptime would
+        // return device boot uptime, which isn't what the Claude desktop
+        // expects for per-session stats.
+        let up = Int(Date().timeIntervalSince(startDate))
+        let (fsFree, fsTotal) = filesystemCapacity(at: transferStore.charactersRootURL)
+
         // iOS cannot enforce LE Secure Connections bonding via CoreBluetooth
         // Peripheral — report sec=false so the desktop knows transcripts are
         // unencrypted in this direction.
@@ -251,8 +287,10 @@ public final class BridgeRuntime {
                 "usb": .bool(battery.usb)
             ]),
             "sys": .object([
-                "up": .number(ProcessInfo.processInfo.systemUptime),
-                "heap": .number(0)
+                "up": .number(Double(up)),
+                "heap": .number(0),
+                "fsFree": .number(Double(fsFree)),
+                "fsTotal": .number(Double(fsTotal))
             ]),
             "stats": .object([
                 "appr": .number(Double(stats.approvals)),
@@ -261,6 +299,8 @@ public final class BridgeRuntime {
                 "nap": .number(Double(stats.napSeconds)),
                 "lvl": .number(Double(stats.level))
             ]),
+            // iOS-only extension. Firmware/h5 status payload doesn't include
+            // this, so Claude Desktop treats it as advisory.
             "xfer": .object([
                 "active": .bool(transfer.isActive),
                 "total": .number(Double(transfer.totalBytes)),
@@ -269,6 +309,19 @@ public final class BridgeRuntime {
         ]
 
         return BridgeAck(ack: "status", ok: true, n: 0, data: .object(payload))
+    }
+
+    private func filesystemCapacity(at url: URL) -> (free: Int64, total: Int64) {
+        let keys: Set<URLResourceKey> = [
+            .volumeAvailableCapacityForImportantUsageKey,
+            .volumeTotalCapacityKey
+        ]
+        guard let values = try? url.resourceValues(forKeys: keys) else {
+            return (0, 0)
+        }
+        let free = values.volumeAvailableCapacityForImportantUsage ?? 0
+        let total = Int64(values.volumeTotalCapacity ?? 0)
+        return (free, total)
     }
 
     private func encodeAck(_ ack: BridgeAck) -> String {

@@ -41,6 +41,7 @@ struct HomeScreen: View {
     @State private var promptArrivedAt: Date?
     @State private var promptTick: Int = 0
     @State private var frozenWaitedSeconds: Int?
+    @StateObject private var deviceMenu = DeviceMenuState()
 
     @AppStorage("bridge.displayName") private var persistedDisplayName = ""
     @AppStorage("bridge.autoStartBLE") private var autoStartBLE = true
@@ -84,6 +85,9 @@ struct HomeScreen: View {
                     petArea
                         .frame(maxWidth: .infinity)
                         .frame(height: petAreaHeight(in: proxy.size.height))
+                        // Brightness simulation — firmware dims backlight; we
+                        // overlay a black veil scaled by the stored level.
+                        .opacity(deviceMenu.brightnessMultiplier)
 
                     Divider()
                         .background(TerminalStyle.lcdDivider)
@@ -95,12 +99,26 @@ struct HomeScreen: View {
                         .padding(.top, 10)
                         .contentShape(Rectangle())
                         .gesture(horizontalSwipe)
+                        .opacity(deviceMenu.brightnessMultiplier)
 
                     bottomBar
                         .padding(.horizontal, 16)
                         .padding(.bottom, 14)
                         .padding(.top, 8)
                 }
+            }
+
+            // Device menu overlay (MENU / SETTINGS / RESET) — h5 parity,
+            // pure local state. Drawn above the LCD body but below the
+            // screen-off mask so power can still force a blackout.
+            if deviceMenu.isAnyMenuVisible {
+                DeviceMenuOverlay(state: deviceMenu)
+                    .transition(.opacity)
+            }
+
+            if deviceMenu.screenOff {
+                ScreenOffMask()
+                    .transition(.opacity)
             }
         }
         .preferredColorScheme(.dark)
@@ -299,14 +317,28 @@ struct HomeScreen: View {
             HandheldButton(
                 label: "A",
                 accent: TerminalStyle.good,
-                action: onPressA
+                action: onPressA,
+                longPressAction: onLongPressA
             )
             HandheldButton(
                 label: "B",
                 accent: TerminalStyle.bad,
-                action: onPressB
+                action: onPressB,
+                longPressAction: nil
             )
             Spacer(minLength: 0)
+            Button {
+                deviceMenu.toggleScreen()
+                UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
+            } label: {
+                Image(systemName: "power")
+                    .font(.system(size: 13, weight: .bold))
+                    .foregroundStyle(TerminalStyle.accentSoft)
+                    .frame(width: 36, height: 36)
+                    .background(TerminalStyle.lcdPanel.opacity(0.85), in: Circle())
+                    .overlay(Circle().stroke(TerminalStyle.inkDim.opacity(0.5), lineWidth: 1))
+            }
+            .accessibilityLabel(Text("home.power"))
             Button {
                 showLogs = true
             } label: {
@@ -333,6 +365,16 @@ struct HomeScreen: View {
 
     private func onPressA() {
         UIImpactFeedbackGenerator(style: .soft).impactOccurred()
+        // Device-menu state machine takes priority. Short-press A = wake /
+        // next item, mirroring h5-demo (h5-demo.html:998~1104).
+        if deviceMenu.screenOff {
+            deviceMenu.wakeScreen()
+            return
+        }
+        if deviceMenu.isAnyMenuVisible {
+            deviceMenu.advanceCursor()
+            return
+        }
         if mode == .normal, model.prompt != nil {
             // Ignore repeat taps after the first response — the desktop
             // hasn't cleared the prompt yet, so another send would double
@@ -348,8 +390,32 @@ struct HomeScreen: View {
         }
     }
 
+    private func onLongPressA() {
+        UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
+        // Long-press A always opens / backs out of the device menu tree,
+        // even when the screen is "off" (matches firmware wake + menu open
+        // on long-press).
+        if deviceMenu.screenOff { deviceMenu.wakeScreen() }
+        deviceMenu.toggleMenu()
+    }
+
     private func onPressB() {
         UIImpactFeedbackGenerator(style: .rigid).impactOccurred()
+        if deviceMenu.screenOff {
+            // h5 parity: any short-press wakes the screen.
+            deviceMenu.wakeScreen()
+            return
+        }
+        if deviceMenu.isAnyMenuVisible {
+            let description = deviceMenu.applyCurrentSelection(
+                cycleAsciiSpecies: AsciiPetCycler.next,
+                onReset: resetDeviceState,
+                onTurnOff: { deviceMenu.screenOff = true },
+                onDemo: {}
+            )
+            if let description { model.logDeviceMenuEvent(description) }
+            return
+        }
         if mode == .normal, model.prompt != nil {
             guard !model.responseSent else { return }
             model.respondPermission(.deny)
@@ -363,6 +429,20 @@ struct HomeScreen: View {
         case .normal:
             break
         }
+    }
+
+    /// RESET confirm: clear local snapshot/log/persona/menu state. Does NOT
+    /// touch iOS-native prefs (notifications, Live Activity) or unpair BLE.
+    private func resetDeviceState() {
+        model.clearLogs()
+        PersonaSelection.save(.asciiCat)
+        deviceMenu.brightness = 4
+        deviceMenu.sound = true
+        deviceMenu.bt = true
+        deviceMenu.wifi = false
+        deviceMenu.led = true
+        deviceMenu.hud = true
+        deviceMenu.clockRot = 0
     }
 
     private var horizontalSwipe: some Gesture {
@@ -513,6 +593,9 @@ private struct HomeBuddyRenderer: View {
         case .ascii:
             ASCIIBuddyView(state: persona.state)
                 .scaleEffect(0.95)
+        case .asciiSpecies(let idx):
+            ASCIIBuddyView(state: persona.state, speciesIdx: idx)
+                .scaleEffect(0.95)
         case .gif(let p):
             GIFView(persona: p, state: persona.state)
                 .aspectRatio(contentMode: .fit)
@@ -521,12 +604,14 @@ private struct HomeBuddyRenderer: View {
 
     private enum Resolved {
         case ascii
+        case asciiSpecies(idx: Int)
         case gif(InstalledPersona)
     }
 
     private func resolved() -> Resolved {
         switch selection {
         case .asciiCat: return .ascii
+        case .asciiSpecies(let idx): return .asciiSpecies(idx: idx)
         case .builtin(let n):
             if let m = builtin.first(where: { $0.name == n }) { return .gif(m) }
             return .ascii
@@ -566,25 +651,44 @@ private struct HandheldButton: View {
     let label: String
     let accent: Color
     let action: () -> Void
+    let longPressAction: (() -> Void)?
+
+    @GestureState private var isPressed = false
+
+    init(label: String, accent: Color, action: @escaping () -> Void, longPressAction: (() -> Void)? = nil) {
+        self.label = label
+        self.accent = accent
+        self.action = action
+        self.longPressAction = longPressAction
+    }
 
     var body: some View {
-        Button(action: action) {
-            Text(label)
-                .font(.system(size: 18, weight: .heavy, design: .rounded))
-                .foregroundStyle(.white)
-                .frame(width: 54, height: 54)
-                .background(
-                    LinearGradient(
-                        colors: [accent.opacity(0.95), accent.opacity(0.75)],
-                        startPoint: .top,
-                        endPoint: .bottom
-                    ),
-                    in: Circle()
-                )
-                .overlay(Circle().stroke(Color.black.opacity(0.6), lineWidth: 2))
-                .shadow(color: accent.opacity(0.5), radius: 6, x: 0, y: 4)
-        }
-        .buttonStyle(PressedScaleStyle())
+        let face = Text(label)
+            .font(.system(size: 18, weight: .heavy, design: .rounded))
+            .foregroundStyle(.white)
+            .frame(width: 54, height: 54)
+            .background(
+                LinearGradient(
+                    colors: [accent.opacity(0.95), accent.opacity(0.75)],
+                    startPoint: .top,
+                    endPoint: .bottom
+                ),
+                in: Circle()
+            )
+            .overlay(Circle().stroke(Color.black.opacity(0.6), lineWidth: 2))
+            .shadow(color: accent.opacity(0.5), radius: 6, x: 0, y: 4)
+            .scaleEffect(isPressed ? 0.92 : 1)
+            .animation(.easeOut(duration: 0.15), value: isPressed)
+
+        return face
+            .contentShape(Circle())
+            .gesture(
+                // LongPress evaluated first: if it hits 0.6s, tap is
+                // suppressed; if user releases early it fails and tap fires.
+                LongPressGesture(minimumDuration: 0.6)
+                    .onEnded { _ in longPressAction?() }
+                    .exclusively(before: TapGesture().onEnded { action() })
+            )
     }
 }
 
