@@ -46,9 +46,6 @@
         }
       }
     },
-    "auto-advertise" : {
-
-    },
     "B" : {
 
     },
@@ -185,9 +182,6 @@
           }
         }
       }
-    },
-    "github →" : {
-
     },
     "home.a11y.choosePet" : {
       "extractionState" : "stale",
@@ -2008,9 +2002,6 @@
         }
       }
     },
-    "notifications" : {
-
-    },
     "onboarding.cta.enter" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -3353,9 +3344,6 @@
         }
       }
     },
-    "scanline" : {
-
-    },
     "settings.about.app" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -3458,6 +3446,38 @@
         }
       }
     },
+    "settings.autoAdvertise" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auto-advertise"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自动广播"
+          }
+        }
+      }
+    },
+    "settings.github" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GitHub →"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GitHub →"
+          }
+        }
+      }
+    },
     "settings.guide.show" : {
       "localizations" : {
         "en" : {
@@ -3487,6 +3507,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "开启本地通知"
+          }
+        }
+      }
+    },
+    "settings.notifications.label" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifications"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通知"
           }
         }
       }
@@ -3694,6 +3730,22 @@
         }
       }
     },
+    "settings.scanline" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scanline"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "扫描线"
+          }
+        }
+      }
+    },
     "settings.section.about" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -3792,70 +3844,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "外观"
-          }
-        }
-      }
-    },
-    "settings.autoAdvertise" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Auto-advertise"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "自动广播"
-          }
-        }
-      }
-    },
-    "settings.github" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "GitHub →"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "GitHub →"
-          }
-        }
-      }
-    },
-    "settings.notifications.label" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Notifications"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "通知"
-          }
-        }
-      }
-    },
-    "settings.scanline" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Scanline"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "扫描线"
           }
         }
       }
@@ -3959,9 +3947,6 @@
           }
         }
       }
-    },
-    "species" : {
-
     },
     "species.ascii.cat" : {
       "extractionState" : "stale",
