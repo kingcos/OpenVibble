@@ -25,7 +25,7 @@ struct OnboardingScreen: View {
 
     var body: some View {
         ZStack {
-            Color.black.ignoresSafeArea()
+            TerminalStyle.lcdBg.ignoresSafeArea()
 
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
@@ -48,7 +48,7 @@ struct OnboardingScreen: View {
                     .padding(.bottom, 24)
                     .background(
                         LinearGradient(
-                            colors: [Color.black.opacity(0), Color.black],
+                            colors: [TerminalStyle.lcdBg.opacity(0), TerminalStyle.lcdBg],
                             startPoint: .top,
                             endPoint: .bottom
                         )
