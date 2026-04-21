@@ -278,6 +278,7 @@ struct HomeScreen: View {
                 promptTick: promptTick
             )
         case .pet: PetBody(
+                model: model,
                 stats: stats,
                 page: petPage
             )
@@ -744,8 +745,10 @@ private struct NormalBody: View {
 
     // Spec 3.3: NORMAL shows only "解析后日志" (parsed log, time + msg).
     // Raw BLE wire events live in the BLE tab of the log sheet.
+    // Reads the app-side accumulator — the bridge replaces its list every
+    // heartbeat, so `snapshot.entries` alone would stay at ~3 forever.
     private var parsedLog: [LogLine] {
-        model.snapshot.entries.prefix(16).map(LogLine.init(parsed:))
+        model.parsedEntries.prefix(64).map(LogLine.init(parsed:))
     }
 
     private func parsedLogRow(_ line: LogLine) -> some View {
@@ -804,6 +807,7 @@ private struct LogLine {
 // MARK: - PET mode body (h5-demo pet-view)
 
 private struct PetBody: View {
+    @ObservedObject var model: BridgeAppModel
     @ObservedObject var stats: PersonaStatsStore
     let page: Int
 
@@ -856,14 +860,21 @@ private struct PetBody: View {
                 Spacer(minLength: 0)
             }
 
-            PetIndicator.LevelBadge(level: s.level)
+            // Level is driven by the bridge's cumulative tokens rather than
+            // our local delta-accrual: the firmware/iOS latch logic hides the
+            // first-seen total to avoid re-crediting on reconnect, which
+            // leaves the displayed level stuck at 0 whenever the user hasn't
+            // crossed a 50k milestone *since the app started*. Reading the
+            // bridge number directly matches what the user sees "happening
+            // right now" — if it stays 0, the sender isn't emitting tokens.
+            PetIndicator.LevelBadge(level: bridgeLevel)
 
             VStack(alignment: .leading, spacing: 2) {
                 metric("pet.metric.approved", "\(s.approvals)")
                 metric("pet.metric.denied", "\(s.denials)")
                 metric("pet.metric.napped", formatNap(s.napSeconds))
-                metric("pet.metric.tokens", formatTokens(s.tokens))
-                metric("pet.metric.today", formatTokens(stats.tokensToday))
+                metric("pet.metric.tokens", formatTokens(bridgeTokens))
+                metric("pet.metric.today", formatTokens(bridgeTokensToday))
             }
             Spacer(minLength: 0)
         }
@@ -906,6 +917,18 @@ private struct PetBody: View {
                 .foregroundStyle(TerminalStyle.ink)
             Spacer(minLength: 0)
         }
+    }
+
+    private var bridgeTokens: UInt32 {
+        UInt32(max(0, model.snapshot.tokens))
+    }
+
+    private var bridgeTokensToday: UInt32 {
+        UInt32(max(0, model.snapshot.tokensToday))
+    }
+
+    private var bridgeLevel: UInt8 {
+        UInt8(min(UInt32(UInt8.max), bridgeTokens / PersonaStats.tokensPerLevel))
     }
 
     private func formatTokens(_ v: UInt32) -> String {

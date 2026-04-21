@@ -21,6 +21,15 @@ final class BridgeAppModel: ObservableObject {
     @Published private(set) var activeDisplayName: String = "Claude"
     @Published private(set) var diagnosticLogs: [String] = []
     @Published private(set) var recentEvents: [String] = []
+    /// Client-side accumulation of heartbeat `entries`. The bridge replaces
+    /// its list every heartbeat (see REFERENCE.md — "capped to a few"), so
+    /// `snapshot.entries` by itself never grows past ~3 items. We merge each
+    /// heartbeat into a longer scrollback here, newest first, deduping
+    /// against a sliding window so a line that stays in the bridge's top-N
+    /// across several heartbeats doesn't get re-prepended.
+    @Published private(set) var parsedEntries: [String] = []
+    private static let parsedEntriesMax = 200
+    private static let parsedEntriesDedupWindow = 16
     @Published private(set) var lastInstalledCharacter: String?
     @Published private(set) var recentLevelUp: Bool = false
     @Published private(set) var lastQuickApprovalAt: Date?
@@ -227,11 +236,30 @@ final class BridgeAppModel: ObservableObject {
     func clearLogs() {
         recentEvents.removeAll()
         diagnosticLogs.removeAll()
+        parsedEntries.removeAll()
         snapshot.entries.removeAll()
+    }
+
+    /// Incoming heartbeat `entries` arrive newest-first. Walk from oldest to
+    /// newest and prepend any line that isn't already in our recent window —
+    /// lines that stay in the bridge's top-N across several heartbeats get
+    /// skipped instead of duplicated. Keeping the dedup to a window (not the
+    /// whole history) means a legitimate repeat later on still records.
+    private func mergeParsedEntries(from incoming: [String]) {
+        guard !incoming.isEmpty else { return }
+        for entry in incoming.reversed() {
+            let window = parsedEntries.prefix(Self.parsedEntriesDedupWindow)
+            if window.contains(entry) { continue }
+            parsedEntries.insert(entry, at: 0)
+        }
+        if parsedEntries.count > Self.parsedEntriesMax {
+            parsedEntries.removeLast(parsedEntries.count - Self.parsedEntriesMax)
+        }
     }
 
     private func refreshFromRuntime() {
         let newSnapshot = runtime.currentSnapshot()
+        mergeParsedEntries(from: newSnapshot.entries)
         snapshot = newSnapshot
         transfer = runtime.transferProgress()
 
