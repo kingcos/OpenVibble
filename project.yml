@@ -54,10 +54,12 @@ targets:
       base:
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         CODE_SIGN_ENTITLEMENTS: OpenVibbleApp/OpenVibbleApp.entitlements
+        MARKETING_VERSION: "1.0.1"
     info:
       path: OpenVibbleApp/Info.plist
       properties:
         CFBundleDisplayName: OpenVibble
+        CFBundleShortVersionString: "1.0.1"
         NSSupportsLiveActivities: YES
         UIApplicationSupportsIndirectInputEvents: YES
         UILaunchScreen:
