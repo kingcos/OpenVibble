@@ -242,41 +242,7 @@ struct OnboardingScreen: View {
             active: permissionStepComplete && renameAcknowledged,
             done: false
         ) {
-            VStack(alignment: .leading, spacing: 8) {
-                helpRow(badge: .text("A"), body: "onboarding.help.a")
-                helpRow(badge: .text("B"), body: "onboarding.help.b")
-                helpRow(badge: .icon("list.bullet.rectangle"), body: "onboarding.help.log")
-                helpRow(badge: .icon("gearshape"), body: "onboarding.help.gear")
-            }
-        }
-    }
-
-    private enum HelpBadge {
-        case text(String)
-        case icon(String)
-    }
-
-    private func helpRow(badge: HelpBadge, body: LocalizedStringKey) -> some View {
-        HStack(alignment: .top, spacing: 10) {
-            Group {
-                switch badge {
-                case .text(let s):
-                    Text(s).font(TerminalStyle.mono(12, weight: .bold))
-                case .icon(let name):
-                    Image(systemName: name).font(.system(size: 12, weight: .bold))
-                }
-            }
-            .foregroundStyle(TerminalStyle.lcdBg)
-            .frame(width: 28, height: 24)
-            .background(TerminalStyle.ink, in: RoundedRectangle(cornerRadius: 5))
-
-            Text(body)
-                .font(TerminalStyle.mono(12))
-                .foregroundStyle(TerminalStyle.ink)
-                .lineSpacing(3)
-                .fixedSize(horizontal: false, vertical: true)
-                .frame(minHeight: 24, alignment: .topLeading)
-                .frame(maxWidth: .infinity, alignment: .leading)
+            ButtonCheatSheet()
         }
     }
 

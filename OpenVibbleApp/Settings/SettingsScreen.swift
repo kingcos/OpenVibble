@@ -12,6 +12,7 @@ struct SettingsScreen: View {
     @AppStorage("buddy.notificationsEnabled") private var notificationsEnabled = true
     @AppStorage("buddy.liveActivityEnabled") private var liveActivityEnabled = true
     @AppStorage("bridge.autoStartBLE") private var autoStartBLE: Bool = true
+    @AppStorage("home.showPowerButton") private var showPowerButton: Bool = true
 
     @State private var notificationStatus = "?"
     @State private var notificationsAuthorized = false
@@ -36,6 +37,7 @@ struct SettingsScreen: View {
 
                     TerminalPanel("settings.section.pet.lower") { petContent }
                     TerminalPanel("settings.section.bluetooth.lower") { bluetoothContent }
+                    TerminalPanel("settings.section.interface.lower") { interfaceContent }
                     TerminalPanel("settings.section.alerts.lower") { alertsContent }
                     TerminalPanel("settings.section.guide.lower") { guideContent }
                     TerminalPanel("settings.section.about.lower") { aboutContent }
@@ -151,6 +153,24 @@ struct SettingsScreen: View {
         .tint(TerminalStyle.accent)
     }
 
+    // MARK: - Interface
+
+    private var interfaceContent: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Toggle(isOn: $showPowerButton) {
+                Text("settings.interface.showPowerButton")
+                    .font(TerminalStyle.mono(12))
+                    .foregroundStyle(TerminalStyle.ink)
+            }
+            .tint(TerminalStyle.accent)
+
+            Text("settings.interface.showPowerButton.hint")
+                .font(TerminalStyle.mono(10))
+                .foregroundStyle(TerminalStyle.inkDim)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+    }
+
     // MARK: - Alerts (notifications + live activity)
 
     private var alertsContent: some View {
@@ -200,16 +220,20 @@ struct SettingsScreen: View {
     // MARK: - Guide
 
     private var guideContent: some View {
-        Button {
-            hasOnboarded = false
-        } label: {
-            rowLabel(
-                text: "settings.guide.show",
-                trailing: "arrow.up.right",
-                tint: TerminalStyle.ink
-            )
+        VStack(alignment: .leading, spacing: 12) {
+            ButtonCheatSheet()
+
+            Button {
+                hasOnboarded = false
+            } label: {
+                rowLabel(
+                    text: "settings.guide.show",
+                    trailing: "arrow.up.right",
+                    tint: TerminalStyle.ink
+                )
+            }
+            .buttonStyle(.plain)
         }
-        .buttonStyle(.plain)
     }
 
     // MARK: - About
@@ -357,7 +381,8 @@ struct SettingsScreen: View {
             "buddy.liveActivityEnabled",
             "bridge.autoStartBLE",
             "bridge.displayName",
-            "buddy.petName"
+            "buddy.petName",
+            "home.showPowerButton"
         ] {
             defaults.removeObject(forKey: key)
         }

@@ -170,6 +170,42 @@ final class DeviceMenuState: ObservableObject {
         let t = Double(max(0, min(4, brightness))) / 4.0
         return 0.3 + t * 0.7
     }
+
+    // MARK: - Localization
+
+    /// Internal item IDs stay in English (see `applyMenu` / `applySettings`
+    /// switches) — this maps each ID to a `LocalizedStringKey` for display.
+    static func menuItemKey(_ id: String) -> LocalizedStringKey {
+        switch id {
+        case "settings": return "device.menu.item.settings"
+        case "turn off": return "device.menu.item.turnOff"
+        case "help":     return "device.menu.item.help"
+        case "about":    return "device.menu.item.about"
+        case "demo":     return "device.menu.item.demo"
+        case "close":    return "device.menu.item.close"
+        default:         return LocalizedStringKey(id)
+        }
+    }
+
+    static func settingsItemKey(_ id: String) -> LocalizedStringKey {
+        switch id {
+        case "brightness": return "device.menu.item.brightness"
+        case "sound":      return "device.menu.item.sound"
+        case "bluetooth":  return "device.menu.item.bluetooth"
+        case "wifi":       return "device.menu.item.wifi"
+        case "led":        return "device.menu.item.led"
+        case "transcript": return "device.menu.item.transcript"
+        case "clock rot":  return "device.menu.item.clockRot"
+        case "ascii pet":  return "device.menu.item.asciiPet"
+        case "reset":      return "device.menu.item.reset"
+        case "back":       return "device.menu.item.back"
+        default:           return LocalizedStringKey(id)
+        }
+    }
+
+    static func resetItemKey(_ id: String) -> LocalizedStringKey {
+        id == "confirm" ? "device.menu.item.confirm" : "device.menu.item.cancel"
+    }
 }
 
 // MARK: - Persona species cycling

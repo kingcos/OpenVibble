@@ -186,6 +186,98 @@ struct TerminalTabBar: View {
     }
 }
 
+// MARK: - Button cheat-sheet (shared by onboarding + settings guide)
+
+/// Monospace cheat-sheet of the handheld's on-screen buttons. Rendered in both
+/// Step 3 of onboarding and the Settings "guide" section so users can reference
+/// the same mapping without re-running onboarding.
+struct ButtonCheatSheet: View {
+    enum Badge {
+        case text(String)
+        case longPress(String)
+        case icon(String)
+    }
+
+    struct Row {
+        let badge: Badge
+        let body: LocalizedStringKey
+    }
+
+    static let defaultRows: [Row] = [
+        Row(badge: .text("A"), body: "onboarding.help.a"),
+        Row(badge: .longPress("A"), body: "onboarding.help.a.long"),
+        Row(badge: .text("B"), body: "onboarding.help.b"),
+        Row(badge: .icon("power"), body: "onboarding.help.power"),
+        Row(badge: .icon("list.bullet.rectangle"), body: "onboarding.help.log"),
+        Row(badge: .icon("gearshape"), body: "onboarding.help.gear")
+    ]
+
+    let rows: [Row]
+
+    init(rows: [Row] = Self.defaultRows) {
+        self.rows = rows
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            ForEach(Array(rows.enumerated()), id: \.offset) { _, row in
+                rowView(row)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func rowView(_ row: Row) -> some View {
+        HStack(alignment: .top, spacing: 10) {
+            badgeView(row.badge)
+            Text(row.body)
+                .font(TerminalStyle.mono(12))
+                .foregroundStyle(TerminalStyle.ink)
+                .lineSpacing(3)
+                .fixedSize(horizontal: false, vertical: true)
+                .frame(minHeight: 24, alignment: .topLeading)
+                .frame(maxWidth: .infinity, alignment: .leading)
+        }
+    }
+
+    @ViewBuilder
+    private func badgeView(_ badge: Badge) -> some View {
+        // Long-press badges get a dashed outline + ring to distinguish them
+        // from short-press taps, while keeping the letter inside identical —
+        // pairs visually with the copy's "长按 · ..." prefix.
+        switch badge {
+        case .text(let s):
+            Text(s)
+                .font(TerminalStyle.mono(12, weight: .bold))
+                .foregroundStyle(TerminalStyle.lcdBg)
+                .frame(width: 28, height: 24)
+                .background(TerminalStyle.ink, in: RoundedRectangle(cornerRadius: 5))
+        case .longPress(let s):
+            Text(s)
+                .font(TerminalStyle.mono(12, weight: .bold))
+                .foregroundStyle(TerminalStyle.ink)
+                .frame(width: 28, height: 24)
+                .background(
+                    TerminalStyle.lcdPanel.opacity(0.8),
+                    in: RoundedRectangle(cornerRadius: 5)
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: 5)
+                        .strokeBorder(
+                            TerminalStyle.ink,
+                            style: StrokeStyle(lineWidth: 1.2, dash: [2, 2])
+                        )
+                )
+        case .icon(let name):
+            Image(systemName: name)
+                .font(.system(size: 12, weight: .bold))
+                .foregroundStyle(TerminalStyle.lcdBg)
+                .frame(width: 28, height: 24)
+                .background(TerminalStyle.ink, in: RoundedRectangle(cornerRadius: 5))
+        }
+    }
+}
+
 // MARK: - Pet-view primitives (match h5 `pet-view` indicators)
 
 enum PetIndicator {

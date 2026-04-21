@@ -46,6 +46,7 @@ struct HomeScreen: View {
     @AppStorage("bridge.displayName") private var persistedDisplayName = ""
     @AppStorage("bridge.autoStartBLE") private var autoStartBLE = true
     @AppStorage("buddy.petName") private var petName: String = "Buddy"
+    @AppStorage("home.showPowerButton") private var showPowerButton: Bool = true
 
     private let appStart = Date()
     private let promptTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
@@ -111,13 +112,15 @@ struct HomeScreen: View {
             // Device menu overlay (MENU / SETTINGS / RESET) — h5 parity,
             // pure local state. Drawn above the LCD body but below the
             // screen-off mask so power can still force a blackout.
+            // Reserves the bottom-bar height so A/B stay visible+tappable
+            // while the menu is open.
             if deviceMenu.isAnyMenuVisible {
-                DeviceMenuOverlay(state: deviceMenu)
+                DeviceMenuOverlay(state: deviceMenu, bottomReservedHeight: bottomBarReservedHeight)
                     .transition(.opacity)
             }
 
             if deviceMenu.screenOff {
-                ScreenOffMask()
+                ScreenOffMask(onWake: { deviceMenu.wakeScreen() })
                     .transition(.opacity)
             }
         }
@@ -201,7 +204,8 @@ struct HomeScreen: View {
     }
 
     private var statusIndicator: some View {
-        let actionable = statusActionURL != nil
+        let action = statusAction
+        let actionable = action != nil
         let content = HStack(spacing: 8) {
             BreathingLED(color: statusColor)
             Text(statusLabel)
@@ -224,9 +228,9 @@ struct HomeScreen: View {
         ))
 
         return Group {
-            if let url = statusActionURL {
+            if let action {
                 Button {
-                    UIApplication.shared.open(url)
+                    handleStatusAction(action)
                 } label: { content }
                 .buttonStyle(.plain)
             } else {
@@ -235,20 +239,51 @@ struct HomeScreen: View {
         }
     }
 
-    /// Surface a tap target only when the user can actually do something about
-    /// the current status (e.g. flip denied-permission in Settings). Passive
-    /// states like "advertising" or "connected" have no action, so the pill
+    /// Actions surfaced by the status pill. The pill is only interactive when
+    /// the user can actually do something — a passive state like "advertising"
     /// stays non-interactive.
-    private var statusActionURL: URL? {
+    private enum StatusAction {
+        case openURL(URL)
+        case startAdvertising
+    }
+
+    private var statusAction: StatusAction? {
         switch model.bluetoothAuthorization {
         case .denied, .restricted:
-            return URL(string: UIApplication.openSettingsURLString)
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                return .openURL(url)
+            }
+            return nil
         default: break
         }
         if model.bluetoothPowerState == .poweredOff {
-            return URL(string: UIApplication.openSettingsURLString)
+            if let url = URL(string: UIApplication.openSettingsURLString) {
+                return .openURL(url)
+            }
+            return nil
+        }
+        // Stopped + permission granted + BT on → user has turned auto-advertise
+        // off (or hasn't flipped it on yet). Give them a manual entry point so
+        // "待机" isn't a dead-end.
+        if case .stopped = model.connectionState,
+           model.bluetoothAuthorization == .allowedAlways,
+           model.bluetoothPowerState == .poweredOn {
+            return .startAdvertising
         }
         return nil
+    }
+
+    private func handleStatusAction(_ action: StatusAction) {
+        switch action {
+        case .openURL(let url):
+            UIApplication.shared.open(url)
+        case .startAdvertising:
+            UIImpactFeedbackGenerator(style: .soft).impactOccurred()
+            model.start(
+                displayName: effectiveDisplayName,
+                includeServiceUUIDInAdvertisement: true
+            )
+        }
     }
 
     // MARK: - Pet area (fixed size so body content never jitters)
@@ -327,18 +362,20 @@ struct HomeScreen: View {
                 longPressAction: nil
             )
             Spacer(minLength: 0)
-            Button {
-                deviceMenu.toggleScreen()
-                UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
-            } label: {
-                Image(systemName: "power")
-                    .font(.system(size: 13, weight: .bold))
-                    .foregroundStyle(TerminalStyle.accentSoft)
-                    .frame(width: 36, height: 36)
-                    .background(TerminalStyle.lcdPanel.opacity(0.85), in: Circle())
-                    .overlay(Circle().stroke(TerminalStyle.inkDim.opacity(0.5), lineWidth: 1))
+            if showPowerButton {
+                Button {
+                    deviceMenu.toggleScreen()
+                    UIImpactFeedbackGenerator(style: .heavy).impactOccurred()
+                } label: {
+                    Image(systemName: "power")
+                        .font(.system(size: 13, weight: .bold))
+                        .foregroundStyle(TerminalStyle.accentSoft)
+                        .frame(width: 36, height: 36)
+                        .background(TerminalStyle.lcdPanel.opacity(0.85), in: Circle())
+                        .overlay(Circle().stroke(TerminalStyle.inkDim.opacity(0.5), lineWidth: 1))
+                }
+                .accessibilityLabel(Text("home.power"))
             }
-            .accessibilityLabel(Text("home.power"))
             Button {
                 showLogs = true
             } label: {
@@ -464,6 +501,11 @@ struct HomeScreen: View {
     }
 
     // MARK: - Derived UI state
+
+    /// Height of the A/B/log bottom bar plus its vertical padding — used by
+    /// the device-menu overlay to stop short of the handheld buttons so they
+    /// remain visible and tappable while the menu is open.
+    private var bottomBarReservedHeight: CGFloat { 86 }
 
     private func petAreaHeight(in availableHeight: CGFloat) -> CGFloat {
         // GIFs ship at ~160–200px native — beyond ~320pt on iPhone we start
