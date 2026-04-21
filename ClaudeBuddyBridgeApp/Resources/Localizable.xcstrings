@@ -186,12 +186,6 @@
         }
       }
     },
-    "energy" : {
-
-    },
-    "fed" : {
-
-    },
     "github →" : {
 
     },
@@ -342,6 +336,125 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "待确认"
+          }
+        }
+      }
+    },
+    "home.mode.info" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "INFO"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "信息"
+          }
+        }
+      }
+    },
+    "home.mode.normal" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NORMAL"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "普通"
+          }
+        }
+      }
+    },
+    "home.mode.pet" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PET"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "宠物"
+          }
+        }
+      }
+    },
+    "home.pill.run" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "run"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "运行"
+          }
+        }
+      }
+    },
+    "home.pill.sess" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "sess"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "会话"
+          }
+        }
+      }
+    },
+    "home.pill.tokPerDay" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "tok/d"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日"
+          }
+        }
+      }
+    },
+    "home.pill.wait" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "wait"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "等待"
           }
         }
       }
@@ -598,9 +711,6 @@
         }
       }
     },
-    "Info" : {
-
-    },
     "info.about.body1" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -652,6 +762,278 @@
         }
       }
     },
+    "info.about.line1" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Buddy Bridge"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Buddy Bridge"
+          }
+        }
+      }
+    },
+    "info.about.line2" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iPhone ↔ Claude Desktop"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iPhone ↔ Claude 桌面端"
+          }
+        }
+      }
+    },
+    "info.about.line3" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BLE NUS + pet simulator"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BLE NUS + 宠物模拟"
+          }
+        }
+      }
+    },
+    "info.about.line4" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A: cycle screens · B: flip page"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A：切屏 · B：翻页"
+          }
+        }
+      }
+    },
+    "info.ble.adv" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "adv"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "广播"
+          }
+        }
+      }
+    },
+    "info.ble.link" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "link"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "连接"
+          }
+        }
+      }
+    },
+    "info.ble.link.advertising" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "advertising"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "广播中"
+          }
+        }
+      }
+    },
+    "info.ble.link.conn" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "conn×%d"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已连 ×%d"
+          }
+        }
+      }
+    },
+    "info.ble.link.off" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "off"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未启动"
+          }
+        }
+      }
+    },
+    "info.ble.name" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "name"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "名称"
+          }
+        }
+      }
+    },
+    "info.ble.uuid" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "uuid"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "UUID"
+          }
+        }
+      }
+    },
+    "info.buttons.line1" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A: NORMAL → PET → INFO"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A：NORMAL → PET → INFO"
+          }
+        }
+      }
+    },
+    "info.buttons.line2" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A (on prompt): approve"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A（待审批时）：同意"
+          }
+        }
+      }
+    },
+    "info.buttons.line3" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "B: page PET / INFO"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "B：翻页 PET / INFO"
+          }
+        }
+      }
+    },
+    "info.buttons.line4" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "B (on prompt): deny"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "B（待审批时）：拒绝"
+          }
+        }
+      }
+    },
+    "info.buttons.line5" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log: show raw packets"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log：查看原始数据包"
+          }
+        }
+      }
+    },
     "info.claude.body1" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -699,6 +1081,91 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Claude Desktop"
+          }
+        }
+      }
+    },
+    "info.claude.running" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "running"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "运行中"
+          }
+        }
+      }
+    },
+    "info.claude.sessions" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "sessions"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "会话"
+          }
+        }
+      }
+    },
+    "info.claude.state" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "state"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "状态"
+          }
+        }
+      }
+    },
+    "info.claude.tokPerDay" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "tok/d"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日 token"
+          }
+        }
+      }
+    },
+    "info.claude.waiting" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "waiting"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "等待"
           }
         }
       }
@@ -767,6 +1234,210 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "致谢"
+          }
+        }
+      }
+    },
+    "info.credits.line1" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "idea: Felix Rieseberg"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "灵感：Felix Rieseberg"
+          }
+        }
+      }
+    },
+    "info.credits.line2" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "anthropics/"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "anthropics/"
+          }
+        }
+      }
+    },
+    "info.credits.line3" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "  claude-desktop-buddy"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "  claude-desktop-buddy"
+          }
+        }
+      }
+    },
+    "info.credits.line4" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iOS bridge: kingcos"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iOS 桥接：kingcos"
+          }
+        }
+      }
+    },
+    "info.credits.line5" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MIT-licensed"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MIT 许可"
+          }
+        }
+      }
+    },
+    "info.device.battery" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "battery"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "电池"
+          }
+        }
+      }
+    },
+    "info.device.off" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "off"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关"
+          }
+        }
+      }
+    },
+    "info.device.on" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "on"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开"
+          }
+        }
+      }
+    },
+    "info.device.pet" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "pet"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "宠物"
+          }
+        }
+      }
+    },
+    "info.device.scan" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "scan"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "扫描线"
+          }
+        }
+      }
+    },
+    "info.device.uptime" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "uptime"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "运行时长"
+          }
+        }
+      }
+    },
+    "info.device.usb" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "usb"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "USB 充电"
           }
         }
       }
@@ -1009,6 +1680,108 @@
         }
       }
     },
+    "info.page.about.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ABOUT"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关于"
+          }
+        }
+      }
+    },
+    "info.page.ble.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BLE"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "蓝牙"
+          }
+        }
+      }
+    },
+    "info.page.buttons.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BUTTONS"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按键"
+          }
+        }
+      }
+    },
+    "info.page.claude.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CLAUDE"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CLAUDE"
+          }
+        }
+      }
+    },
+    "info.page.credits.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "CREDITS"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "致谢"
+          }
+        }
+      }
+    },
+    "info.page.device.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DEVICE"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设备"
+          }
+        }
+      }
+    },
     "info.tab.about" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1078,7 +1851,6 @@
       }
     },
     "info.title" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1167,9 +1939,6 @@
           }
         }
       }
-    },
-    "mood" : {
-
     },
     "notification.level.body" : {
       "extractionState" : "stale",
@@ -1599,6 +2368,7 @@
       }
     },
     "onboarding.rename.copied" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1615,6 +2385,7 @@
       }
     },
     "onboarding.rename.copy" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1668,13 +2439,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open Name Settings"
+            "value" : "Open Settings"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "打开名称设置"
+            "value" : "打开设置"
           }
         }
       }
@@ -1846,9 +2617,6 @@
         }
       }
     },
-    "Pet" : {
-
-    },
     "pet.a11y.nextPage" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1996,6 +2764,210 @@
         }
       }
     },
+    "pet.how.a" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "cycle screens"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "切换屏幕"
+          }
+        }
+      }
+    },
+    "pet.how.b" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "flip pages"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "翻页"
+          }
+        }
+      }
+    },
+    "pet.how.energy" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "face-down naps refill"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "面朝下小憩回能"
+          }
+        }
+      }
+    },
+    "pet.how.fed" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "50K tokens = Lv up"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每 5 万 token = 升级"
+          }
+        }
+      }
+    },
+    "pet.how.idle" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "no touch → sleep"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "闲置 → 睡眠"
+          }
+        }
+      }
+    },
+    "pet.how.mood" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "approve fast ↑ · deny lots ↓"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "秒批 ↑ · 多拒 ↓"
+          }
+        }
+      }
+    },
+    "pet.how.shake" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "shake → dizzy"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "摇晃 → 晕眩"
+          }
+        }
+      }
+    },
+    "pet.how.tag.energy" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ENERGY"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "精力"
+          }
+        }
+      }
+    },
+    "pet.how.tag.fed" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FED"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "饱食"
+          }
+        }
+      }
+    },
+    "pet.how.tag.idle" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "IDLE"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "空闲"
+          }
+        }
+      }
+    },
+    "pet.how.tag.mood" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "MOOD"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "心情"
+          }
+        }
+      }
+    },
+    "pet.how.tag.shake" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SHAKE"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "摇一摇"
+          }
+        }
+      }
+    },
     "pet.level" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2026,6 +2998,91 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "平均响应"
+          }
+        }
+      }
+    },
+    "pet.metric.approved" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "approved"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已批准"
+          }
+        }
+      }
+    },
+    "pet.metric.denied" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "denied"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已拒绝"
+          }
+        }
+      }
+    },
+    "pet.metric.napped" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "napped"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "小憩"
+          }
+        }
+      }
+    },
+    "pet.metric.today" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "today"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日"
+          }
+        }
+      }
+    },
+    "pet.metric.tokens" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "tokens"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Token"
           }
         }
       }
@@ -2242,6 +3299,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "宠物数据"
+          }
+        }
+      }
+    },
+    "pet.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pet"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "宠物"
           }
         }
       }
@@ -2894,6 +3967,125 @@
         }
       }
     },
+    "state.attention" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ATTN"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "待应"
+          }
+        }
+      }
+    },
+    "state.busy" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BUSY"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "忙碌"
+          }
+        }
+      }
+    },
+    "state.celebrate" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "YAY"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "庆祝"
+          }
+        }
+      }
+    },
+    "state.dizzy" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DIZZY"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "眩晕"
+          }
+        }
+      }
+    },
+    "state.heart" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HEART"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "喜爱"
+          }
+        }
+      }
+    },
+    "state.idle" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "IDLE"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "空闲"
+          }
+        }
+      }
+    },
+    "state.sleep" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SLEEP"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "休眠"
+          }
+        }
+      }
+    },
     "tab.console" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2943,438 +4135,6 @@
             "value" : "设备"
           }
         }
-      }
-    },
-    "pet.title" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Pet" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "宠物" } }
-      }
-    },
-    "pet.metric.approved" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "approved" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已批准" } }
-      }
-    },
-    "pet.metric.denied" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "denied" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已拒绝" } }
-      }
-    },
-    "pet.metric.napped" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "napped" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "小憩" } }
-      }
-    },
-    "pet.metric.tokens" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "tokens" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "Token" } }
-      }
-    },
-    "pet.metric.today" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "today" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "今日" } }
-      }
-    },
-    "pet.how.mood" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "approve fast ↑ · deny lots ↓" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "秒批 ↑ · 多拒 ↓" } }
-      }
-    },
-    "pet.how.fed" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "50K tokens = Lv up" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "每 5 万 token = 升级" } }
-      }
-    },
-    "pet.how.energy" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "face-down naps refill" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "面朝下小憩回能" } }
-      }
-    },
-    "pet.how.shake" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "shake → dizzy" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "摇晃 → 晕眩" } }
-      }
-    },
-    "pet.how.idle" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "no touch → sleep" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "闲置 → 睡眠" } }
-      }
-    },
-    "pet.how.a" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "cycle screens" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "切换屏幕" } }
-      }
-    },
-    "pet.how.b" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "flip pages" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "翻页" } }
-      }
-    },
-    "home.pill.sess" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "sess" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "会话" } }
-      }
-    },
-    "home.pill.run" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "run" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "运行" } }
-      }
-    },
-    "home.pill.wait" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "wait" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "等待" } }
-      }
-    },
-    "home.pill.tokPerDay" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "tok/d" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "今日" } }
-      }
-    },
-    "info.title" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Info" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "信息" } }
-      }
-    },
-    "info.about.line1" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Claude Buddy Bridge" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "Claude Buddy Bridge" } }
-      }
-    },
-    "info.about.line2" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "iPhone ↔ Claude Desktop" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "iPhone ↔ Claude 桌面端" } }
-      }
-    },
-    "info.about.line3" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "BLE NUS + pet simulator" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "BLE NUS + 宠物模拟" } }
-      }
-    },
-    "info.about.line4" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "A: cycle screens · B: flip page" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "A：切屏 · B：翻页" } }
-      }
-    },
-    "info.buttons.line1" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "A: NORMAL → PET → INFO" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "A：NORMAL → PET → INFO" } }
-      }
-    },
-    "info.buttons.line2" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "A (on prompt): approve" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "A（待审批时）：同意" } }
-      }
-    },
-    "info.buttons.line3" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "B: page PET / INFO" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "B：翻页 PET / INFO" } }
-      }
-    },
-    "info.buttons.line4" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "B (on prompt): deny" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "B（待审批时）：拒绝" } }
-      }
-    },
-    "info.buttons.line5" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Log: show raw packets" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "Log：查看原始数据包" } }
-      }
-    },
-    "info.claude.sessions" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "sessions" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "会话" } }
-      }
-    },
-    "info.claude.running" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "running" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "运行中" } }
-      }
-    },
-    "info.claude.waiting" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "waiting" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "等待" } }
-      }
-    },
-    "info.claude.state" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "state" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "状态" } }
-      }
-    },
-    "info.claude.tokPerDay" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "tok/d" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "今日 token" } }
-      }
-    },
-    "info.device.battery" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "battery" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "电池" } }
-      }
-    },
-    "info.device.usb" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "usb" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "USB 充电" } }
-      }
-    },
-    "info.device.uptime" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "uptime" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "运行时长" } }
-      }
-    },
-    "info.device.scan" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "scan" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "扫描线" } }
-      }
-    },
-    "info.device.pet" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "pet" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "宠物" } }
-      }
-    },
-    "info.device.on" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "on" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "开" } }
-      }
-    },
-    "info.device.off" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "off" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "关" } }
-      }
-    },
-    "info.ble.link" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "link" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "连接" } }
-      }
-    },
-    "info.ble.link.off" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "off" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "未启动" } }
-      }
-    },
-    "info.ble.link.advertising" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "advertising" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "广播中" } }
-      }
-    },
-    "info.ble.link.conn" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "conn×%d" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已连 ×%d" } }
-      }
-    },
-    "info.ble.adv" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "adv" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "广播" } }
-      }
-    },
-    "info.ble.name" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "name" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "名称" } }
-      }
-    },
-    "info.ble.uuid" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "uuid" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "UUID" } }
-      }
-    },
-    "info.credits.line1" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "idea: Felix Rieseberg" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "灵感：Felix Rieseberg" } }
-      }
-    },
-    "info.credits.line2" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "anthropics/" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "anthropics/" } }
-      }
-    },
-    "info.credits.line3" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "  claude-desktop-buddy" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "  claude-desktop-buddy" } }
-      }
-    },
-    "info.credits.line4" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "iOS bridge: kingcos" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "iOS 桥接：kingcos" } }
-      }
-    },
-    "info.credits.line5" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "MIT-licensed" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "MIT 许可" } }
-      }
-    },
-    "home.mode.normal" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "NORMAL" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "普通" } }
-      }
-    },
-    "home.mode.pet" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "PET" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "宠物" } }
-      }
-    },
-    "home.mode.info" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "INFO" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "信息" } }
-      }
-    },
-    "state.sleep" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "SLEEP" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "休眠" } }
-      }
-    },
-    "state.idle" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "IDLE" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "空闲" } }
-      }
-    },
-    "state.busy" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "BUSY" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "忙碌" } }
-      }
-    },
-    "state.attention" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "ATTN" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "待应" } }
-      }
-    },
-    "state.celebrate" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "YAY" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "庆祝" } }
-      }
-    },
-    "state.dizzy" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "DIZZY" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "眩晕" } }
-      }
-    },
-    "state.heart" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "HEART" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "喜爱" } }
-      }
-    },
-    "pet.how.tag.mood" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "MOOD" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "心情" } }
-      }
-    },
-    "pet.how.tag.fed" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "FED" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "饱食" } }
-      }
-    },
-    "pet.how.tag.energy" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "ENERGY" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "精力" } }
-      }
-    },
-    "pet.how.tag.shake" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "SHAKE" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "摇一摇" } }
-      }
-    },
-    "pet.how.tag.idle" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "IDLE" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "空闲" } }
-      }
-    },
-    "info.page.about.title" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "ABOUT" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "关于" } }
-      }
-    },
-    "info.page.buttons.title" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "BUTTONS" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "按键" } }
-      }
-    },
-    "info.page.claude.title" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "CLAUDE" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "CLAUDE" } }
-      }
-    },
-    "info.page.device.title" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "DEVICE" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "设备" } }
-      }
-    },
-    "info.page.ble.title" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "BLE" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "蓝牙" } }
-      }
-    },
-    "info.page.credits.title" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "CREDITS" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "致谢" } }
       }
     }
   },

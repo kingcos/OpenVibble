@@ -213,18 +213,21 @@ struct OnboardingScreen: View {
                         foreground: .white,
                         background: TerminalStyle.accent.opacity(0.85)
                     ))
-                } else {
-                    HStack(alignment: .top, spacing: 8) {
-                        Image(systemName: "info.circle")
-                            .foregroundStyle(TerminalStyle.accentSoft)
-                        Text("onboarding.rename.manualHint")
-                            .font(TerminalStyle.mono(11))
-                            .foregroundStyle(TerminalStyle.inkDim)
-                        Spacer(minLength: 0)
-                    }
-                    .padding(10)
-                    .background(TerminalStyle.lcdPanel.opacity(0.5), in: RoundedRectangle(cornerRadius: 8))
                 }
+
+                // Always show the navigation breadcrumb — iOS can't deep-link
+                // into General → About → Name, so users need to know where to
+                // go once the Settings app opens.
+                HStack(alignment: .top, spacing: 8) {
+                    Image(systemName: "info.circle")
+                        .foregroundStyle(TerminalStyle.accentSoft)
+                    Text("onboarding.rename.manualHint")
+                        .font(TerminalStyle.mono(11))
+                        .foregroundStyle(TerminalStyle.inkDim)
+                    Spacer(minLength: 0)
+                }
+                .padding(10)
+                .background(TerminalStyle.lcdPanel.opacity(0.5), in: RoundedRectangle(cornerRadius: 8))
             }
         }
     }
