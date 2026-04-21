@@ -186,11 +186,11 @@ struct LCDFrame<Content: View>: View {
 // MARK: - Panel
 
 struct TerminalPanel<Content: View>: View {
-    let title: String?
+    let title: LocalizedStringKey?
     let accent: Color
     @ViewBuilder var content: Content
 
-    init(_ title: String? = nil, accent: Color = TerminalStyle.ink, @ViewBuilder content: () -> Content) {
+    init(_ title: LocalizedStringKey? = nil, accent: Color = TerminalStyle.ink, @ViewBuilder content: () -> Content) {
         self.title = title
         self.accent = accent
         self.content = content()
@@ -199,9 +199,12 @@ struct TerminalPanel<Content: View>: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             if let title {
-                Text("$ \(title)")
-                    .font(TerminalStyle.mono(12, weight: .semibold))
-                    .foregroundStyle(accent)
+                HStack(spacing: 0) {
+                    Text(verbatim: "$ ")
+                    Text(title)
+                }
+                .font(TerminalStyle.mono(12, weight: .semibold))
+                .foregroundStyle(accent)
             }
             content
                 .frame(maxWidth: .infinity, alignment: .leading)

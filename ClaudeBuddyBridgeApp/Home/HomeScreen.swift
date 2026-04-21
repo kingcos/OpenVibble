@@ -368,11 +368,11 @@ struct HomeScreen: View {
     // MARK: - Derived UI state
 
     private func petAreaHeight(in availableHeight: CGFloat) -> CGFloat {
-        // Give the pet the dominant share of the LCD — the h5-demo mirrors
-        // this with its canvas reserving the top ~60% for drawTopCharacter.
-        // Clamp so SE-class screens still leave room for mode body + A/B.
-        let target = availableHeight * 0.50
-        return min(460, max(300, target))
+        // GIFs ship at ~160–200px native — beyond ~320pt on iPhone we start
+        // upscaling and the pet looks blurry. Keep the area tight so the
+        // image renders near 1:1 while still reserving the top of the LCD.
+        let target = availableHeight * 0.36
+        return min(320, max(220, target))
     }
 
     private func personaStateKey(_ state: PersonaState) -> LocalizedStringKey {

@@ -33,12 +33,13 @@ struct SettingsScreen: View {
                 VStack(alignment: .leading, spacing: 12) {
                     headerBar
 
-                    TerminalPanel("pet") { petContent }
-                    TerminalPanel("bluetooth") { bluetoothContent }
-                    TerminalPanel("display") { displayContent }
-                    TerminalPanel("alerts") { alertsContent }
-                    TerminalPanel("about") { aboutContent }
-                    TerminalPanel("danger", accent: .red) { dangerContent }
+                    TerminalPanel("settings.section.pet.lower") { petContent }
+                    TerminalPanel("settings.section.bluetooth.lower") { bluetoothContent }
+                    TerminalPanel("settings.section.display.lower") { displayContent }
+                    TerminalPanel("settings.section.alerts.lower") { alertsContent }
+                    TerminalPanel("settings.section.guide.lower") { guideContent }
+                    TerminalPanel("settings.section.about.lower") { aboutContent }
+                    TerminalPanel("settings.section.danger.lower", accent: .red) { dangerContent }
                 }
                 .padding(16)
             }
@@ -100,8 +101,11 @@ struct SettingsScreen: View {
     // MARK: - Header
 
     private var headerBar: some View {
-        HStack {
-            Text("$ settings")
+        HStack(spacing: 0) {
+            Text(verbatim: "$ ")
+                .font(TerminalStyle.mono(16, weight: .bold))
+                .foregroundStyle(TerminalStyle.ink)
+            Text("settings.title")
                 .font(TerminalStyle.mono(16, weight: .bold))
                 .foregroundStyle(TerminalStyle.ink)
             Spacer()
@@ -208,38 +212,39 @@ struct SettingsScreen: View {
         }
     }
 
+    // MARK: - Guide
+
+    private var guideContent: some View {
+        Button {
+            hasOnboarded = false
+        } label: {
+            rowLabel(
+                text: "settings.guide.show",
+                trailing: "arrow.up.right",
+                tint: TerminalStyle.ink
+            )
+        }
+        .buttonStyle(.plain)
+    }
+
     // MARK: - About
 
     private var aboutContent: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            aboutRow("settings.about.app", "Claude Buddy Bridge")
-            aboutRow("settings.about.version", appVersion)
-            aboutRow("settings.about.author", "kingcos")
-            aboutRow("settings.about.language", currentLanguageLabel)
+        VStack(alignment: .leading, spacing: 10) {
+            VStack(alignment: .leading, spacing: 4) {
+                aboutRow("settings.about.app", "Claude Buddy Bridge")
+                aboutRow("settings.about.version", appVersion)
+                aboutRow("settings.about.author", "kingcos")
+                aboutRow("settings.about.language", currentLanguageLabel)
+            }
 
             Link(destination: repoURL) {
-                HStack {
-                    Text("settings.github")
-                        .foregroundStyle(TerminalStyle.ink)
-                    Spacer()
-                }
-                .font(TerminalStyle.mono(12, weight: .semibold))
-                .padding(.top, 4)
+                rowLabel(
+                    text: "settings.github",
+                    trailing: "arrow.up.right",
+                    tint: TerminalStyle.ink
+                )
             }
-
-            Button {
-                hasOnboarded = false
-            } label: {
-                HStack {
-                    Text("settings.guide.show")
-                    Spacer()
-                    Image(systemName: "arrow.up.right")
-                        .font(.system(size: 11, weight: .bold))
-                }
-                .foregroundStyle(TerminalStyle.ink)
-                .font(TerminalStyle.mono(12))
-            }
-            .buttonStyle(.plain)
         }
     }
 
@@ -254,6 +259,30 @@ struct SettingsScreen: View {
         .font(TerminalStyle.mono(12))
     }
 
+    private func rowLabel(
+        text: LocalizedStringKey,
+        trailing: String,
+        tint: Color
+    ) -> some View {
+        HStack {
+            Text(text)
+            Spacer()
+            Image(systemName: trailing)
+                .font(.system(size: 12, weight: .bold))
+        }
+        .font(TerminalStyle.mono(12, weight: .semibold))
+        .foregroundStyle(tint)
+        .padding(.horizontal, 10)
+        .padding(.vertical, 12)
+        .frame(maxWidth: .infinity)
+        .background(TerminalStyle.lcdPanel.opacity(0.6), in: RoundedRectangle(cornerRadius: 8))
+        .overlay(
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(tint.opacity(0.4), lineWidth: 1)
+        )
+        .contentShape(Rectangle())
+    }
+
     // MARK: - Danger
 
     private var dangerContent: some View {
@@ -261,26 +290,22 @@ struct SettingsScreen: View {
             Button(role: .destructive) {
                 confirmResetStats = true
             } label: {
-                HStack {
-                    Text("pet.reset")
-                    Spacer()
-                    Image(systemName: "arrow.counterclockwise")
-                }
-                .font(TerminalStyle.mono(12, weight: .semibold))
-                .foregroundStyle(TerminalStyle.bad)
+                rowLabel(
+                    text: "pet.reset",
+                    trailing: "arrow.counterclockwise",
+                    tint: TerminalStyle.bad
+                )
             }
             .buttonStyle(.plain)
 
             Button(role: .destructive) {
                 confirmDeleteChars = true
             } label: {
-                HStack {
-                    Text("pet.delete")
-                    Spacer()
-                    Image(systemName: "trash")
-                }
-                .font(TerminalStyle.mono(12, weight: .semibold))
-                .foregroundStyle(TerminalStyle.bad)
+                rowLabel(
+                    text: "pet.delete",
+                    trailing: "trash",
+                    tint: TerminalStyle.bad
+                )
             }
             .buttonStyle(.plain)
         }
