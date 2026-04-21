@@ -11,6 +11,7 @@
 		343D78323800A2EFACEB3D52 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F6C622D6CF269E4DBD46366 /* SettingsScreen.swift */; };
 		3B6C101D8EAA599515AF1788 /* PersonaController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B009D5D10454B61E89963C8 /* PersonaController.swift */; };
 		4C1E3AF4DF5789D4DFF3B873 /* BuddyPersona in Frameworks */ = {isa = PBXBuildFile; productRef = 44F8AFF504D8CA47A444E57C /* BuddyPersona */; };
+		4E7B4AF93BA002C5346F2981 /* PromptEdgeDetectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBDCDEAA68CE32AFFF223CB /* PromptEdgeDetectorTests.swift */; };
 		516F17121682AB550CC901A7 /* BuddyLiveActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B122A926562D2A34C73B782 /* BuddyLiveActivityAttributes.swift */; };
 		54F87E5C689EC08548350CD7 /* BuddyStats in Frameworks */ = {isa = PBXBuildFile; productRef = 8966AD7A853C35E7677CCBEC /* BuddyStats */; };
 		5680ADABA6886EF8D0088838 /* BuddyLiveActivityBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44CB6D9FCE1B00A4A028A4E0 /* BuddyLiveActivityBundle.swift */; };
@@ -29,6 +30,7 @@
 		A59EE1B8344899982A8B2C63 /* TerminalStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECFFFB7377D3220997A6D987 /* TerminalStyle.swift */; };
 		BF0DDE1BD2A52C3F6899CC17 /* BuddyLiveActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F7C66BFA4D7D069BAA3076 /* BuddyLiveActivityAttributes.swift */; };
 		CD125A99FBE380470ADA7BD4 /* OnboardingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87C0002E0C787AB9B8B09629 /* OnboardingScreen.swift */; };
+		CE4106E4B4075DA6BD438339 /* MiniBuddyGlyphTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC93956D619BC517CFEF0E59 /* MiniBuddyGlyphTests.swift */; };
 		D63EF87F59305F858295CC18 /* BridgeAppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C11DC586586DFE2B5E6B9 /* BridgeAppModel.swift */; };
 		DEDE1D177A4F44194E1DC0DA /* BuddyProtocol in Frameworks */ = {isa = PBXBuildFile; productRef = C4A4AB6F3E449B30E1EC3B8D /* BuddyProtocol */; };
 		E16BAEA411C8D111F9E63730 /* BuddyStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 5F3D2FBF347F0FE2945FCEF6 /* BuddyStorage */; };
@@ -76,6 +78,7 @@
 		3B009D5D10454B61E89963C8 /* PersonaController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonaController.swift; sourceTree = "<group>"; };
 		44CB6D9FCE1B00A4A028A4E0 /* BuddyLiveActivityBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddyLiveActivityBundle.swift; sourceTree = "<group>"; };
 		54DD70B9C8F1675EA19A1ABC /* BuiltinCharacters */ = {isa = PBXFileReference; lastKnownFileType = folder; name = BuiltinCharacters; path = ClaudeBuddyBridgeApp/Resources/BuiltinCharacters; sourceTree = SOURCE_ROOT; };
+		5DBDCDEAA68CE32AFFF223CB /* PromptEdgeDetectorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptEdgeDetectorTests.swift; sourceTree = "<group>"; };
 		5F6C622D6CF269E4DBD46366 /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
 		60DE9041705CE3A8112E3A29 /* ClaudeBuddyBridgeAppTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = ClaudeBuddyBridgeAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		63CD167C925FC96F77C8AFB4 /* ClaudeBuddyKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ClaudeBuddyKit; path = Packages/ClaudeBuddyKit; sourceTree = SOURCE_ROOT; };
@@ -90,6 +93,7 @@
 		A4EE341486BD5DAEFD51C47D /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		D618613A515C409CDC70B957 /* SmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokeTests.swift; sourceTree = "<group>"; };
 		ECFFFB7377D3220997A6D987 /* TerminalStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalStyle.swift; sourceTree = "<group>"; };
+		FC93956D619BC517CFEF0E59 /* MiniBuddyGlyphTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniBuddyGlyphTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,6 +225,8 @@
 		EC0F48A47BF1DEE76B5F6C1D /* ClaudeBuddyBridgeAppTests */ = {
 			isa = PBXGroup;
 			children = (
+				FC93956D619BC517CFEF0E59 /* MiniBuddyGlyphTests.swift */,
+				5DBDCDEAA68CE32AFFF223CB /* PromptEdgeDetectorTests.swift */,
 				D618613A515C409CDC70B957 /* SmokeTests.swift */,
 			);
 			path = ClaudeBuddyBridgeAppTests;
@@ -391,6 +397,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE4106E4B4075DA6BD438339 /* MiniBuddyGlyphTests.swift in Sources */,
+				4E7B4AF93BA002C5346F2981 /* PromptEdgeDetectorTests.swift in Sources */,
 				5DBD4C1E40D1D622E8AA77DD /* SmokeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -501,6 +509,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -517,6 +526,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -1,0 +1,47 @@
+import XCTest
+@testable import ClaudeBuddyBridgeApp
+
+/// Ensures every PersonaState slug that the app emits via its Live Activity
+/// payload corresponds to a non-empty glyph in the widget's MiniBuddyView.
+///
+/// The widget target lives in a separate extension, so we mirror its glyph
+/// map here — if the widget adds or removes a case, update both places.
+final class MiniBuddyGlyphTests: XCTestCase {
+    // Source of truth: PersonaState.slug values produced by BuddyPersona.
+    private let expectedSlugs = [
+        "sleep", "idle", "busy", "attention", "celebrate", "dizzy", "heart"
+    ]
+
+    func testEverySlugHasGlyph() {
+        for slug in expectedSlugs {
+            let glyph = miniBuddyGlyph(for: slug)
+            XCTAssertFalse(glyph.isEmpty, "slug \(slug) is missing a glyph")
+        }
+    }
+
+    func testUnknownSlugFallsBackToIdleGlyph() {
+        XCTAssertEqual(miniBuddyGlyph(for: "totally-unknown"), miniBuddyGlyph(for: "idle"))
+    }
+
+    func testDistinctStatesMapToDistinctGlyphs() {
+        var seen = Set<String>()
+        for slug in expectedSlugs {
+            XCTAssertTrue(seen.insert(miniBuddyGlyph(for: slug)).inserted,
+                          "slug \(slug) collides with another state")
+        }
+    }
+}
+
+/// Mirror of the widget-target glyph map. Keep in sync with MiniBuddyView.
+func miniBuddyGlyph(for slug: String) -> String {
+    switch slug {
+    case "sleep": return "😴"
+    case "busy": return "⚡️"
+    case "attention": return "❗️"
+    case "celebrate": return "🎉"
+    case "dizzy": return "💫"
+    case "heart": return "💚"
+    case "idle": return "🙂"
+    default: return "🙂"
+    }
+}

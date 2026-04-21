@@ -7,6 +7,7 @@ import NUSPeripheral
 import BuddyProtocol
 import BuddyStorage
 import BuddyStats
+import BuddyPersona
 
 @MainActor
 final class BridgeAppModel: ObservableObject {
@@ -63,11 +64,15 @@ final class BridgeAppModel: ObservableObject {
             .sink { [weak self] state in
                 self?.connectionState = state
                 guard let self else { return }
+                let slug = self.currentPersonaSlug(connection: state, snapshot: self.snapshot)
+                let preview = self.prompt.map(self.previewFor(prompt:))
                 Task { [snapshot = self.snapshot, hasPrompt = self.prompt != nil] in
                     await self.liveActivityManager.startOrUpdate(
                         state: state,
                         snapshot: snapshot,
-                        hasPrompt: hasPrompt
+                        hasPrompt: hasPrompt,
+                        personaSlug: slug,
+                        messagePreview: preview
                     )
                 }
             }
@@ -129,8 +134,16 @@ final class BridgeAppModel: ObservableObject {
         recordEvent("系统 请求启动广播：\(finalName)")
         refreshFromRuntime()
         started = true
+        let slug = currentPersonaSlug(connection: connectionState, snapshot: snapshot)
+        let preview = prompt.map(previewFor(prompt:))
         Task { [snapshot, prompt] in
-            await liveActivityManager.startOrUpdate(state: connectionState, snapshot: snapshot, hasPrompt: prompt != nil)
+            await liveActivityManager.startOrUpdate(
+                state: connectionState,
+                snapshot: snapshot,
+                hasPrompt: prompt != nil,
+                personaSlug: slug,
+                messagePreview: preview
+            )
         }
     }
 
@@ -219,9 +232,38 @@ final class BridgeAppModel: ObservableObject {
             }
         }
         pushStatusSample()
-        Task {
-            await liveActivityManager.startOrUpdate(state: connectionState, snapshot: newSnapshot, hasPrompt: newPrompt != nil)
+        let slug = currentPersonaSlug(connection: connectionState, snapshot: newSnapshot)
+        let preview = newPrompt.map(previewFor(prompt:))
+        Task { [connectionState, hasPrompt = newPrompt != nil] in
+            await liveActivityManager.startOrUpdate(
+                state: connectionState,
+                snapshot: newSnapshot,
+                hasPrompt: hasPrompt,
+                personaSlug: slug,
+                messagePreview: preview
+            )
         }
+    }
+
+    private func currentPersonaSlug(connection: NUSConnectionState, snapshot: BridgeSnapshot) -> String {
+        let connected: Bool
+        if case .connected = connection { connected = true } else { connected = false }
+        let input = PersonaDeriveInput(
+            connected: connected,
+            sessionsRunning: snapshot.running,
+            sessionsWaiting: snapshot.waiting,
+            recentlyCompleted: recentLevelUp
+        )
+        return derivePersonaState(input).slug
+    }
+
+    private func previewFor(prompt: PromptRequest) -> String {
+        let tool = prompt.tool.trimmingCharacters(in: .whitespacesAndNewlines)
+        let hint = prompt.hint.trimmingCharacters(in: .whitespacesAndNewlines)
+        if tool.isEmpty && hint.isEmpty { return String(localized: "live.alert.body") }
+        if tool.isEmpty { return hint }
+        if hint.isEmpty { return tool }
+        return "\(tool): \(hint)"
     }
 
     private func enableBatteryMonitoring() {

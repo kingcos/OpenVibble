@@ -90,6 +90,7 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: kingcos.me.claude.buddy.bridge.tests
+        GENERATE_INFOPLIST_FILE: YES
 schemes:
   ClaudeBuddyBridgeApp:
     build:
