@@ -39,7 +39,7 @@ public final class CharacterTransferStore {
         } else {
             let appSupport = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
                 ?? URL(fileURLWithPath: NSTemporaryDirectory())
-            self.rootURL = appSupport.appendingPathComponent("ClaudeBuddyBridge", isDirectory: true)
+            self.rootURL = appSupport.appendingPathComponent("OpenVibble", isDirectory: true)
         }
 
         try? fileManager.createDirectory(at: self.rootURL, withIntermediateDirectories: true)

@@ -1,5 +1,5 @@
 import XCTest
-@testable import ClaudeBuddyBridgeApp
+@testable import OpenVibbleApp
 
 /// Ensures every PersonaState slug that the app emits via its Live Activity
 /// payload corresponds to a non-empty glyph in the widget's MiniBuddyView.

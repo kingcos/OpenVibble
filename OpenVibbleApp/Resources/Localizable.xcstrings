@@ -768,18 +768,17 @@
       }
     },
     "info.about.line1" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Claude Buddy Bridge"
+            "value" : "OpenVibble"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Claude Buddy Bridge"
+            "value" : "OpenVibble"
           }
         }
       }

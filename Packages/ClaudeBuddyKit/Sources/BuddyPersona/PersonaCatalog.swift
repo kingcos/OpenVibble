@@ -29,7 +29,7 @@ public struct PersonaCatalog {
         let appSupport = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
             ?? URL(fileURLWithPath: NSTemporaryDirectory())
         return appSupport
-            .appendingPathComponent("ClaudeBuddyBridge", isDirectory: true)
+            .appendingPathComponent("OpenVibble", isDirectory: true)
             .appendingPathComponent("characters", isDirectory: true)
     }
 

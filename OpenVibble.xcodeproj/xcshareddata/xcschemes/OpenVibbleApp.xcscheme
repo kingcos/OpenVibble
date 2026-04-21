@@ -15,10 +15,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "1AC16FB8B8EAB24D691DB17B"
-               BuildableName = "ClaudeBuddyBridgeApp.app"
-               BlueprintName = "ClaudeBuddyBridgeApp"
-               ReferencedContainer = "container:ClaudeBuddyBridge.xcodeproj">
+               BlueprintIdentifier = "89FDE76CCB772B8D0ED90AEA"
+               BuildableName = "OpenVibbleApp.app"
+               BlueprintName = "OpenVibbleApp"
+               ReferencedContainer = "container:OpenVibble.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -29,10 +29,10 @@
             buildForAnalyzing = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "72293D56C1005A2E8D7D917F"
-               BuildableName = "ClaudeBuddyBridgeAppTests.xctest"
-               BlueprintName = "ClaudeBuddyBridgeAppTests"
-               ReferencedContainer = "container:ClaudeBuddyBridge.xcodeproj">
+               BlueprintIdentifier = "3F8ACEF9EAFFF7D2938DCC74"
+               BuildableName = "OpenVibbleAppTests.xctest"
+               BlueprintName = "OpenVibbleAppTests"
+               ReferencedContainer = "container:OpenVibble.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,10 +46,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "1AC16FB8B8EAB24D691DB17B"
-            BuildableName = "ClaudeBuddyBridgeApp.app"
-            BlueprintName = "ClaudeBuddyBridgeApp"
-            ReferencedContainer = "container:ClaudeBuddyBridge.xcodeproj">
+            BlueprintIdentifier = "89FDE76CCB772B8D0ED90AEA"
+            BuildableName = "OpenVibbleApp.app"
+            BlueprintName = "OpenVibbleApp"
+            ReferencedContainer = "container:OpenVibble.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <Testables>
@@ -58,10 +58,10 @@
             parallelizable = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "72293D56C1005A2E8D7D917F"
-               BuildableName = "ClaudeBuddyBridgeAppTests.xctest"
-               BlueprintName = "ClaudeBuddyBridgeAppTests"
-               ReferencedContainer = "container:ClaudeBuddyBridge.xcodeproj">
+               BlueprintIdentifier = "3F8ACEF9EAFFF7D2938DCC74"
+               BuildableName = "OpenVibbleAppTests.xctest"
+               BlueprintName = "OpenVibbleAppTests"
+               ReferencedContainer = "container:OpenVibble.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -82,10 +82,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "1AC16FB8B8EAB24D691DB17B"
-            BuildableName = "ClaudeBuddyBridgeApp.app"
-            BlueprintName = "ClaudeBuddyBridgeApp"
-            ReferencedContainer = "container:ClaudeBuddyBridge.xcodeproj">
+            BlueprintIdentifier = "89FDE76CCB772B8D0ED90AEA"
+            BuildableName = "OpenVibbleApp.app"
+            BlueprintName = "OpenVibbleApp"
+            ReferencedContainer = "container:OpenVibble.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -99,10 +99,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "1AC16FB8B8EAB24D691DB17B"
-            BuildableName = "ClaudeBuddyBridgeApp.app"
-            BlueprintName = "ClaudeBuddyBridgeApp"
-            ReferencedContainer = "container:ClaudeBuddyBridge.xcodeproj">
+            BlueprintIdentifier = "89FDE76CCB772B8D0ED90AEA"
+            BuildableName = "OpenVibbleApp.app"
+            BlueprintName = "OpenVibbleApp"
+            ReferencedContainer = "container:OpenVibble.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -1,5 +1,5 @@
 import XCTest
-@testable import ClaudeBuddyBridgeApp
+@testable import OpenVibbleApp
 
 final class PromptEdgeDetectorTests: XCTestCase {
     func testDetectsRisingEdge() {

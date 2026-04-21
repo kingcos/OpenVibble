@@ -1,4 +1,4 @@
-name: ClaudeBuddyBridge
+name: OpenVibble
 options:
   minimumXcodeGenVersion: 2.40.0
   deploymentTarget:
@@ -13,7 +13,7 @@ configs:
   Release: release
 settings:
   base:
-    PRODUCT_BUNDLE_IDENTIFIER: kingcos.me.claude.buddy.bridge
+    PRODUCT_BUNDLE_IDENTIFIER: kingcos.me.openvibble
     SWIFT_VERSION: 6.0
     DEVELOPMENT_TEAM: ""
     TARGETED_DEVICE_FAMILY: "1,2"
@@ -22,14 +22,14 @@ packages:
   ClaudeBuddyKit:
     path: Packages/ClaudeBuddyKit
 targets:
-  ClaudeBuddyBridgeApp:
+  OpenVibbleApp:
     type: application
     platform: iOS
     sources:
-      - path: ClaudeBuddyBridgeApp
+      - path: OpenVibbleApp
         excludes:
           - "Resources/BuiltinCharacters"
-      - path: ClaudeBuddyBridgeApp/Resources/BuiltinCharacters
+      - path: OpenVibbleApp/Resources/BuiltinCharacters
         type: folder
         buildPhase: resources
     dependencies:
@@ -47,11 +47,11 @@ targets:
         product: BuddyStats
       - package: ClaudeBuddyKit
         product: BuddyUI
-      - target: ClaudeBuddyBridgeLiveActivity
+      - target: OpenVibbleLiveActivity
         embed: true
     settings:
       base:
-        INFOPLIST_KEY_CFBundleDisplayName: Claude Buddy Bridge
+        INFOPLIST_KEY_CFBundleDisplayName: OpenVibble
         INFOPLIST_KEY_NSSupportsLiveActivities: YES
         INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
         INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents: YES
@@ -65,38 +65,38 @@ targets:
           - bluetooth-peripheral
         GENERATE_INFOPLIST_FILE: YES
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
-  ClaudeBuddyBridgeLiveActivity:
+  OpenVibbleLiveActivity:
     type: app-extension
     platform: iOS
     deploymentTarget: "18.0"
     sources:
-      - path: ClaudeBuddyBridgeLiveActivity
+      - path: OpenVibbleLiveActivity
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: kingcos.me.claude.buddy.bridge.liveactivity
+        PRODUCT_BUNDLE_IDENTIFIER: kingcos.me.openvibble.liveactivity
         GENERATE_INFOPLIST_FILE: NO
-        INFOPLIST_FILE: ClaudeBuddyBridgeLiveActivity/Info.plist
+        INFOPLIST_FILE: OpenVibbleLiveActivity/Info.plist
         MARKETING_VERSION: "1.0"
         CURRENT_PROJECT_VERSION: "1"
         SKIP_INSTALL: YES
         APPLICATION_EXTENSION_API_ONLY: YES
-  ClaudeBuddyBridgeAppTests:
+  OpenVibbleAppTests:
     type: bundle.unit-test
     platform: iOS
     sources:
-      - ClaudeBuddyBridgeAppTests
+      - OpenVibbleAppTests
     dependencies:
-      - target: ClaudeBuddyBridgeApp
+      - target: OpenVibbleApp
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: kingcos.me.claude.buddy.bridge.tests
+        PRODUCT_BUNDLE_IDENTIFIER: kingcos.me.openvibble.tests
         GENERATE_INFOPLIST_FILE: YES
 schemes:
-  ClaudeBuddyBridgeApp:
+  OpenVibbleApp:
     build:
       targets:
-        ClaudeBuddyBridgeApp: all
-        ClaudeBuddyBridgeAppTests: [test]
+        OpenVibbleApp: all
+        OpenVibbleAppTests: [test]
     test:
       targets:
-        - ClaudeBuddyBridgeAppTests
+        - OpenVibbleAppTests

@@ -216,7 +216,7 @@ struct SettingsScreen: View {
     private var aboutContent: some View {
         VStack(alignment: .leading, spacing: 10) {
             VStack(alignment: .leading, spacing: 4) {
-                aboutRow("settings.about.app", "Claude Buddy Bridge")
+                aboutRow("settings.about.app", "OpenVibble")
                 aboutRow("settings.about.version", appVersion)
                 aboutRow("settings.about.author", "kingcos")
                 aboutRow("settings.about.language", currentLanguageLabel)

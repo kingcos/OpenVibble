@@ -2,7 +2,7 @@ import SwiftUI
 import BuddyStats
 
 @main
-struct ClaudeBuddyBridgeApp: App {
+struct OpenVibbleApp: App {
     @StateObject private var statsStore: PersonaStatsStore
     @StateObject private var model: BridgeAppModel
     @StateObject private var persona = PersonaController()
