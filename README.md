@@ -12,11 +12,12 @@
 </p>
 
 OpenVibble is an iPhone app that pairs with Claude Desktop over BLE (Nordic UART Service) and acts as a "hardware buddy" on iOS.
-M5Stack dev board still on the way? Start with OpenVibble first.
+
+<p align="center"><strong>M5Stack dev board still on the way? Start with OpenVibble first.</strong></p>
 
 ## Screenshots
 
-| Claude Desktop Connected | iPhone App | Dynamic Island |
+| Claude Desktop Connected | iOS App | Dynamic Island |
 | --- | --- | --- |
 | ![Claude Desktop connected](./docs/readme/connected.png) | ![OpenVibble app main screen](./docs/readme/iphone-main.png) | ![OpenVibble Live Activity in Dynamic Island](./docs/readme/dynamic-island.jpg) |
 
