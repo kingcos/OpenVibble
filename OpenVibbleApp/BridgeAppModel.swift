@@ -142,11 +142,6 @@ final class BridgeAppModel: ObservableObject {
         peripheral.requestAuthorization()
     }
 
-    func restart(displayName: String? = nil, includeServiceUUIDInAdvertisement: Bool = true) {
-        stop()
-        start(displayName: displayName, includeServiceUUIDInAdvertisement: includeServiceUUIDInAdvertisement)
-    }
-
     func stop() {
         guard started else { return }
         peripheral.stop()
@@ -179,10 +174,6 @@ final class BridgeAppModel: ObservableObject {
         responseSent = true
         pushStatusSample()
         return elapsed
-    }
-
-    func clearLevelUpFlag() {
-        recentLevelUp = false
     }
 
     /// Wipes the log surfaces visible in the home log sheet — heartbeat
@@ -313,20 +304,10 @@ final class BridgeAppModel: ObservableObject {
         }
     }
 
-    private func sanitizedDisplayName(_ displayName: String?) -> String? {
-        guard let displayName else { return nil }
-        var trimmed = displayName.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard !trimmed.isEmpty else { return nil }
-        if !trimmed.lowercased().hasPrefix("claude") {
-            trimmed = "Claude-\(trimmed)"
-        }
-        return String(trimmed.prefix(12))
-    }
-
     private func resolvedDisplayName(_ requested: String?) -> String {
         // Claude Desktop 文档要求以 Claude 开头；这里强制固定成 Claude，
         // 最大化发现兼容性（避免因扩展名长度或过滤规则导致扫不到）。
-        _ = sanitizedDisplayName(requested)
+        _ = requested
         return "Claude"
     }
 

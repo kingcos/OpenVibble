@@ -7,12 +7,6 @@ enum TerminalStyle {
     // LCD inks ---------------------------------------------------------------
     static let ink       = Color(red: 0.804, green: 0.910, blue: 0.808)   // #cde8ce
     static let inkDim    = Color(red: 0.435, green: 0.522, blue: 0.443)   // #6f8571
-    static let inkFaint  = Color(red: 0.435, green: 0.522, blue: 0.443).opacity(0.6)
-
-    // Legacy aliases (kept so existing `.foreground/.dim/.faint` call-sites stay green-mint)
-    static let foreground = ink
-    static let dim        = inkDim
-    static let faint      = inkFaint
 
     // LCD backgrounds --------------------------------------------------------
     static let lcdBg      = Color(red: 0.059, green: 0.063, blue: 0.063)  // #0f1010
@@ -40,13 +34,8 @@ enum TerminalStyle {
     static let levelBg    = Color(red: 0.918, green: 0.776, blue: 0.718)  // #eac6b7
     static let levelInk   = Color(red: 0.125, green: 0.122, blue: 0.114)  // #201f1d
 
-    // Device shell colors (the red/orange body around the LCD) ---------------
-    static let shellTop      = Color(red: 1.000, green: 0.553, blue: 0.341)  // #ff8d57
-    static let shellMid      = Color(red: 0.918, green: 0.353, blue: 0.165)  // #ea5a2a
-    static let shellBottom   = Color(red: 0.859, green: 0.259, blue: 0.082)  // #db4215
-    static let shellEdge     = Color(red: 0.098, green: 0.098, blue: 0.090)  // #191917
-    static let shellHighlight = Color.white.opacity(0.12)
-    static let shellShadow   = Color(red: 0.706, green: 0.259, blue: 0.094).opacity(0.55)
+    // Salmon accent still used by onboarding highlights.
+    static let shellBottom = Color(red: 0.859, green: 0.259, blue: 0.082)  // #db4215
 
     static let background = LinearGradient(
         colors: [lcdBg, Color.black],
@@ -55,7 +44,6 @@ enum TerminalStyle {
     )
 
     static let panelFill   = lcdBgHi.opacity(0.72)
-    static let panelStroke = inkDim.opacity(0.45)
 
     static func mono(_ size: CGFloat, weight: Font.Weight = .regular) -> Font {
         .system(size: size, weight: weight, design: .monospaced)
@@ -94,88 +82,6 @@ struct ScanlineOverlay: View {
         }
         .ignoresSafeArea()
         .allowsHitTesting(false)
-    }
-}
-
-// MARK: - Device shell (the orange/red M5-style body wrapping the LCD)
-
-struct DeviceShell<Content: View>: View {
-    @ViewBuilder var content: Content
-
-    var body: some View {
-        GeometryReader { proxy in
-            let w = proxy.size.width
-            let h = proxy.size.height
-            ZStack {
-                // Outer body: rounded orange gradient like the h5 `.device`.
-                RoundedRectangle(cornerRadius: 28, style: .continuous)
-                    .fill(
-                        LinearGradient(
-                            colors: [
-                                TerminalStyle.shellTop,
-                                TerminalStyle.shellMid,
-                                TerminalStyle.shellBottom
-                            ],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 28, style: .continuous)
-                            .stroke(TerminalStyle.shellEdge, lineWidth: 3)
-                    )
-                    .overlay(alignment: .top) {
-                        // Subtle highlight at the top of the shell.
-                        RoundedRectangle(cornerRadius: 24, style: .continuous)
-                            .fill(TerminalStyle.shellHighlight)
-                            .frame(height: max(8, h * 0.06))
-                            .padding(.horizontal, 14)
-                            .padding(.top, 8)
-                            .blur(radius: 6)
-                    }
-                    .overlay(alignment: .bottom) {
-                        // Embossed "M5" style badge at the bottom of the shell.
-                        Text("M5")
-                            .font(.system(size: 22, weight: .heavy, design: .rounded))
-                            .foregroundStyle(TerminalStyle.shellBottom.opacity(0.85))
-                            .shadow(color: .white.opacity(0.18), radius: 0, x: 0, y: 1)
-                            .padding(.bottom, max(14, h * 0.035))
-                    }
-                    .shadow(color: TerminalStyle.shellShadow, radius: 14, x: 0, y: 12)
-
-                // Side rocker button on the right edge, echoing h5's `.btn-b`.
-                Capsule()
-                    .fill(TerminalStyle.shellBottom)
-                    .frame(width: 5, height: 42)
-                    .overlay(Capsule().stroke(TerminalStyle.shellEdge, lineWidth: 1.5))
-                    .offset(x: w / 2 - 1, y: -h * 0.18)
-
-                // LCD inset: positioned in the upper ~80% of the shell.
-                VStack(spacing: 0) {
-                    LCDFrame { content }
-                        .padding(.top, max(18, h * 0.03))
-                        .padding(.horizontal, max(18, w * 0.05))
-                    Spacer(minLength: max(60, h * 0.10))
-                }
-            }
-        }
-    }
-}
-
-/// Dark LCD pane — black fill, thin dark border, mint-green ink inside.
-struct LCDFrame<Content: View>: View {
-    @ViewBuilder var content: Content
-
-    var body: some View {
-        content
-            .padding(10)
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-            .background(TerminalStyle.lcdBg)
-            .overlay(
-                RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .stroke(Color.black, lineWidth: 2)
-            )
-            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
     }
 }
 
@@ -234,27 +140,6 @@ struct TerminalHeaderButtonStyle: ButtonStyle {
             .overlay(
                 RoundedRectangle(cornerRadius: 6)
                     .stroke(TerminalStyle.inkDim.opacity(0.55), lineWidth: 1)
-            )
-    }
-}
-
-struct TerminalActionButtonStyle: ButtonStyle {
-    let foreground: Color
-    let background: Color
-
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label
-            .font(TerminalStyle.mono(12, weight: .semibold))
-            .foregroundStyle(foreground)
-            .padding(.horizontal, 12)
-            .padding(.vertical, 8)
-            .background(
-                background.opacity(configuration.isPressed ? 0.8 : 1.0),
-                in: RoundedRectangle(cornerRadius: 8)
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(.black.opacity(0.35), lineWidth: 1)
             )
     }
 }
