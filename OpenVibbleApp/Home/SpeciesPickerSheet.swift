@@ -17,7 +17,7 @@ struct SpeciesPickerSheet: View {
 
                     TerminalPanel("species.panel.builtin") {
                         VStack(spacing: 6) {
-                            rowButton(titleKey: "species.ascii.cat", subtitle: nil, id: .asciiCat)
+                            asciiRowButton
                             ForEach(builtin) { persona in
                                 rowButton(
                                     title: persona.manifest.name.capitalized,
@@ -69,6 +69,19 @@ struct SpeciesPickerSheet: View {
         String(format: String(localized: "species.subtitle.states"), count)
     }
 
+    private var asciiRowButton: some View {
+        Button {
+            selectOrCycleASCII()
+        } label: {
+            rowBody(
+                titleView: Text("ASCII"),
+                subtitle: "ASCII \(currentASCIISpeciesLabel)",
+                selected: isASCIISelection(selection)
+            )
+        }
+        .buttonStyle(.plain)
+    }
+
     private func rowButton(titleKey: LocalizedStringKey, subtitle: String?, id: PersonaSpeciesID) -> some View {
         Button {
             selection = id
@@ -77,6 +90,39 @@ struct SpeciesPickerSheet: View {
             rowBody(titleView: Text(titleKey), subtitle: subtitle, selected: id == selection)
         }
         .buttonStyle(.plain)
+    }
+
+    private func selectOrCycleASCII() {
+        if isASCIISelection(selection) {
+            AsciiPetCycler.next()
+            selection = PersonaSelection.load()
+            return
+        }
+        selection = .asciiSpecies(idx: 4)
+        PersonaSelection.save(selection)
+    }
+
+    private func isASCIISelection(_ id: PersonaSpeciesID) -> Bool {
+        switch id {
+        case .asciiCat, .asciiSpecies:
+            return true
+        case .builtin, .installed:
+            return false
+        }
+    }
+
+    private var currentASCIISpeciesLabel: String {
+        switch selection {
+        case .asciiCat:
+            return "Cat"
+        case .asciiSpecies(let idx):
+            if let name = PersonaSpeciesCatalog.name(at: idx) {
+                return name.capitalized
+            }
+            return "#\(idx)"
+        case .builtin, .installed:
+            return "Cat"
+        }
     }
 
     private func rowButton(title: String, subtitle: String, id: PersonaSpeciesID) -> some View {

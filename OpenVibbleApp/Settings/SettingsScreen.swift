@@ -357,10 +357,10 @@ struct SettingsScreen: View {
     private var currentSpeciesLabel: String {
         switch selection {
         case .asciiCat:
-            return String(localized: "species.ascii.cat")
+            return "ASCII"
         case .asciiSpecies(let idx):
             if let name = PersonaSpeciesCatalog.name(at: idx) {
-                return "ASCII \(name)"
+                return "ASCII (\(name.capitalized))"
             }
             return "ASCII #\(idx)"
         case .builtin(let name), .installed(let name):

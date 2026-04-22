@@ -1104,7 +1104,11 @@ private struct PetBody: View {
     }
 
     private var bridgeLevel: UInt8 {
-        UInt8(min(UInt32(UInt8.max), bridgeTokens / PersonaStats.tokensPerLevel))
+        let bridgeDerived = UInt8(min(UInt32(UInt8.max), bridgeTokens / PersonaStats.tokensPerLevel))
+        // Cold-launch can briefly show snapshot tokens as 0 until the first
+        // heartbeat arrives. Keep the badge from regressing by honoring the
+        // highest known level between bridge snapshot and persisted stats.
+        return max(bridgeDerived, stats.stats.level)
     }
 
     private func formatTokens(_ v: UInt32) -> String {
