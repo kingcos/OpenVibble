@@ -174,8 +174,8 @@ struct HomeScreen: View {
         .onChange(of: navigation.pendingRoute) { _, route in
             guard let route else { return }
             switch route {
-            case .pet:
-                withAnimation { mode = .pet }
+            case .status:
+                withAnimation { mode = .normal }
             }
             navigation.pendingRoute = nil
         }

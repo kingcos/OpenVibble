@@ -6,6 +6,8 @@ struct SettingsTab: View {
     @State private var testPanelExpanded = false
 
     private let repoURL = URL(string: "https://github.com/kingcos/OpenVibble")!
+    private let authorURL = URL(string: "https://github.com/kingcos")!
+    private let authorXURL = URL(string: "https://x.com/kingcos_v")!
 
     var body: some View {
         ScrollView {
@@ -25,17 +27,28 @@ struct SettingsTab: View {
             TestPanelTab()
                 .padding(.top, 8)
         } label: {
+            // Tap anywhere on the row (not just the chevron) to toggle.
             LText("desktop.tab.testPanel")
                 .font(.headline)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    withAnimation(.easeInOut(duration: 0.15)) {
+                        testPanelExpanded.toggle()
+                    }
+                }
         }
         .padding(.horizontal, 2)
     }
 
     private var hero: some View {
         HStack(spacing: 14) {
-            Image(systemName: "dot.radiowaves.left.and.right")
-                .font(.system(size: 40, weight: .regular))
-                .foregroundStyle(.tint)
+            // Use the bundle's actual app icon instead of an SF Symbol so the
+            // About screen mirrors what users see in Finder/Dock.
+            appIconImage
+                .resizable()
+                .interpolation(.high)
+                .aspectRatio(contentMode: .fit)
                 .frame(width: 56, height: 56)
             VStack(alignment: .leading, spacing: 3) {
                 Text(appName)
@@ -76,40 +89,61 @@ struct SettingsTab: View {
     private var aboutSection: some View {
         GroupBox(label: LText("desktop.settings.about")) {
             VStack(alignment: .leading, spacing: 8) {
-                infoRow(labelKey: "desktop.about.author", value: "kingcos")
-                HStack(alignment: .firstTextBaseline) {
-                    LText("desktop.about.repo")
-                        .foregroundStyle(.secondary)
-                        .frame(width: 90, alignment: .leading)
+                // Author: clickable Link to kingcos's GitHub profile, with
+                // a trailing "(X)" link pointing at the @kingcos_v X account.
+                labeledRow("desktop.about.author") {
+                    HStack(spacing: 6) {
+                        Link(destination: authorURL) {
+                            Text("kingcos")
+                                .font(.system(.body, design: .monospaced))
+                        }
+                        Link(destination: authorXURL) {
+                            Text("(X)")
+                                .font(.system(.body, design: .monospaced))
+                        }
+                    }
+                }
+                // Repo: clickable Link; wrap long URL onto multiple lines.
+                labeledRow("desktop.about.repo") {
                     Link(destination: repoURL) {
                         Text(repoURL.absoluteString)
                             .font(.system(.body, design: .monospaced))
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
-                    Spacer()
                 }
-                infoRow(labelKey: "desktop.about.license", value: "Apache-2.0")
+                // License: plain text, selectable so it can be copied.
+                labeledRow("desktop.about.license") {
+                    Text("Apache-2.0")
+                        .font(.system(.body, design: .monospaced))
+                        .textSelection(.enabled)
+                }
             }
             .padding(.vertical, 4)
             .frame(maxWidth: .infinity, alignment: .leading)
+            // Selecting plain text in the section (version, author, license
+            // values) is enabled per-element; this lets users copy the label
+            // key labels as well since many reference the same layout.
+            .textSelection(.enabled)
         }
     }
 
-    private func infoRow(labelKey: String, value: String) -> some View {
+    /// Shared row layout: localized label on the left, arbitrary content on
+    /// the right. Right side is allowed to wrap vertically.
+    private func labeledRow<Content: View>(_ labelKey: String, @ViewBuilder content: () -> Content) -> some View {
         HStack(alignment: .firstTextBaseline) {
             LText(labelKey)
                 .foregroundStyle(.secondary)
                 .frame(width: 90, alignment: .leading)
-            Text(value)
-                .font(.system(.body, design: .monospaced))
-                .textSelection(.enabled)
-            Spacer()
+            content()
+                .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
 
     private var appName: String {
         Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String
             ?? Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String
-            ?? "OpenVibbleDesktop"
+            ?? "OpenVibble Desktop"
     }
 
     private var shortVersion: String {
@@ -118,5 +152,17 @@ struct SettingsTab: View {
 
     private var buildNumber: String {
         Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "0"
+    }
+
+    /// Loads the running app's icon. NSApp.applicationIconImage is populated
+    /// once the bundle is registered with LaunchServices; for safety we fall
+    /// back to the AppIcon asset or a generic SF Symbol when unavailable
+    /// (e.g. SwiftUI preview, unsigned build).
+    private var appIconImage: Image {
+        let ns = NSApp?.applicationIconImage
+            ?? NSImage(named: "AppIcon")
+            ?? NSImage(systemSymbolName: "app.fill", accessibilityDescription: nil)
+            ?? NSImage()
+        return Image(nsImage: ns)
     }
 }

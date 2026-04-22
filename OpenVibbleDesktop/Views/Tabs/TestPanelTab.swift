@@ -233,14 +233,15 @@ struct TestPanelTab: View {
             }
         ) {
             ScrollView {
-                VStack(alignment: .leading, spacing: 2) {
-                    ForEach(state.activityLog.indices, id: \.self) { index in
-                        Text(state.activityLog[index])
-                            .font(.system(.caption, design: .monospaced))
-                            .foregroundStyle(.secondary)
-                    }
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
+                // Concatenate all entries into a single Text so selection can
+                // sweep across multiple rows (one Text = one selection unit).
+                // ForEach rendered each entry as a separate Text, which made
+                // dragging a selection across rows impossible.
+                Text(state.activityLog.joined(separator: "\n"))
+                    .font(.system(.caption, design: .monospaced))
+                    .foregroundStyle(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .textSelection(.enabled)
             }
             .frame(height: 140)
         }

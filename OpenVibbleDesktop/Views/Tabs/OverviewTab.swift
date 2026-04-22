@@ -26,21 +26,14 @@ struct OverviewTab: View {
                     if state.hookActivity.recent.isEmpty {
                         LText("desktop.hooks.empty").foregroundStyle(.secondary)
                     } else {
-                        VStack(alignment: .leading, spacing: 4) {
-                            ForEach(state.hookActivity.recent.prefix(5)) { entry in
-                                HStack {
-                                    Text(entry.event.rawValue)
-                                        .font(.caption.weight(.semibold))
-                                    if let p = entry.projectName {
-                                        Text("[\(p)]").font(.caption).foregroundStyle(.secondary)
-                                    }
-                                    Spacer()
-                                    Text(relative(entry.firedAt))
-                                        .font(.caption)
-                                        .foregroundStyle(.tertiary)
-                                }
-                            }
-                        }
+                        // All rows are concatenated into ONE Text so selection
+                        // can sweep across rows. Each per-field Text keeps its
+                        // own style via Text("…").font(…).foregroundStyle(…)
+                        // because Text + Text preserves styled runs.
+                        recentHooksText
+                            .font(.caption)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .textSelection(.enabled)
                     }
                 }
             }
@@ -89,5 +82,23 @@ struct OverviewTab: View {
         let fmt = RelativeDateTimeFormatter()
         fmt.unitsStyle = .short
         return fmt.localizedString(for: date, relativeTo: Date())
+    }
+
+    /// Builds one compound Text from the 5 most recent hook entries, joined
+    /// by newlines, so the whole thing is a single selection unit. Per-field
+    /// styling (bold event name, secondary project tag, tertiary timestamp)
+    /// is preserved via Text + Text run concatenation.
+    private var recentHooksText: Text {
+        let entries = Array(state.hookActivity.recent.prefix(5))
+        var line = 0
+        return entries.reduce(Text("")) { acc, entry in
+            var row = Text(entry.event.rawValue).fontWeight(.semibold)
+            if let p = entry.projectName {
+                row = row + Text(" [\(p)]").foregroundStyle(.secondary)
+            }
+            row = row + Text("  ") + Text(relative(entry.firedAt)).foregroundStyle(.tertiary)
+            defer { line += 1 }
+            return line == 0 ? row : acc + Text("\n") + row
+        }
     }
 }

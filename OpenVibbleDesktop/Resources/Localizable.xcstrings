@@ -1,8 +1,36 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "[%@]" : {
+    "" : {
 
+    },
+    "\n" : {
+
+    },
+    "  " : {
+
+    },
+    "  [%@]" : {
+
+    },
+    "  %@" : {
+
+    },
+    " [%@]" : {
+
+    },
+    "(X)" : {
+
+    },
+    "%@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$@"
+          }
+        }
+      }
     },
     "%@: %@" : {
       "localizations" : {
@@ -17,141 +45,8 @@
     "~/.claude/openvibble.port" : {
 
     },
-    "desktop.overview.hooksCTA.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hooks not registered"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hooks 尚未注册"
-          }
-        }
-      }
-    },
-    "desktop.overview.hooksCTA.desc" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Claude Code won't forward events to OpenVibble until you register hooks in ~/.claude/settings.json. This is reversible."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Claude Code 需要在 ~/.claude/settings.json 注册 hooks 后才会把事件转发给 OpenVibble。该操作可随时撤销。"
-          }
-        }
-      }
-    },
-    "desktop.bt.off" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bluetooth is off"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "蓝牙已关闭"
-          }
-        }
-      }
-    },
-    "desktop.bt.on" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bluetooth is on"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "蓝牙已开启"
-          }
-        }
-      }
-    },
-    "desktop.bt.unauth" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bluetooth permission denied"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "蓝牙权限被拒绝"
-          }
-        }
-      }
-    },
-    "desktop.bt.unsupported" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bluetooth not supported"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "此设备不支持蓝牙"
-          }
-        }
-      }
-    },
-    "desktop.bt.resetting" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bluetooth resetting"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "蓝牙正在重置"
-          }
-        }
-      }
-    },
-    "desktop.bt.unknown" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bluetooth state unknown"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "蓝牙状态未知"
-          }
-        }
-      }
+    "Apache-2.0" : {
+
     },
     "desktop.about" : {
       "extractionState" : "stale",
@@ -193,13 +88,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open source under Apache-2.0"
+            "value" : "License"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "基于 Apache-2.0 开源"
+            "value" : "协议"
           }
         }
       }
@@ -227,13 +122,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "An open-source desktop companion for Claude iOS Buddy."
+            "value" : "The open-source desktop side of OpenVibble."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "为 Claude iOS Buddy 打造的开源桌面端。"
+            "value" : "OpenVibble 的开源桌面端。"
           }
         }
       }
@@ -287,66 +182,6 @@
             "value" : "清空"
           }
         }
-      }
-    },
-    "desktop.preset.title" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Heartbeat presets" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "心跳预设" } }
-      }
-    },
-    "desktop.preset.idle" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Idle" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "空闲心跳" } }
-      }
-    },
-    "desktop.preset.busy" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Busy" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "忙碌中" } }
-      }
-    },
-    "desktop.preset.attention" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Await approval" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "等待审批" } }
-      }
-    },
-    "desktop.preset.done" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Turn done" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "回合完成" } }
-      }
-    },
-    "desktop.preset.clearPrompt" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Clear prompt" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "清除审批" } }
-      }
-    },
-    "desktop.preset.tokenUp" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "+50000 tokens" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "+50000 token" } }
-      }
-    },
-    "desktop.raw.title" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Custom NDJSON" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "自定义 NDJSON" } }
-      }
-    },
-    "desktop.raw.hint" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "One JSON object per line. Sent as-is over NUS." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "每行一个 JSON 对象,直接通过 NUS 发送。" } }
-      }
-    },
-    "desktop.raw.send" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Send" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "发送" } }
       }
     },
     "desktop.battery" : {
@@ -508,13 +343,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OpenVibbleDesktop bridges local HTTP events to the iOS buddy over Bluetooth. Any agent that can POST JSON to localhost can integrate."
+            "value" : "OpenVibble Desktop bridges local HTTP events to the iOS buddy over Bluetooth. Any agent that can POST JSON to localhost can integrate."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OpenVibbleDesktop 通过本地 HTTP 把事件桥接到蓝牙桌宠。任何能向本机 POST JSON 的 agent 都可接入。"
+            "value" : "OpenVibble Desktop 通过本地 HTTP 把事件桥接到蓝牙桌宠。任何能向本机 POST JSON 的 agent 都可接入。"
           }
         }
       }
@@ -566,6 +401,108 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "令牌"
+          }
+        }
+      }
+    },
+    "desktop.bt.off" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bluetooth is off"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "蓝牙已关闭"
+          }
+        }
+      }
+    },
+    "desktop.bt.on" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bluetooth is on"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "蓝牙已开启"
+          }
+        }
+      }
+    },
+    "desktop.bt.resetting" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bluetooth resetting"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "蓝牙正在重置"
+          }
+        }
+      }
+    },
+    "desktop.bt.unauth" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bluetooth permission denied"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "蓝牙权限被拒绝"
+          }
+        }
+      }
+    },
+    "desktop.bt.unknown" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bluetooth state unknown"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "蓝牙状态未知"
+          }
+        }
+      }
+    },
+    "desktop.bt.unsupported" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bluetooth not supported"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此设备不支持蓝牙"
           }
         }
       }
@@ -1131,6 +1068,40 @@
         }
       }
     },
+    "desktop.hooks.permissionRequest.desc" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When Claude Code needs your approval. Blocks up to 30s waiting for your decision from the buddy."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Code 请求权限时触发，最多阻塞 30 秒等待桌宠侧的决策。"
+          }
+        }
+      }
+    },
+    "desktop.hooks.permissionRequest.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PermissionRequest"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "权限请求"
+          }
+        }
+      }
+    },
     "desktop.hooks.petState" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1182,90 +1153,6 @@
         }
       }
     },
-    "desktop.hooks.permissionRequest.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "PermissionRequest" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "权限请求" } }
-      }
-    },
-    "desktop.hooks.permissionRequest.desc" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "When Claude Code needs your approval. Blocks up to 30s waiting for your decision from the buddy." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "Claude Code 请求权限时触发，最多阻塞 30 秒等待桌宠侧的决策。" } }
-      }
-    },
-    "desktop.hooks.stopFailure.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "StopFailure" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "异常结束" } }
-      }
-    },
-    "desktop.hooks.stopFailure.desc" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "When a turn ends due to an API error." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "因 API 错误等原因导致本轮对话异常结束。" } }
-      }
-    },
-    "desktop.hooks.sessionStart.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "SessionStart" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "会话开始" } }
-      }
-    },
-    "desktop.hooks.sessionStart.desc" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "When a new Claude Code session begins or resumes." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "新的 Claude Code 会话开启或恢复时触发。" } }
-      }
-    },
-    "desktop.hooks.sessionEnd.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "SessionEnd" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "会话结束" } }
-      }
-    },
-    "desktop.hooks.sessionEnd.desc" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "When a Claude Code session terminates." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "Claude Code 会话终止时触发。" } }
-      }
-    },
-    "desktop.hooks.subagentStart.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "SubagentStart" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "子代理开始" } }
-      }
-    },
-    "desktop.hooks.subagentStart.desc" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "When a subagent spawns. Great signal for parallel work." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "子代理启动时触发，常用于并行任务信号。" } }
-      }
-    },
-    "desktop.hooks.subagentStop.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "SubagentStop" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "子代理结束" } }
-      }
-    },
-    "desktop.hooks.subagentStop.desc" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "When a subagent finishes." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "子代理结束时触发。" } }
-      }
-    },
     "desktop.hooks.register" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -1279,6 +1166,74 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "注册 hooks"
+          }
+        }
+      }
+    },
+    "desktop.hooks.sessionEnd.desc" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When a Claude Code session terminates."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Code 会话终止时触发。"
+          }
+        }
+      }
+    },
+    "desktop.hooks.sessionEnd.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SessionEnd"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "会话结束"
+          }
+        }
+      }
+    },
+    "desktop.hooks.sessionStart.desc" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When a new Claude Code session begins or resumes."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新的 Claude Code 会话开启或恢复时触发。"
+          }
+        }
+      }
+    },
+    "desktop.hooks.sessionStart.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SessionStart"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "会话开始"
           }
         }
       }
@@ -1364,6 +1319,108 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "回合结束"
+          }
+        }
+      }
+    },
+    "desktop.hooks.stopFailure.desc" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When a turn ends due to an API error."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "因 API 错误等原因导致本轮对话异常结束。"
+          }
+        }
+      }
+    },
+    "desktop.hooks.stopFailure.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "StopFailure"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "异常结束"
+          }
+        }
+      }
+    },
+    "desktop.hooks.subagentStart.desc" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When a subagent spawns. Great signal for parallel work."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "子代理启动时触发，常用于并行任务信号。"
+          }
+        }
+      }
+    },
+    "desktop.hooks.subagentStart.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SubagentStart"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "子代理开始"
+          }
+        }
+      }
+    },
+    "desktop.hooks.subagentStop.desc" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "When a subagent finishes."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "子代理结束时触发。"
+          }
+        }
+      }
+    },
+    "desktop.hooks.subagentStop.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SubagentStop"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "子代理结束"
           }
         }
       }
@@ -1663,13 +1720,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Quit OpenVibbleDesktop"
+            "value" : "Quit OpenVibble Desktop"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "退出 OpenVibbleDesktop"
+            "value" : "退出 OpenVibble Desktop"
           }
         }
       }
@@ -1708,6 +1765,23 @@
         }
       }
     },
+    "desktop.menu.settings" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设置…"
+          }
+        }
+      }
+    },
     "desktop.menu.summary.connected" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1738,6 +1812,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "正在扫描…"
+          }
+        }
+      }
+    },
+    "desktop.overview.hooksCTA.desc" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Code won't forward events to OpenVibble until you register hooks in ~/.claude/settings.json. This is reversible."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Code 需要在 ~/.claude/settings.json 注册 hooks 后才会把事件转发给 OpenVibble。该操作可随时撤销。"
+          }
+        }
+      }
+    },
+    "desktop.overview.hooksCTA.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hooks not registered"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hooks 尚未注册"
           }
         }
       }
@@ -1942,6 +2050,176 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "角色包名称"
+          }
+        }
+      }
+    },
+    "desktop.preset.attention" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Await approval"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "等待审批"
+          }
+        }
+      }
+    },
+    "desktop.preset.busy" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Busy"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "忙碌中"
+          }
+        }
+      }
+    },
+    "desktop.preset.clearPrompt" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clear prompt"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "清除审批"
+          }
+        }
+      }
+    },
+    "desktop.preset.done" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Turn done"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "回合完成"
+          }
+        }
+      }
+    },
+    "desktop.preset.idle" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Idle"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "空闲心跳"
+          }
+        }
+      }
+    },
+    "desktop.preset.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Heartbeat presets"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "心跳预设"
+          }
+        }
+      }
+    },
+    "desktop.preset.tokenUp" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+50000 tokens"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "+50000 token"
+          }
+        }
+      }
+    },
+    "desktop.raw.hint" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "One JSON object per line. Sent as-is over NUS."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "每行一个 JSON 对象,直接通过 NUS 发送。"
+          }
+        }
+      }
+    },
+    "desktop.raw.send" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "发送"
+          }
+        }
+      }
+    },
+    "desktop.raw.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom NDJSON"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自定义 NDJSON"
           }
         }
       }
@@ -2417,7 +2695,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "钩子"
+            "value" : "Hooks"
           }
         }
       }
@@ -2506,6 +2784,9 @@
           }
         }
       }
+    },
+    "kingcos" : {
+
     }
   },
   "version" : "1.0"

@@ -1,5 +1,9 @@
 import SwiftUI
 
+// Legacy "About" sheet. Superseded by the About section inside SettingsTab;
+// the dedicated About window scene was removed when the menu bar was
+// redirected to the Settings tab. Left in the target because removing it
+// from the Xcode project requires pbxproj surgery; safe to delete later.
 struct AboutSheet: View {
     @ObservedObject private var l10n = LocalizationManager.shared
     @Environment(\.dismiss) private var dismiss
@@ -75,7 +79,7 @@ struct AboutSheet: View {
     private var appName: String {
         Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String
             ?? Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String
-            ?? "OpenVibbleDesktop"
+            ?? "OpenVibble Desktop"
     }
 
     private var shortVersion: String {

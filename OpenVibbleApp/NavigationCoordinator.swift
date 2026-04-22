@@ -7,7 +7,7 @@ import Combine
 @MainActor
 final class NavigationCoordinator: ObservableObject {
     enum Route: Equatable {
-        case pet
+        case status
     }
 
     @Published var pendingRoute: Route?
@@ -16,7 +16,7 @@ final class NavigationCoordinator: ObservableObject {
         guard url.scheme == "openvibble" else { return }
         switch url.host {
         case "status":
-            pendingRoute = .pet
+            pendingRoute = .status
         default:
             break
         }

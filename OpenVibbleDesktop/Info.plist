@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>OpenVibbleDesktop</string>
+	<string>OpenVibble Desktop</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -26,9 +26,7 @@
 	<string>public.app-category.developer-tools</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>14.0</string>
-	<key>LSUIElement</key>
-	<true/>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>OpenVibbleDesktop uses Bluetooth to connect to your OpenVibble device.</string>
+	<string>OpenVibble Desktop uses Bluetooth to connect to your OpenVibble device.</string>
 </dict>
 </plist>

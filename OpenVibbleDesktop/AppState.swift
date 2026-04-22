@@ -75,6 +75,14 @@ final class AppState: ObservableObject {
     private var bridgeServer: HookBridgeServer?
     private var bridgeStartTask: Task<Void, Never>?
 
+    /// Rolling cache of synthesized hook-event log lines we ship to iOS in each
+    /// outbound heartbeat's `entries` field. Newest first. iOS's
+    /// `BridgeAppModel.mergeParsedEntries` uses a 16-entry dedup window, so we
+    /// keep the cache slightly larger than that to survive the window but not
+    /// so large that a single heartbeat balloons in size.
+    private var recentHookLines: [String] = []
+    private static let recentHookLinesCap = 20
+
     init() {
         central.$connectionState
             .receive(on: DispatchQueue.main)
@@ -483,6 +491,11 @@ final class AppState: ObservableObject {
             projectName: project,
             toolName: payload.toolName
         ))
+        // Stamp the event into the rolling log too so iOS sees it in the
+        // parsed log even before the user decides. `pushPromptToPeripheral`
+        // ships `recentHookLines` via `entries`, so iOS picks it up on the
+        // same BLE write.
+        appendHookLine(event: .permissionRequest, projectName: project, toolName: payload.toolName)
         pushPromptToPeripheral(state)
     }
 
@@ -498,7 +511,11 @@ final class AppState: ObservableObject {
             running: base?.running ?? 0,
             waiting: (base?.waiting ?? 0) + (promptInfo == nil ? 0 : 1),
             msg: promptInfo == nil ? "cleared" : "pending",
-            entries: base?.entries ?? [],
+            // Ship our rolling hook-event log instead of echoing the last
+            // inbound heartbeat's entries — iOS reads `entries` into its
+            // parsed-log accumulator, so we want our lines to ride every
+            // outbound snapshot.
+            entries: recentHookLines,
             tokens: base?.tokens,
             tokensToday: base?.tokensToday,
             prompt: promptInfo,
@@ -511,6 +528,43 @@ final class AppState: ObservableObject {
         let projectName = Self.extractCwd(from: body).flatMap { HookEvent.projectName(fromCwd: $0) }
         hookActivity.append(HookActivityEntry(event: event, projectName: projectName))
         appendLog("[hook] \(event.rawValue) [\(projectName ?? "?")]")
+        appendHookLine(event: event, projectName: projectName, toolName: nil)
+        pushHookSnapshotToPeripheral()
+    }
+
+    /// Prepends one "HH:mm:ss event [project] tool" line into `recentHookLines`
+    /// and trims to the cap. iOS parses the leading "HH:mm:ss" token as the
+    /// time column and the rest as the message — same format as the embedded
+    /// device already uses on its own heartbeat entries.
+    private func appendHookLine(event: HookEvent, projectName: String?, toolName: String?) {
+        let stamp = DateFormatter.logStamp.string(from: Date())
+        var line = "\(stamp) \(event.rawValue)"
+        if let project = projectName { line += " [\(project)]" }
+        if let tool = toolName { line += " \(tool)" }
+        recentHookLines.insert(line, at: 0)
+        if recentHookLines.count > Self.recentHookLinesCap {
+            recentHookLines.removeLast(recentHookLines.count - Self.recentHookLinesCap)
+        }
+    }
+
+    /// Fire-and-forget events don't have a pending-prompt to attach, so we
+    /// still need to push a heartbeat carrying the new log line. Preserve the
+    /// last-known counters/prompt from the inbound heartbeat so we don't
+    /// overwrite state the iOS side already has.
+    private func pushHookSnapshotToPeripheral() {
+        let base = heartbeat
+        let snapshot = HeartbeatSnapshot(
+            total: base?.total ?? 0,
+            running: base?.running ?? 0,
+            waiting: base?.waiting ?? 0,
+            msg: base?.msg ?? "hook",
+            entries: recentHookLines,
+            tokens: base?.tokens,
+            tokensToday: base?.tokensToday,
+            prompt: base?.prompt,
+            completed: base?.completed ?? false
+        )
+        _ = central.sendEncodable(snapshot)
     }
 
     private static func extractCwd(from body: Data) -> String? {

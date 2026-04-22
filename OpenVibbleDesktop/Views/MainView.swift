@@ -4,10 +4,11 @@ import AppKit
 struct MainView: View {
     @EnvironmentObject private var state: AppState
     @ObservedObject private var l10n = LocalizationManager.shared
-    @State private var selection: Tab = .overview
+    @State private var selection: Tab = .hooks
     @State private var showScanSheet = false
 
-    enum Tab: Hashable { case overview, hooks, bridge, settings }
+    // Overview was folded into the Hooks tab, so the enum no longer lists it.
+    enum Tab: Hashable { case hooks, bridge, settings }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -16,9 +17,6 @@ struct MainView: View {
                 .padding(.vertical, 12)
             Divider()
             TabView(selection: $selection) {
-                OverviewTab()
-                    .tabItem { Label { LText("desktop.tab.overview") } icon: { Image(systemName: "gauge") } }
-                    .tag(Tab.overview)
                 HooksTab()
                     .tabItem { Label { LText("desktop.tab.hooks") } icon: { Image(systemName: "link") } }
                     .tag(Tab.hooks)
@@ -33,6 +31,9 @@ struct MainView: View {
         .environment(\.localizationBundle, l10n.bundle)
         .sheet(isPresented: $showScanSheet) {
             ScanSheet().environmentObject(state).environment(\.localizationBundle, l10n.bundle)
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .openVibbleSelectTab)) { note in
+            if let tab = note.object as? Tab { selection = tab }
         }
     }
 }
