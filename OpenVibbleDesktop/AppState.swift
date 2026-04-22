@@ -201,6 +201,8 @@ final class AppState: ObservableObject {
                 statusSnapshot = parseStatus(payload)
             }
             appendLog("[recv] ack=\(ack.ack) ok=\(ack.ok) err=\(ack.error ?? "-")")
+        case .permission(let cmd):
+            appendLog("[recv] permission id=\(cmd.id) decision=\(cmd.decision)")
         case .unknown(let raw):
             appendLog("[recv] unknown \(raw.prefix(120))")
         }
