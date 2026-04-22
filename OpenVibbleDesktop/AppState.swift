@@ -83,6 +83,15 @@ final class AppState: ObservableObject {
     private var recentHookLines: [String] = []
     private static let recentHookLinesCap = 20
 
+    /// Per-session lifecycle derived from Claude Code hooks. SessionStart /
+    /// UserPromptSubmit / Stop / SessionEnd drive this, and every outbound
+    /// hook-heartbeat ships counts computed from here instead of echoing the
+    /// firmware's `running`/`total` — the firmware doesn't know about Claude
+    /// sessions, the desktop does. PermissionRequest stays out of this map
+    /// because it's tracked per-request via `pendingApproval`.
+    private enum SessionState { case idle, running }
+    private var sessions: [String: SessionState] = [:]
+
     init() {
         central.$connectionState
             .receive(on: DispatchQueue.main)
@@ -485,6 +494,10 @@ final class AppState: ObservableObject {
             payload: payload
         )
         self.pendingApproval = state
+        // A PermissionRequest proves Claude is actively processing this
+        // session — mark it running in case we missed UserPromptSubmit (e.g.
+        // app launched mid-turn).
+        if let sid = payload.sessionId, !sid.isEmpty { sessions[sid] = .running }
         appendLog("[hook] PermissionRequest \(payload.toolName ?? "?") [\(project ?? "?")]")
         hookActivity.append(HookActivityEntry(
             event: .permissionRequest,
@@ -503,9 +516,9 @@ final class AppState: ObservableObject {
         let base = heartbeat
         let promptInfo = Self.promptInfo(from: pending)
         let snapshot = HeartbeatSnapshot(
-            total: base?.total ?? 0,
-            running: base?.running ?? 0,
-            waiting: (base?.waiting ?? 0) + (promptInfo == nil ? 0 : 1),
+            total: sessionTotal(base: base),
+            running: sessionRunning(),
+            waiting: promptInfo == nil ? 0 : 1,
             msg: promptInfo == nil ? "cleared" : "pending",
             // Ship our rolling hook-event log instead of echoing the last
             // inbound heartbeat's entries — iOS reads `entries` into its
@@ -530,10 +543,33 @@ final class AppState: ObservableObject {
 
     private func recordFireAndForget(event: HookEvent, body: Data) {
         let projectName = Self.extractCwd(from: body).flatMap { HookEvent.projectName(fromCwd: $0) }
+        let sessionId = Self.extractSessionId(from: body)
+        updateSessions(event: event, sessionId: sessionId)
         hookActivity.append(HookActivityEntry(event: event, projectName: projectName))
         appendLog("[hook] \(event.rawValue) [\(projectName ?? "?")]")
         appendHookLine(event: event, projectName: projectName, toolName: nil)
-        pushHookSnapshotToPeripheral()
+        pushHookSnapshotToPeripheral(event: event)
+    }
+
+    private func updateSessions(event: HookEvent, sessionId: String?) {
+        guard let sid = sessionId, !sid.isEmpty else { return }
+        switch event {
+        case .sessionStart:
+            // Register the session in idle state. UserPromptSubmit is what
+            // flips it to running — SessionStart just means "this session now
+            // exists" (fresh terminal, resumed session, etc.).
+            if sessions[sid] == nil { sessions[sid] = .idle }
+        case .userPromptSubmit, .subagentStart:
+            sessions[sid] = .running
+        case .stop, .stopFailure, .subagentStop:
+            // Turn finished — session goes back to idle. Keep the entry so
+            // `total` still counts it; SessionEnd is what removes it.
+            if sessions[sid] != nil { sessions[sid] = .idle }
+        case .sessionEnd:
+            sessions.removeValue(forKey: sid)
+        case .preToolUse, .notification, .permissionRequest:
+            break
+        }
     }
 
     /// Prepends one "HH:mm:ss event [project] tool" line into `recentHookLines`
@@ -552,32 +588,51 @@ final class AppState: ObservableObject {
     }
 
     /// Fire-and-forget events don't have a pending-prompt of their own, so we
-    /// push a heartbeat carrying just the new log line. Preserve the last-known
-    /// counters from the inbound heartbeat AND re-attach the currently pending
-    /// approval (if any) so events like `Notification` arriving mid-request
-    /// don't wipe iOS's approve/deny UI. `base?.prompt` is always nil — iOS
-    /// heartbeats never carry a prompt field — so the authoritative source is
-    /// `self.pendingApproval`.
-    private func pushHookSnapshotToPeripheral() {
+    /// push a heartbeat carrying the new log line plus freshly-derived session
+    /// counts. `base?.prompt` is always nil (iOS heartbeats never carry a
+    /// prompt field) so `self.pendingApproval` is the authoritative source for
+    /// `prompt`/`waiting`. `total`/`running` come from the session map —
+    /// `base?.*` is meaningless here because the firmware doesn't know about
+    /// Claude sessions.
+    ///
+    /// `Stop` flips `completed: true` for exactly one heartbeat so iOS's
+    /// `lastCompletedAt` bumps and the persona plays its celebrate overlay.
+    private func pushHookSnapshotToPeripheral(event: HookEvent? = nil) {
         let base = heartbeat
         let promptInfo = Self.promptInfo(from: pendingApproval)
         let snapshot = HeartbeatSnapshot(
-            total: base?.total ?? 0,
-            running: base?.running ?? 0,
-            waiting: (base?.waiting ?? 0) + (promptInfo == nil ? 0 : 1),
+            total: sessionTotal(base: base),
+            running: sessionRunning(),
+            waiting: promptInfo == nil ? 0 : 1,
             msg: base?.msg ?? "hook",
             entries: recentHookLines,
             tokens: base?.tokens,
             tokensToday: base?.tokensToday,
             prompt: promptInfo,
-            completed: base?.completed ?? false
+            completed: event == .stop
         )
         _ = central.sendEncodable(snapshot)
+    }
+
+    private func sessionTotal(base: HeartbeatSnapshot?) -> Int {
+        // Prefer session-map count once we've seen any hook traffic; fall back
+        // to the firmware's last-known total before any hook fires so early
+        // heartbeats don't report zero.
+        sessions.isEmpty ? (base?.total ?? 0) : sessions.count
+    }
+
+    private func sessionRunning() -> Int {
+        sessions.values.reduce(into: 0) { acc, s in if s == .running { acc += 1 } }
     }
 
     private static func extractCwd(from body: Data) -> String? {
         guard let obj = try? JSONSerialization.jsonObject(with: body) as? [String: Any] else { return nil }
         return obj["cwd"] as? String
+    }
+
+    private static func extractSessionId(from body: Data) -> String? {
+        guard let obj = try? JSONSerialization.jsonObject(with: body) as? [String: Any] else { return nil }
+        return obj["session_id"] as? String
     }
 
     func approvePending() {
