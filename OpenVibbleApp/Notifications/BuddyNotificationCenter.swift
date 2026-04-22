@@ -3,7 +3,7 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 import Foundation
-import UserNotifications
+@preconcurrency import UserNotifications
 
 /// Owns all local-notification plumbing for OpenVibble, including the
 /// actionable "prompt" category that lets the user approve/deny a tool

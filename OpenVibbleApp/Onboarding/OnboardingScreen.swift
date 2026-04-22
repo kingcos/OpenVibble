@@ -4,7 +4,7 @@
 
 import SwiftUI
 import UIKit
-import UserNotifications
+@preconcurrency import UserNotifications
 import CoreBluetooth
 
 /// Single-page guided setup. Three stacked step cards the user walks through
