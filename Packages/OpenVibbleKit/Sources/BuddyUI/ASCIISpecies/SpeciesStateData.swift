@@ -19,7 +19,3 @@ public struct SpeciesStateData: Sendable {
     }
 }
 
-// Stub — Task 7 replaces this with the full Overlay / OverlayPath / OverlayTint types.
-public struct Overlay: Sendable {
-    public init() {}
-}

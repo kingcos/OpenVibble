@@ -6,6 +6,10 @@ public struct ASCIIBuddyView: View {
     public let startDate: Date
     public let speciesIdx: Int?
 
+    private static let monoFont = Font.system(size: 22, weight: .bold, design: .monospaced)
+    private static let charAdvance: CGFloat = 13.2   // measured for size 22 monospaced bold
+    private static let lineHeight:  CGFloat = 26.0
+
     public init(state: PersonaState, startDate: Date = .now, speciesIdx: Int? = nil) {
         self.state = state
         self.startDate = startDate
@@ -33,16 +37,45 @@ public struct ASCIIBuddyView: View {
 
     @ViewBuilder
     private func renderFrame(_ frame: ASCIIFrame, state: PersonaState, tick: Int) -> some View {
-        VStack(spacing: 0) {
-            ForEach(Array(frame.lines.enumerated()), id: \.offset) { _, line in
-                Text(line)
-                    .font(.system(size: 22, weight: .bold, design: .monospaced))
-                    .foregroundStyle(speciesColor())
-                    .lineLimit(1)
-                    .fixedSize(horizontal: true, vertical: false)
+        ZStack(alignment: .topLeading) {
+            VStack(spacing: 0) {
+                ForEach(Array(frame.lines.enumerated()), id: \.offset) { _, line in
+                    Text(line)
+                        .font(Self.monoFont)
+                        .foregroundStyle(speciesColor())
+                        .lineLimit(1)
+                        .fixedSize(horizontal: true, vertical: false)
+                }
+            }
+            if let overlays = SpeciesRegistry.stateData(forIdx: speciesIdx ?? 4, state: state)?.overlays,
+               !overlays.isEmpty {
+                overlayLayer(overlays: overlays, tick: tick)
             }
         }
         .accessibilityLabel("OpenVibble pet, state: \(state.slug)")
+    }
+
+    @ViewBuilder
+    private func overlayLayer(overlays: [Overlay], tick: Int) -> some View {
+        ForEach(Array(overlays.enumerated()), id: \.offset) { _, overlay in
+            let p = OverlayRenderer.position(for: overlay.path, tick: tick)
+            Text(overlay.char)
+                .font(Self.monoFont)
+                .foregroundStyle(tintColor(overlay.tint))
+                .offset(
+                    x: CGFloat(p.col) * Self.charAdvance,
+                    y: CGFloat(p.row) * Self.lineHeight
+                )
+        }
+    }
+
+    private func tintColor(_ tint: OverlayTint) -> Color {
+        switch tint {
+        case .dim:   return Color.white.opacity(0.4)
+        case .white: return Color.white
+        case .body:  return speciesColor()
+        case .rgb565(let raw): return Color(rgb565: raw)
+        }
     }
 
     private func speciesColor() -> Color {
