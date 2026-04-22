@@ -102,7 +102,7 @@ In `OpenVibbleApp/Settings/SettingsScreen.swift:434-435`, delete the `"buddy.pet
 
 - [ ] **Step 7: Build**
 
-Run: `xcodebuild -scheme OpenVibble -project OpenVibble.xcodeproj -destination 'generic/platform=iOS' build | tail -20`
+Run: `xcodebuild -scheme OpenVibbleApp -project OpenVibble.xcodeproj -destination 'generic/platform=iOS' build | tail -20`
 Expected: `BUILD SUCCEEDED`.
 
 - [ ] **Step 8: Manual simulator verification**
@@ -162,7 +162,7 @@ Expected: no remaining references.
 
 - [ ] **Step 4: Build**
 
-Run: `xcodebuild -scheme OpenVibble -project OpenVibble.xcodeproj -destination 'generic/platform=iOS' build | tail -20`
+Run: `xcodebuild -scheme OpenVibbleApp -project OpenVibble.xcodeproj -destination 'generic/platform=iOS' build | tail -20`
 Expected: `BUILD SUCCEEDED`.
 
 - [ ] **Step 5: Manual verification**
@@ -228,7 +228,7 @@ Ensure the GIF row does NOT also apply `.maxWidth: .infinity` on the GIF itself 
 
 - [ ] **Step 4: Build**
 
-Run: `xcodebuild -scheme OpenVibble -project OpenVibble.xcodeproj -destination 'generic/platform=iOS' build | tail -20`
+Run: `xcodebuild -scheme OpenVibbleApp -project OpenVibble.xcodeproj -destination 'generic/platform=iOS' build | tail -20`
 Expected: `BUILD SUCCEEDED`.
 
 - [ ] **Step 5: Manual verification**
@@ -1075,7 +1075,7 @@ Note: `OverlayPath.driftUpRight` as implemented in Task 7 may not exactly reprod
 
 - [ ] **Step 4: Build + manual verify cat**
 
-Run: `xcodebuild -scheme OpenVibble -project OpenVibble.xcodeproj -destination 'generic/platform=iOS' build | tail -20`
+Run: `xcodebuild -scheme OpenVibbleApp -project OpenVibble.xcodeproj -destination 'generic/platform=iOS' build | tail -20`
 
 Launch simulator, pick cat species, wait for sleep state. Z's should drift up-right.
 
@@ -1134,7 +1134,7 @@ Expected: no matches.
 
 - [ ] **Step 2: Full build + test**
 
-Run: `swift test --package-path Packages/OpenVibbleKit && xcodebuild -scheme OpenVibble -project OpenVibble.xcodeproj -destination 'generic/platform=iOS' build | tail -10`
+Run: `swift test --package-path Packages/OpenVibbleKit && xcodebuild -scheme OpenVibbleApp -project OpenVibble.xcodeproj -destination 'generic/platform=iOS' build | tail -10`
 Expected: all green.
 
 - [ ] **Step 3: Commit cleanup (if anything was changed)**
