@@ -9,6 +9,7 @@ struct TestPanelTab: View {
     @State private var ownerDraft = "Felix"
     @State private var packNameDraft = ""
     @State private var speciesSelection: Int = 4
+    @State private var rawJsonDraft: String = "{\"cmd\":\"status\"}"
 
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
@@ -18,10 +19,54 @@ struct TestPanelTab: View {
             systemSection
             legacyPendingSection
             manualSection
+            presetSection
+            rawJsonSection
             speciesSection
             installSection
             logSection
         }
+    }
+
+    private var presetSection: some View {
+        GroupBox(label: LText("desktop.preset.title")) {
+            VStack(alignment: .leading, spacing: 8) {
+                HStack {
+                    Button(action: { state.sendHeartbeatPreset(.idle) }) { LText("desktop.preset.idle") }
+                    Button(action: { state.sendHeartbeatPreset(.busy) }) { LText("desktop.preset.busy") }
+                    Button(action: { state.sendHeartbeatPreset(.attention) }) { LText("desktop.preset.attention") }
+                    Spacer()
+                }
+                HStack {
+                    Button(action: { state.sendHeartbeatPreset(.done) }) { LText("desktop.preset.done") }
+                    Button(action: { state.sendHeartbeatPreset(.clearPrompt) }) { LText("desktop.preset.clearPrompt") }
+                    Button(action: { state.sendHeartbeatPreset(.tokenUp) }) { LText("desktop.preset.tokenUp") }
+                    Spacer()
+                }
+            }
+        }
+        .disabled(!isConnected)
+    }
+
+    private var rawJsonSection: some View {
+        GroupBox(label: LText("desktop.raw.title")) {
+            VStack(alignment: .leading, spacing: 8) {
+                LText("desktop.raw.hint")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                TextEditor(text: $rawJsonDraft)
+                    .font(.system(.body, design: .monospaced))
+                    .frame(minHeight: 60, maxHeight: 120)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 4)
+                            .stroke(Color.secondary.opacity(0.3), lineWidth: 1)
+                    )
+                HStack {
+                    Button(action: { state.sendRawJSON(rawJsonDraft) }) { LText("desktop.raw.send") }
+                    Spacer()
+                }
+            }
+        }
+        .disabled(!isConnected)
     }
 
     private var deviceSection: some View {

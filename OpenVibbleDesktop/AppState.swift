@@ -201,6 +201,114 @@ final class AppState: ObservableObject {
         appendLog(ok ? "[send] time \(epoch) tz=\(tz)" : "[send] time FAILED")
     }
 
+    enum HeartbeatPreset: String, CaseIterable, Identifiable {
+        case idle, busy, attention, done, clearPrompt, tokenUp
+        var id: String { rawValue }
+    }
+
+    /// Mirrors h5-demo's preset() at h5-demo.html:1126 — mutate the last-known
+    /// heartbeat into a canned state and send it to the device. Used to smoke
+    /// the renderer without waiting for Claude to cycle through states.
+    func sendHeartbeatPreset(_ preset: HeartbeatPreset) {
+        let base = heartbeat
+        let baseTokens = base?.tokens ?? 0
+        let snapshot: HeartbeatSnapshot
+        switch preset {
+        case .idle:
+            snapshot = HeartbeatSnapshot(
+                total: base?.total ?? 0,
+                running: 0,
+                waiting: 0,
+                msg: "idle",
+                entries: base?.entries ?? [],
+                tokens: base?.tokens,
+                tokensToday: base?.tokensToday,
+                prompt: nil,
+                completed: false
+            )
+        case .busy:
+            snapshot = HeartbeatSnapshot(
+                total: 4,
+                running: 3,
+                waiting: 0,
+                msg: "running tasks",
+                entries: ["10:44 npm test", "10:43 build"],
+                tokens: baseTokens + 1200,
+                tokensToday: base?.tokensToday,
+                prompt: nil,
+                completed: false
+            )
+        case .attention:
+            let promptId = "req_\(String(UUID().uuidString.prefix(6)).lowercased())"
+            snapshot = HeartbeatSnapshot(
+                total: base?.total ?? 1,
+                running: 1,
+                waiting: 1,
+                msg: "approve: Bash",
+                entries: base?.entries ?? [],
+                tokens: base?.tokens,
+                tokensToday: base?.tokensToday,
+                prompt: HeartbeatPrompt(id: promptId, tool: "Bash", hint: "rm -rf /tmp/foo"),
+                completed: false
+            )
+        case .done:
+            snapshot = HeartbeatSnapshot(
+                total: base?.total ?? 0,
+                running: base?.running ?? 0,
+                waiting: base?.waiting ?? 0,
+                msg: "turn completed",
+                entries: ["10:46 done"],
+                tokens: baseTokens + 900,
+                tokensToday: base?.tokensToday,
+                prompt: nil,
+                completed: true
+            )
+        case .clearPrompt:
+            snapshot = HeartbeatSnapshot(
+                total: base?.total ?? 0,
+                running: base?.running ?? 0,
+                waiting: 0,
+                msg: "prompt resolved",
+                entries: base?.entries ?? [],
+                tokens: base?.tokens,
+                tokensToday: base?.tokensToday,
+                prompt: nil,
+                completed: base?.completed ?? false
+            )
+        case .tokenUp:
+            snapshot = HeartbeatSnapshot(
+                total: base?.total ?? 0,
+                running: base?.running ?? 0,
+                waiting: base?.waiting ?? 0,
+                msg: "token growth +50K",
+                entries: base?.entries ?? [],
+                tokens: baseTokens + 50_000,
+                tokensToday: base?.tokensToday,
+                prompt: base?.prompt,
+                completed: base?.completed ?? false
+            )
+        }
+        let ok = central.sendEncodable(snapshot)
+        appendLog(ok ? "[send] preset:\(preset.rawValue)" : "[send] preset:\(preset.rawValue) FAILED")
+    }
+
+    /// Sends one line of raw NDJSON as-is. Caller owns validity — errors from
+    /// an unknown `cmd` field surface as an ack with ok=false from the device.
+    func sendRawJSON(_ text: String) {
+        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else {
+            appendLog("[send] raw skipped (empty)")
+            return
+        }
+        guard let data = trimmed.data(using: .utf8),
+              (try? JSONSerialization.jsonObject(with: data)) != nil else {
+            appendLog("[send] raw skipped (invalid JSON)")
+            return
+        }
+        let ok = central.sendLine(trimmed)
+        appendLog(ok ? "[send] raw \(trimmed.prefix(60))" : "[send] raw FAILED")
+    }
+
     func installCharacter(from folder: URL, name: String) {
         Task { @MainActor in
             let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)

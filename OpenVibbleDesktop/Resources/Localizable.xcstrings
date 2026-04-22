@@ -289,6 +289,66 @@
         }
       }
     },
+    "desktop.preset.title" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Heartbeat presets" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "心跳预设" } }
+      }
+    },
+    "desktop.preset.idle" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Idle" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "空闲心跳" } }
+      }
+    },
+    "desktop.preset.busy" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Busy" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "忙碌中" } }
+      }
+    },
+    "desktop.preset.attention" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Await approval" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "等待审批" } }
+      }
+    },
+    "desktop.preset.done" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Turn done" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "回合完成" } }
+      }
+    },
+    "desktop.preset.clearPrompt" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Clear prompt" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "清除审批" } }
+      }
+    },
+    "desktop.preset.tokenUp" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "+50000 tokens" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "+50000 token" } }
+      }
+    },
+    "desktop.raw.title" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Custom NDJSON" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "自定义 NDJSON" } }
+      }
+    },
+    "desktop.raw.hint" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "One JSON object per line. Sent as-is over NUS." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "每行一个 JSON 对象,直接通过 NUS 发送。" } }
+      }
+    },
+    "desktop.raw.send" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Send" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "发送" } }
+      }
+    },
     "desktop.battery" : {
       "extractionState" : "stale",
       "localizations" : {
