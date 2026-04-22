@@ -69,6 +69,20 @@ public struct PreToolUsePayload: Codable, Sendable {
     public let toolInput: [String: String]?
     public let transcriptPath: String?
 
+    public init(
+        sessionId: String?,
+        cwd: String?,
+        toolName: String?,
+        toolInput: [String: String]?,
+        transcriptPath: String?
+    ) {
+        self.sessionId = sessionId
+        self.cwd = cwd
+        self.toolName = toolName
+        self.toolInput = toolInput
+        self.transcriptPath = transcriptPath
+    }
+
     enum CodingKeys: String, CodingKey {
         case sessionId = "session_id"
         case cwd

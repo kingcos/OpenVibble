@@ -3,6 +3,8 @@ import Combine
 import BuddyProtocol
 import BuddyPersona
 import NUSCentral
+import HookBridge
+import Security
 
 struct StatusAckSnapshot: Equatable {
     var batteryPct: Int?
@@ -37,10 +39,39 @@ final class AppState: ObservableObject {
     @Published var installRunning: Bool = false
     @Published var installError: String?
 
+    @Published var pendingApproval: PendingApprovalState?
+    @Published var hookActivity = HookActivityLog(capacity: 50)
+    @Published var registrationStatus: HookRegistrationStatus = .notRegistered
+    @Published var bridgeReady: Bool = false
+    @Published var bridgePort: UInt16?
+
+    struct PendingApprovalState: Equatable, Identifiable {
+        let id: UUID
+        let projectName: String?
+        let toolName: String?
+        let hint: String?
+        let payload: PreToolUsePayload
+
+        static func == (lhs: PendingApprovalState, rhs: PendingApprovalState) -> Bool {
+            lhs.id == rhs.id
+                && lhs.projectName == rhs.projectName
+                && lhs.toolName == rhs.toolName
+                && lhs.hint == rhs.hint
+        }
+    }
+
     let central = BuddyCentralService()
     lazy var installer: CharacterInstaller = CharacterInstaller(central: central)
 
     private var cancellables: Set<AnyCancellable> = []
+
+    private let registrar = HookRegistrar(
+        settingsURL: HookRegistrar.defaultSettingsURL(),
+        portFilePath: "$HOME/.claude/openvibble.port"
+    )
+    private let portFileStore = PortFileStore(url: PortFileStore.defaultURL())
+    private var bridgeServer: HookBridgeServer?
+    private var bridgeStartTask: Task<Void, Never>?
 
     init() {
         central.$connectionState
@@ -74,7 +105,12 @@ final class AppState: ObservableObject {
         installer.$lastError
             .receive(on: DispatchQueue.main)
             .assign(to: &$installError)
+
+        refreshRegistrationStatus()
+        startBridge()
     }
+
+    deinit { bridgeStartTask?.cancel() }
 
     func startScan() {
         central.requestAuthorization()
@@ -201,8 +237,12 @@ final class AppState: ObservableObject {
                 statusSnapshot = parseStatus(payload)
             }
             appendLog("[recv] ack=\(ack.ack) ok=\(ack.ok) err=\(ack.error ?? "-")")
-        case .permission(let cmd):
-            appendLog("[recv] permission id=\(cmd.id) decision=\(cmd.decision)")
+        case .permission(let command):
+            appendLog("[recv] permission id=\(command.id) decision=\(command.decision.rawValue)")
+            if let pending = pendingApproval, pending.id.uuidString == command.id {
+                let kind: HookEvent.PermissionDecisionKind = command.decision == .once ? .allow : .deny
+                resolve(pending: pending, decision: kind)
+            }
         case .unknown(let raw):
             appendLog("[recv] unknown \(raw.prefix(120))")
         }
@@ -248,6 +288,180 @@ final class AppState: ObservableObject {
             activityLog.removeLast(activityLog.count - 200)
         }
     }
+
+    // MARK: - Hook bridge lifecycle
+
+    private func startBridge() {
+        let token = Self.generateToken()
+        let server = HookBridgeServer(token: token) { [weak self] event, body in
+            switch event {
+            case .preToolUse:
+                let payload = (try? JSONDecoder().decode(PreToolUsePayload.self, from: body)) ?? PreToolUsePayload.empty
+                let id = UUID()
+                Task { @MainActor [weak self] in
+                    self?.pushPending(id: id, payload: payload)
+                }
+                return .pendingApproval(id: id, payload: payload)
+            default:
+                Task { @MainActor [weak self] in
+                    self?.recordFireAndForget(event: event, body: body)
+                }
+                return .ignore
+            }
+        }
+        self.bridgeServer = server
+        bridgeStartTask = Task { [weak self, portFileStore] in
+            do {
+                let port = try await server.start()
+                let payload = PortFile(
+                    port: Int(port),
+                    token: token,
+                    pid: Int(ProcessInfo.processInfo.processIdentifier),
+                    version: 1
+                )
+                try portFileStore.write(payload)
+                await MainActor.run {
+                    self?.bridgePort = port
+                    self?.bridgeReady = true
+                    self?.appendLog("[bridge] listening on 127.0.0.1:\(port)")
+                }
+            } catch {
+                await MainActor.run {
+                    self?.appendLog("[bridge] start failed: \(error.localizedDescription)")
+                }
+            }
+        }
+    }
+
+    private static func generateToken() -> String {
+        var bytes = [UInt8](repeating: 0, count: 24)
+        _ = SecRandomCopyBytes(kSecRandomDefault, bytes.count, &bytes)
+        return Data(bytes).base64EncodedString()
+    }
+
+    func stopBridge() {
+        bridgeStartTask?.cancel()
+        let server = bridgeServer
+        let store = portFileStore
+        Task {
+            await server?.stop()
+            try? store.remove()
+        }
+    }
+
+    // MARK: - Pending approval + fire-and-forget
+
+    private func pushPending(id: UUID, payload: PreToolUsePayload) {
+        let project = HookEvent.projectName(fromCwd: payload.cwd)
+        let hint = (payload.toolInput?["command"]
+            ?? payload.toolInput?["description"]
+            ?? payload.toolInput?["file_path"]).map { String($0.prefix(120)) }
+        let state = PendingApprovalState(
+            id: id,
+            projectName: project,
+            toolName: payload.toolName,
+            hint: hint,
+            payload: payload
+        )
+        self.pendingApproval = state
+        appendLog("[hook] PreToolUse \(payload.toolName ?? "?") [\(project ?? "?")]")
+        hookActivity.append(HookActivityEntry(
+            event: .preToolUse,
+            projectName: project,
+            toolName: payload.toolName
+        ))
+        pushPromptToPeripheral(state)
+    }
+
+    private func pushPromptToPeripheral(_ pending: PendingApprovalState?) {
+        let base = heartbeat
+        let promptInfo: HeartbeatPrompt? = pending.map { p in
+            let label = p.hint ?? p.toolName ?? "request"
+            let hintText = p.projectName.map { "[\($0)] \(label)" } ?? label
+            return HeartbeatPrompt(id: p.id.uuidString, tool: p.toolName, hint: hintText)
+        }
+        let snapshot = HeartbeatSnapshot(
+            total: base?.total ?? 0,
+            running: base?.running ?? 0,
+            waiting: (base?.waiting ?? 0) + (promptInfo == nil ? 0 : 1),
+            msg: promptInfo == nil ? "cleared" : "pending",
+            entries: base?.entries ?? [],
+            tokens: base?.tokens,
+            tokensToday: base?.tokensToday,
+            prompt: promptInfo,
+            completed: false
+        )
+        _ = central.sendEncodable(snapshot)
+    }
+
+    private func recordFireAndForget(event: HookEvent, body: Data) {
+        let projectName = Self.extractCwd(from: body).flatMap { HookEvent.projectName(fromCwd: $0) }
+        hookActivity.append(HookActivityEntry(event: event, projectName: projectName))
+        appendLog("[hook] \(event.rawValue) [\(projectName ?? "?")]")
+    }
+
+    private static func extractCwd(from body: Data) -> String? {
+        guard let obj = try? JSONSerialization.jsonObject(with: body) as? [String: Any] else { return nil }
+        return obj["cwd"] as? String
+    }
+
+    func approvePending() {
+        guard let pending = pendingApproval else { return }
+        resolve(pending: pending, decision: .allow)
+    }
+
+    func denyPending() {
+        guard let pending = pendingApproval else { return }
+        resolve(pending: pending, decision: .deny)
+    }
+
+    private func resolve(pending: PendingApprovalState, decision: HookEvent.PermissionDecisionKind) {
+        if let server = bridgeServer {
+            Task { await server.resolvePending(id: pending.id, decision: decision) }
+        }
+        self.pendingApproval = nil
+        hookActivity.append(HookActivityEntry(
+            event: .preToolUse,
+            projectName: pending.projectName,
+            toolName: pending.toolName,
+            decision: decision
+        ))
+        pushPromptToPeripheral(nil)
+        appendLog("[hook] decide \(decision.rawValue) id=\(pending.id)")
+    }
+
+    // MARK: - Registration
+
+    func registerHooks() {
+        do {
+            try registrar.register()
+            refreshRegistrationStatus()
+            appendLog("[hook] registered")
+        } catch {
+            appendLog("[hook] register failed: \(error.localizedDescription)")
+        }
+    }
+
+    func unregisterHooks() {
+        do {
+            try registrar.unregister()
+            refreshRegistrationStatus()
+            appendLog("[hook] unregistered")
+        } catch {
+            appendLog("[hook] unregister failed: \(error.localizedDescription)")
+        }
+    }
+
+    func refreshRegistrationStatus() {
+        do { registrationStatus = try registrar.status() }
+        catch { registrationStatus = .notRegistered }
+    }
+}
+
+extension PreToolUsePayload {
+    static let empty = PreToolUsePayload(
+        sessionId: nil, cwd: nil, toolName: nil, toolInput: nil, transcriptPath: nil
+    )
 }
 
 extension JSONValue {
