@@ -51,6 +51,7 @@
 		C9FCFB69BA32C7A0070CBA26 /* PromptIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A40F865CF51C1BCDAA4390 /* PromptIntents.swift */; };
 		D344CC6B9180B1E621663DC0 /* DeviceMenuState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1CFB277C64078012E3D244 /* DeviceMenuState.swift */; };
 		E43EB9951D88D531C22AA846 /* PersonaController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1C9C966DB1D6C2C3E2D7C1 /* PersonaController.swift */; };
+		E5D49BCE4826C0B91DC3D3BC /* AboutSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01FD2AF1687D7CEBC1003C4 /* AboutSheet.swift */; };
 		EDEEE97570EC5BBAA12F0C4E /* LiveActivitySharedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C994DA7F257B43DBEDD2360 /* LiveActivitySharedStore.swift */; };
 		F792FCCA99DC8AF64B9457D5 /* BuddyProtocol in Frameworks */ = {isa = PBXBuildFile; productRef = 2A2889476DF5C751D95EB4FB /* BuddyProtocol */; };
 		F79D111908A6D2D30373A6B7 /* LiveActivitySharedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C994DA7F257B43DBEDD2360 /* LiveActivitySharedStore.swift */; };
@@ -113,6 +114,7 @@
 		80DC976D1CE8B0AE215D7624 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		9153332463570EB58424249C /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		91F3C187CB72273ADE7F62D1 /* BuiltinCharacters */ = {isa = PBXFileReference; lastKnownFileType = folder; name = BuiltinCharacters; path = OpenVibbleApp/Resources/BuiltinCharacters; sourceTree = SOURCE_ROOT; };
+		A01FD2AF1687D7CEBC1003C4 /* AboutSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutSheet.swift; sourceTree = "<group>"; };
 		AEE80BFE42253DF8A0777FC9 /* OpenVibbleKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = OpenVibbleKit; path = Packages/OpenVibbleKit; sourceTree = SOURCE_ROOT; };
 		AF72CA7A3AC578E356AF0373 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B1E56A25DAA306740E807AC9 /* CharacterInstaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterInstaller.swift; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 		C0B1302EDABCD75193F13170 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A01FD2AF1687D7CEBC1003C4 /* AboutSheet.swift */,
 				80DC976D1CE8B0AE215D7624 /* MainView.swift */,
 				D292D42081F942406889A1D3 /* MenuBarView.swift */,
 				EF0995CECE1B7A891F9B7360 /* ScanSheet.swift */,
@@ -521,6 +524,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5D49BCE4826C0B91DC3D3BC /* AboutSheet.swift in Sources */,
 				7EB749B50B45BC7FCEB9BE5B /* AppState.swift in Sources */,
 				626C88F87702B9B7815D32F9 /* CharacterInstaller.swift in Sources */,
 				4C1BF1FDB4A7CECA7D12F65A /* L10n.swift in Sources */,

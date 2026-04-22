@@ -6,6 +6,7 @@ import BuddyPersona
 struct MainView: View {
     @EnvironmentObject private var state: AppState
     @ObservedObject private var l10n = LocalizationManager.shared
+    @Environment(\.openWindow) private var openWindow
     @State private var showScanSheet = false
     @State private var nameDraft = "Claude-iOS"
     @State private var ownerDraft = "Felix"
@@ -44,6 +45,13 @@ struct MainView: View {
             Text(headerLabel).font(.headline)
             Spacer()
             languagePicker
+            Button(action: { openWindow(id: "about") }) {
+                Label {
+                    LText("desktop.about")
+                } icon: {
+                    Image(systemName: "info.circle")
+                }
+            }
             if isConnected {
                 Button(action: { state.disconnect() }) { LText("desktop.btn.disconnect") }
             } else {

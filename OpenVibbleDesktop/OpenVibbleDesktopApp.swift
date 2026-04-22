@@ -14,9 +14,18 @@ struct OpenVibbleDesktopApp: App {
         }
         .windowResizability(.contentSize)
 
+        Window("About OpenVibbleDesktop", id: "about") {
+            AboutSheet()
+        }
+        .windowResizability(.contentSize)
+        .windowStyle(.hiddenTitleBar)
+
         MenuBarExtra {
-            MenuBarView(openMainWindow: { openWindow(id: "main") })
-                .environmentObject(state)
+            MenuBarView(
+                openMainWindow: { openWindow(id: "main") },
+                openAboutWindow: { openWindow(id: "about") }
+            )
+            .environmentObject(state)
         } label: {
             Image(systemName: menuBarIcon(for: state.connection))
         }

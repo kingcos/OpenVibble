@@ -5,6 +5,7 @@ struct MenuBarView: View {
     @EnvironmentObject private var state: AppState
     @ObservedObject private var l10n = LocalizationManager.shared
     let openMainWindow: () -> Void
+    let openAboutWindow: () -> Void
 
     var body: some View {
         Group {
@@ -22,6 +23,7 @@ struct MenuBarView: View {
             }
 
             Button(action: openMainWindow) { LText("desktop.menu.open") }
+            Button(action: openAboutWindow) { LText("desktop.about") }
             Divider()
             Button(action: { NSApp.terminate(nil) }) { LText("desktop.menu.quit") }
                 .keyboardShortcut("q")
