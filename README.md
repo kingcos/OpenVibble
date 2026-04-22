@@ -1,6 +1,8 @@
-# OpenVibble · iOS Hardware Buddy Bridge
+# OpenVibble · iOS Hardware Buddy App
 
 English | [中文](./README.zh-CN.md)
+
+<p align="center"><strong>M5Stack dev board still on the way? Start with OpenVibble first.</strong></p>
 
 <p align="center">
   <img src="./docs/readme/icon.png" alt="OpenVibble Icon" width="120" height="120" />
@@ -13,9 +15,7 @@ English | [中文](./README.zh-CN.md)
 
 OpenVibble is an iOS app that pairs with Claude Desktop over BLE (Nordic UART Service) and acts as a "hardware buddy" on iOS.
 
-It is designed as a companion bridge for [Claude Desktop Buddy](https://github.com/anthropics/claude-desktop-buddy), with iOS-native UX and runtime support.
-
-<p align="center"><strong>M5Stack dev board still on the way? Start with OpenVibble first.</strong></p>
+It is designed as a companion app for [Claude Desktop Buddy](https://github.com/anthropics/claude-desktop-buddy), with iOS-native UX and runtime support.
 
 ## Screenshots
 
