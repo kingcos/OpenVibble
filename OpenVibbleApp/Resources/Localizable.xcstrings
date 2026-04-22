@@ -5201,6 +5201,23 @@
         }
       }
     },
+    "species.panel.preview" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "species --preview"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "预览"
+          }
+        }
+      }
+    },
     "species.subtitle.states" : {
       "extractionState" : "stale",
       "localizations" : {

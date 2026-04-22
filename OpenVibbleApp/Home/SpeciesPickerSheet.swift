@@ -16,7 +16,11 @@ struct SpeciesPickerSheet: View {
                 VStack(alignment: .leading, spacing: 12) {
                     header
 
-                    previewBlock
+                    TerminalPanel("species.panel.preview") {
+                        previewSpeciesView
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 140)
+                    }
 
                     TerminalPanel(
                         "species.panel.builtin",
@@ -86,26 +90,6 @@ struct SpeciesPickerSheet: View {
         String(format: String(localized: "species.subtitle.states"), count)
     }
 
-    private var previewBlock: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text(verbatim: "预览")
-                .font(TerminalStyle.mono(10, weight: .bold))
-                .foregroundStyle(TerminalStyle.inkDim)
-            ZStack {
-                Rectangle()
-                    .fill(Color.black)
-                previewSpeciesView
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            }
-            .frame(width: 136, height: 100)
-            .clipShape(RoundedRectangle(cornerRadius: 8))
-            .overlay(
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(TerminalStyle.inkDim.opacity(0.5), lineWidth: 1)
-            )
-        }
-    }
-
     @ViewBuilder
     private var previewSpeciesView: some View {
         switch selection {
@@ -167,8 +151,10 @@ struct SpeciesPickerSheet: View {
                     .foregroundStyle(TerminalStyle.ink)
             }
         }
-        .padding(.horizontal, 10)
-        .padding(.vertical, 8)
+        .padding(.horizontal, 12)
+        .padding(.vertical, 10)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .frame(height: 40)
         .background(
             TerminalStyle.lcdPanel.opacity(selected ? 0.9 : 0.55),
             in: RoundedRectangle(cornerRadius: 8)
