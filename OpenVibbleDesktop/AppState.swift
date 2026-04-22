@@ -501,11 +501,7 @@ final class AppState: ObservableObject {
 
     private func pushPromptToPeripheral(_ pending: PendingApprovalState?) {
         let base = heartbeat
-        let promptInfo: HeartbeatPrompt? = pending.map { p in
-            let label = p.hint ?? p.toolName ?? "request"
-            let hintText = p.projectName.map { "[\($0)] \(label)" } ?? label
-            return HeartbeatPrompt(id: p.id.uuidString, tool: p.toolName, hint: hintText)
-        }
+        let promptInfo = Self.promptInfo(from: pending)
         let snapshot = HeartbeatSnapshot(
             total: base?.total ?? 0,
             running: base?.running ?? 0,
@@ -522,6 +518,14 @@ final class AppState: ObservableObject {
             completed: false
         )
         _ = central.sendEncodable(snapshot)
+    }
+
+    private static func promptInfo(from pending: PendingApprovalState?) -> HeartbeatPrompt? {
+        pending.map { p in
+            let label = p.hint ?? p.toolName ?? "request"
+            let hintText = p.projectName.map { "[\($0)] \(label)" } ?? label
+            return HeartbeatPrompt(id: p.id.uuidString, tool: p.toolName, hint: hintText)
+        }
     }
 
     private func recordFireAndForget(event: HookEvent, body: Data) {
@@ -547,21 +551,25 @@ final class AppState: ObservableObject {
         }
     }
 
-    /// Fire-and-forget events don't have a pending-prompt to attach, so we
-    /// still need to push a heartbeat carrying the new log line. Preserve the
-    /// last-known counters/prompt from the inbound heartbeat so we don't
-    /// overwrite state the iOS side already has.
+    /// Fire-and-forget events don't have a pending-prompt of their own, so we
+    /// push a heartbeat carrying just the new log line. Preserve the last-known
+    /// counters from the inbound heartbeat AND re-attach the currently pending
+    /// approval (if any) so events like `Notification` arriving mid-request
+    /// don't wipe iOS's approve/deny UI. `base?.prompt` is always nil — iOS
+    /// heartbeats never carry a prompt field — so the authoritative source is
+    /// `self.pendingApproval`.
     private func pushHookSnapshotToPeripheral() {
         let base = heartbeat
+        let promptInfo = Self.promptInfo(from: pendingApproval)
         let snapshot = HeartbeatSnapshot(
             total: base?.total ?? 0,
             running: base?.running ?? 0,
-            waiting: base?.waiting ?? 0,
+            waiting: (base?.waiting ?? 0) + (promptInfo == nil ? 0 : 1),
             msg: base?.msg ?? "hook",
             entries: recentHookLines,
             tokens: base?.tokens,
             tokensToday: base?.tokensToday,
-            prompt: base?.prompt,
+            prompt: promptInfo,
             completed: base?.completed ?? false
         )
         _ = central.sendEncodable(snapshot)
