@@ -13,6 +13,7 @@ enum SpeciesOverlays {
         "mushroom": MushroomOverlays.all,
         "ghost": GhostOverlays.all,
         "owl": OwlOverlays.all,
+        "snail": SnailOverlays.all,
         // future: more species added per batch.
     ]
 
