@@ -10,6 +10,7 @@ let package = Package(
     products: [
         .library(name: "BuddyProtocol", targets: ["BuddyProtocol"]),
         .library(name: "NUSPeripheral", targets: ["NUSPeripheral"]),
+        .library(name: "NUSCentral", targets: ["NUSCentral"]),
         .library(name: "BuddyStorage", targets: ["BuddyStorage"]),
         .library(name: "BridgeRuntime", targets: ["BridgeRuntime"]),
         .library(name: "BuddyPersona", targets: ["BuddyPersona"]),
@@ -22,6 +23,10 @@ let package = Package(
         ),
         .target(
             name: "NUSPeripheral",
+            dependencies: ["BuddyProtocol"]
+        ),
+        .target(
+            name: "NUSCentral",
             dependencies: ["BuddyProtocol"]
         ),
         .target(
@@ -63,6 +68,10 @@ let package = Package(
         .testTarget(
             name: "BuddyStatsTests",
             dependencies: ["BuddyStats", "BuddyProtocol"]
+        ),
+        .testTarget(
+            name: "NUSCentralTests",
+            dependencies: ["NUSCentral", "BuddyProtocol"]
         )
     ]
 )

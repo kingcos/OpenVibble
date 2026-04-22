@@ -3,6 +3,7 @@ options:
   minimumXcodeGenVersion: 2.40.0
   deploymentTarget:
     iOS: '18.0'
+    macOS: '14.0'
   developmentLanguage: en
 knownRegions:
   - en
@@ -15,7 +16,7 @@ settings:
   base:
     PRODUCT_BUNDLE_IDENTIFIER: kingcos.me.openvibble
     SWIFT_VERSION: 6.0
-    DEVELOPMENT_TEAM: ""
+    DEVELOPMENT_TEAM: C9JF3B5K5A
     TARGETED_DEVICE_FAMILY: "1,2"
     IPHONEOS_DEPLOYMENT_TARGET: 18.0
 packages:
@@ -55,11 +56,13 @@ targets:
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         CODE_SIGN_ENTITLEMENTS: OpenVibbleApp/OpenVibbleApp.entitlements
         MARKETING_VERSION: "1.0.1"
+        CURRENT_PROJECT_VERSION: "2"
     info:
       path: OpenVibbleApp/Info.plist
       properties:
         CFBundleDisplayName: OpenVibble
         CFBundleShortVersionString: "1.0.1"
+        CFBundleVersion: "2"
         NSSupportsLiveActivities: YES
         UIApplicationSupportsIndirectInputEvents: YES
         UILaunchScreen:
@@ -95,7 +98,7 @@ targets:
         GENERATE_INFOPLIST_FILE: NO
         INFOPLIST_FILE: OpenVibbleLiveActivity/Info.plist
         MARKETING_VERSION: "1.0.1"
-        CURRENT_PROJECT_VERSION: "1"
+        CURRENT_PROJECT_VERSION: "2"
         SKIP_INSTALL: YES
         APPLICATION_EXTENSION_API_ONLY: YES
         CODE_SIGN_ENTITLEMENTS: OpenVibbleLiveActivity/OpenVibbleLiveActivity.entitlements
@@ -110,6 +113,38 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: kingcos.me.openvibble.tests
         GENERATE_INFOPLIST_FILE: YES
+  OpenVibbleDesktop:
+    type: application
+    platform: macOS
+    deploymentTarget: "14.0"
+    sources:
+      - path: OpenVibbleDesktop
+    dependencies:
+      - package: OpenVibbleKit
+        product: NUSCentral
+      - package: OpenVibbleKit
+        product: BuddyProtocol
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: kingcos.me.openvibble.desktop
+        PRODUCT_NAME: OpenVibbleDesktop
+        MARKETING_VERSION: "0.1.0"
+        CURRENT_PROJECT_VERSION: "1"
+        MACOSX_DEPLOYMENT_TARGET: "14.0"
+        CODE_SIGN_ENTITLEMENTS: OpenVibbleDesktop/OpenVibbleDesktop.entitlements
+        ENABLE_HARDENED_RUNTIME: YES
+        TARGETED_DEVICE_FAMILY: ""
+        SDKROOT: macosx
+    info:
+      path: OpenVibbleDesktop/Info.plist
+      properties:
+        CFBundleDisplayName: OpenVibbleDesktop
+        CFBundleShortVersionString: "0.1.0"
+        LSUIElement: YES
+        LSApplicationCategoryType: public.app-category.developer-tools
+        LSMinimumSystemVersion: "14.0"
+        NSBluetoothAlwaysUsageDescription: OpenVibbleDesktop uses Bluetooth to connect to your OpenVibble device.
+        ITSAppUsesNonExemptEncryption: NO
 schemes:
   OpenVibbleApp:
     build:
@@ -119,3 +154,7 @@ schemes:
     test:
       targets:
         - OpenVibbleAppTests
+  OpenVibbleDesktop:
+    build:
+      targets:
+        OpenVibbleDesktop: all
