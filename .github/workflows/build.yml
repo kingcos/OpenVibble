@@ -1,0 +1,41 @@
+name: Build
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build & test
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        run: make bootstrap
+
+      - name: SwiftPM unit tests
+        run: swift test --package-path Packages/OpenVibbleKit
+
+      - name: Build iOS app (no signing)
+        run: make build
+
+      - name: Build macOS companion (no signing)
+        run: |
+          xcodebuild \
+            -project OpenVibble.xcodeproj \
+            -scheme OpenVibbleDesktop \
+            -configuration Debug \
+            -destination 'generic/platform=macOS' \
+            CODE_SIGNING_ALLOWED=NO \
+            build
