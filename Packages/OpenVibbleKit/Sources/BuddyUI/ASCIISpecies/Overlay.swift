@@ -18,6 +18,10 @@ public enum OverlayPath: Sendable, Equatable {
     case bobble(col: Double, row: Double, amp: Double, speed: Double)
     /// Escape hatch: pre-baked per-tick positions.
     case baked([BakedPoint])
+    /// Linear drift from origin with per-tick delta, cycling over span ticks.
+    /// col(tick) = originCol + ((tick + phase) % span) * dxPerTick
+    /// row(tick) = originRow + ((tick + phase) % span) * dyPerTick
+    case linear(originCol: Double, originRow: Double, dxPerTick: Double, dyPerTick: Double, phase: Double, span: Double)
 }
 
 public struct BakedPoint: Sendable, Equatable {
@@ -29,14 +33,23 @@ public struct BakedPoint: Sendable, Equatable {
     }
 }
 
+public enum OverlayVisibility: Sendable, Equatable {
+    case always
+    /// Visible when `tick % period` is in `activeTicks`. Use to model firmware
+    /// gates like `if (t/2) & 1` → `.tickMod(period: 4, activeTicks: [2, 3])`.
+    case tickMod(period: Int, activeTicks: [Int])
+}
+
 public struct Overlay: Sendable, Equatable {
     public let char: String
     public let tint: OverlayTint
     public let path: OverlayPath
+    public let visibility: OverlayVisibility
 
-    public init(char: String, tint: OverlayTint, path: OverlayPath) {
+    public init(char: String, tint: OverlayTint, path: OverlayPath, visibility: OverlayVisibility = .always) {
         self.char = char
         self.tint = tint
         self.path = path
+        self.visibility = visibility
     }
 }

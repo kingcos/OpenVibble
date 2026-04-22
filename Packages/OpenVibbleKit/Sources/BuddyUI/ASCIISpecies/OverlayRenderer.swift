@@ -18,6 +18,9 @@ public enum OverlayRenderer {
             guard !points.isEmpty else { return (0, 0) }
             let idx = tick % points.count
             return (col: points[idx].col, row: points[idx].row)
+        case .linear(let originCol, let originRow, let dx, let dy, let phase, let span):
+            let p = (t + phase).truncatingRemainder(dividingBy: span)
+            return (col: originCol + p * dx, row: originRow + p * dy)
         }
     }
 }

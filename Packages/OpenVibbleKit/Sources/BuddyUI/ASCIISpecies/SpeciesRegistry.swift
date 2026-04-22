@@ -5,7 +5,15 @@ public enum SpeciesRegistry {
     public static func stateData(forIdx idx: Int, state: PersonaState) -> SpeciesStateData? {
         guard idx >= 0, idx < PersonaSpeciesCatalog.count else { return nil }
         let name = PersonaSpeciesCatalog.names[idx]
-        return GeneratedSpecies.all[name]?[state]
+        guard let base = GeneratedSpecies.all[name]?[state] else { return nil }
+        let overlays = SpeciesOverlays.overlays(for: name, state: state)
+        guard !overlays.isEmpty else { return base }
+        return SpeciesStateData(
+            frames: base.frames,
+            seq: base.seq,
+            colorRGB565: base.colorRGB565,
+            overlays: overlays
+        )
     }
 
     public static func animation(forIdx idx: Int, state: PersonaState) -> ASCIIAnimation {

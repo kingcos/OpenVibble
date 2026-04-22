@@ -58,14 +58,24 @@ public struct ASCIIBuddyView: View {
     @ViewBuilder
     private func overlayLayer(overlays: [Overlay], tick: Int) -> some View {
         ForEach(Array(overlays.enumerated()), id: \.offset) { _, overlay in
-            let p = OverlayRenderer.position(for: overlay.path, tick: tick)
-            Text(overlay.char)
-                .font(Self.monoFont)
-                .foregroundStyle(tintColor(overlay.tint))
-                .offset(
-                    x: CGFloat(p.col) * Self.charAdvance,
-                    y: CGFloat(p.row) * Self.lineHeight
-                )
+            if isVisible(overlay.visibility, tick: tick) {
+                let p = OverlayRenderer.position(for: overlay.path, tick: tick)
+                Text(overlay.char)
+                    .font(Self.monoFont)
+                    .foregroundStyle(tintColor(overlay.tint))
+                    .offset(
+                        x: CGFloat(p.col) * Self.charAdvance,
+                        y: CGFloat(p.row) * Self.lineHeight
+                    )
+            }
+        }
+    }
+
+    private func isVisible(_ vis: OverlayVisibility, tick: Int) -> Bool {
+        switch vis {
+        case .always: return true
+        case .tickMod(let period, let active):
+            return active.contains(tick % period)
         }
     }
 
