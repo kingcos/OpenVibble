@@ -20,9 +20,6 @@
     "$ openvibble --init" : {
 
     },
-    "A" : {
-
-    },
     "app.name" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -39,9 +36,6 @@
           }
         }
       }
-    },
-    "B" : {
-
     },
     "common.back" : {
       "extractionState" : "stale",
@@ -1109,6 +1103,7 @@
       }
     },
     "home.prompt.approve" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -1125,6 +1120,7 @@
       }
     },
     "home.prompt.deny" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -4486,6 +4482,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "开启本地通知"
+          }
+        }
+      }
+    },
+    "settings.notifications.foreground.hint" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Still deliver banners and sound when the app is in the foreground."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "应用处于前台时，仍然弹出横幅和声音提示。"
+          }
+        }
+      }
+    },
+    "settings.notifications.foreground.label" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show while app is open"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "应用内通知"
           }
         }
       }

@@ -11,6 +11,7 @@ struct SettingsScreen: View {
     @Environment(\.dismiss) private var dismiss
     @AppStorage("buddy.hasOnboarded") private var hasOnboarded: Bool = false
     @AppStorage("buddy.notificationsEnabled") private var notificationsEnabled = true
+    @AppStorage("buddy.foregroundNotificationsEnabled") private var foregroundNotificationsEnabled = true
     @AppStorage("buddy.liveActivityEnabled") private var liveActivityEnabled = true
     @AppStorage("home.showPowerButton") private var showPowerButton: Bool = true
 
@@ -183,6 +184,20 @@ struct SettingsScreen: View {
                 .foregroundStyle(TerminalStyle.ink)
             }
             .tint(TerminalStyle.accent)
+
+            Toggle(isOn: $foregroundNotificationsEnabled) {
+                Text("settings.notifications.foreground.label")
+                    .font(TerminalStyle.mono(12))
+                    .foregroundStyle(TerminalStyle.ink)
+            }
+            .tint(TerminalStyle.accent)
+            .disabled(!notificationsEnabled)
+            .opacity(notificationsEnabled ? 1 : 0.5)
+
+            Text("settings.notifications.foreground.hint")
+                .font(TerminalStyle.mono(10))
+                .foregroundStyle(TerminalStyle.inkDim)
+                .fixedSize(horizontal: false, vertical: true)
 
             if !notificationsAuthorized {
                 Button {
@@ -379,6 +394,7 @@ struct SettingsScreen: View {
         for key in [
             "buddy.hasOnboarded",
             "buddy.notificationsEnabled",
+            "buddy.foregroundNotificationsEnabled",
             "buddy.liveActivityEnabled",
             "bridge.displayName",
             "home.showPowerButton"

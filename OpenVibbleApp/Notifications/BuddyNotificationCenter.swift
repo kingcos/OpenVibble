@@ -163,13 +163,19 @@ extension BuddyNotificationCenter: UNUserNotificationCenterDelegate {
         LiveActivitySharedStore.writePendingDecision(id: id, decision: decision)
     }
 
-    /// Present the actionable banner even while the app is foregrounded so
-    /// the user can still quick-approve without jumping to the prompt panel.
+    /// Present the actionable banner while the app is foregrounded only if
+    /// the user hasn't opted out. The setting default is `true`, so the
+    /// quick-approve banner still surfaces unless they explicitly disable it.
     nonisolated func userNotificationCenter(
         _ center: UNUserNotificationCenter,
         willPresent notification: UNNotification,
         withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
     ) {
-        completionHandler([.banner, .sound, .list])
+        let allowed = (UserDefaults.standard.object(forKey: "buddy.foregroundNotificationsEnabled") as? Bool) ?? true
+        if allowed {
+            completionHandler([.banner, .sound, .list])
+        } else {
+            completionHandler([])
+        }
     }
 }

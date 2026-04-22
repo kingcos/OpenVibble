@@ -952,20 +952,24 @@ private struct NormalBody: View {
                         .tracking(1)
                         .foregroundStyle(TerminalStyle.good)
                 } else {
-                    Label {
-                        Text("home.prompt.approve")
-                            .font(TerminalStyle.mono(11, weight: .bold))
-                    } icon: {
-                        Text("A").font(TerminalStyle.mono(11, weight: .bold))
+                    promptActionButton(
+                        labelKey: "home.prompt.approve",
+                        keyLetter: "A",
+                        tint: TerminalStyle.good
+                    ) {
+                        guard !model.responseSent else { return }
+                        UIImpactFeedbackGenerator(style: .soft).impactOccurred()
+                        model.respondPermission(.once)
                     }
-                    .foregroundStyle(TerminalStyle.good)
-                    Label {
-                        Text("home.prompt.deny")
-                            .font(TerminalStyle.mono(11, weight: .bold))
-                    } icon: {
-                        Text("B").font(TerminalStyle.mono(11, weight: .bold))
+                    promptActionButton(
+                        labelKey: "home.prompt.deny",
+                        keyLetter: "B",
+                        tint: TerminalStyle.bad
+                    ) {
+                        guard !model.responseSent else { return }
+                        UIImpactFeedbackGenerator(style: .rigid).impactOccurred()
+                        model.respondPermission(.deny)
                     }
-                    .foregroundStyle(TerminalStyle.bad)
                 }
                 Spacer(minLength: 0)
             }
@@ -979,6 +983,29 @@ private struct NormalBody: View {
             RoundedRectangle(cornerRadius: 10)
                 .stroke(TerminalStyle.accent.opacity(0.6), lineWidth: 1)
         )
+    }
+
+    private func promptActionButton(
+        labelKey: LocalizedStringKey,
+        keyLetter: String,
+        tint: Color,
+        action: @escaping () -> Void
+    ) -> some View {
+        Button(action: action) {
+            HStack(spacing: 6) {
+                Text(keyLetter)
+                    .font(TerminalStyle.mono(11, weight: .bold))
+                Text(labelKey)
+                    .font(TerminalStyle.mono(11, weight: .bold))
+            }
+            .foregroundStyle(tint)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 6)
+            .background(TerminalStyle.lcdPanel.opacity(0.7), in: Capsule())
+            .overlay(Capsule().stroke(tint.opacity(0.55), lineWidth: 1))
+            .contentShape(Capsule())
+        }
+        .buttonStyle(.plain)
     }
 
     // Spec 3.3: NORMAL shows only "解析后日志" (parsed log, time + msg).
