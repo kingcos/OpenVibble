@@ -126,6 +126,8 @@ targets:
         product: BuddyProtocol
       - package: OpenVibbleKit
         product: BuddyPersona
+      - package: OpenVibbleKit
+        product: HookBridge
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: kingcos.me.openvibble.desktop
