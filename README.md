@@ -11,6 +11,9 @@ English | [中文](./README.zh-CN.md)
 <p align="center">
   <img alt="Swift" src="https://img.shields.io/badge/Swift-6.0-FA7343" />
   <img alt="License" src="https://img.shields.io/badge/License-MPL--2.0-brightgreen" />
+  <a href="https://github.com/kingcos/OpenVibble/actions/workflows/build.yml">
+    <img alt="Build" src="https://github.com/kingcos/OpenVibble/actions/workflows/build.yml/badge.svg?branch=main" />
+  </a>
 </p>
 
 OpenVibble implements the Claude Desktop Buddy Bluetooth protocol so an iPhone can pair directly with Claude Desktop and stand in for the original M5Stack hardware. Paired with the companion macOS app **OpenVibble Desktop**, it can also bridge to other agents such as Claude Code.

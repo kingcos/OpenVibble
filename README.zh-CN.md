@@ -11,6 +11,9 @@
 <p align="center">
   <img alt="Swift" src="https://img.shields.io/badge/Swift-6.0-FA7343" />
   <img alt="License" src="https://img.shields.io/badge/License-MPL--2.0-brightgreen" />
+  <a href="https://github.com/kingcos/OpenVibble/actions/workflows/build.yml">
+    <img alt="Build" src="https://github.com/kingcos/OpenVibble/actions/workflows/build.yml/badge.svg?branch=main" />
+  </a>
 </p>
 
 OpenVibble 基于 Claude Desktop Buddy 蓝牙协议实现，让 iPhone 直接与 Claude Desktop 配对，复刻原版 M5Stack 固件能力；搭配配套的 macOS 应用 **OpenVibble Desktop**，还能进一步桥接 Claude Code 等 Agent。
