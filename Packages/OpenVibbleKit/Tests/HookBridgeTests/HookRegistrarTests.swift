@@ -19,10 +19,9 @@ struct HookRegistrarTests {
         let data = try Data(contentsOf: url)
         let json = try JSONSerialization.jsonObject(with: data) as? [String: Any]
         let hooks = json?["hooks"] as? [String: Any]
-        #expect(hooks?["PreToolUse"] != nil)
-        #expect(hooks?["UserPromptSubmit"] != nil)
-        #expect(hooks?["Stop"] != nil)
-        #expect(hooks?["Notification"] != nil)
+        for event in HookEvent.allCases {
+            #expect(hooks?[event.rawValue] != nil, "missing hook registration for \(event.rawValue)")
+        }
     }
 
     @Test func registerEmbedsMarker() throws {
@@ -34,19 +33,22 @@ struct HookRegistrarTests {
         #expect(text.contains("/tmp/port"))
     }
 
-    @Test func preToolUseUses30sTimeout() throws {
+    @Test func permissionRequestUses30sTimeout() throws {
         let url = tempSettings()
         try HookRegistrar(settingsURL: url, portFilePath: "/tmp/port").register()
         let text = try String(contentsOf: url, encoding: .utf8)
         #expect(text.contains("--max-time 30"))
-        #expect(text.contains("pretooluse"))
+        #expect(text.contains("permission-request"))
     }
 
-    @Test func fireAndForgetEventsUse1sTimeout() throws {
+    @Test func fireAndForgetEventsUse5sTimeout() throws {
         let url = tempSettings()
         try HookRegistrar(settingsURL: url, portFilePath: "/tmp/port").register()
         let text = try String(contentsOf: url, encoding: .utf8)
-        #expect(text.contains("--max-time 1"))
+        #expect(text.contains("--max-time 5"))
+        #expect(text.contains("/pretooluse"))
+        #expect(text.contains("/session-start"))
+        #expect(text.contains("/subagent-start"))
     }
 
     @Test func unregisterRemovesOnlyMarkedEntries() throws {

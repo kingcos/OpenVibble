@@ -112,14 +112,30 @@ public struct HookRegistrar: Sendable {
         let port = "$(jq -r .port \(portFilePath) 2>/dev/null)"
         let token = "$(jq -r .token \(portFilePath) 2>/dev/null)"
         switch event {
+        case .permissionRequest:
+            return "curl -s --max-time 30 -H \"X-OVD-Token: \(token)\" http://127.0.0.1:\(port)/permission-request -d @- 2>/dev/null || echo '{}' \(Self.marker)"
         case .preToolUse:
-            return "curl -s --max-time 30 -H \"X-OVD-Token: \(token)\" http://127.0.0.1:\(port)/pretooluse -d @- 2>/dev/null || echo '{}' \(Self.marker)"
+            return fireAndForget(path: "pretooluse", port: port, token: token)
         case .userPromptSubmit:
-            return "curl -s --max-time 1 -H \"X-OVD-Token: \(token)\" http://127.0.0.1:\(port)/prompt -d @- >/dev/null 2>&1; echo '{}' \(Self.marker)"
+            return fireAndForget(path: "prompt", port: port, token: token)
         case .stop:
-            return "curl -s --max-time 1 -H \"X-OVD-Token: \(token)\" http://127.0.0.1:\(port)/stop -d @- >/dev/null 2>&1; echo '{}' \(Self.marker)"
+            return fireAndForget(path: "stop", port: port, token: token)
+        case .stopFailure:
+            return fireAndForget(path: "stop-failure", port: port, token: token)
         case .notification:
-            return "curl -s --max-time 1 -H \"X-OVD-Token: \(token)\" http://127.0.0.1:\(port)/notification -d @- >/dev/null 2>&1; echo '{}' \(Self.marker)"
+            return fireAndForget(path: "notification", port: port, token: token)
+        case .sessionStart:
+            return fireAndForget(path: "session-start", port: port, token: token)
+        case .sessionEnd:
+            return fireAndForget(path: "session-end", port: port, token: token)
+        case .subagentStart:
+            return fireAndForget(path: "subagent-start", port: port, token: token)
+        case .subagentStop:
+            return fireAndForget(path: "subagent-stop", port: port, token: token)
         }
+    }
+
+    private func fireAndForget(path: String, port: String, token: String) -> String {
+        "curl -s --max-time 5 -H \"X-OVD-Token: \(token)\" http://127.0.0.1:\(port)/\(path) -d @- >/dev/null 2>&1 \(Self.marker)"
     }
 }

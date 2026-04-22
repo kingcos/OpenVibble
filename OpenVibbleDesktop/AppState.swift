@@ -300,7 +300,7 @@ final class AppState: ObservableObject {
         let token = Self.generateToken()
         let server = HookBridgeServer(token: token) { [weak self] event, body in
             switch event {
-            case .preToolUse:
+            case .permissionRequest:
                 let payload = (try? JSONDecoder().decode(PreToolUsePayload.self, from: body)) ?? PreToolUsePayload.empty
                 let id = UUID()
                 Task { @MainActor [weak self] in
@@ -369,9 +369,9 @@ final class AppState: ObservableObject {
             payload: payload
         )
         self.pendingApproval = state
-        appendLog("[hook] PreToolUse \(payload.toolName ?? "?") [\(project ?? "?")]")
+        appendLog("[hook] PermissionRequest \(payload.toolName ?? "?") [\(project ?? "?")]")
         hookActivity.append(HookActivityEntry(
-            event: .preToolUse,
+            event: .permissionRequest,
             projectName: project,
             toolName: payload.toolName
         ))
@@ -426,7 +426,7 @@ final class AppState: ObservableObject {
         }
         self.pendingApproval = nil
         hookActivity.append(HookActivityEntry(
-            event: .preToolUse,
+            event: .permissionRequest,
             projectName: pending.projectName,
             toolName: pending.toolName,
             decision: decision

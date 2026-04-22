@@ -30,14 +30,14 @@ struct HookBridgeServerTests {
         #expect((response as! HTTPURLResponse).statusCode == 401)
     }
 
-    @Test func preToolUseWaitsForDecision() async throws {
+    @Test func permissionRequestWaitsForDecision() async throws {
         let server = HookBridgeServer(token: "t") { _, _ in
             return .pendingApproval(id: UUID(), payload: PreToolUsePayload.placeholder)
         }
         let port = try await server.start()
         defer { Task { await server.stop() } }
 
-        var req = URLRequest(url: URL(string: "http://127.0.0.1:\(port)/pretooluse")!)
+        var req = URLRequest(url: URL(string: "http://127.0.0.1:\(port)/permission-request")!)
         req.httpMethod = "POST"
         req.setValue("t", forHTTPHeaderField: "X-OVD-Token")
         req.httpBody = Data("{\"session_id\":\"s\",\"cwd\":\"/a/b\",\"tool_name\":\"Bash\"}".utf8)
@@ -59,7 +59,40 @@ struct HookBridgeServerTests {
         #expect((response as! HTTPURLResponse).statusCode == 200)
         let parsed = try JSONSerialization.jsonObject(with: data) as? [String: Any]
         let output = parsed?["hookSpecificOutput"] as? [String: Any]
-        #expect(output?["permissionDecision"] as? String == "allow")
+        let decision = output?["decision"] as? [String: Any]
+        #expect(decision?["behavior"] as? String == "allow")
+    }
+
+    @Test func preToolUseIsObservationOnly() async throws {
+        let server = HookBridgeServer(token: "t") { _, _ in .ignore }
+        let port = try await server.start()
+        defer { Task { await server.stop() } }
+
+        var req = URLRequest(url: URL(string: "http://127.0.0.1:\(port)/pretooluse")!)
+        req.httpMethod = "POST"
+        req.setValue("t", forHTTPHeaderField: "X-OVD-Token")
+        req.httpBody = Data("{\"session_id\":\"s\",\"cwd\":\"/a/b\",\"tool_name\":\"Bash\"}".utf8)
+
+        let (data, response) = try await URLSession.shared.data(for: req)
+        #expect((response as! HTTPURLResponse).statusCode == 204)
+        #expect(data.isEmpty)
+    }
+
+    @Test func fireAndForgetEventsReturn204() async throws {
+        let paths = ["/prompt", "/stop", "/stop-failure", "/notification",
+                     "/session-start", "/session-end", "/subagent-start", "/subagent-stop"]
+        let server = HookBridgeServer(token: "t") { _, _ in .ignore }
+        let port = try await server.start()
+        defer { Task { await server.stop() } }
+
+        for path in paths {
+            var req = URLRequest(url: URL(string: "http://127.0.0.1:\(port)\(path)")!)
+            req.httpMethod = "POST"
+            req.setValue("t", forHTTPHeaderField: "X-OVD-Token")
+            req.httpBody = Data("{}".utf8)
+            let (_, response) = try await URLSession.shared.data(for: req)
+            #expect((response as! HTTPURLResponse).statusCode == 204, "path \(path) should return 204")
+        }
     }
 }
 

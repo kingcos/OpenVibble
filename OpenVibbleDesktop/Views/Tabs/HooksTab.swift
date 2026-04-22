@@ -11,6 +11,12 @@ struct HooksTab: View {
 
                 LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 12) {
                     EventCard(
+                        event: .permissionRequest,
+                        titleKey: "desktop.hooks.permissionRequest.title",
+                        descKey: "desktop.hooks.permissionRequest.desc",
+                        stats: state.hookActivity.stats(for: .permissionRequest)
+                    )
+                    EventCard(
                         event: .preToolUse,
                         titleKey: "desktop.hooks.preToolUse.title",
                         descKey: "desktop.hooks.preToolUse.desc",
@@ -29,10 +35,40 @@ struct HooksTab: View {
                         stats: state.hookActivity.stats(for: .stop)
                     )
                     EventCard(
+                        event: .stopFailure,
+                        titleKey: "desktop.hooks.stopFailure.title",
+                        descKey: "desktop.hooks.stopFailure.desc",
+                        stats: state.hookActivity.stats(for: .stopFailure)
+                    )
+                    EventCard(
                         event: .notification,
                         titleKey: "desktop.hooks.notification.title",
                         descKey: "desktop.hooks.notification.desc",
                         stats: state.hookActivity.stats(for: .notification)
+                    )
+                    EventCard(
+                        event: .sessionStart,
+                        titleKey: "desktop.hooks.sessionStart.title",
+                        descKey: "desktop.hooks.sessionStart.desc",
+                        stats: state.hookActivity.stats(for: .sessionStart)
+                    )
+                    EventCard(
+                        event: .sessionEnd,
+                        titleKey: "desktop.hooks.sessionEnd.title",
+                        descKey: "desktop.hooks.sessionEnd.desc",
+                        stats: state.hookActivity.stats(for: .sessionEnd)
+                    )
+                    EventCard(
+                        event: .subagentStart,
+                        titleKey: "desktop.hooks.subagentStart.title",
+                        descKey: "desktop.hooks.subagentStart.desc",
+                        stats: state.hookActivity.stats(for: .subagentStart)
+                    )
+                    EventCard(
+                        event: .subagentStop,
+                        titleKey: "desktop.hooks.subagentStop.title",
+                        descKey: "desktop.hooks.subagentStop.desc",
+                        stats: state.hookActivity.stats(for: .subagentStop)
                     )
                 }
 

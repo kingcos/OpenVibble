@@ -2,9 +2,15 @@ import Foundation
 
 public enum HookEvent: String, Codable, CaseIterable, Sendable {
     case preToolUse = "PreToolUse"
+    case permissionRequest = "PermissionRequest"
     case userPromptSubmit = "UserPromptSubmit"
     case stop = "Stop"
+    case stopFailure = "StopFailure"
     case notification = "Notification"
+    case sessionStart = "SessionStart"
+    case sessionEnd = "SessionEnd"
+    case subagentStart = "SubagentStart"
+    case subagentStop = "SubagentStop"
 
     public enum PersonaIntent: Equatable, Sendable {
         case idle
@@ -39,17 +45,23 @@ public enum HookEvent: String, Codable, CaseIterable, Sendable {
 
     public var pendingPersonaIntent: PersonaIntent {
         switch self {
-        case .preToolUse: return .attention(overlay: .heart)
+        case .permissionRequest: return .attention(overlay: .heart)
         default: return .idle
         }
     }
 
     public var transientPersonaIntent: PersonaIntent {
         switch self {
-        case .preToolUse: return .attention(overlay: .heart)
+        case .preToolUse: return .busy(duration: 0.5)
+        case .permissionRequest: return .attention(overlay: .heart)
         case .userPromptSubmit: return .busy(duration: 1.0)
         case .stop: return .celebrate(duration: 3.0)
+        case .stopFailure: return .dizzy(duration: 2.0)
         case .notification: return .attention(duration: 2.0)
+        case .sessionStart: return .busy(duration: 1.0)
+        case .sessionEnd: return .idle
+        case .subagentStart: return .busy(duration: 1.5)
+        case .subagentStop: return .idle
         }
     }
 

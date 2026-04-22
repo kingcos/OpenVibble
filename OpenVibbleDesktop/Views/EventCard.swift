@@ -44,10 +44,16 @@ struct EventCard: View {
 
     private var icon: String {
         switch event {
-        case .preToolUse: return "shield"
+        case .preToolUse: return "wrench.and.screwdriver"
+        case .permissionRequest: return "shield"
         case .userPromptSubmit: return "text.bubble"
         case .stop: return "checkmark.seal"
+        case .stopFailure: return "exclamationmark.triangle"
         case .notification: return "bell"
+        case .sessionStart: return "play.circle"
+        case .sessionEnd: return "stop.circle"
+        case .subagentStart: return "person.2.badge.gearshape"
+        case .subagentStop: return "person.2.slash"
         }
     }
 }

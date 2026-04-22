@@ -1094,13 +1094,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Before Claude Code runs a tool. Blocks up to 30s waiting for your approval."
+            "value" : "Fires before every tool call. Observation only — does not block."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Claude Code 执行工具前触发。最多阻塞 30 秒等待你的决策。"
+            "value" : "每次工具调用前触发，仅观察，不阻塞。"
           }
         }
       }
@@ -1120,6 +1120,90 @@
             "value" : "工具调用前"
           }
         }
+      }
+    },
+    "desktop.hooks.permissionRequest.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "PermissionRequest" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "权限请求" } }
+      }
+    },
+    "desktop.hooks.permissionRequest.desc" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "When Claude Code needs your approval. Blocks up to 30s waiting for your decision from the buddy." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "Claude Code 请求权限时触发，最多阻塞 30 秒等待桌宠侧的决策。" } }
+      }
+    },
+    "desktop.hooks.stopFailure.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "StopFailure" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "异常结束" } }
+      }
+    },
+    "desktop.hooks.stopFailure.desc" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "When a turn ends due to an API error." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "因 API 错误等原因导致本轮对话异常结束。" } }
+      }
+    },
+    "desktop.hooks.sessionStart.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "SessionStart" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "会话开始" } }
+      }
+    },
+    "desktop.hooks.sessionStart.desc" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "When a new Claude Code session begins or resumes." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "新的 Claude Code 会话开启或恢复时触发。" } }
+      }
+    },
+    "desktop.hooks.sessionEnd.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "SessionEnd" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "会话结束" } }
+      }
+    },
+    "desktop.hooks.sessionEnd.desc" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "When a Claude Code session terminates." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "Claude Code 会话终止时触发。" } }
+      }
+    },
+    "desktop.hooks.subagentStart.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "SubagentStart" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "子代理开始" } }
+      }
+    },
+    "desktop.hooks.subagentStart.desc" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "When a subagent spawns. Great signal for parallel work." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "子代理启动时触发，常用于并行任务信号。" } }
+      }
+    },
+    "desktop.hooks.subagentStop.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "SubagentStop" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "子代理结束" } }
+      }
+    },
+    "desktop.hooks.subagentStop.desc" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "When a subagent finishes." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "子代理结束时触发。" } }
       }
     },
     "desktop.hooks.register" : {

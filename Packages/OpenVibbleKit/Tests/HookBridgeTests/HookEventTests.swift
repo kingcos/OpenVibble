@@ -5,13 +5,17 @@ import Testing
 @Suite("HookEvent")
 struct HookEventTests {
     @Test func personaIntentForPending() {
-        #expect(HookEvent.preToolUse.pendingPersonaIntent == .attention(overlay: .heart))
+        #expect(HookEvent.permissionRequest.pendingPersonaIntent == .attention(overlay: .heart))
+        #expect(HookEvent.preToolUse.pendingPersonaIntent == .idle)
     }
 
     @Test func personaIntentForNonBlocking() {
         #expect(HookEvent.userPromptSubmit.transientPersonaIntent == .busy(duration: 1.0))
         #expect(HookEvent.stop.transientPersonaIntent == .celebrate(duration: 3.0))
+        #expect(HookEvent.stopFailure.transientPersonaIntent == .dizzy(duration: 2.0))
         #expect(HookEvent.notification.transientPersonaIntent == .attention(duration: 2.0))
+        #expect(HookEvent.sessionStart.transientPersonaIntent == .busy(duration: 1.0))
+        #expect(HookEvent.subagentStart.transientPersonaIntent == .busy(duration: 1.5))
     }
 
     @Test func decisionIntent() {

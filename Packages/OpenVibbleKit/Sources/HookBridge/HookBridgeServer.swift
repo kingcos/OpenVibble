@@ -114,9 +114,14 @@ public actor HookBridgeServer {
             ], options: [.sortedKeys])
             await send(conn, status: 200, contentType: "application/json", body: body ?? Data())
 
+        case ("POST", "/permission-request"):
+            guard verifyToken(request) else { await send(conn, status: 401, body: Data()); return }
+            await handlePermissionRequest(conn: conn, body: request.body)
+
         case ("POST", "/pretooluse"):
             guard verifyToken(request) else { await send(conn, status: 401, body: Data()); return }
-            await handlePreToolUse(conn: conn, body: request.body)
+            _ = router(.preToolUse, request.body)
+            await send(conn, status: 204, body: Data())
 
         case ("POST", "/prompt"):
             guard verifyToken(request) else { await send(conn, status: 401, body: Data()); return }
@@ -128,9 +133,34 @@ public actor HookBridgeServer {
             _ = router(.stop, request.body)
             await send(conn, status: 204, body: Data())
 
+        case ("POST", "/stop-failure"):
+            guard verifyToken(request) else { await send(conn, status: 401, body: Data()); return }
+            _ = router(.stopFailure, request.body)
+            await send(conn, status: 204, body: Data())
+
         case ("POST", "/notification"):
             guard verifyToken(request) else { await send(conn, status: 401, body: Data()); return }
             _ = router(.notification, request.body)
+            await send(conn, status: 204, body: Data())
+
+        case ("POST", "/session-start"):
+            guard verifyToken(request) else { await send(conn, status: 401, body: Data()); return }
+            _ = router(.sessionStart, request.body)
+            await send(conn, status: 204, body: Data())
+
+        case ("POST", "/session-end"):
+            guard verifyToken(request) else { await send(conn, status: 401, body: Data()); return }
+            _ = router(.sessionEnd, request.body)
+            await send(conn, status: 204, body: Data())
+
+        case ("POST", "/subagent-start"):
+            guard verifyToken(request) else { await send(conn, status: 401, body: Data()); return }
+            _ = router(.subagentStart, request.body)
+            await send(conn, status: 204, body: Data())
+
+        case ("POST", "/subagent-stop"):
+            guard verifyToken(request) else { await send(conn, status: 401, body: Data()); return }
+            _ = router(.subagentStop, request.body)
             await send(conn, status: 204, body: Data())
 
         default:
@@ -138,28 +168,48 @@ public actor HookBridgeServer {
         }
     }
 
-    private func handlePreToolUse(conn: NWConnection, body: Data) async {
-        let action = router(.preToolUse, body)
+    private func handlePermissionRequest(conn: NWConnection, body: Data) async {
+        let action = router(.permissionRequest, body)
         switch action {
         case .pendingApproval(let id, let payload):
             pendingPayloads[id] = payload
             let decision: HookEvent.PermissionDecisionKind = await withCheckedContinuation { cont in
                 self.pending[id] = cont
             }
-            let responseBody = Self.encodePreToolUseResponse(decision: decision)
+            let responseBody = Self.encodePermissionRequestResponse(decision: decision)
             await send(conn, status: 200, contentType: "application/json", body: responseBody)
         case .ignore, .fireAndForget:
-            let fallback = Self.encodePreToolUseResponse(decision: .ask)
+            let fallback = Self.encodePermissionRequestResponse(decision: .ask)
             await send(conn, status: 200, contentType: "application/json", body: fallback)
         }
     }
 
-    private static func encodePreToolUseResponse(decision: HookEvent.PermissionDecisionKind) -> Data {
-        var output: [String: Any] = [
-            "hookEventName": "PreToolUse",
-            "permissionDecision": decision.rawValue
-        ]
-        if decision == .deny { output["permissionDecisionReason"] = "Denied from OpenVibbleDesktop" }
+    private static func encodePermissionRequestResponse(decision: HookEvent.PermissionDecisionKind) -> Data {
+        // PermissionRequest hook schema: hookSpecificOutput.decision.behavior must be "allow" or "deny".
+        // If the user chose "ask", we return empty hookSpecificOutput so Claude falls back to the
+        // native permission dialog.
+        let output: [String: Any]
+        switch decision {
+        case .allow:
+            output = [
+                "hookEventName": "PermissionRequest",
+                "decision": [
+                    "behavior": "allow"
+                ]
+            ]
+        case .deny:
+            output = [
+                "hookEventName": "PermissionRequest",
+                "decision": [
+                    "behavior": "deny",
+                    "message": "Denied from OpenVibbleDesktop"
+                ]
+            ]
+        case .ask:
+            output = [
+                "hookEventName": "PermissionRequest"
+            ]
+        }
         let payload: [String: Any] = ["hookSpecificOutput": output]
         return (try? JSONSerialization.data(withJSONObject: payload, options: [.sortedKeys])) ?? Data()
     }
