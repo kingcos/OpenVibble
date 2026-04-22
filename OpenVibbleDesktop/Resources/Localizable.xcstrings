@@ -1,6 +1,22 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "[%@]" : {
+
+    },
+    "%@: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@: %2$@"
+          }
+        }
+      }
+    },
+    "~/.claude/openvibble.port" : {
+
+    },
     "desktop.about" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -208,64 +224,154 @@
     "desktop.bridge.baseUrl" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Base URL" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "基础 URL" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Base URL"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "基础 URL"
+          }
+        }
       }
     },
     "desktop.bridge.copied" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Copied" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已复制" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copied"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已复制"
+          }
+        }
       }
     },
     "desktop.bridge.copy" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Copy" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "复制" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copy"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "复制"
+          }
+        }
       }
     },
     "desktop.bridge.endpoints" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Endpoints" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "端点" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Endpoints"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "端点"
+          }
+        }
       }
     },
     "desktop.bridge.exampleCurl" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Example curl" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "curl 示例" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Example curl"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "curl 示例"
+          }
+        }
       }
     },
     "desktop.bridge.intro" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "OpenVibbleDesktop bridges local HTTP events to the iOS buddy over Bluetooth. Any agent that can POST JSON to localhost can integrate." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "OpenVibbleDesktop 通过本地 HTTP 把事件桥接到蓝牙桌宠。任何能向本机 POST JSON 的 agent 都可接入。" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OpenVibbleDesktop bridges local HTTP events to the iOS buddy over Bluetooth. Any agent that can POST JSON to localhost can integrate."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OpenVibbleDesktop 通过本地 HTTP 把事件桥接到蓝牙桌宠。任何能向本机 POST JSON 的 agent 都可接入。"
+          }
+        }
       }
     },
     "desktop.bridge.notReady" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Bridge not ready" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "桥接未就绪" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bridge not ready"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "桥接未就绪"
+          }
+        }
       }
     },
     "desktop.bridge.portFile" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Port file" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "端口文件" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Port file"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "端口文件"
+          }
+        }
       }
     },
     "desktop.bridge.token" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Token" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "令牌" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Token"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "令牌"
+          }
+        }
       }
     },
     "desktop.btn.approve" : {
@@ -747,127 +853,307 @@
     "desktop.hooks.bleAction" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "BLE: %@" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "蓝牙：%@" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "BLE: %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "蓝牙：%@"
+          }
+        }
       }
     },
     "desktop.hooks.empty" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "No activity yet" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "暂无活动" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No activity yet"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂无活动"
+          }
+        }
       }
     },
     "desktop.hooks.lastFired" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Last fired %@" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "上次触发 %@" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last fired %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上次触发 %@"
+          }
+        }
       }
     },
     "desktop.hooks.notification.desc" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Claude Code system-level notifications." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "Claude Code 系统级通知事件。" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Code system-level notifications."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Code 系统级通知事件。"
+          }
+        }
       }
     },
     "desktop.hooks.notification.title" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Notification" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "系统通知" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notification"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "系统通知"
+          }
+        }
       }
     },
     "desktop.hooks.petState" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Pet: %@" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "宠物:%@" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pet: %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "宠物:%@"
+          }
+        }
       }
     },
     "desktop.hooks.preToolUse.desc" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Before Claude Code runs a tool. Blocks up to 30s waiting for your approval." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "Claude Code 执行工具前触发。最多阻塞 30 秒等待你的决策。" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Before Claude Code runs a tool. Blocks up to 30s waiting for your approval."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Code 执行工具前触发。最多阻塞 30 秒等待你的决策。"
+          }
+        }
       }
     },
     "desktop.hooks.preToolUse.title" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "PreToolUse" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "工具调用前" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PreToolUse"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "工具调用前"
+          }
+        }
       }
     },
     "desktop.hooks.register" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Register hooks" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "注册 hooks" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Register hooks"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "注册 hooks"
+          }
+        }
       }
     },
     "desktop.hooks.status.notRegistered" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Not registered" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "未注册" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not registered"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未注册"
+          }
+        }
       }
     },
     "desktop.hooks.status.partial" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Partially registered" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "部分注册" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partially registered"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "部分注册"
+          }
+        }
       }
     },
     "desktop.hooks.status.registered" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Registered" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已注册" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Registered"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已注册"
+          }
+        }
       }
     },
     "desktop.hooks.stop.desc" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Fires when Claude Code finishes a response." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "Claude Code 完成一次回复时触发。" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fires when Claude Code finishes a response."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Claude Code 完成一次回复时触发。"
+          }
+        }
       }
     },
     "desktop.hooks.stop.title" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Stop" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "回合结束" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "回合结束"
+          }
+        }
       }
     },
     "desktop.hooks.todayCount" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Today: %d" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "今日：%d" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today: %d"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "今日：%d"
+          }
+        }
       }
     },
     "desktop.hooks.unregister" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Unregister" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "注销" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unregister"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "注销"
+          }
+        }
       }
     },
     "desktop.hooks.userPromptSubmit.desc" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Fires when you send a message to Claude Code." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "你向 Claude Code 发消息时触发。" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fires when you send a message to Claude Code."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你向 Claude Code 发消息时触发。"
+          }
+        }
       }
     },
     "desktop.hooks.userPromptSubmit.title" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "UserPromptSubmit" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "用户提交" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "UserPromptSubmit"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用户提交"
+          }
+        }
       }
     },
     "desktop.install" : {
@@ -1179,15 +1465,35 @@
     "desktop.overview.petState" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Pet state" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "宠物状态" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pet state"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "宠物状态"
+          }
+        }
       }
     },
     "desktop.overview.recentHooks" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Recent hook events" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "最近 hook 事件" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recent hook events"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最近 hook 事件"
+          }
+        }
       }
     },
     "desktop.pending" : {
@@ -1261,15 +1567,35 @@
     "desktop.pending.project" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Project: %@" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "项目：%@" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Project: %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "项目：%@"
+          }
+        }
       }
     },
     "desktop.pending.title" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Waiting for approval" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "等待审批" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Waiting for approval"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "等待审批"
+          }
+        }
       }
     },
     "desktop.pending.tool" : {
@@ -1564,15 +1890,35 @@
     "desktop.settings.about" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "About" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "关于" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关于"
+          }
+        }
       }
     },
     "desktop.settings.language" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Language" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "语言" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Language"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "语言"
+          }
+        }
       }
     },
     "desktop.species" : {
@@ -1765,36 +2111,86 @@
     "desktop.tab.bridge" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Bridge API" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "桥接说明" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bridge API"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "桥接说明"
+          }
+        }
       }
     },
     "desktop.tab.hooks" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Hooks" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "钩子" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hooks"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "钩子"
+          }
+        }
       }
     },
     "desktop.tab.overview" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Overview" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "概览" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Overview"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "概览"
+          }
+        }
       }
     },
     "desktop.tab.settings" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Settings" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "设置" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设置"
+          }
+        }
       }
     },
     "desktop.tab.testPanel" : {
       "extractionState" : "manual",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Test Panel" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "测试面板" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Test Panel"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "测试面板"
+          }
+        }
       }
     },
     "desktop.value.none" : {

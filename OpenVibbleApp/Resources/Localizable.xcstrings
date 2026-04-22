@@ -40,6 +40,9 @@
         }
       }
     },
+    "ASCII" : {
+
+    },
     "B" : {
 
     },
@@ -327,22 +330,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "下一项"
-          }
-        }
-      }
-    },
-    "device.menu.notice.demoOnly" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Some features in this menu are for display only."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "该菜单内部分功能仅供展示。"
           }
         }
       }
@@ -649,6 +636,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Wi-Fi"
+          }
+        }
+      }
+    },
+    "device.menu.notice.demoOnly" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Some features in this menu are for display only."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "该菜单内部分功能仅供展示。"
           }
         }
       }
@@ -4343,6 +4346,7 @@
       }
     },
     "settings.autoAdvertise" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

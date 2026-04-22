@@ -11,6 +11,7 @@
 		071D192A3A75DACF6FDA80E8 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF76EBF276FBAD084D5F62C /* HomeScreen.swift */; };
 		0D63FE5BE7ACEC64AFE7BD16 /* BuddyPersona in Frameworks */ = {isa = PBXBuildFile; productRef = E64C391922BD2DC616D86DB4 /* BuddyPersona */; };
 		0D8BA2FB4E2F32AAA97BB4B7 /* BridgeAppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2382F18941BE0950209AA0E /* BridgeAppModel.swift */; };
+		0E27D88C26F57BDC185ADCDD /* OverviewTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA02992DB8BE1A55CC5220E7 /* OverviewTab.swift */; };
 		10C4552150806CEAB534178E /* OpenVibbleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3453FEFE9D00261494A6F /* OpenVibbleApp.swift */; };
 		13C8A0B1E0DAF9363AB87328 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC3459B4E6022FBD263A1B98 /* Assets.xcassets */; };
 		1C2C6053500D7691CA2F181A /* NUSPeripheral in Frameworks */ = {isa = PBXBuildFile; productRef = E34575DAA58E05003C553CFD /* NUSPeripheral */; };
@@ -37,22 +38,29 @@
 		89EE5E1BB9EF8E1FBD7A1389 /* BridgeRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 1DB67BB197FA9008649A72BF /* BridgeRuntime */; };
 		94AA4E07AE4EA944A183FB4B /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DC976D1CE8B0AE215D7624 /* MainView.swift */; };
 		94F0ABD769C92C77262DF2F8 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = CEA83E7ACDD6B6DBB38E325B /* Localizable.xcstrings */; };
+		950AA204C52E2D1FFC075E2E /* SettingsTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85164EF739439E2BFCB2619F /* SettingsTab.swift */; };
+		95947439FC202EA6CF237812 /* PendingApprovalBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22961C8537F1986493473B28 /* PendingApprovalBanner.swift */; };
 		9EDB1FDD35E9029DAEEA6B72 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12431580E5231408D96515A2 /* SettingsScreen.swift */; };
 		9F0FA349BABFFC3F2DD69485 /* BuddyLiveActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA1CBCBA3072723280C1D62 /* BuddyLiveActivityManager.swift */; };
 		9FFE87B19C016A672AC6E9D1 /* BuiltinCharacters in Resources */ = {isa = PBXBuildFile; fileRef = 91F3C187CB72273ADE7F62D1 /* BuiltinCharacters */; };
+		A406AD5C4B90FE915D8CBF22 /* HookBridge in Frameworks */ = {isa = PBXBuildFile; productRef = 36A9C11793530C0E7F5D313F /* HookBridge */; };
 		A41F74B19E1E987E1852398E /* BuddyLiveActivityBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FBC544007CEEB71BCD06D8 /* BuddyLiveActivityBundle.swift */; };
 		AE169377843FB602802D8AC4 /* BuddyProtocol in Frameworks */ = {isa = PBXBuildFile; productRef = B365537E47D447BCB5615160 /* BuddyProtocol */; };
 		B2AB1216B2E0A68CAA5C660C /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 30707157E1964F9310AA0E33 /* Localizable.xcstrings */; };
+		B7DBD1E84C09654599E365F0 /* BridgeDocsTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5784230AEB1633572765042 /* BridgeDocsTab.swift */; };
 		C337972C670397990EE958E8 /* ScanSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0995CECE1B7A891F9B7360 /* ScanSheet.swift */; };
 		C5F0A7A39BC862623686EA6D /* MotionSensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99022B5E05DD0DBD7335BEC /* MotionSensor.swift */; };
 		C6D07473479E61FC08A46FCC /* BuddyPersona in Frameworks */ = {isa = PBXBuildFile; productRef = CA9C0F2C63C6E8DDD5C3BFD0 /* BuddyPersona */; };
+		C7048227785E8C3FD0EC7543 /* HooksTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1468CFC59FC0DBB72321C8 /* HooksTab.swift */; };
 		C903ED15DD82B7FB5652E921 /* NUSCentral in Frameworks */ = {isa = PBXBuildFile; productRef = CA68DFFBEEDE337DC0FFF798 /* NUSCentral */; };
 		C9AC58D301BD3C5F6DEA3BC2 /* BuddyNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D899283E258F52E976B88875 /* BuddyNotificationCenter.swift */; };
 		C9FCFB69BA32C7A0070CBA26 /* PromptIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A40F865CF51C1BCDAA4390 /* PromptIntents.swift */; };
 		D344CC6B9180B1E621663DC0 /* DeviceMenuState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1CFB277C64078012E3D244 /* DeviceMenuState.swift */; };
+		E0AA1B6DAFC611200CA7157D /* TestPanelTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DF98B7ED2F83C830B316236 /* TestPanelTab.swift */; };
 		E43EB9951D88D531C22AA846 /* PersonaController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD1C9C966DB1D6C2C3E2D7C1 /* PersonaController.swift */; };
 		E5D49BCE4826C0B91DC3D3BC /* AboutSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A01FD2AF1687D7CEBC1003C4 /* AboutSheet.swift */; };
 		EDEEE97570EC5BBAA12F0C4E /* LiveActivitySharedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C994DA7F257B43DBEDD2360 /* LiveActivitySharedStore.swift */; };
+		F11A91D132B320C9C4DA3CEF /* EventCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FF1FB6138443DEE79C0F45 /* EventCard.swift */; };
 		F792FCCA99DC8AF64B9457D5 /* BuddyProtocol in Frameworks */ = {isa = PBXBuildFile; productRef = 2A2889476DF5C751D95EB4FB /* BuddyProtocol */; };
 		F79D111908A6D2D30373A6B7 /* LiveActivitySharedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C994DA7F257B43DBEDD2360 /* LiveActivitySharedStore.swift */; };
 		FDB5A980C170EADC9CD6B1CD /* SpeciesPickerSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3081794479729D37C708A0A4 /* SpeciesPickerSheet.swift */; };
@@ -98,11 +106,14 @@
 		0A715408EC71FC395654FDF5 /* OpenVibbleDesktop.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenVibbleDesktop.entitlements; sourceTree = "<group>"; };
 		12431580E5231408D96515A2 /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
 		1C994DA7F257B43DBEDD2360 /* LiveActivitySharedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivitySharedStore.swift; sourceTree = "<group>"; };
+		22961C8537F1986493473B28 /* PendingApprovalBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingApprovalBanner.swift; sourceTree = "<group>"; };
 		22FBC544007CEEB71BCD06D8 /* BuddyLiveActivityBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddyLiveActivityBundle.swift; sourceTree = "<group>"; };
 		2BA9D2E1EC1BB41E5CA5BF52 /* PromptEdgeDetectorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptEdgeDetectorTests.swift; sourceTree = "<group>"; };
+		2D1468CFC59FC0DBB72321C8 /* HooksTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HooksTab.swift; sourceTree = "<group>"; };
 		30707157E1964F9310AA0E33 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		3081794479729D37C708A0A4 /* SpeciesPickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesPickerSheet.swift; sourceTree = "<group>"; };
 		3638EB48505CF446D806C25A /* OnboardingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingScreen.swift; sourceTree = "<group>"; };
+		3DF98B7ED2F83C830B316236 /* TestPanelTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestPanelTab.swift; sourceTree = "<group>"; };
 		5F4F84865792A7D52BF73EDD /* SmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokeTests.swift; sourceTree = "<group>"; };
 		5FFF5757CB966F2F1570C019 /* OpenVibbleAppTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = OpenVibbleAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D1CD2BA270744D1E216FCFA /* TerminalStyleLite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalStyleLite.swift; sourceTree = "<group>"; };
@@ -112,9 +123,12 @@
 		7AA1CBCBA3072723280C1D62 /* BuddyLiveActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddyLiveActivityManager.swift; sourceTree = "<group>"; };
 		7E47C66FD50F78FAD4642669 /* OpenVibbleApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenVibbleApp.entitlements; sourceTree = "<group>"; };
 		80DC976D1CE8B0AE215D7624 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		85164EF739439E2BFCB2619F /* SettingsTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTab.swift; sourceTree = "<group>"; };
+		88FF1FB6138443DEE79C0F45 /* EventCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCard.swift; sourceTree = "<group>"; };
 		9153332463570EB58424249C /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		91F3C187CB72273ADE7F62D1 /* BuiltinCharacters */ = {isa = PBXFileReference; lastKnownFileType = folder; name = BuiltinCharacters; path = OpenVibbleApp/Resources/BuiltinCharacters; sourceTree = SOURCE_ROOT; };
 		A01FD2AF1687D7CEBC1003C4 /* AboutSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutSheet.swift; sourceTree = "<group>"; };
+		A5784230AEB1633572765042 /* BridgeDocsTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BridgeDocsTab.swift; sourceTree = "<group>"; };
 		AEE80BFE42253DF8A0777FC9 /* OpenVibbleKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = OpenVibbleKit; path = Packages/OpenVibbleKit; sourceTree = SOURCE_ROOT; };
 		AF72CA7A3AC578E356AF0373 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B1E56A25DAA306740E807AC9 /* CharacterInstaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterInstaller.swift; sourceTree = "<group>"; };
@@ -132,6 +146,7 @@
 		EF0995CECE1B7A891F9B7360 /* ScanSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanSheet.swift; sourceTree = "<group>"; };
 		F2382F18941BE0950209AA0E /* BridgeAppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BridgeAppModel.swift; sourceTree = "<group>"; };
 		F436D96AA5667C59FFFAD4EE /* TerminalStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalStyle.swift; sourceTree = "<group>"; };
+		FA02992DB8BE1A55CC5220E7 /* OverviewTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewTab.swift; sourceTree = "<group>"; };
 		FA740647AA30E09599D13094 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		FAF76EBF276FBAD084D5F62C /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
 		FD1C9C966DB1D6C2C3E2D7C1 /* PersonaController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonaController.swift; sourceTree = "<group>"; };
@@ -159,6 +174,7 @@
 				C903ED15DD82B7FB5652E921 /* NUSCentral in Frameworks */,
 				AE169377843FB602802D8AC4 /* BuddyProtocol in Frameworks */,
 				C6D07473479E61FC08A46FCC /* BuddyPersona in Frameworks */,
+				A406AD5C4B90FE915D8CBF22 /* HookBridge in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -309,6 +325,18 @@
 			path = OpenVibbleDesktop;
 			sourceTree = "<group>";
 		};
+		9DCFC43DE5BE32D46A3D6DDD /* Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				A5784230AEB1633572765042 /* BridgeDocsTab.swift */,
+				2D1468CFC59FC0DBB72321C8 /* HooksTab.swift */,
+				FA02992DB8BE1A55CC5220E7 /* OverviewTab.swift */,
+				85164EF739439E2BFCB2619F /* SettingsTab.swift */,
+				3DF98B7ED2F83C830B316236 /* TestPanelTab.swift */,
+			);
+			path = Tabs;
+			sourceTree = "<group>";
+		};
 		B903C2EFBD7E8C928B250314 /* UI */ = {
 			isa = PBXGroup;
 			children = (
@@ -329,9 +357,12 @@
 			isa = PBXGroup;
 			children = (
 				A01FD2AF1687D7CEBC1003C4 /* AboutSheet.swift */,
+				88FF1FB6138443DEE79C0F45 /* EventCard.swift */,
 				80DC976D1CE8B0AE215D7624 /* MainView.swift */,
 				D292D42081F942406889A1D3 /* MenuBarView.swift */,
+				22961C8537F1986493473B28 /* PendingApprovalBanner.swift */,
 				EF0995CECE1B7A891F9B7360 /* ScanSheet.swift */,
+				9DCFC43DE5BE32D46A3D6DDD /* Tabs */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -436,6 +467,7 @@
 				CA68DFFBEEDE337DC0FFF798 /* NUSCentral */,
 				B365537E47D447BCB5615160 /* BuddyProtocol */,
 				CA9C0F2C63C6E8DDD5C3BFD0 /* BuddyPersona */,
+				36A9C11793530C0E7F5D313F /* HookBridge */,
 			);
 			productName = OpenVibbleDesktop;
 			productReference = B608CB8E5FA6634F488D0C81 /* OpenVibbleDesktop.app */;
@@ -526,12 +558,19 @@
 			files = (
 				E5D49BCE4826C0B91DC3D3BC /* AboutSheet.swift in Sources */,
 				7EB749B50B45BC7FCEB9BE5B /* AppState.swift in Sources */,
+				B7DBD1E84C09654599E365F0 /* BridgeDocsTab.swift in Sources */,
 				626C88F87702B9B7815D32F9 /* CharacterInstaller.swift in Sources */,
+				F11A91D132B320C9C4DA3CEF /* EventCard.swift in Sources */,
+				C7048227785E8C3FD0EC7543 /* HooksTab.swift in Sources */,
 				4C1BF1FDB4A7CECA7D12F65A /* L10n.swift in Sources */,
 				94AA4E07AE4EA944A183FB4B /* MainView.swift in Sources */,
 				51C2D2296BC134BB1D86EF0A /* MenuBarView.swift in Sources */,
 				5DCFA081D42CC05C6600AB9A /* OpenVibbleDesktopApp.swift in Sources */,
+				0E27D88C26F57BDC185ADCDD /* OverviewTab.swift in Sources */,
+				95947439FC202EA6CF237812 /* PendingApprovalBanner.swift in Sources */,
 				C337972C670397990EE958E8 /* ScanSheet.swift in Sources */,
+				950AA204C52E2D1FFC075E2E /* SettingsTab.swift in Sources */,
+				E0AA1B6DAFC611200CA7157D /* TestPanelTab.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -945,6 +984,10 @@
 		2A2889476DF5C751D95EB4FB /* BuddyProtocol */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = BuddyProtocol;
+		};
+		36A9C11793530C0E7F5D313F /* HookBridge */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = HookBridge;
 		};
 		95466985313AEFA5924180FD /* BuddyUI */ = {
 			isa = XCSwiftPackageProductDependency;
