@@ -7,7 +7,7 @@ struct MainView: View {
     @State private var selection: Tab = .overview
     @State private var showScanSheet = false
 
-    enum Tab: Hashable { case overview, hooks, testPanel, bridge, settings }
+    enum Tab: Hashable { case overview, hooks, bridge, settings }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -22,9 +22,6 @@ struct MainView: View {
                 HooksTab()
                     .tabItem { Label { LText("desktop.tab.hooks") } icon: { Image(systemName: "link") } }
                     .tag(Tab.hooks)
-                TestPanelTab()
-                    .tabItem { Label { LText("desktop.tab.testPanel") } icon: { Image(systemName: "wrench.and.screwdriver") } }
-                    .tag(Tab.testPanel)
                 BridgeDocsTab()
                     .tabItem { Label { LText("desktop.tab.bridge") } icon: { Image(systemName: "doc.plaintext") } }
                     .tag(Tab.bridge)

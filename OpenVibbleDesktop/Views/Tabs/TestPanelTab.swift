@@ -11,19 +11,16 @@ struct TestPanelTab: View {
     @State private var speciesSelection: Int = 4
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 14) {
-                deviceSection
-                batterySection
-                statsSection
-                systemSection
-                legacyPendingSection
-                manualSection
-                speciesSection
-                installSection
-                logSection
-            }
-            .padding(16)
+        VStack(alignment: .leading, spacing: 14) {
+            deviceSection
+            batterySection
+            statsSection
+            systemSection
+            legacyPendingSection
+            manualSection
+            speciesSection
+            installSection
+            logSection
         }
     }
 

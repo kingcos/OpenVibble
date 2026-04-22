@@ -3,6 +3,7 @@ import AppKit
 
 struct SettingsTab: View {
     @ObservedObject private var l10n = LocalizationManager.shared
+    @State private var testPanelExpanded = false
 
     private let repoURL = URL(string: "https://github.com/kingcos/OpenVibble")!
 
@@ -12,10 +13,22 @@ struct SettingsTab: View {
                 hero
                 languageSection
                 aboutSection
+                testPanelSection
             }
             .padding(20)
             .frame(maxWidth: .infinity, alignment: .leading)
         }
+    }
+
+    private var testPanelSection: some View {
+        DisclosureGroup(isExpanded: $testPanelExpanded) {
+            TestPanelTab()
+                .padding(.top, 8)
+        } label: {
+            LText("desktop.tab.testPanel")
+                .font(.headline)
+        }
+        .padding(.horizontal, 2)
     }
 
     private var hero: some View {
