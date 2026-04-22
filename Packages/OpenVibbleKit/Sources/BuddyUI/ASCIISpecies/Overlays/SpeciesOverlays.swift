@@ -4,6 +4,7 @@ enum SpeciesOverlays {
     static let byNameAndState: [String: [PersonaState: [Overlay]]] = [
         "cat": CatOverlays.all,
         "duck": DuckOverlays.all,
+        "goose": GooseOverlays.all,
         // future: more species added per batch.
     ]
 
