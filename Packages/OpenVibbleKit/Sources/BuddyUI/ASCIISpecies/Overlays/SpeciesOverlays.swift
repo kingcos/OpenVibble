@@ -16,6 +16,7 @@ enum SpeciesOverlays {
         "snail": SnailOverlays.all,
         "robot": RobotOverlays.all,
         "axolotl": AxolotlOverlays.all,
+        "blob": BlobOverlays.all,
         // future: more species added per batch.
     ]
 
