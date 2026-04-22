@@ -14,6 +14,11 @@ struct OpenVibbleApp: App {
         let store = PersonaStatsStore()
         _statsStore = StateObject(wrappedValue: store)
         _model = StateObject(wrappedValue: BridgeAppModel(statsStore: store))
+        // Register the actionable "prompt" notification category and install
+        // the delegate before the first scene is built. Apple requires the
+        // delegate to be set before app-launch-time callbacks fire, otherwise
+        // action taps that cold-start the app would be delivered to nobody.
+        BuddyNotificationCenter.shared.configure()
     }
 
     var body: some Scene {

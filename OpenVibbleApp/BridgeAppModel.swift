@@ -228,6 +228,7 @@ final class BridgeAppModel: ObservableObject {
 
     @discardableResult
     func respondPermission(_ decision: PermissionDecision) -> TimeInterval? {
+        let answeredId = prompt?.id
         guard let line = runtime.respondPermission(decision) else { return nil }
         let direction = decision == .once ? "允许" : "拒绝"
         recordEvent("发送  权限\(direction)")
@@ -250,8 +251,12 @@ final class BridgeAppModel: ObservableObject {
         // Dynamic Island / lock-screen buttons collapse immediately instead of
         // waiting ~one heartbeat for the desktop to reflect the response. The
         // runtime is now idempotent against the same id, so a stale heartbeat
-        // won't re-seat it.
+        // won't re-seat it. Also sweep any delivered local notification for
+        // this prompt id — its quick actions would otherwise reappear.
         prompt = nil
+        if let answeredId {
+            BuddyNotificationCenter.shared.clearPromptNotifications(promptID: answeredId)
+        }
         pushStatusSample()
         pushLiveActivity()
         return elapsed
