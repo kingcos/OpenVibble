@@ -112,6 +112,13 @@ public struct BridgeSnapshot: Equatable, Sendable {
 public final class BridgeRuntime {
     private var snapshotStorage: BridgeSnapshot
     private var promptStorage: PromptRequest?
+    /// Most recent prompt id we already answered via `respondPermission`. The
+    /// desktop needs a round-trip before its next heartbeat reflects the
+    /// response, and during that window `ingestLine` would otherwise re-seat
+    /// the same prompt and make the UI bounce (island button reappears, etc.).
+    /// Cleared once the desktop confirms with a heartbeat whose `prompt` is
+    /// absent or carries a different id.
+    private var lastAnsweredPromptId: String?
     private let transferStore: CharacterTransferStore
     private var lastStatusSample: StatusSample?
     private let startDate = Date()
@@ -143,9 +150,20 @@ public final class BridgeRuntime {
                 snapshotStorage.tokens = heartbeat.tokens ?? snapshotStorage.tokens
                 snapshotStorage.tokensToday = heartbeat.tokensToday ?? snapshotStorage.tokensToday
                 if let prompt = heartbeat.prompt {
-                    promptStorage = PromptRequest(id: prompt.id, tool: prompt.tool ?? "", hint: prompt.hint ?? "")
+                    if prompt.id == lastAnsweredPromptId {
+                        // Desktop hasn't yet acknowledged our response — treat
+                        // this stale prompt as cleared so the UI stays quiet
+                        // instead of bouncing between "answered" and "pending".
+                        promptStorage = nil
+                    } else {
+                        promptStorage = PromptRequest(id: prompt.id, tool: prompt.tool ?? "", hint: prompt.hint ?? "")
+                        // A different prompt id means the desktop has moved
+                        // on; the previous answer is now irrelevant.
+                        lastAnsweredPromptId = nil
+                    }
                 } else {
                     promptStorage = nil
+                    lastAnsweredPromptId = nil
                 }
                 if heartbeat.completed == true {
                     onTaskCompleted?()
@@ -183,6 +201,7 @@ public final class BridgeRuntime {
 
         case .unpair:
             promptStorage = nil
+            lastAnsweredPromptId = nil
             transferStore.reset()
             let ack = BridgeAck(ack: "unpair", ok: true, n: 0, error: "ios_bond_reset_requires_system_forget")
             return [encodeAck(ack)]
@@ -251,7 +270,13 @@ public final class BridgeRuntime {
     public func respondPermission(_ decision: PermissionDecision) -> String? {
         guard let promptStorage else { return nil }
         let command = PermissionCommand(id: promptStorage.id, decision: decision)
-        return try? NDJSONCodec.encodeLine(command)
+        guard let line = try? NDJSONCodec.encodeLine(command) else { return nil }
+        // Optimistically drop the pending prompt so the UI (Home, Live
+        // Activity, notification drawer) collapses to "no prompt" without
+        // waiting for the next heartbeat round-trip.
+        lastAnsweredPromptId = promptStorage.id
+        self.promptStorage = nil
+        return line
     }
 
     private func makeStatusAck() -> BridgeAck {

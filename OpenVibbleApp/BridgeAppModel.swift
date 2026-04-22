@@ -246,7 +246,14 @@ final class BridgeAppModel: ObservableObject {
         lastPromptAt = nil
         lastPromptId = nil
         responseSent = true
+        // Optimistically clear the prompt and refresh the Live Activity so the
+        // Dynamic Island / lock-screen buttons collapse immediately instead of
+        // waiting ~one heartbeat for the desktop to reflect the response. The
+        // runtime is now idempotent against the same id, so a stale heartbeat
+        // won't re-seat it.
+        prompt = nil
         pushStatusSample()
+        pushLiveActivity()
         return elapsed
     }
 
