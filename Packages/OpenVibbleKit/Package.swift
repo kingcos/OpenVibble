@@ -81,6 +81,10 @@ let package = Package(
         .testTarget(
             name: "HookBridgeTests",
             dependencies: ["HookBridge", "BuddyProtocol"]
+        ),
+        .testTarget(
+            name: "BuddyUITests",
+            dependencies: ["BuddyUI", "BuddyPersona"]
         )
     ]
 )
