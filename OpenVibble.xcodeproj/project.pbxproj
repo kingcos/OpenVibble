@@ -14,7 +14,6 @@
 		0E27D88C26F57BDC185ADCDD /* OverviewTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA02992DB8BE1A55CC5220E7 /* OverviewTab.swift */; };
 		10C4552150806CEAB534178E /* OpenVibbleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3453FEFE9D00261494A6F /* OpenVibbleApp.swift */; };
 		13C8A0B1E0DAF9363AB87328 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC3459B4E6022FBD263A1B98 /* Assets.xcassets */; };
-		A11D1CEB01DC01010E510FEB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A11D1CEB01DC01010E510FE0 /* Assets.xcassets */; };
 		1C2C6053500D7691CA2F181A /* NUSPeripheral in Frameworks */ = {isa = PBXBuildFile; productRef = E34575DAA58E05003C553CFD /* NUSPeripheral */; };
 		2158028287496A33D4016ACC /* BuddyLiveActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A2C706FC0D1C2E7EE4A449 /* BuddyLiveActivityAttributes.swift */; };
 		2461AD8BB652D66EC53FB324 /* TerminalStyleLite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1CD2BA270744D1E216FCFA /* TerminalStyleLite.swift */; };
@@ -46,6 +45,7 @@
 		9FFE87B19C016A672AC6E9D1 /* BuiltinCharacters in Resources */ = {isa = PBXBuildFile; fileRef = 91F3C187CB72273ADE7F62D1 /* BuiltinCharacters */; };
 		A406AD5C4B90FE915D8CBF22 /* HookBridge in Frameworks */ = {isa = PBXBuildFile; productRef = 36A9C11793530C0E7F5D313F /* HookBridge */; };
 		A41F74B19E1E987E1852398E /* BuddyLiveActivityBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FBC544007CEEB71BCD06D8 /* BuddyLiveActivityBundle.swift */; };
+		A5D3ED510FB03FFFA84C3184 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0E44CC997729C13E6FA41573 /* Assets.xcassets */; };
 		AE169377843FB602802D8AC4 /* BuddyProtocol in Frameworks */ = {isa = PBXBuildFile; productRef = B365537E47D447BCB5615160 /* BuddyProtocol */; };
 		B2AB1216B2E0A68CAA5C660C /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 30707157E1964F9310AA0E33 /* Localizable.xcstrings */; };
 		B7DBD1E84C09654599E365F0 /* BridgeDocsTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5784230AEB1633572765042 /* BridgeDocsTab.swift */; };
@@ -105,6 +105,7 @@
 		05EBBCA4BE5024998B9168B4 /* OpenVibbleDesktopApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenVibbleDesktopApp.swift; sourceTree = "<group>"; };
 		07B87E2C93760C9540A014BD /* MiniBuddyGlyphTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniBuddyGlyphTests.swift; sourceTree = "<group>"; };
 		0A715408EC71FC395654FDF5 /* OpenVibbleDesktop.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenVibbleDesktop.entitlements; sourceTree = "<group>"; };
+		0E44CC997729C13E6FA41573 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		12431580E5231408D96515A2 /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
 		1C994DA7F257B43DBEDD2360 /* LiveActivitySharedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivitySharedStore.swift; sourceTree = "<group>"; };
 		22961C8537F1986493473B28 /* PendingApprovalBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingApprovalBanner.swift; sourceTree = "<group>"; };
@@ -140,7 +141,6 @@
 		BD1CFB277C64078012E3D244 /* DeviceMenuState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMenuState.swift; sourceTree = "<group>"; };
 		BF1D080F23F14DFD50B41E3D /* NavigationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCoordinator.swift; sourceTree = "<group>"; };
 		CC3459B4E6022FBD263A1B98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		A11D1CEB01DC01010E510FE0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CEA83E7ACDD6B6DBB38E325B /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		D292D42081F942406889A1D3 /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
 		D899283E258F52E976B88875 /* BuddyNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddyNotificationCenter.swift; sourceTree = "<group>"; };
@@ -316,7 +316,7 @@
 			isa = PBXGroup;
 			children = (
 				9153332463570EB58424249C /* AppState.swift */,
-				A11D1CEB01DC01010E510FE0 /* Assets.xcassets */,
+				0E44CC997729C13E6FA41573 /* Assets.xcassets */,
 				B1E56A25DAA306740E807AC9 /* CharacterInstaller.swift */,
 				768D4B98611B5F094BCB41F0 /* Info.plist */,
 				E32C5F44C4FC7CC363C39C1D /* L10n.swift */,
@@ -485,18 +485,6 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
-					3F8ACEF9EAFFF7D2938DCC74 = {
-						DevelopmentTeam = C9JF3B5K5A;
-					};
-					89FDE76CCB772B8D0ED90AEA = {
-						DevelopmentTeam = C9JF3B5K5A;
-					};
-					B704384976EA2CDEE6ED26D3 = {
-						DevelopmentTeam = C9JF3B5K5A;
-					};
-					F165918CF7A8AA973A180FB5 = {
-						DevelopmentTeam = C9JF3B5K5A;
-					};
 				};
 			};
 			buildConfigurationList = BD41E83893AB248CFF4D3207 /* Build configuration list for PBXProject "OpenVibble" */;
@@ -530,8 +518,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5D3ED510FB03FFFA84C3184 /* Assets.xcassets in Resources */,
 				94F0ABD769C92C77262DF2F8 /* Localizable.xcstrings in Resources */,
-				A11D1CEB01DC01010E510FEB /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -675,7 +663,6 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = C9JF3B5K5A;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -881,7 +868,6 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = C9JF3B5K5A;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;

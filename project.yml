@@ -16,7 +16,6 @@ settings:
   base:
     PRODUCT_BUNDLE_IDENTIFIER: kingcos.me.openvibble
     SWIFT_VERSION: 6.0
-    DEVELOPMENT_TEAM: C9JF3B5K5A
     TARGETED_DEVICE_FAMILY: "1,2"
     IPHONEOS_DEPLOYMENT_TARGET: 18.0
 packages:
@@ -74,8 +73,8 @@ targets:
           - UIInterfaceOrientationPortraitUpsideDown
           - UIInterfaceOrientationLandscapeLeft
           - UIInterfaceOrientationLandscapeRight
-        NSBluetoothAlwaysUsageDescription: Connect to Claude Desktop as Hardware Buddy.
-        NSBluetoothPeripheralUsageDescription: Connect to Claude Desktop as Hardware Buddy.
+        NSBluetoothAlwaysUsageDescription: Connect to Claude Desktop / Claude Code, etc. as Hardware Buddy.
+        NSBluetoothPeripheralUsageDescription: Connect to Claude Desktop / Claude Code, etc. as Hardware Buddy.
         NSMotionUsageDescription: Detect shakes and face-down gestures to animate your Buddy.
         ITSAppUsesNonExemptEncryption: NO
         UIBackgroundModes:

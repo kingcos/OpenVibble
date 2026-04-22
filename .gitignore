@@ -18,5 +18,10 @@ DerivedData/
 **/.swiftpm/
 h5-demo.html
 
-# Local Claude loop notes (machine-specific)
-.claude/ralph-loop.local.md
+# Local Claude Code per-project state (settings, loop notes, memory)
+.claude/
+memory/
+
+# Python tooling caches (used only by helper scripts)
+.pytest_cache/
+__pycache__/

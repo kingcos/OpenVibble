@@ -1297,7 +1297,7 @@ git commit -m "Parse inbound PermissionCommand in NUSCentral decoder"
 - [ ] **Step 2: Regenerate project and build**
 
 ```bash
-cd /Users/kingcos/Documents/GitHub/claude-buddy-bridge-ios
+cd path/to/claude-buddy-bridge-ios
 xcodegen
 xcodebuild -scheme OpenVibbleDesktop -destination 'platform=macOS' build
 ```
