@@ -1,4 +1,4 @@
-# OpenVibble · iOS Hardware Buddy App
+# OpenVibble
 
 English | [中文](./README.zh-CN.md)
 
@@ -10,12 +10,12 @@ English | [中文](./README.zh-CN.md)
 
 <p align="center">
   <img alt="Swift" src="https://img.shields.io/badge/Swift-6.0-FA7343" />
-  <img alt="License" src="https://img.shields.io/badge/License-AGPLv3-3DA639" />
+  <img alt="License" src="https://img.shields.io/badge/License-MPL--2.0-brightgreen" />
 </p>
 
-OpenVibble is an iOS app that pairs with Claude Desktop over BLE (Nordic UART Service) and acts as a "hardware buddy" on iOS.
+OpenVibble implements the Claude Desktop Buddy Bluetooth protocol so an iPhone can pair directly with Claude Desktop and stand in for the original M5Stack hardware. Paired with the companion macOS app **OpenVibble Desktop**, it can also bridge to other agents such as Claude Code.
 
-It is designed as a companion app for [Claude Desktop Buddy](https://github.com/anthropics/claude-desktop-buddy), with iOS-native UX and runtime support.
+It builds on [Claude Desktop Buddy](https://github.com/anthropics/claude-desktop-buddy) with iOS-native UX and runtime support.
 
 ## Screenshots
 
@@ -23,20 +23,20 @@ It is designed as a companion app for [Claude Desktop Buddy](https://github.com/
 | --- | --- | --- |
 | ![Claude Desktop connected](./docs/readme/connected.png) | ![OpenVibble app main screen](./docs/readme/iphone-main.png) | ![OpenVibble Live Activity in Dynamic Island](./docs/readme/dynamic-island.jpg) |
 
-It keeps the buddy runtime on your phone and supports:
-- BLE pairing with Claude Desktop Hardware Buddy mode
-- Prompt approval/deny actions from the phone UI
-- Persona state transitions (idle/attention/busy/sleep/dizzy/celebrate/heart)
-- Motion-based interactions (shake and face-down detection)
-- Built-in and transferred GIF character packs
-- Live Activity status surface
+The buddy runtime stays on your phone with support for:
+- BLE pairing with Claude Desktop's Hardware Buddy mode
+- Approving or denying prompts directly from the phone
+- Persona state transitions (idle / attention / busy / sleep / dizzy / celebrate / heart)
+- Motion-based interactions (shake, face-down)
+- Built-in and over-the-air GIF character packs
+- Dynamic Island and Live Activity status surface with quick actions
 
 ## Requirements
 
 - macOS with Xcode 17+
 - iOS deployment target: 18.0+
 - [XcodeGen](https://github.com/yonaskolb/XcodeGen)
-- A physical iPhone for BLE peripheral advertising (Simulator has BLE limits)
+- A physical iPhone — the iOS Simulator does not support BLE peripheral advertising
 
 ## Quick Start
 
@@ -67,6 +67,14 @@ Notes:
 - iOS controls BLE/GAP behavior, so some low-level options from MCU firmware are not available.
 - Character packs transferred from desktop are saved under app sandbox storage and appear in species/persona pickers automatically.
 
+## Pair With Claude Code (via OpenVibble Desktop)
+
+OpenVibble Desktop is a macOS companion app that bridges OpenVibble to Claude Code — and any other agent that speaks the same hook protocol.
+
+1. Build and run **OpenVibbleDesktop** from the same Xcode workspace.
+2. Open the **Hooks** tab in OpenVibble Desktop and register the Claude Code hooks. This writes into `~/.claude/settings.json` and can be removed at any time.
+3. Connect your iOS device. Claude Code session events — session start/stop, permission prompts, response completion, user messages — are forwarded to the buddy in real time.
+
 ## Contributing
 
 Issues and pull requests are welcome. Please include reproducible steps and environment details when reporting bugs.
@@ -77,4 +85,4 @@ The app currently includes English (`en`) and Simplified Chinese (`zh-Hans`) res
 
 ## License
 
-GNU Affero General Public License v3.0. See [LICENSE](./LICENSE).
+Mozilla Public License 2.0. See [LICENSE](./LICENSE).

@@ -46,7 +46,7 @@ struct AboutSheet: View {
                     }
                     Spacer()
                 }
-                infoRow(key: "desktop.about.license", value: "Apache-2.0")
+                infoRow(key: "desktop.about.license", value: "MPL-2.0")
             }
             .padding(.horizontal, 24)
 

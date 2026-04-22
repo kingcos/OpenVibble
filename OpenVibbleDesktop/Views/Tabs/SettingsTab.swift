@@ -114,7 +114,7 @@ struct SettingsTab: View {
                 }
                 // License: plain text, selectable so it can be copied.
                 labeledRow("desktop.about.license") {
-                    Text("Apache-2.0")
+                    Text("MPL-2.0")
                         .font(.system(.body, design: .monospaced))
                         .textSelection(.enabled)
                 }
