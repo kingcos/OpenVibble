@@ -46,7 +46,6 @@ struct HomeScreen: View {
     @StateObject private var deviceMenu = DeviceMenuState()
 
     @AppStorage("bridge.displayName") private var persistedDisplayName = ""
-    @AppStorage("buddy.petName") private var petName: String = "Buddy"
     @AppStorage("home.showPowerButton") private var showPowerButton: Bool = true
 
     private let appStart = Date()
@@ -410,7 +409,8 @@ struct HomeScreen: View {
                 persona: persona,
                 page: infoPage,
                 appStart: appStart,
-                petName: petName
+                petName: model.snapshot.deviceName,
+                ownerName: model.snapshot.ownerName
             )
         }
     }
@@ -1194,6 +1194,12 @@ private struct InfoBody: View {
     let page: Int
     let appStart: Date
     let petName: String
+    let ownerName: String
+
+    private var formattedPetLabel: String {
+        let name = petName.isEmpty ? "Buddy" : petName
+        return ownerName.isEmpty ? name : "\(ownerName)'s \(name)"
+    }
 
     static let pages: [String] = ["ABOUT", "BUTTONS", "CLAUDE", "DEVICE", "BLE", "CREDITS"]
 
@@ -1287,7 +1293,7 @@ private struct InfoBody: View {
                 .pair("info.device.battery", batt),
                 .pair("info.device.usb", usb),
                 .pair("info.device.uptime", formatUptime(uptime)),
-                .pair("info.device.pet", petName.isEmpty ? "Buddy" : petName)
+                .pair("info.device.pet", formattedPetLabel)
             ]
         case "BLE": return [
             .pair("info.ble.link", shortConn),

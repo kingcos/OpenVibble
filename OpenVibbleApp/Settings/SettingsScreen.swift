@@ -432,7 +432,6 @@ struct SettingsScreen: View {
             "buddy.notificationsEnabled",
             "buddy.liveActivityEnabled",
             "bridge.displayName",
-            "buddy.petName",
             "home.showPowerButton"
         ] {
             defaults.removeObject(forKey: key)
