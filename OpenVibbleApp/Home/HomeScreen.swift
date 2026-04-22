@@ -42,10 +42,10 @@ struct HomeScreen: View {
     @State private var promptArrivedAt: Date?
     @State private var promptTick: Int = 0
     @State private var frozenWaitedSeconds: Int?
+    @State private var showAdvertisingActions = false
     @StateObject private var deviceMenu = DeviceMenuState()
 
     @AppStorage("bridge.displayName") private var persistedDisplayName = ""
-    @AppStorage("bridge.autoStartBLE") private var autoStartBLE = true
     @AppStorage("buddy.petName") private var petName: String = "Buddy"
     @AppStorage("home.showPowerButton") private var showPowerButton: Bool = true
 
@@ -148,6 +148,12 @@ struct HomeScreen: View {
             // but this will, so advertising kicks in as soon as they return.
             startBLEIfAllowed()
         }
+        .onChange(of: model.connectionState) { _, state in
+            if case .advertising = state {
+                return
+            }
+            showAdvertisingActions = false
+        }
         .onReceive(promptTimer) { _ in
             if promptArrivedAt != nil { promptTick &+= 1 }
         }
@@ -197,6 +203,9 @@ struct HomeScreen: View {
                 }
                 .accessibilityLabel(Text("settings.title"))
             }
+            if showAdvertisingActions, case .advertising = model.connectionState {
+                advertisingActionBar
+            }
 
             VStack(alignment: .leading, spacing: 2) {
                 Text("OpenVibble")
@@ -208,9 +217,43 @@ struct HomeScreen: View {
         }
     }
 
+    private var advertisingActionBar: some View {
+        HStack {
+            Button {
+                restartAdvertising()
+            } label: {
+                HStack(spacing: 6) {
+                    Image(systemName: "arrow.clockwise")
+                        .font(.system(size: 11, weight: .bold))
+                    Text(verbatim: "Restart advertising")
+                        .font(TerminalStyle.mono(11, weight: .semibold))
+                }
+                .foregroundStyle(TerminalStyle.ink)
+                .padding(.horizontal, 10)
+                .padding(.vertical, 7)
+                .background(TerminalStyle.lcdPanel.opacity(0.7), in: Capsule())
+                .overlay(
+                    Capsule()
+                        .stroke(TerminalStyle.accentSoft.opacity(0.55), lineWidth: 1)
+                )
+            }
+            .buttonStyle(.plain)
+            Spacer(minLength: 0)
+        }
+    }
+
     private var statusIndicator: some View {
         let action = statusAction
         let actionable = action != nil
+        let chevronName: String = {
+            guard let action else { return "chevron.right" }
+            switch action {
+            case .toggleAdvertisingActions:
+                return showAdvertisingActions ? "chevron.down" : "chevron.right"
+            case .openURL, .startAdvertising:
+                return "chevron.right"
+            }
+        }()
         let content = HStack(spacing: 8) {
             BreathingLED(color: statusColor)
             Text(statusLabel)
@@ -219,7 +262,7 @@ struct HomeScreen: View {
                 .lineLimit(1)
                 .truncationMode(.tail)
             if actionable {
-                Image(systemName: "chevron.right")
+                Image(systemName: chevronName)
                     .font(.system(size: 9, weight: .bold))
                     .foregroundStyle(TerminalStyle.inkDim)
             }
@@ -245,11 +288,11 @@ struct HomeScreen: View {
     }
 
     /// Actions surfaced by the status pill. The pill is only interactive when
-    /// the user can actually do something — a passive state like "advertising"
-    /// stays non-interactive.
+    /// the user can actually do something.
     private enum StatusAction {
         case openURL(URL)
         case startAdvertising
+        case toggleAdvertisingActions
     }
 
     private var statusAction: StatusAction? {
@@ -267,16 +310,18 @@ struct HomeScreen: View {
             }
             return nil
         }
-        // Stopped + permission granted → user has turned auto-advertise
-        // off (or hasn't flipped it on yet). Keep a manual entry point even
-        // when power state is still `.unknown` before manager bootstraps.
-        // The start path itself will create the manager and re-check power.
+        // Stopped + permission granted: keep a manual "start advertising"
+        // entry-point. The start path itself will create the manager and
+        // re-check power.
         if case .stopped = model.connectionState,
            model.bluetoothAuthorization == .allowedAlways,
            model.bluetoothPowerState != .poweredOff,
            model.bluetoothPowerState != .unsupported,
            model.bluetoothPowerState != .unauthorized {
             return .startAdvertising
+        }
+        if case .advertising = model.connectionState {
+            return .toggleAdvertisingActions
         }
         return nil
     }
@@ -285,8 +330,25 @@ struct HomeScreen: View {
         switch action {
         case .openURL(let url):
             UIApplication.shared.open(url)
+            showAdvertisingActions = false
         case .startAdvertising:
             UIImpactFeedbackGenerator(style: .soft).impactOccurred()
+            model.start(
+                displayName: effectiveDisplayName,
+                includeServiceUUIDInAdvertisement: true
+            )
+            showAdvertisingActions = false
+        case .toggleAdvertisingActions:
+            showAdvertisingActions.toggle()
+        }
+    }
+
+    private func restartAdvertising() {
+        UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+        showAdvertisingActions = false
+        Task { @MainActor in
+            model.stop()
+            try? await Task.sleep(for: .milliseconds(220))
             model.start(
                 displayName: effectiveDisplayName,
                 includeServiceUUIDInAdvertisement: true
@@ -558,7 +620,7 @@ struct HomeScreen: View {
     }
 
     private func startBLEIfAllowed() {
-        guard autoStartBLE, model.bluetoothAuthorization == .allowedAlways else { return }
+        guard model.bluetoothAuthorization == .allowedAlways else { return }
         model.start(
             displayName: effectiveDisplayName,
             includeServiceUUIDInAdvertisement: true

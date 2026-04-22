@@ -11,7 +11,6 @@ struct SettingsScreen: View {
     @AppStorage("buddy.hasOnboarded") private var hasOnboarded: Bool = false
     @AppStorage("buddy.notificationsEnabled") private var notificationsEnabled = true
     @AppStorage("buddy.liveActivityEnabled") private var liveActivityEnabled = true
-    @AppStorage("bridge.autoStartBLE") private var autoStartBLE: Bool = true
     @AppStorage("home.showPowerButton") private var showPowerButton: Bool = true
 
     @State private var notificationStatus = "?"
@@ -35,7 +34,6 @@ struct SettingsScreen: View {
                     headerBar
 
                     TerminalPanel("settings.section.pet.lower") { petContent }
-                    TerminalPanel("settings.section.bluetooth.lower") { bluetoothContent }
                     TerminalPanel("settings.section.interface.lower") { interfaceContent }
                     TerminalPanel("settings.section.alerts.lower") { alertsContent }
                     TerminalPanel("settings.section.about.lower") { aboutContent }
@@ -148,17 +146,6 @@ struct SettingsScreen: View {
             )
         }
         .buttonStyle(.plain)
-    }
-
-    // MARK: - Bluetooth
-
-    private var bluetoothContent: some View {
-        Toggle(isOn: $autoStartBLE) {
-            Text("settings.autoAdvertise")
-                .font(TerminalStyle.mono(12))
-                .foregroundStyle(TerminalStyle.ink)
-        }
-        .tint(TerminalStyle.accent)
     }
 
     // MARK: - Interface
@@ -392,7 +379,6 @@ struct SettingsScreen: View {
             "buddy.hasOnboarded",
             "buddy.notificationsEnabled",
             "buddy.liveActivityEnabled",
-            "bridge.autoStartBLE",
             "bridge.displayName",
             "buddy.petName",
             "home.showPowerButton"
