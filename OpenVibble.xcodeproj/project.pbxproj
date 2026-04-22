@@ -23,9 +23,11 @@
 		4765CE8489545C2B5A0FC55D /* PromptEdgeDetectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA9D2E1EC1BB41E5CA5BF52 /* PromptEdgeDetectorTests.swift */; };
 		49323CE8E8BD615C099553C2 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 30707157E1964F9310AA0E33 /* Localizable.xcstrings */; };
 		4B8F6E4D6BE3BC156CF356B8 /* BuddyStorage in Frameworks */ = {isa = PBXBuildFile; productRef = D4181E28E656C37944651F07 /* BuddyStorage */; };
+		4C1BF1FDB4A7CECA7D12F65A /* L10n.swift in Sources */ = {isa = PBXBuildFile; fileRef = E32C5F44C4FC7CC363C39C1D /* L10n.swift */; };
 		51C2D2296BC134BB1D86EF0A /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D292D42081F942406889A1D3 /* MenuBarView.swift */; };
 		53721F6E5426709BBA037D57 /* BuddyStats in Frameworks */ = {isa = PBXBuildFile; productRef = DC881B515F8061AD893E79BD /* BuddyStats */; };
 		5DCFA081D42CC05C6600AB9A /* OpenVibbleDesktopApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EBBCA4BE5024998B9168B4 /* OpenVibbleDesktopApp.swift */; };
+		626C88F87702B9B7815D32F9 /* CharacterInstaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E56A25DAA306740E807AC9 /* CharacterInstaller.swift */; };
 		7386A953E41C3C1DCCF1A6E1 /* TerminalStyleLite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1CD2BA270744D1E216FCFA /* TerminalStyleLite.swift */; };
 		7546E492567BE2295FAAE913 /* SmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F4F84865792A7D52BF73EDD /* SmokeTests.swift */; };
 		7EB749B50B45BC7FCEB9BE5B /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9153332463570EB58424249C /* AppState.swift */; };
@@ -34,6 +36,7 @@
 		899F9ED36F2237AB236DB0E1 /* OnboardingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3638EB48505CF446D806C25A /* OnboardingScreen.swift */; };
 		89EE5E1BB9EF8E1FBD7A1389 /* BridgeRuntime in Frameworks */ = {isa = PBXBuildFile; productRef = 1DB67BB197FA9008649A72BF /* BridgeRuntime */; };
 		94AA4E07AE4EA944A183FB4B /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80DC976D1CE8B0AE215D7624 /* MainView.swift */; };
+		94F0ABD769C92C77262DF2F8 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = CEA83E7ACDD6B6DBB38E325B /* Localizable.xcstrings */; };
 		9EDB1FDD35E9029DAEEA6B72 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12431580E5231408D96515A2 /* SettingsScreen.swift */; };
 		9F0FA349BABFFC3F2DD69485 /* BuddyLiveActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA1CBCBA3072723280C1D62 /* BuddyLiveActivityManager.swift */; };
 		9FFE87B19C016A672AC6E9D1 /* BuiltinCharacters in Resources */ = {isa = PBXBuildFile; fileRef = 91F3C187CB72273ADE7F62D1 /* BuiltinCharacters */; };
@@ -42,6 +45,7 @@
 		B2AB1216B2E0A68CAA5C660C /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 30707157E1964F9310AA0E33 /* Localizable.xcstrings */; };
 		C337972C670397990EE958E8 /* ScanSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF0995CECE1B7A891F9B7360 /* ScanSheet.swift */; };
 		C5F0A7A39BC862623686EA6D /* MotionSensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99022B5E05DD0DBD7335BEC /* MotionSensor.swift */; };
+		C6D07473479E61FC08A46FCC /* BuddyPersona in Frameworks */ = {isa = PBXBuildFile; productRef = CA9C0F2C63C6E8DDD5C3BFD0 /* BuddyPersona */; };
 		C903ED15DD82B7FB5652E921 /* NUSCentral in Frameworks */ = {isa = PBXBuildFile; productRef = CA68DFFBEEDE337DC0FFF798 /* NUSCentral */; };
 		C9AC58D301BD3C5F6DEA3BC2 /* BuddyNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D899283E258F52E976B88875 /* BuddyNotificationCenter.swift */; };
 		C9FCFB69BA32C7A0070CBA26 /* PromptIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A40F865CF51C1BCDAA4390 /* PromptIntents.swift */; };
@@ -111,6 +115,7 @@
 		91F3C187CB72273ADE7F62D1 /* BuiltinCharacters */ = {isa = PBXFileReference; lastKnownFileType = folder; name = BuiltinCharacters; path = OpenVibbleApp/Resources/BuiltinCharacters; sourceTree = SOURCE_ROOT; };
 		AEE80BFE42253DF8A0777FC9 /* OpenVibbleKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = OpenVibbleKit; path = Packages/OpenVibbleKit; sourceTree = SOURCE_ROOT; };
 		AF72CA7A3AC578E356AF0373 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		B1E56A25DAA306740E807AC9 /* CharacterInstaller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterInstaller.swift; sourceTree = "<group>"; };
 		B56B396C1C7E39F53D657B11 /* OpenVibbleApp.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = OpenVibbleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B608CB8E5FA6634F488D0C81 /* OpenVibbleDesktop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenVibbleDesktop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B675ED379CED64D51EE4671A /* DeviceMenuOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMenuOverlay.swift; sourceTree = "<group>"; };
@@ -118,8 +123,10 @@
 		BD1CFB277C64078012E3D244 /* DeviceMenuState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMenuState.swift; sourceTree = "<group>"; };
 		BF1D080F23F14DFD50B41E3D /* NavigationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCoordinator.swift; sourceTree = "<group>"; };
 		CC3459B4E6022FBD263A1B98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CEA83E7ACDD6B6DBB38E325B /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		D292D42081F942406889A1D3 /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
 		D899283E258F52E976B88875 /* BuddyNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddyNotificationCenter.swift; sourceTree = "<group>"; };
+		E32C5F44C4FC7CC363C39C1D /* L10n.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = L10n.swift; sourceTree = "<group>"; };
 		EF0995CECE1B7A891F9B7360 /* ScanSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanSheet.swift; sourceTree = "<group>"; };
 		F2382F18941BE0950209AA0E /* BridgeAppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BridgeAppModel.swift; sourceTree = "<group>"; };
 		F436D96AA5667C59FFFAD4EE /* TerminalStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalStyle.swift; sourceTree = "<group>"; };
@@ -149,6 +156,7 @@
 			files = (
 				C903ED15DD82B7FB5652E921 /* NUSCentral in Frameworks */,
 				AE169377843FB602802D8AC4 /* BuddyProtocol in Frameworks */,
+				C6D07473479E61FC08A46FCC /* BuddyPersona in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,9 +296,12 @@
 			isa = PBXGroup;
 			children = (
 				9153332463570EB58424249C /* AppState.swift */,
+				B1E56A25DAA306740E807AC9 /* CharacterInstaller.swift */,
 				768D4B98611B5F094BCB41F0 /* Info.plist */,
+				E32C5F44C4FC7CC363C39C1D /* L10n.swift */,
 				0A715408EC71FC395654FDF5 /* OpenVibbleDesktop.entitlements */,
 				05EBBCA4BE5024998B9168B4 /* OpenVibbleDesktopApp.swift */,
+				BF33738568DC79CCCAA12DDD /* Resources */,
 				C0B1302EDABCD75193F13170 /* Views */,
 			);
 			path = OpenVibbleDesktop;
@@ -302,6 +313,14 @@
 				F436D96AA5667C59FFFAD4EE /* TerminalStyle.swift */,
 			);
 			path = UI;
+			sourceTree = "<group>";
+		};
+		BF33738568DC79CCCAA12DDD /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				CEA83E7ACDD6B6DBB38E325B /* Localizable.xcstrings */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		C0B1302EDABCD75193F13170 /* Views */ = {
@@ -402,6 +421,7 @@
 			buildConfigurationList = 7E06262CBB492EB8A7F5E7DF /* Build configuration list for PBXNativeTarget "OpenVibbleDesktop" */;
 			buildPhases = (
 				1071C040DDD592CF3298D0F7 /* Sources */,
+				065D35EE6A2B3EABE6BEF76C /* Resources */,
 				6598F6B57C5AC3E7DC35A33A /* Frameworks */,
 			);
 			buildRules = (
@@ -412,6 +432,7 @@
 			packageProductDependencies = (
 				CA68DFFBEEDE337DC0FFF798 /* NUSCentral */,
 				B365537E47D447BCB5615160 /* BuddyProtocol */,
+				CA9C0F2C63C6E8DDD5C3BFD0 /* BuddyPersona */,
 			);
 			productName = OpenVibbleDesktop;
 			productReference = B608CB8E5FA6634F488D0C81 /* OpenVibbleDesktop.app */;
@@ -467,6 +488,14 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		065D35EE6A2B3EABE6BEF76C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94F0ABD769C92C77262DF2F8 /* Localizable.xcstrings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2BD0DD2345E185401657DF9F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -493,6 +522,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				7EB749B50B45BC7FCEB9BE5B /* AppState.swift in Sources */,
+				626C88F87702B9B7815D32F9 /* CharacterInstaller.swift in Sources */,
+				4C1BF1FDB4A7CECA7D12F65A /* L10n.swift in Sources */,
 				94AA4E07AE4EA944A183FB4B /* MainView.swift in Sources */,
 				51C2D2296BC134BB1D86EF0A /* MenuBarView.swift in Sources */,
 				5DCFA081D42CC05C6600AB9A /* OpenVibbleDesktopApp.swift in Sources */,
@@ -922,6 +953,10 @@
 		CA68DFFBEEDE337DC0FFF798 /* NUSCentral */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = NUSCentral;
+		};
+		CA9C0F2C63C6E8DDD5C3BFD0 /* BuddyPersona */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BuddyPersona;
 		};
 		D4181E28E656C37944651F07 /* BuddyStorage */ = {
 			isa = XCSwiftPackageProductDependency;

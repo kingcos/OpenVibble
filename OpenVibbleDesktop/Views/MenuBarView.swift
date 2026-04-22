@@ -3,6 +3,7 @@ import NUSCentral
 
 struct MenuBarView: View {
     @EnvironmentObject private var state: AppState
+    @ObservedObject private var l10n = LocalizationManager.shared
     let openMainWindow: () -> Void
 
     var body: some View {
@@ -13,38 +14,40 @@ struct MenuBarView: View {
 
             switch state.connection {
             case .connected:
-                Button("Disconnect") { state.disconnect() }
+                Button(action: { state.disconnect() }) { LText("desktop.btn.disconnect") }
             case .scanning:
-                Button("Stop scanning") { state.stopScan() }
+                Button(action: { state.stopScan() }) { LText("desktop.menu.scan.stop") }
             default:
-                Button("Start scanning") { state.startScan() }
+                Button(action: { state.startScan() }) { LText("desktop.menu.scan.start") }
             }
 
-            Button("Open window") { openMainWindow() }
+            Button(action: openMainWindow) { LText("desktop.menu.open") }
             Divider()
-            Button("Quit OpenVibbleDesktop") { NSApp.terminate(nil) }
+            Button(action: { NSApp.terminate(nil) }) { LText("desktop.menu.quit") }
                 .keyboardShortcut("q")
         }
+        .environment(\.localizationBundle, l10n.bundle)
     }
 
     private var summaryLine: String {
         switch state.connection {
         case .connected:
-            return "Connected · \(state.connectedName ?? "Claude")"
+            let name = state.connectedName ?? "Claude"
+            return l10n.bundle.l("desktop.menu.summary.connected", name)
         case .scanning:
-            return "Scanning for Claude…"
+            return l10n.bundle.l("desktop.menu.summary.scanning")
         case .connecting:
-            return "Connecting…"
+            return l10n.bundle.l("desktop.header.connecting")
         case .poweredOff:
-            return "Bluetooth is off"
+            return state.bluetoothNote
         case .unauthorized:
-            return "Bluetooth permission denied"
+            return l10n.bundle.l("desktop.header.unauth")
         case .unsupported:
-            return "Bluetooth not supported"
+            return l10n.bundle.l("desktop.header.unsupported")
         case .error(let msg):
-            return "Error: \(msg)"
+            return l10n.bundle.l("desktop.header.error", msg)
         default:
-            return "Idle"
+            return l10n.bundle.l("desktop.header.idle")
         }
     }
 }

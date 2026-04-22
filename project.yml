@@ -124,6 +124,8 @@ targets:
         product: NUSCentral
       - package: OpenVibbleKit
         product: BuddyProtocol
+      - package: OpenVibbleKit
+        product: BuddyPersona
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: kingcos.me.openvibble.desktop

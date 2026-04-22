@@ -1,7 +1,22 @@
 import Foundation
 import Combine
 import BuddyProtocol
+import BuddyPersona
 import NUSCentral
+
+struct StatusAckSnapshot: Equatable {
+    var batteryPct: Int?
+    var batteryUsb: Bool?
+    var batteryVoltageMv: Int?
+    var statsLevel: Int?
+    var statsApproved: Int?
+    var statsVelocitySec: Int?
+    var sysFirmware: String?
+    var sysUptimeSec: Int?
+    var xferRx: Int?
+    var xferTx: Int?
+    var rawJson: String?
+}
 
 @MainActor
 final class AppState: ObservableObject {
@@ -15,9 +30,15 @@ final class AppState: ObservableObject {
     @Published var lastAck: BridgeAck?
     @Published var lastTurn: TurnEvent?
     @Published var lastTimeSync: TimeSync?
+    @Published var statusSnapshot: StatusAckSnapshot = StatusAckSnapshot()
     @Published var activityLog: [String] = []
 
+    @Published var installProgress: InstallProgress?
+    @Published var installRunning: Bool = false
+    @Published var installError: String?
+
     let central = BuddyCentralService()
+    lazy var installer: CharacterInstaller = CharacterInstaller(central: central)
 
     private var cancellables: Set<AnyCancellable> = []
 
@@ -43,6 +64,16 @@ final class AppState: ObservableObject {
                 self?.ingest(message)
             }
         }
+
+        installer.$progress
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$installProgress)
+        installer.$isRunning
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$installRunning)
+        installer.$lastError
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$installError)
     }
 
     func startScan() {
@@ -72,18 +103,34 @@ final class AppState: ObservableObject {
     }
 
     func sendName(_ name: String) {
-        let ok = central.sendEncodable(NameCommand(name: name))
-        appendLog(ok ? "[send] cmd:name \(name)" : "[send] cmd:name FAILED")
+        let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else {
+            appendLog("[send] cmd:name skipped (empty)")
+            return
+        }
+        let ok = central.sendEncodable(NameCommand(name: trimmed))
+        appendLog(ok ? "[send] cmd:name \(trimmed)" : "[send] cmd:name FAILED")
     }
 
     func sendOwner(_ name: String) {
-        let ok = central.sendEncodable(OwnerCommand(name: name))
-        appendLog(ok ? "[send] cmd:owner \(name)" : "[send] cmd:owner FAILED")
+        let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else {
+            appendLog("[send] cmd:owner skipped (empty)")
+            return
+        }
+        let ok = central.sendEncodable(OwnerCommand(name: trimmed))
+        appendLog(ok ? "[send] cmd:owner \(trimmed)" : "[send] cmd:owner FAILED")
     }
 
     func sendUnpair() {
         let ok = central.sendEncodable(UnpairCommand())
         appendLog(ok ? "[send] cmd:unpair" : "[send] cmd:unpair FAILED")
+    }
+
+    func sendSpecies(index: Int) {
+        let ok = central.sendEncodable(SpeciesCommand(idx: index))
+        let label = PersonaSpeciesCatalog.name(at: index) ?? (index == PersonaSpeciesCatalog.gifSentinel ? "gif" : "idx=\(index)")
+        appendLog(ok ? "[send] cmd:species \(label) (idx=\(index))" : "[send] cmd:species FAILED")
     }
 
     func approveCurrentPrompt() {
@@ -113,6 +160,30 @@ final class AppState: ObservableObject {
         appendLog(ok ? "[send] time \(epoch) tz=\(tz)" : "[send] time FAILED")
     }
 
+    func installCharacter(from folder: URL, name: String) {
+        Task { @MainActor in
+            let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
+            let finalName = trimmed.isEmpty ? folder.lastPathComponent : trimmed
+            appendLog("[install] begin name=\(finalName) folder=\(folder.lastPathComponent)")
+            let result = await installer.install(folder: folder, characterName: finalName)
+            switch result {
+            case .success:
+                appendLog("[install] complete")
+            case .failure(let err):
+                appendLog("[install] failed: \(err.localizedDescription)")
+            }
+        }
+    }
+
+    func cancelInstall() {
+        installer.cancel()
+        appendLog("[install] cancel requested")
+    }
+
+    func clearLog() {
+        activityLog.removeAll()
+    }
+
     private func ingest(_ message: CentralInboundMessage) {
         switch message {
         case .heartbeat(let snapshot):
@@ -126,10 +197,46 @@ final class AppState: ObservableObject {
             appendLog("[recv] time epoch=\(time.epochSeconds) tz=\(time.timezoneOffsetSeconds)")
         case .ack(let ack):
             lastAck = ack
+            if ack.ack == "status", let payload = ack.data {
+                statusSnapshot = parseStatus(payload)
+            }
             appendLog("[recv] ack=\(ack.ack) ok=\(ack.ok) err=\(ack.error ?? "-")")
         case .unknown(let raw):
             appendLog("[recv] unknown \(raw.prefix(120))")
         }
+    }
+
+    private func parseStatus(_ value: JSONValue) -> StatusAckSnapshot {
+        var snapshot = StatusAckSnapshot()
+        if let bat = value["bat"] {
+            snapshot.batteryPct = bat["pct"]?.intValue
+            snapshot.batteryUsb = bat["usb"]?.boolValue
+            snapshot.batteryVoltageMv = bat["mv"]?.intValue ?? bat["voltage"]?.intValue
+        }
+        if let stats = value["stats"] {
+            snapshot.statsLevel = stats["lvl"]?.intValue
+            snapshot.statsApproved = stats["appr"]?.intValue
+            snapshot.statsVelocitySec = stats["vel"]?.intValue
+        }
+        if let sys = value["sys"] {
+            snapshot.sysFirmware = sys["fw"]?.stringValue ?? sys["version"]?.stringValue
+            snapshot.sysUptimeSec = sys["up"]?.intValue ?? sys["uptime"]?.intValue
+        }
+        if let xfer = value["xfer"] {
+            snapshot.xferRx = xfer["rx"]?.intValue
+            snapshot.xferTx = xfer["tx"]?.intValue
+        }
+        snapshot.rawJson = prettyPrint(value)
+        return snapshot
+    }
+
+    private func prettyPrint(_ value: JSONValue) -> String? {
+        guard let data = try? JSONEncoder().encode(value),
+              let any = try? JSONSerialization.jsonObject(with: data),
+              let pretty = try? JSONSerialization.data(withJSONObject: any, options: [.prettyPrinted, .sortedKeys]) else {
+            return nil
+        }
+        return String(data: pretty, encoding: .utf8)
     }
 
     private func appendLog(_ line: String) {
@@ -138,6 +245,28 @@ final class AppState: ObservableObject {
         if activityLog.count > 200 {
             activityLog.removeLast(activityLog.count - 200)
         }
+    }
+}
+
+extension JSONValue {
+    subscript(key: String) -> JSONValue? {
+        if case let .object(dict) = self { return dict[key] }
+        return nil
+    }
+
+    var intValue: Int? {
+        if case let .number(v) = self { return Int(v) }
+        return nil
+    }
+
+    var boolValue: Bool? {
+        if case let .bool(v) = self { return v }
+        return nil
+    }
+
+    var stringValue: String? {
+        if case let .string(v) = self { return v }
+        return nil
     }
 }
 

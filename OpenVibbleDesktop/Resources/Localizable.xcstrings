@@ -1,0 +1,504 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "desktop.activity" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Activity" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "活动日志" } }
+      }
+    },
+    "desktop.activity.clear" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Clear" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "清空" } }
+      }
+    },
+    "desktop.battery" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Battery" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "电量" } }
+      }
+    },
+    "desktop.battery.pct" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Level" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "电量" } }
+      }
+    },
+    "desktop.battery.usb" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "USB" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "USB" } }
+      }
+    },
+    "desktop.battery.voltage" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Voltage" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "电压" } }
+      }
+    },
+    "desktop.btn.approve" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Approve" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "同意" } }
+      }
+    },
+    "desktop.btn.cancel" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Cancel" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "取消" } }
+      }
+    },
+    "desktop.btn.close" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Close" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "关闭" } }
+      }
+    },
+    "desktop.btn.connect" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Connect" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "连接" } }
+      }
+    },
+    "desktop.btn.deny" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Deny" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "拒绝" } }
+      }
+    },
+    "desktop.btn.disconnect" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Disconnect" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "断开" } }
+      }
+    },
+    "desktop.btn.scan" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Scan" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "扫描" } }
+      }
+    },
+    "desktop.btn.send" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Send" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "发送" } }
+      }
+    },
+    "desktop.btn.stop" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Stop" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "停止" } }
+      }
+    },
+    "desktop.device" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Device" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "设备" } }
+      }
+    },
+    "desktop.device.name" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Name" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "名称" } }
+      }
+    },
+    "desktop.device.none" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Not connected. Click Connect to scan for a Claude device." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "未连接。点击连接扫描 Claude 设备。" } }
+      }
+    },
+    "desktop.device.security" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Security" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "加密" } }
+      }
+    },
+    "desktop.device.unencrypted" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Unencrypted" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "未加密" } }
+      }
+    },
+    "desktop.header.connected" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Connected" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已连接" } }
+      }
+    },
+    "desktop.header.connecting" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Connecting…" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在连接…" } }
+      }
+    },
+    "desktop.header.disconnecting" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Disconnecting…" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在断开…" } }
+      }
+    },
+    "desktop.header.error" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Error: %@" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "错误：%@" } }
+      }
+    },
+    "desktop.header.idle" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Idle" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "空闲" } }
+      }
+    },
+    "desktop.header.scanning" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Scanning…" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "扫描中…" } }
+      }
+    },
+    "desktop.header.startup" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Starting up…" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "启动中…" } }
+      }
+    },
+    "desktop.header.unauth" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Bluetooth permission denied" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "蓝牙权限被拒绝" } }
+      }
+    },
+    "desktop.header.unsupported" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Bluetooth not supported" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "此设备不支持蓝牙" } }
+      }
+    },
+    "desktop.install" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Install character" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "安装角色" } }
+      }
+    },
+    "desktop.install.hint" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Pick a folder whose files will be pushed to the device as a character pack." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "选择一个文件夹，其中的文件将作为角色包推送到设备。" } }
+      }
+    },
+    "desktop.install.pick" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Pick folder…" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "选择文件夹…" } }
+      }
+    },
+    "desktop.install.progress" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "%1$@ · file %2$d/%3$d · %4$d bytes" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "%1$@ · 文件 %2$d/%3$d · %4$d 字节" } }
+      }
+    },
+    "desktop.install.start" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Start install" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "开始安装" } }
+      }
+    },
+    "desktop.install.cancel" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Cancel install" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "取消安装" } }
+      }
+    },
+    "desktop.install.title" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Character pack name" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "角色包名称" } }
+      }
+    },
+    "desktop.lang" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Language" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "语言" } }
+      }
+    },
+    "desktop.lang.en" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "English" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "English" } }
+      }
+    },
+    "desktop.lang.system" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "System" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "跟随系统" } }
+      }
+    },
+    "desktop.lang.zh" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "简体中文" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "简体中文" } }
+      }
+    },
+    "desktop.manual" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Manual events" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "手动事件" } }
+      }
+    },
+    "desktop.menu.open" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Open window" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "打开主窗口" } }
+      }
+    },
+    "desktop.menu.quit" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Quit OpenVibbleDesktop" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "退出 OpenVibbleDesktop" } }
+      }
+    },
+    "desktop.menu.scan.start" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Start scanning" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "开始扫描" } }
+      }
+    },
+    "desktop.menu.scan.stop" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Stop scanning" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "停止扫描" } }
+      }
+    },
+    "desktop.menu.summary.connected" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Connected · %@" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已连接 · %@" } }
+      }
+    },
+    "desktop.menu.summary.scanning" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Scanning for Claude…" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在扫描…" } }
+      }
+    },
+    "desktop.pending" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Pending prompt" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "待处理请求" } }
+      }
+    },
+    "desktop.pending.hint" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Hint" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "提示" } }
+      }
+    },
+    "desktop.pending.id" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "ID" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "ID" } }
+      }
+    },
+    "desktop.pending.none" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "No prompt is waiting." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "当前没有等待中的请求。" } }
+      }
+    },
+    "desktop.pending.tool" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Tool" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "工具" } }
+      }
+    },
+    "desktop.scan.empty.default" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "No devices yet — tap Scan." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "暂无设备 — 点击扫描。" } }
+      }
+    },
+    "desktop.scan.empty.scanning" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Scanning… make sure the iOS app is open and broadcasting." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "扫描中……请确认 iOS 应用已打开并正在广播。" } }
+      }
+    },
+    "desktop.scan.empty.poweredOff" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Bluetooth is off" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "蓝牙已关闭" } }
+      }
+    },
+    "desktop.scan.empty.unauth" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Bluetooth permission denied" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "蓝牙权限被拒绝" } }
+      }
+    },
+    "desktop.scan.empty.unsupported" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Bluetooth not supported on this Mac" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "此 Mac 不支持蓝牙" } }
+      }
+    },
+    "desktop.scan.title" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Nearby Claude devices" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "附近的 Claude 设备" } }
+      }
+    },
+    "desktop.session" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Sessions" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "会话" } }
+      }
+    },
+    "desktop.session.counts" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "total %1$d · running %2$d · waiting %3$d" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "总计 %1$d · 运行 %2$d · 等待 %3$d" } }
+      }
+    },
+    "desktop.session.tokens" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Tokens" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "Tokens" } }
+      }
+    },
+    "desktop.session.tokensFmt" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "%1$d total · %2$d today" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "总计 %1$d · 今日 %2$d" } }
+      }
+    },
+    "desktop.species" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Species" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "物种" } }
+      }
+    },
+    "desktop.species.gif" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "GIF (installed pack)" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "GIF（已安装角色）" } }
+      }
+    },
+    "desktop.stats" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Stats" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "数据" } }
+      }
+    },
+    "desktop.stats.approved" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Approved" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已通过" } }
+      }
+    },
+    "desktop.stats.level" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Level" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "等级" } }
+      }
+    },
+    "desktop.stats.velocity" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Velocity" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "速率" } }
+      }
+    },
+    "desktop.stats.velocity.sec" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "%d s" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "%d 秒" } }
+      }
+    },
+    "desktop.system" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "System" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "系统" } }
+      }
+    },
+    "desktop.system.fw" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Firmware" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "固件" } }
+      }
+    },
+    "desktop.system.uptime" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Uptime" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "在线时长" } }
+      }
+    },
+    "desktop.system.xfer" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Transfer" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "传输" } }
+      }
+    },
+    "desktop.xfer.stats" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "rx %1$d · tx %2$d" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "接收 %1$d · 发送 %2$d" } }
+      }
+    },
+    "desktop.value.none" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "—" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "—" } }
+      }
+    },
+    "desktop.cmd.name" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Name" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "名称" } }
+      }
+    },
+    "desktop.cmd.owner" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Owner" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "主人" } }
+      }
+    },
+    "desktop.cmd.status" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Request status" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "请求状态" } }
+      }
+    },
+    "desktop.cmd.time" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Sync time" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "同步时间" } }
+      }
+    },
+    "desktop.cmd.unpair" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Unpair" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "解绑" } }
+      }
+    },
+    "desktop.placeholder.name" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Name" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "名称" } }
+      }
+    },
+    "desktop.placeholder.owner" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Owner" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "主人" } }
+      }
+    },
+    "desktop.placeholder.pack" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "pack name" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "角色包名称" } }
+      }
+    }
+  },
+  "version" : "1.0"
+}
