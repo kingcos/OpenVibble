@@ -40,7 +40,7 @@ public struct ASCIIBuddyView: View {
             ForEach(Array(frame.lines.enumerated()), id: \.offset) { _, line in
                 Text(line)
                     .font(.system(size: 22, weight: .bold, design: .monospaced))
-                    .foregroundStyle(Self.bodyColor)
+                    .foregroundStyle(speciesColor())
                     .lineLimit(1)
                     .fixedSize(horizontal: true, vertical: false)
             }
@@ -48,12 +48,37 @@ public struct ASCIIBuddyView: View {
         .accessibilityLabel("OpenVibble pet, state: \(state.slug)")
     }
 
-    // 0xC2A6 RGB565 ≈ RGB(197, 85, 49). Convert to sRGB.
-    private static let bodyColor = Color(
-        red: 197.0 / 255.0,
-        green: 85.0 / 255.0,
-        blue: 49.0 / 255.0
-    )
+    // Idle-state bodyColor values from claude-desktop-buddy firmware (buddies/*.cpp).
+    // Key = PersonaSpeciesCatalog.names[idx], value = RGB565 literal from doIdle().
+    private static let bodyColorByName: [String: UInt16] = [
+        "axolotl":  0xFB1E,
+        "blob":     0x07F0,
+        "cactus":   0x07E0,
+        "capybara": 0xC2A6,
+        "cat":      0xC2A6,
+        "chonk":    0xFD20,
+        "dragon":   0xF800,
+        "duck":     0xFFE0,
+        "ghost":    0xFFFF,
+        "goose":    0xFFFF,
+        "mushroom": 0xF810,
+        "octopus":  0xA01F,
+        "owl":      0x8430,
+        "penguin":  0x041F,
+        "rabbit":   0xFFFF,
+        "robot":    0xC618,
+        "snail":    0xD8FE,
+        "turtle":   0x07E0,
+    ]
+
+    private func speciesColor() -> Color {
+        guard let idx = speciesIdx,
+              idx >= 0 && idx < PersonaSpeciesCatalog.count,
+              let raw = Self.bodyColorByName[PersonaSpeciesCatalog.names[idx]] else {
+            return Color(rgb565: 0xC2A6) // cat fallback
+        }
+        return Color(rgb565: raw)
+    }
 }
 
 #Preview("Cat states") {
