@@ -13,8 +13,14 @@ public struct ASCIIBuddyView: View {
     }
 
     public var body: some View {
+        // Use a fixed reference point (equivalent to the h5 demo's
+        // `performance.now()`) so `tick` is strictly monotonic across view
+        // reconstructions. If we derived it from an instance-level `startDate`
+        // default-initialized to `.now`, every re-render of the parent (driven
+        // by PersonaController's 0.2s publish tick) would reset the tick to 0
+        // and freeze the animation on `sequence[0]`.
         TimelineView(.periodic(from: startDate, by: 0.2)) { ctx in
-            let tick = Int(ctx.date.timeIntervalSince(startDate) * 5)
+            let tick = Int(ctx.date.timeIntervalSinceReferenceDate * 5)
             let animation = resolveAnimation()
             let frame = animation.frame(at: tick)
             renderFrame(frame, state: state, tick: tick)
