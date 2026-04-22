@@ -14,6 +14,7 @@
 		0E27D88C26F57BDC185ADCDD /* OverviewTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA02992DB8BE1A55CC5220E7 /* OverviewTab.swift */; };
 		10C4552150806CEAB534178E /* OpenVibbleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3453FEFE9D00261494A6F /* OpenVibbleApp.swift */; };
 		13C8A0B1E0DAF9363AB87328 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC3459B4E6022FBD263A1B98 /* Assets.xcassets */; };
+		A11D1CEB01DC01010E510FEB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A11D1CEB01DC01010E510FE0 /* Assets.xcassets */; };
 		1C2C6053500D7691CA2F181A /* NUSPeripheral in Frameworks */ = {isa = PBXBuildFile; productRef = E34575DAA58E05003C553CFD /* NUSPeripheral */; };
 		2158028287496A33D4016ACC /* BuddyLiveActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A2C706FC0D1C2E7EE4A449 /* BuddyLiveActivityAttributes.swift */; };
 		2461AD8BB652D66EC53FB324 /* TerminalStyleLite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1CD2BA270744D1E216FCFA /* TerminalStyleLite.swift */; };
@@ -139,6 +140,7 @@
 		BD1CFB277C64078012E3D244 /* DeviceMenuState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMenuState.swift; sourceTree = "<group>"; };
 		BF1D080F23F14DFD50B41E3D /* NavigationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationCoordinator.swift; sourceTree = "<group>"; };
 		CC3459B4E6022FBD263A1B98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A11D1CEB01DC01010E510FE0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CEA83E7ACDD6B6DBB38E325B /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		D292D42081F942406889A1D3 /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
 		D899283E258F52E976B88875 /* BuddyNotificationCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddyNotificationCenter.swift; sourceTree = "<group>"; };
@@ -314,6 +316,7 @@
 			isa = PBXGroup;
 			children = (
 				9153332463570EB58424249C /* AppState.swift */,
+				A11D1CEB01DC01010E510FE0 /* Assets.xcassets */,
 				B1E56A25DAA306740E807AC9 /* CharacterInstaller.swift */,
 				768D4B98611B5F094BCB41F0 /* Info.plist */,
 				E32C5F44C4FC7CC363C39C1D /* L10n.swift */,
@@ -528,6 +531,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				94F0ABD769C92C77262DF2F8 /* Localizable.xcstrings in Resources */,
+				A11D1CEB01DC01010E510FEB /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
