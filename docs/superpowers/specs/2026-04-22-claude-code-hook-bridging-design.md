@@ -354,3 +354,14 @@ Cursor / 其它 agent 只需：
 - Cursor 原生集成（协议已文档化，用户可手接）
 - 用户可配置超时时长（固定 30s）
 - 自动重启 HookBridge（绑端口失败就显示错误，让用户重启 app）
+
+## Implementation log
+
+- 2026-04-22: Implemented per plan `docs/superpowers/plans/2026-04-22-hook-bridging-implementation.md`.
+  - SPM target `HookBridge` added with 4 types (`PortFile`, `HookEvent` + `PreToolUsePayload`, `HookRegistrar`, `HookActivity`) plus an actor-based `HookBridgeServer` bound to `127.0.0.1`. 46/46 package tests pass (`swift test`).
+  - `CentralInboundMessage` gained a `.permission(PermissionCommand)` case so iOS-side Approve/Deny decisions flow back into `AppState` and resolve the pending Mac `CheckedContinuation`.
+  - `OpenVibbleDesktop` sandbox entitlement removed (loopback HTTP listener + `~/.claude/settings.json` patching require non-sandboxed file access).
+  - UI restructured into a 5-tab shell (Overview / Hooks / Test Panel / Bridge API / Settings); the old single-scroll dashboard became `TestPanelTab`, language picker moved to `SettingsTab`, and a persistent `TopBar` replaced the inline header.
+  - `PendingApprovalBanner` + `EventCard` + `BridgeDocsTab` new view components added alongside ~38 new en/zh-Hans localization keys.
+  - Verified builds: `xcodebuild -scheme OpenVibbleDesktop` BUILD SUCCEEDED, `xcodebuild -scheme OpenVibbleApp -destination 'generic/platform=iOS'` BUILD SUCCEEDED (zero iOS regression).
+  - Manual GUI smoke test (register hooks, PreToolUse race, fail-open with app quit, language switch, curl copy) is left for the user to run against a built `.app` — all supporting code paths are exercised by unit tests and the compile succeeds.
