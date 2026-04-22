@@ -34,9 +34,9 @@
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>Connect to Claude Desktop as Hardware Buddy.</string>
+	<string>Connect to Claude Desktop / Claude Code, etc. as Hardware Buddy.</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>Connect to Claude Desktop as Hardware Buddy.</string>
+	<string>Connect to Claude Desktop / Claude Code, etc. as Hardware Buddy.</string>
 	<key>NSMotionUsageDescription</key>
 	<string>Detect shakes and face-down gestures to animate your Buddy.</string>
 	<key>NSSupportsLiveActivities</key>

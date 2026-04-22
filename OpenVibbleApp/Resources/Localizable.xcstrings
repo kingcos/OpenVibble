@@ -1091,13 +1091,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Power"
+            "value" : "Screen off"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "电源"
+            "value" : "熄屏"
           }
         }
       }
@@ -1378,13 +1378,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Your iPhone becomes Claude Desktop's Hardware Buddy over BLE. Watch your pet react to sessions, approve permissions, and level up as tokens accumulate."
+            "value" : "Your iPhone becomes a Hardware Buddy for Claude Desktop / Claude Code, etc. over BLE. Watch your pet react to sessions, approve permissions, and level up as tokens accumulate."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "让你的 iPhone 通过蓝牙成为 Claude Desktop 的硬件伙伴。宠物会随会话状态变化，也能在手机上回复权限请求，并随 Token 升级。"
+            "value" : "让你的 iPhone 通过蓝牙成为 Claude Desktop、Claude Code 等的硬件伙伴。宠物会随会话状态变化，也能在手机上回复权限请求，并随 Token 升级。"
           }
         }
       }
@@ -1446,13 +1446,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "iPhone ↔ Claude Desktop"
+            "value" : "iPhone ↔ Claude Desktop / Claude Code"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "iPhone ↔ Claude 桌面端"
+            "value" : "iPhone ↔ Claude Desktop / Claude Code"
           }
         }
       }
@@ -2824,13 +2824,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Claude Desktop requests permission for tool: %@."
+            "value" : "Claude requests permission for tool: %@."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Claude Desktop 请求工具权限：%@。"
+            "value" : "Claude 请求工具权限：%@。"
           }
         }
       }
@@ -3398,13 +3398,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OpenVibble needs Bluetooth to connect to Claude Desktop. Notifications let you approve tools while OpenVibble is in the background."
+            "value" : "OpenVibble needs Bluetooth to connect to Claude Desktop / Claude Code, etc. Notifications let you approve tools while OpenVibble is in the background."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "OpenVibble 需要蓝牙才能连接 Claude Desktop；通知用于在后台时提示权限请求。"
+            "value" : "OpenVibble 需要蓝牙才能连接 Claude Desktop、Claude Code 等；通知用于在后台时提示权限请求。"
           }
         }
       }
@@ -3465,13 +3465,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Your iPhone becomes Claude Desktop's Hardware Buddy over Bluetooth. Watch your pet react to sessions, level up on tokens, and approve permissions from your phone."
+            "value" : "Your iPhone becomes a Hardware Buddy for Claude Desktop / Claude Code and more over Bluetooth. Watch your pet react to sessions, level up on tokens, and approve permissions from your phone."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "让你的 iPhone 通过蓝牙成为 Claude Desktop 的硬件伙伴。宠物会跟着会话状态变化、随 Token 升级，也能在手机上一键允许/拒绝权限。"
+            "value" : "让你的 iPhone 通过蓝牙成为 Claude Desktop、Claude Code 等的硬件伙伴。宠物会跟着会话状态变化、随 Token 升级，也能在手机上一键允许/拒绝权限。"
           }
         }
       }
@@ -4394,13 +4394,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "If Claude Desktop still cannot connect after multiple tries, restart the Claude Desktop client."
+            "value" : "If Claude Desktop still cannot connect after multiple tries, restart the Claude Desktop client, or pair with OpenVibble Desktop instead."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "如果 Claude Desktop 多次尝试后仍无法正常连接，可重启 Claude Desktop 客户端。"
+            "value" : "如果 Claude Desktop 多次尝试后仍无法正常连接，可重启 Claude Desktop 客户端，或配合使用 OpenVibble Desktop 连接。"
           }
         }
       }
@@ -4410,13 +4410,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Show power button"
+            "value" : "Show screen-off button"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "显示关机键"
+            "value" : "显示熄屏键"
           }
         }
       }
@@ -4426,13 +4426,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hide the power button on the home screen. Long-press A can still open the device menu and turn off the screen from there."
+            "value" : "Hide the screen-off button on the home screen. Long-press A can still open the device menu and turn the screen off from there."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "隐藏主界面的关机键。长按 A 仍可打开设备菜单并在其中关屏。"
+            "value" : "隐藏主界面的熄屏键。长按 A 仍可打开设备菜单并在其中熄屏。"
           }
         }
       }
@@ -4458,13 +4458,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Shown only when Claude Desktop is connected."
+            "value" : "Shown only when Claude Desktop / Claude Code, etc. is connected."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "仅在连接 Claude 桌面端时显示。"
+            "value" : "仅在连接 Claude Desktop、Claude Code 等时显示。"
           }
         }
       }

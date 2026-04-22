@@ -235,8 +235,8 @@ struct SettingsScreen: View {
             ButtonCheatSheet()
 
             Text("settings.help.reconnectHint")
-                .font(TerminalStyle.mono(10))
-                .foregroundStyle(TerminalStyle.inkDim)
+                .font(TerminalStyle.mono(11, weight: .bold))
+                .foregroundStyle(TerminalStyle.bad)
                 .fixedSize(horizontal: false, vertical: true)
 
             Button {
