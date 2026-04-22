@@ -1,0 +1,58 @@
+name: Bug report
+description: Report a reproducible problem in OpenVibble
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug report. Please fill out the sections below so we can reproduce and fix the issue.
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: One or two sentences describing the bug.
+      placeholder: "Live Activity does not update after the buddy receives a SLEEP transition."
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: Numbered steps. Include the pairing partner (Claude Desktop, Claude Code via OpenVibbleDesktop, etc.).
+      value: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: iPhone model + iOS version
+      placeholder: "iPhone 15 Pro · iOS 18.2"
+    validations:
+      required: true
+  - type: input
+    id: commit
+    attributes:
+      label: OpenVibble commit / version
+      description: Output of `git rev-parse --short HEAD` if building from source, or the App Store / TestFlight build number.
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs / screenshots
+      description: Drag in screenshots, recordings, or relevant console output. Redact anything sensitive.
