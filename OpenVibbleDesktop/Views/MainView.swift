@@ -44,7 +44,6 @@ private struct TopBar: View {
     @EnvironmentObject var state: AppState
     @Binding var showScanSheet: Bool
     @ObservedObject var l10n = LocalizationManager.shared
-    @Environment(\.openWindow) private var openWindow
 
     var body: some View {
         HStack(spacing: 12) {
@@ -53,13 +52,6 @@ private struct TopBar: View {
                 .frame(width: 10, height: 10)
             Text(label).font(.headline)
             Spacer()
-            Button(action: { openWindow(id: "about") }) {
-                Label {
-                    LText("desktop.about")
-                } icon: {
-                    Image(systemName: "info.circle")
-                }
-            }
             if isConnected {
                 Button(action: { state.disconnect() }) { LText("desktop.btn.disconnect") }
             } else {
@@ -85,7 +77,7 @@ private struct TopBar: View {
         case .connecting: return l10n.bundle.l("desktop.header.connecting")
         case .disconnecting: return l10n.bundle.l("desktop.header.disconnecting")
         case .idle: return l10n.bundle.l("desktop.header.idle")
-        case .poweredOff: return state.bluetoothNote
+        case .poweredOff: return l10n.bundle.l("desktop.bt.off")
         case .unauthorized: return l10n.bundle.l("desktop.header.unauth")
         case .unsupported: return l10n.bundle.l("desktop.header.unsupported")
         case .unknown: return l10n.bundle.l("desktop.header.startup")

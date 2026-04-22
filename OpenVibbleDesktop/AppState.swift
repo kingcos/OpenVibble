@@ -1,5 +1,6 @@
 import Foundation
 import Combine
+import CoreBluetooth
 import BuddyProtocol
 import BuddyPersona
 import NUSCentral
@@ -24,6 +25,7 @@ struct StatusAckSnapshot: Equatable {
 final class AppState: ObservableObject {
     @Published var connection: CentralConnectionState = .unknown
     @Published var bluetoothNote: String = "Bluetooth state unknown"
+    @Published var bluetoothPowerState: CBManagerState = .unknown
     @Published var discovered: [DiscoveredPeripheral] = []
     @Published var diagnostics: [String] = []
     @Published var connectedName: String?
@@ -80,6 +82,9 @@ final class AppState: ObservableObject {
         central.$bluetoothStateNote
             .receive(on: DispatchQueue.main)
             .assign(to: &$bluetoothNote)
+        central.$bluetoothPowerState
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$bluetoothPowerState)
         central.$discovered
             .receive(on: DispatchQueue.main)
             .assign(to: &$discovered)
@@ -455,6 +460,18 @@ final class AppState: ObservableObject {
     func refreshRegistrationStatus() {
         do { registrationStatus = try registrar.status() }
         catch { registrationStatus = .notRegistered }
+    }
+
+    var bluetoothStateKey: String {
+        switch bluetoothPowerState {
+        case .poweredOn: return "desktop.bt.on"
+        case .poweredOff: return "desktop.bt.off"
+        case .unauthorized: return "desktop.bt.unauth"
+        case .unsupported: return "desktop.bt.unsupported"
+        case .resetting: return "desktop.bt.resetting"
+        case .unknown: return "desktop.bt.unknown"
+        @unknown default: return "desktop.bt.unknown"
+        }
     }
 }
 

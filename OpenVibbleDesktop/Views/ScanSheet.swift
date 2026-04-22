@@ -171,7 +171,7 @@ struct ScanSheet: View {
 
     private var emptyHint: String {
         switch state.connection {
-        case .poweredOff: return state.bluetoothNote
+        case .poweredOff: return l10n.bundle.l("desktop.bt.off")
         case .unauthorized: return l10n.bundle.l("desktop.scan.empty.unauth")
         case .unsupported: return l10n.bundle.l("desktop.scan.empty.unsupported")
         case .scanning: return l10n.bundle.l("desktop.scan.empty.scanning")

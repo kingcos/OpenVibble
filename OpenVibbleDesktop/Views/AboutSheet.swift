@@ -4,7 +4,7 @@ struct AboutSheet: View {
     @ObservedObject private var l10n = LocalizationManager.shared
     @Environment(\.dismiss) private var dismiss
 
-    private let repoURL = URL(string: "https://github.com/kingcos/claude-buddy-bridge-ios")!
+    private let repoURL = URL(string: "https://github.com/kingcos/OpenVibble")!
 
     var body: some View {
         VStack(spacing: 16) {

@@ -92,7 +92,7 @@ struct BridgeDocsTab: View {
     }
 
     private func openRepo() {
-        if let url = URL(string: "https://github.com/kingcos/claude-buddy-bridge-ios") {
+        if let url = URL(string: "https://github.com/kingcos/OpenVibble") {
             NSWorkspace.shared.open(url)
         }
     }

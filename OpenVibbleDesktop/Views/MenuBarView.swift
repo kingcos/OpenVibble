@@ -41,7 +41,7 @@ struct MenuBarView: View {
         case .connecting:
             return l10n.bundle.l("desktop.header.connecting")
         case .poweredOff:
-            return state.bluetoothNote
+            return l10n.bundle.l("desktop.bt.off")
         case .unauthorized:
             return l10n.bundle.l("desktop.header.unauth")
         case .unsupported:

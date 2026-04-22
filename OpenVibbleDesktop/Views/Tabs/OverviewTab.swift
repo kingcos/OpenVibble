@@ -8,6 +8,9 @@ struct OverviewTab: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 14) {
                 PendingApprovalBanner()
+                if case .notRegistered = state.registrationStatus {
+                    hooksCTA
+                }
 
                 GroupBox(label: LText("desktop.device")) {
                     VStack(alignment: .leading, spacing: 6) {
@@ -43,6 +46,35 @@ struct OverviewTab: View {
             }
             .padding(16)
         }
+    }
+
+    private var hooksCTA: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack {
+                Image(systemName: "exclamationmark.triangle.fill").foregroundStyle(.orange)
+                LText("desktop.overview.hooksCTA.title").font(.headline)
+                Spacer()
+            }
+            LText("desktop.overview.hooksCTA.desc")
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .fixedSize(horizontal: false, vertical: true)
+            HStack {
+                Button(action: { state.registerHooks() }) {
+                    LText("desktop.hooks.register")
+                }
+                .keyboardShortcut(.defaultAction)
+                Spacer()
+            }
+        }
+        .padding(12)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Color.orange.opacity(0.08))
+        .overlay(
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(Color.orange.opacity(0.3))
+        )
+        .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 
     private func row(_ key: String, _ value: String) -> some View {
