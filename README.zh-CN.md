@@ -1,6 +1,6 @@
 # OpenVibble · iOS Hardware Buddy Bridge
 
-[English](./README.md) | [中文](./README.zh-CN.md)
+[English](./README.md) | 中文
 
 <p align="center">
   <img src="./docs/readme/icon.png" alt="OpenVibble Icon" width="120" height="120" />
@@ -11,7 +11,9 @@
   <img alt="License" src="https://img.shields.io/badge/License-AGPLv3-3DA639" />
 </p>
 
-OpenVibble 是一个 iPhone 应用，通过 BLE（Nordic UART Service）与 Claude Desktop 配对，作为 iOS 端的“Hardware Buddy”。
+OpenVibble 是一个 iOS App，通过 BLE（Nordic UART Service）与 Claude Desktop 配对，作为 iOS 端的“Hardware Buddy”。
+
+它也是 [Claude Desktop Buddy](https://github.com/anthropics/claude-desktop-buddy) 的配套桥接实现，提供 iOS 原生交互与运行时支持。
 
 <p align="center"><strong>M5Stack 开发板还在路上？先用 OpenVibble 体验起来！</strong></p>
 
@@ -57,63 +59,17 @@ make test
 
 ## 与 Claude Desktop 配对
 
-1. 在 Claude Desktop 打开开发者模式，进入 `Developer -> Hardware Buddy`。
-2. 在 iPhone 启动 OpenVibble，并授权蓝牙。
-3. 保持蓝牙开启，在 Claude Desktop 中选择该设备完成连接。
+1. 在 Claude Desktop 通过 `Help -> Troubleshooting -> Enable Developer Mode` 开启开发者模式。
+2. 打开 `Developer -> Open Hardware Buddy...`，点击 `Connect`，然后选择你的 iOS 设备。
+3. 在 iOS 设备上启动 OpenVibble，并在提示时授权蓝牙。
 
 说明：
 - iOS 对 BLE/GAP 有系统级限制，部分 MCU 固件中的底层能力无法直接映射。
 - 桌面端下发的角色包会保存在 App 沙盒目录，并自动出现在角色/物种选择中。
 
-## 项目结构
+## 贡献
 
-- `OpenVibbleApp/`：iOS 主应用（界面、引导、设置、传感器、资源）
-- `OpenVibbleLiveActivity/`：Live Activity 扩展
-- `Packages/OpenVibbleKit/`：共享 Swift Package 模块
-  - `BridgeRuntime`
-  - `NUSPeripheral`
-  - `BuddyProtocol`
-  - `BuddyStorage`
-  - `BuddyPersona`
-  - `BuddyStats`
-  - `BuddyUI`
-
-## 常用命令
-
-```sh
-make bootstrap
-make build
-make test
-make run-sim
-make tf-package
-make testflight
-make clean
-```
-
-## TestFlight 上传
-
-推荐使用 App Store Connect API Key：
-
-```sh
-make testflight \
-  ASC_KEY_ID=你的KeyID \
-  ASC_ISSUER_ID=你的IssuerID \
-  ASC_KEY_FILEPATH=$HOME/Downloads/AuthKey_你的KeyID.p8
-```
-
-可选版本控制：
-
-```sh
-make testflight MARKETING_VERSION=1.0.1 BUMP_BUILD=1 ...
-```
-
-也支持 Apple ID + 专用密码：
-
-```sh
-make testflight \
-  APPLE_ID=you@example.com \
-  APP_SPECIFIC_PASSWORD=xxxx-xxxx-xxxx-xxxx
-```
+欢迎提交 Issue 和 Pull Request。反馈问题时建议附上可复现步骤与环境信息。
 
 ## 本地化
 
