@@ -1,5 +1,6 @@
 import SwiftUI
 import BuddyPersona
+import BuddyUI
 
 struct SpeciesPickerSheet: View {
     @Binding var selection: PersonaSpeciesID
@@ -15,9 +16,21 @@ struct SpeciesPickerSheet: View {
                 VStack(alignment: .leading, spacing: 12) {
                     header
 
-                    TerminalPanel("species.panel.builtin") {
+                    previewBlock
+
+                    TerminalPanel(
+                        "species.panel.builtin",
+                        collapsible: true,
+                        collapsedByDefault: true
+                    ) {
                         VStack(spacing: 6) {
-                            asciiRowButton
+                            ForEach(Array(PersonaSpeciesCatalog.names.enumerated()), id: \.offset) { idx, name in
+                                rowButton(
+                                    title: "ASCII (\(name.capitalized))",
+                                    subtitle: idx == 4 ? "默认形态" : "idx \(idx)",
+                                    id: asciiID(for: idx)
+                                )
+                            }
                             ForEach(builtin) { persona in
                                 rowButton(
                                     title: persona.manifest.name.capitalized,
@@ -28,7 +41,11 @@ struct SpeciesPickerSheet: View {
                         }
                     }
 
-                    TerminalPanel("species.panel.installed") {
+                    TerminalPanel(
+                        "species.panel.installed",
+                        collapsible: true,
+                        collapsedByDefault: true
+                    ) {
                         if installed.isEmpty {
                             Text("species.empty.installed")
                                 .font(TerminalStyle.mono(12))
@@ -69,59 +86,51 @@ struct SpeciesPickerSheet: View {
         String(format: String(localized: "species.subtitle.states"), count)
     }
 
-    private var asciiRowButton: some View {
-        Button {
-            selectOrCycleASCII()
-        } label: {
-            rowBody(
-                titleView: Text("ASCII"),
-                subtitle: "ASCII \(currentASCIISpeciesLabel)",
-                selected: isASCIISelection(selection)
+    private var previewBlock: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text(verbatim: "预览")
+                .font(TerminalStyle.mono(10, weight: .bold))
+                .foregroundStyle(TerminalStyle.inkDim)
+            ZStack {
+                Rectangle()
+                    .fill(Color.black)
+                previewSpeciesView
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+            .frame(width: 136, height: 100)
+            .clipShape(RoundedRectangle(cornerRadius: 8))
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(TerminalStyle.inkDim.opacity(0.5), lineWidth: 1)
             )
         }
-        .buttonStyle(.plain)
     }
 
-    private func rowButton(titleKey: LocalizedStringKey, subtitle: String?, id: PersonaSpeciesID) -> some View {
-        Button {
-            selection = id
-            PersonaSelection.save(id)
-        } label: {
-            rowBody(titleView: Text(titleKey), subtitle: subtitle, selected: id == selection)
-        }
-        .buttonStyle(.plain)
-    }
-
-    private func selectOrCycleASCII() {
-        if isASCIISelection(selection) {
-            AsciiPetCycler.next()
-            selection = PersonaSelection.load()
-            return
-        }
-        selection = .asciiSpecies(idx: 4)
-        PersonaSelection.save(selection)
-    }
-
-    private func isASCIISelection(_ id: PersonaSpeciesID) -> Bool {
-        switch id {
-        case .asciiCat, .asciiSpecies:
-            return true
-        case .builtin, .installed:
-            return false
-        }
-    }
-
-    private var currentASCIISpeciesLabel: String {
+    @ViewBuilder
+    private var previewSpeciesView: some View {
         switch selection {
         case .asciiCat:
-            return "Cat"
+            ASCIIBuddyView(state: .idle)
+                .scaleEffect(0.72)
         case .asciiSpecies(let idx):
-            if let name = PersonaSpeciesCatalog.name(at: idx) {
-                return name.capitalized
+            ASCIIBuddyView(state: .idle, speciesIdx: idx)
+                .scaleEffect(0.72)
+        case .builtin(let name):
+            if let persona = builtin.first(where: { $0.name == name }) {
+                GIFView(persona: persona, state: .idle)
+                    .aspectRatio(contentMode: .fit)
+            } else {
+                ASCIIBuddyView(state: .idle)
+                    .scaleEffect(0.72)
             }
-            return "#\(idx)"
-        case .builtin, .installed:
-            return "Cat"
+        case .installed(let name):
+            if let persona = installed.first(where: { $0.name == name }) {
+                GIFView(persona: persona, state: .idle)
+                    .aspectRatio(contentMode: .fit)
+            } else {
+                ASCIIBuddyView(state: .idle)
+                    .scaleEffect(0.72)
+            }
         }
     }
 
@@ -133,6 +142,10 @@ struct SpeciesPickerSheet: View {
             rowBody(titleView: Text(title), subtitle: subtitle, selected: id == selection)
         }
         .buttonStyle(.plain)
+    }
+
+    private func asciiID(for idx: Int) -> PersonaSpeciesID {
+        idx == 4 ? .asciiCat : .asciiSpecies(idx: idx)
     }
 
     private func rowBody(titleView: Text, subtitle: String?, selected: Bool) -> some View {

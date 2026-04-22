@@ -2,6 +2,7 @@ import SwiftUI
 import UserNotifications
 import BuddyPersona
 import BuddyStats
+import BuddyUI
 
 struct SettingsScreen: View {
     @ObservedObject var model: BridgeAppModel
@@ -123,29 +124,80 @@ struct SettingsScreen: View {
     // MARK: - Pet
 
     private var petContent: some View {
-        Button {
-            showPicker = true
-        } label: {
-            HStack(spacing: 6) {
-                Text("settings.species")
-                    .foregroundStyle(TerminalStyle.inkDim)
-                Text(currentSpeciesLabel)
-                    .foregroundStyle(TerminalStyle.ink)
-                Spacer()
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 11, weight: .bold))
-                    .foregroundStyle(TerminalStyle.inkDim)
+        VStack(alignment: .leading, spacing: 10) {
+            Text(verbatim: "预览")
+                .font(TerminalStyle.mono(10, weight: .bold))
+                .foregroundStyle(TerminalStyle.inkDim)
+
+            petPreview
+
+            Button {
+                showPicker = true
+            } label: {
+                HStack(spacing: 6) {
+                    Text("settings.species")
+                        .foregroundStyle(TerminalStyle.inkDim)
+                    Text(currentSpeciesLabel)
+                        .foregroundStyle(TerminalStyle.ink)
+                    Spacer()
+                    Image(systemName: "chevron.right")
+                        .font(.system(size: 11, weight: .bold))
+                        .foregroundStyle(TerminalStyle.inkDim)
+                }
+                .font(TerminalStyle.mono(12))
+                .padding(.horizontal, 10)
+                .padding(.vertical, 8)
+                .background(TerminalStyle.lcdPanel.opacity(0.7), in: RoundedRectangle(cornerRadius: 8))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(TerminalStyle.inkDim.opacity(0.5), lineWidth: 1)
+                )
             }
-            .font(TerminalStyle.mono(12))
-            .padding(.horizontal, 10)
-            .padding(.vertical, 8)
-            .background(TerminalStyle.lcdPanel.opacity(0.7), in: RoundedRectangle(cornerRadius: 8))
-            .overlay(
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(TerminalStyle.inkDim.opacity(0.5), lineWidth: 1)
-            )
+            .buttonStyle(.plain)
         }
-        .buttonStyle(.plain)
+    }
+
+    private var petPreview: some View {
+        ZStack {
+            Rectangle()
+                .fill(Color.black)
+            previewSpeciesView
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+        .frame(width: 132, height: 96)
+        .clipShape(RoundedRectangle(cornerRadius: 8))
+        .overlay(
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(TerminalStyle.inkDim.opacity(0.5), lineWidth: 1)
+        )
+    }
+
+    @ViewBuilder
+    private var previewSpeciesView: some View {
+        switch selection {
+        case .asciiCat:
+            ASCIIBuddyView(state: .idle)
+                .scaleEffect(0.72)
+        case .asciiSpecies(let idx):
+            ASCIIBuddyView(state: .idle, speciesIdx: idx)
+                .scaleEffect(0.72)
+        case .builtin(let name):
+            if let persona = builtin.first(where: { $0.name == name }) {
+                GIFView(persona: persona, state: .idle)
+                    .aspectRatio(contentMode: .fit)
+            } else {
+                ASCIIBuddyView(state: .idle)
+                    .scaleEffect(0.72)
+            }
+        case .installed(let name):
+            if let persona = installed.first(where: { $0.name == name }) {
+                GIFView(persona: persona, state: .idle)
+                    .aspectRatio(contentMode: .fit)
+            } else {
+                ASCIIBuddyView(state: .idle)
+                    .scaleEffect(0.72)
+            }
+        }
     }
 
     // MARK: - Interface

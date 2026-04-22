@@ -225,7 +225,7 @@ struct HomeScreen: View {
                 HStack(spacing: 6) {
                     Image(systemName: "arrow.clockwise")
                         .font(.system(size: 11, weight: .bold))
-                    Text(verbatim: "Restart advertising")
+                    Text(verbatim: "重启蓝牙广播")
                         .font(TerminalStyle.mono(11, weight: .semibold))
                 }
                 .foregroundStyle(TerminalStyle.ink)
