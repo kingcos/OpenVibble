@@ -9,6 +9,7 @@ enum SpeciesOverlays {
         "capybara": CapybaraOverlays.all,
         "cactus": CactusOverlays.all,
         "rabbit": RabbitOverlays.all,
+        "penguin": PenguinOverlays.all,
         // future: more species added per batch.
     ]
 
