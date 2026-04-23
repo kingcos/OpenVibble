@@ -24,6 +24,7 @@ DESKTOP_EXPORT_PATH := $(BUILD_DIR)/desktop-export
 DESKTOP_EXPORT_OPTIONS_PLIST := $(BUILD_DIR)/DesktopExportOptions.plist
 DESKTOP_DMG := $(BUILD_DIR)/$(DESKTOP_SCHEME).dmg
 DESKTOP_DMG_VOLUME_NAME ?= OpenVibbleDesktop
+DESKTOP_DMG_ICON_SRC ?= OpenVibbleDesktop/Assets.xcassets/AppIcon.appiconset/icon_1024.png
 DEVELOPER_ID_IDENTITY ?= Developer ID Application
 NOTARY_PROFILE ?=
 
@@ -189,13 +190,11 @@ desktop-archive: bootstrap
 	@echo "Exported app: $(DESKTOP_EXPORT_PATH)/$(DESKTOP_SCHEME).app"
 
 desktop-dmg: desktop-archive
-	rm -f "$(DESKTOP_DMG)"
-	hdiutil create \
-		-volname "$(DESKTOP_DMG_VOLUME_NAME)" \
-		-srcfolder "$(DESKTOP_EXPORT_PATH)/$(DESKTOP_SCHEME).app" \
-		-ov \
-		-format UDZO \
-		"$(DESKTOP_DMG)"
+	./scripts/make_dmg.sh \
+		"$(DESKTOP_EXPORT_PATH)/$(DESKTOP_SCHEME).app" \
+		"$(DESKTOP_DMG)" \
+		"$(DESKTOP_DMG_VOLUME_NAME)" \
+		"$(DESKTOP_DMG_ICON_SRC)"
 	codesign \
 		--force \
 		--sign "$(DEVELOPER_ID_IDENTITY)" \
