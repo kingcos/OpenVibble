@@ -18,7 +18,16 @@ MARKETING_VERSION ?=
 BUMP_BUILD ?= 1
 DEVELOPMENT_TEAM ?=
 
-.PHONY: bootstrap build test run-sim testflight tf-package clean
+DESKTOP_SCHEME := OpenVibbleDesktop
+DESKTOP_ARCHIVE_PATH := $(BUILD_DIR)/$(DESKTOP_SCHEME).xcarchive
+DESKTOP_EXPORT_PATH := $(BUILD_DIR)/desktop-export
+DESKTOP_EXPORT_OPTIONS_PLIST := $(BUILD_DIR)/DesktopExportOptions.plist
+DESKTOP_DMG := $(BUILD_DIR)/$(DESKTOP_SCHEME).dmg
+DESKTOP_DMG_VOLUME_NAME ?= OpenVibbleDesktop
+DEVELOPER_ID_IDENTITY ?= Developer ID Application
+NOTARY_PROFILE ?=
+
+.PHONY: bootstrap build test run-sim testflight tf-package desktop-archive desktop-dmg desktop-notarize clean
 
 bootstrap:
 	xcodegen generate
@@ -146,6 +155,70 @@ tf-package: bootstrap
 		-allowProvisioningUpdates \
 		-exportOptionsPlist "$(EXPORT_OPTIONS_PLIST)"
 	@echo "Exported IPA: $$(find "$(EXPORT_PATH)" -name '*.ipa' -print -quit)"
+
+desktop-archive: bootstrap
+	mkdir -p "$(BUILD_DIR)" "$(DESKTOP_EXPORT_PATH)"
+	printf '%s\n' \
+		'<?xml version="1.0" encoding="UTF-8"?>' \
+		'<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">' \
+		'<plist version="1.0">' \
+		'<dict>' \
+		'  <key>method</key>' \
+		'  <string>developer-id</string>' \
+		'  <key>signingStyle</key>' \
+		'  <string>automatic</string>' \
+		'  <key>destination</key>' \
+		'  <string>export</string>' \
+		'</dict>' \
+		'</plist>' > "$(DESKTOP_EXPORT_OPTIONS_PLIST)"
+	xcodebuild \
+		-project $(PROJECT) \
+		-scheme $(DESKTOP_SCHEME) \
+		-configuration Release \
+		-destination 'generic/platform=macOS' \
+		$(if $(DEVELOPMENT_TEAM),DEVELOPMENT_TEAM=$(DEVELOPMENT_TEAM),) \
+		-allowProvisioningUpdates \
+		archive \
+		-archivePath "$(DESKTOP_ARCHIVE_PATH)"
+	xcodebuild \
+		-exportArchive \
+		-archivePath "$(DESKTOP_ARCHIVE_PATH)" \
+		-exportPath "$(DESKTOP_EXPORT_PATH)" \
+		-allowProvisioningUpdates \
+		-exportOptionsPlist "$(DESKTOP_EXPORT_OPTIONS_PLIST)"
+	@echo "Exported app: $(DESKTOP_EXPORT_PATH)/$(DESKTOP_SCHEME).app"
+
+desktop-dmg: desktop-archive
+	rm -f "$(DESKTOP_DMG)"
+	hdiutil create \
+		-volname "$(DESKTOP_DMG_VOLUME_NAME)" \
+		-srcfolder "$(DESKTOP_EXPORT_PATH)/$(DESKTOP_SCHEME).app" \
+		-ov \
+		-format UDZO \
+		"$(DESKTOP_DMG)"
+	codesign \
+		--force \
+		--sign "$(DEVELOPER_ID_IDENTITY)" \
+		--timestamp \
+		"$(DESKTOP_DMG)"
+	@echo "Created signed DMG: $(DESKTOP_DMG)"
+	@if [ -n "$(NOTARY_PROFILE)" ]; then \
+		$(MAKE) desktop-notarize; \
+	else \
+		echo ""; \
+		echo "DMG built but not notarized."; \
+		echo "To notarize + staple, re-run with NOTARY_PROFILE set, e.g.:"; \
+		echo "  make desktop-dmg NOTARY_PROFILE=<your-keychain-profile>"; \
+	fi
+
+desktop-notarize:
+	@test -n "$(NOTARY_PROFILE)" || (echo "NOTARY_PROFILE is required"; exit 1)
+	@test -f "$(DESKTOP_DMG)" || (echo "DMG not found at $(DESKTOP_DMG); run 'make desktop-dmg' first"; exit 1)
+	xcrun notarytool submit "$(DESKTOP_DMG)" \
+		--keychain-profile "$(NOTARY_PROFILE)" \
+		--wait
+	xcrun stapler staple "$(DESKTOP_DMG)"
+	@echo "Notarized + stapled: $(DESKTOP_DMG)"
 
 clean:
 	rm -rf .build
