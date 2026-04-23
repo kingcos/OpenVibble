@@ -37,7 +37,7 @@ struct ScanSheet: View {
                 .symbolEffect(.variableColor.iterative, isActive: isScanning)
             VStack(alignment: .leading, spacing: 2) {
                 LText("desktop.scan.title").font(.headline)
-                LText("desktop.scan.subtitle")
+                Text(subtitleText)
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
@@ -171,6 +171,14 @@ struct ScanSheet: View {
 
     private var scanButtonKey: LocalizedStringKey {
         isScanning ? "desktop.btn.stop" : "desktop.btn.scan"
+    }
+
+    private var subtitleText: String {
+        let prefix = state.effectiveScanPrefix
+        if prefix.isEmpty {
+            return l10n.bundle.l("desktop.scan.subtitle.any")
+        }
+        return l10n.bundle.l("desktop.scan.subtitle.custom", prefix)
     }
 
     private var emptyHint: String {

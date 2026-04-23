@@ -2360,6 +2360,40 @@
         }
       }
     },
+    "desktop.scan.subtitle.any" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Any NUS-compatible device will appear here."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "附近所有支持 NUS 协议的设备都会显示在这里。"
+          }
+        }
+      }
+    },
+    "desktop.scan.subtitle.custom" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Devices advertising as “%@” will appear here."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "名称前缀为 “%@” 的设备会显示在这里。"
+          }
+        }
+      }
+    },
     "desktop.scan.title" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2475,6 +2509,74 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "语言"
+          }
+        }
+      }
+    },
+    "desktop.settings.scan" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scan filter"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "扫描过滤"
+          }
+        }
+      }
+    },
+    "desktop.settings.scan.custom" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Match a custom device name instead of “Claude”"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用自定义设备名，替代默认的 “Claude”"
+          }
+        }
+      }
+    },
+    "desktop.settings.scan.placeholder" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prefix of the device name to match"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "要匹配的设备名前缀"
+          }
+        }
+      }
+    },
+    "desktop.settings.scan.help" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter the name shown under Settings › General › About › Name on your iPhone. If many nearby devices share the same name, rename yours to something unique. Leave blank to list every NUS-compatible device. A rename may not take effect until you restart the iPhone."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请填写 iPhone「设置 › 通用 › 关于本机 › 名称」中显示的名称。若附近同名设备较多，建议把 iPhone 改成独一无二的名称；留空则会列出所有 NUS 兼容设备。改名后若一直扫不到，请重启 iPhone 再试。"
           }
         }
       }

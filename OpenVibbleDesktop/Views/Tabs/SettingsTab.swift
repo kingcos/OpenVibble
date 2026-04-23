@@ -7,6 +7,7 @@ import AppKit
 
 struct SettingsTab: View {
     @ObservedObject private var l10n = LocalizationManager.shared
+    @EnvironmentObject private var state: AppState
     @State private var testPanelExpanded = false
 
     private let repoURL = URL(string: "https://github.com/kingcos/OpenVibble")!
@@ -18,6 +19,7 @@ struct SettingsTab: View {
             VStack(alignment: .leading, spacing: 16) {
                 hero
                 languageSection
+                scanFilterSection
                 aboutSection
                 testPanelSection
             }
@@ -85,6 +87,33 @@ struct SettingsTab: View {
             }
             .labelsHidden()
             .pickerStyle(.radioGroup)
+            .padding(.vertical, 4)
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+    }
+
+    private var scanFilterSection: some View {
+        GroupBox(label: LText("desktop.settings.scan")) {
+            VStack(alignment: .leading, spacing: 10) {
+                Toggle(isOn: $state.useCustomScanPrefix) {
+                    LText("desktop.settings.scan.custom")
+                }
+                .toggleStyle(.checkbox)
+
+                if state.useCustomScanPrefix {
+                    TextField(
+                        l10n.bundle.l("desktop.settings.scan.placeholder"),
+                        text: $state.customScanPrefix
+                    )
+                    .textFieldStyle(.roundedBorder)
+                    .disableAutocorrection(true)
+
+                    LText("desktop.settings.scan.help")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
             .padding(.vertical, 4)
             .frame(maxWidth: .infinity, alignment: .leading)
         }

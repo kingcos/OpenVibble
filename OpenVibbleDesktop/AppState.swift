@@ -51,6 +51,21 @@ final class AppState: ObservableObject {
     @Published var bridgeReady: Bool = false
     @Published var bridgePort: UInt16?
 
+    /// When true, scans filter by `customScanPrefix` instead of the default
+    /// `NUSCentralUUIDs.claudeNamePrefix`. Lets users discover peripherals
+    /// that advertise under their iPhone's system name (the fallback iOS
+    /// uses when the app is backgrounded and the explicit `LocalName` from
+    /// the advertisement gets dropped).
+    @Published var useCustomScanPrefix: Bool {
+        didSet { UserDefaults.standard.set(useCustomScanPrefix, forKey: Self.keyUseCustomScanPrefix) }
+    }
+    @Published var customScanPrefix: String {
+        didSet { UserDefaults.standard.set(customScanPrefix, forKey: Self.keyCustomScanPrefix) }
+    }
+
+    private static let keyUseCustomScanPrefix = "ovd.scan.useCustomPrefix"
+    private static let keyCustomScanPrefix = "ovd.scan.customPrefix"
+
     struct PendingApprovalState: Equatable, Identifiable {
         let id: UUID
         let projectName: String?
@@ -97,6 +112,10 @@ final class AppState: ObservableObject {
     private var sessions: [String: SessionState] = [:]
 
     init() {
+        let defaults = UserDefaults.standard
+        self.useCustomScanPrefix = defaults.bool(forKey: Self.keyUseCustomScanPrefix)
+        self.customScanPrefix = defaults.string(forKey: Self.keyCustomScanPrefix) ?? ""
+
         central.$connectionState
             .receive(on: DispatchQueue.main)
             .assign(to: &$connection)
@@ -140,8 +159,16 @@ final class AppState: ObservableObject {
 
     func startScan() {
         central.requestAuthorization()
-        central.startScan()
-        appendLog("[scan] started")
+        central.startScan(nameFilter: effectiveScanPrefix)
+        appendLog("[scan] started filter=\(effectiveScanPrefix.isEmpty ? "<any>" : effectiveScanPrefix)")
+    }
+
+    /// Prefix currently being applied by the scanner. Empty string means the
+    /// user opted in to custom mode but left the field blank — every peripheral
+    /// advertising NUS will show up (service UUID is still the primary filter).
+    var effectiveScanPrefix: String {
+        guard useCustomScanPrefix else { return NUSCentralUUIDs.claudeNamePrefix }
+        return customScanPrefix.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     func stopScan() {
