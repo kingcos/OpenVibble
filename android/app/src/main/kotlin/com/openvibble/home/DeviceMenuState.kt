@@ -11,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import com.openvibble.R
 import com.openvibble.persona.PersonaSpeciesCatalog
 import com.openvibble.persona.PersonaSpeciesId
 import com.openvibble.settings.SharedPreferencesPersonaSelectionStore
@@ -233,31 +234,47 @@ class DeviceMenuState(private val prefs: DeviceMenuPrefs) {
 
         val RESET_ITEMS: List<String> = listOf("confirm", "cancel")
 
-        fun menuItemLabel(id: String): String = when (id) {
-            "settings" -> "设置"
-            "turn off" -> "关机"
-            "help" -> "帮助"
-            "about" -> "关于"
-            "demo" -> "演示"
-            "close" -> "关闭"
-            else -> id
+        /**
+         * Resolves a MENU item id (the internal English keys in [MENU_ITEMS])
+         * to its localized display label. iOS parity: each id maps to a
+         * `device.menu.item.*` entry in Localizable.xcstrings; here we route
+         * through Android resources so the English source strings surface on
+         * en-locale devices.
+         */
+        fun menuItemLabel(context: Context, id: String): String {
+            val resId = when (id) {
+                "settings" -> R.string.device_menu_item_settings
+                "turn off" -> R.string.device_menu_item_turn_off
+                "help" -> R.string.device_menu_item_help
+                "about" -> R.string.device_menu_item_about
+                "demo" -> R.string.device_menu_item_demo
+                "close" -> R.string.device_menu_item_close
+                else -> return id
+            }
+            return context.getString(resId)
         }
 
-        fun settingsItemLabel(id: String): String = when (id) {
-            "brightness" -> "亮度"
-            "sound" -> "声音"
-            "bluetooth" -> "蓝牙"
-            "wifi" -> "WiFi"
-            "led" -> "LED"
-            "transcript" -> "文字稿"
-            "clock rot" -> "旋转"
-            "ascii pet" -> "切换像素宠物"
-            "reset" -> "恢复出厂"
-            "back" -> "返回"
-            else -> id
+        fun settingsItemLabel(context: Context, id: String): String {
+            val resId = when (id) {
+                "brightness" -> R.string.device_menu_item_brightness
+                "sound" -> R.string.device_menu_item_sound
+                "bluetooth" -> R.string.device_menu_item_bluetooth
+                "wifi" -> R.string.device_menu_item_wifi
+                "led" -> R.string.device_menu_item_led
+                "transcript" -> R.string.device_menu_item_transcript
+                "clock rot" -> R.string.device_menu_item_clock_rot
+                "ascii pet" -> R.string.device_menu_item_ascii_pet
+                "reset" -> R.string.device_menu_item_reset
+                "back" -> R.string.device_menu_item_back
+                else -> return id
+            }
+            return context.getString(resId)
         }
 
-        fun resetItemLabel(id: String): String = if (id == "confirm") "确认" else "取消"
+        fun resetItemLabel(context: Context, id: String): String = context.getString(
+            if (id == "confirm") R.string.device_menu_item_confirm
+            else R.string.device_menu_item_cancel,
+        )
     }
 }
 

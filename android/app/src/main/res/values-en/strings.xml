@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+        English overrides for the device-menu tree. Keys here match iOS's
+        device.menu.item.* source strings (Localizable.xcstrings, sourceLanguage=en).
+        The default values/strings.xml holds the zh-Hans labels as that's the
+        project's primary audience; this file kicks in only on English locales.
+    -->
+    <string name="device_menu_item_settings">settings</string>
+    <string name="device_menu_item_turn_off">turn off</string>
+    <string name="device_menu_item_help">help</string>
+    <string name="device_menu_item_about">about</string>
+    <string name="device_menu_item_demo">demo</string>
+    <string name="device_menu_item_close">close</string>
+    <string name="device_menu_item_brightness">brightness</string>
+    <string name="device_menu_item_sound">sound</string>
+    <string name="device_menu_item_bluetooth">bluetooth</string>
+    <string name="device_menu_item_wifi">wifi</string>
+    <string name="device_menu_item_led">led</string>
+    <string name="device_menu_item_transcript">transcript</string>
+    <string name="device_menu_item_clock_rot">clock rot</string>
+    <string name="device_menu_item_ascii_pet">ascii pet</string>
+    <string name="device_menu_item_reset">reset</string>
+    <string name="device_menu_item_back">back</string>
+    <string name="device_menu_item_confirm">confirm</string>
+    <string name="device_menu_item_cancel">cancel</string>
+
+    <string name="device_menu_clock_rot_portrait">portrait</string>
+    <string name="device_menu_clock_rot_landscape">landscape</string>
+    <string name="device_menu_clock_rot_auto">auto</string>
+</resources>

@@ -220,4 +220,27 @@ class DeviceMenuStateTest {
         s.resetOpen = true
         assertTrue(s.isAnyMenuVisible)
     }
+
+    // --- Item-list canonical ids (guard the label-resolution when statement) ---
+
+    @Test fun menuItemsMatchExpectedCanonicalOrder() {
+        assertEquals(
+            listOf("settings", "turn off", "help", "about", "demo", "close"),
+            DeviceMenuState.MENU_ITEMS,
+        )
+    }
+
+    @Test fun settingsItemsMatchExpectedCanonicalOrder() {
+        assertEquals(
+            listOf(
+                "brightness", "sound", "bluetooth", "wifi", "led",
+                "transcript", "clock rot", "ascii pet", "reset", "back",
+            ),
+            DeviceMenuState.SETTINGS_ITEMS,
+        )
+    }
+
+    @Test fun resetItemsMatchExpectedCanonicalOrder() {
+        assertEquals(listOf("confirm", "cancel"), DeviceMenuState.RESET_ITEMS)
+    }
 }

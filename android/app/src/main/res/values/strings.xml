@@ -68,4 +68,29 @@
     <string name="pet_delete_do_it">删除</string>
     <string name="pet_stats_delete_ok">已删除所有角色。</string>
     <string name="pet_stats_delete_fail">删除失败。</string>
+
+    <!-- Device menu (local overlay mirroring firmware menu tree) -->
+    <string name="device_menu_item_settings">设置</string>
+    <string name="device_menu_item_turn_off">关机</string>
+    <string name="device_menu_item_help">帮助</string>
+    <string name="device_menu_item_about">关于</string>
+    <string name="device_menu_item_demo">演示</string>
+    <string name="device_menu_item_close">关闭</string>
+    <string name="device_menu_item_brightness">亮度</string>
+    <string name="device_menu_item_sound">声音</string>
+    <string name="device_menu_item_bluetooth">蓝牙</string>
+    <string name="device_menu_item_wifi">Wi-Fi</string>
+    <string name="device_menu_item_led">LED</string>
+    <string name="device_menu_item_transcript">字幕</string>
+    <string name="device_menu_item_clock_rot">时钟方向</string>
+    <string name="device_menu_item_ascii_pet">ASCII 宠物</string>
+    <string name="device_menu_item_reset">重置</string>
+    <string name="device_menu_item_back">返回</string>
+    <string name="device_menu_item_confirm">确认</string>
+    <string name="device_menu_item_cancel">取消</string>
+
+    <!-- Device menu clock-rotation trailing label -->
+    <string name="device_menu_clock_rot_portrait">竖屏</string>
+    <string name="device_menu_clock_rot_landscape">横屏</string>
+    <string name="device_menu_clock_rot_auto">自动</string>
 </resources>

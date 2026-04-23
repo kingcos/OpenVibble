@@ -21,11 +21,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.openvibble.R
 import com.openvibble.ui.terminal.TerminalFonts
 import com.openvibble.ui.terminal.TerminalPalette
 
@@ -61,20 +64,26 @@ fun DeviceMenuOverlay(
                     .height(1.dp)
                     .background(TerminalPalette.lcdDivider),
             )
+            val ctx = LocalContext.current
+            val clockRotLabels = ClockRotLabels(
+                portrait = stringResource(R.string.device_menu_clock_rot_portrait),
+                landscape = stringResource(R.string.device_menu_clock_rot_landscape),
+                auto = stringResource(R.string.device_menu_clock_rot_auto),
+            )
             when {
                 state.resetOpen -> SectionList(
                     titleLabel = "RESET",
-                    rows = resetRows(),
+                    rows = resetRows(ctx),
                     selected = state.resetIndex,
                 )
                 state.settingsOpen -> SectionList(
                     titleLabel = "SETTINGS",
-                    rows = settingsRows(state),
+                    rows = settingsRows(ctx, state, clockRotLabels),
                     selected = state.settingsIndex,
                 )
                 state.menuOpen -> SectionList(
                     titleLabel = "MENU",
-                    rows = menuRows(),
+                    rows = menuRows(ctx),
                     selected = state.menuIndex,
                 )
             }
@@ -114,23 +123,36 @@ private fun Header(state: DeviceMenuState) {
 
 private data class DisplayRow(val label: String, val trailing: String?)
 
-private fun menuRows(): List<DisplayRow> =
-    DeviceMenuState.MENU_ITEMS.map { DisplayRow(DeviceMenuState.menuItemLabel(it), null) }
+private data class ClockRotLabels(val portrait: String, val landscape: String, val auto: String)
 
-private fun settingsRows(state: DeviceMenuState): List<DisplayRow> =
+private fun menuRows(ctx: android.content.Context): List<DisplayRow> =
+    DeviceMenuState.MENU_ITEMS.map { DisplayRow(DeviceMenuState.menuItemLabel(ctx, it), null) }
+
+private fun settingsRows(
+    ctx: android.content.Context,
+    state: DeviceMenuState,
+    clockRot: ClockRotLabels,
+): List<DisplayRow> =
     DeviceMenuState.SETTINGS_ITEMS.map { id ->
-        DisplayRow(DeviceMenuState.settingsItemLabel(id), settingsTrailing(id, state))
+        DisplayRow(
+            DeviceMenuState.settingsItemLabel(ctx, id),
+            settingsTrailing(id, state, clockRot),
+        )
     }
 
-private fun resetRows(): List<DisplayRow> =
+private fun resetRows(ctx: android.content.Context): List<DisplayRow> =
     DeviceMenuState.RESET_ITEMS.map { id ->
         DisplayRow(
-            label = DeviceMenuState.resetItemLabel(id),
+            label = DeviceMenuState.resetItemLabel(ctx, id),
             trailing = if (id == "confirm") "⚠" else null,
         )
     }
 
-private fun settingsTrailing(id: String, state: DeviceMenuState): String? = when (id) {
+private fun settingsTrailing(
+    id: String,
+    state: DeviceMenuState,
+    clockRot: ClockRotLabels,
+): String? = when (id) {
     "brightness" -> "${state.brightness}/4"
     "sound" -> onOff(state.sound)
     "bluetooth" -> onOff(state.bt)
@@ -138,9 +160,9 @@ private fun settingsTrailing(id: String, state: DeviceMenuState): String? = when
     "led" -> onOff(state.led)
     "transcript" -> onOff(state.hud)
     "clock rot" -> when (state.clockRot) {
-        1 -> "竖屏"
-        2 -> "横屏"
-        else -> "自动"
+        1 -> clockRot.portrait
+        2 -> clockRot.landscape
+        else -> clockRot.auto
     }
     "ascii pet" -> "▸"
     "reset" -> "▸"
