@@ -22,7 +22,10 @@ struct ClaudeSessionsView: View {
             Divider().background(TerminalStyle.lcdDivider)
             if let name = selectedProject,
                let project = model.projects.first(where: { $0.name == name }) {
-                ProjectDetailView(project: project)
+                ProjectDetailView(
+                    project: project,
+                    prompt: project.hasPendingPrompt ? model.prompt : nil
+                )
             } else {
                 allOverview
             }
@@ -141,19 +144,112 @@ struct ClaudeSessionsView: View {
     }
 }
 
-/// Placeholder — filled in by Phase 4. Shows the bare minimum so the chip
-/// selection is demonstrably functional in Phase 3.
+/// One-project slice: a status line, the pending prompt preview (if this
+/// project owns it), and a scrollable list of the recent entries for that
+/// project. Entries are already bucketed/ordered newest-first by
+/// ProjectSummaryBuilder.
 private struct ProjectDetailView: View {
     let project: ProjectSummary
+    let prompt: PromptRequest?
+
+    private static let recentCap = 20
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(project.name)
-                .font(TerminalStyle.mono(12, weight: .bold))
+        VStack(alignment: .leading, spacing: 6) {
+            statusRow
+            if let prompt { promptRow(prompt) }
+            recentHeader
+            recentList
+        }
+    }
+
+    private var statusRow: some View {
+        HStack(alignment: .firstTextBaseline, spacing: 8) {
+            Text("info.claude.project.status")
+                .font(TerminalStyle.mono(12))
+                .foregroundStyle(TerminalStyle.inkDim)
+                .frame(width: 82, alignment: .leading)
+            Text(statusLabel)
+                .font(TerminalStyle.mono(12))
+                .foregroundStyle(statusColor)
+            Spacer(minLength: 0)
+        }
+    }
+
+    private var statusLabel: LocalizedStringKey {
+        if project.hasPendingPrompt { return "info.claude.project.status.waiting" }
+        if project.isActive { return "info.claude.project.status.running" }
+        return "info.claude.project.status.idle"
+    }
+
+    private var statusColor: Color {
+        if project.hasPendingPrompt { return TerminalStyle.bad }
+        if project.isActive { return TerminalStyle.good }
+        return TerminalStyle.inkDim
+    }
+
+    private func promptRow(_ prompt: PromptRequest) -> some View {
+        HStack(alignment: .firstTextBaseline, spacing: 8) {
+            Text("info.claude.project.prompt")
+                .font(TerminalStyle.mono(12))
+                .foregroundStyle(TerminalStyle.inkDim)
+                .frame(width: 82, alignment: .leading)
+            Text(formatPrompt(prompt))
+                .font(TerminalStyle.mono(12))
                 .foregroundStyle(TerminalStyle.ink)
-            Text("\(project.entries.count) entries")
+                .lineLimit(2)
+            Spacer(minLength: 0)
+        }
+    }
+
+    private func formatPrompt(_ prompt: PromptRequest) -> String {
+        let tool = prompt.tool.trimmingCharacters(in: .whitespaces)
+        let hint = prompt.hint.trimmingCharacters(in: .whitespaces)
+        if tool.isEmpty && hint.isEmpty { return "—" }
+        if hint.isEmpty { return tool }
+        if tool.isEmpty { return hint }
+        return "\(tool): \(hint)"
+    }
+
+    private var recentHeader: some View {
+        Text("info.claude.project.recent")
+            .font(TerminalStyle.mono(11, weight: .semibold))
+            .tracking(1)
+            .foregroundStyle(TerminalStyle.accentSoft)
+            .padding(.top, 2)
+    }
+
+    @ViewBuilder
+    private var recentList: some View {
+        if project.entries.isEmpty {
+            Text("info.claude.project.recent.empty")
                 .font(TerminalStyle.mono(11))
                 .foregroundStyle(TerminalStyle.inkDim)
+        } else {
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack(alignment: .leading, spacing: 2) {
+                    ForEach(Array(project.entries.prefix(Self.recentCap).enumerated()), id: \.offset) { _, entry in
+                        entryRow(entry)
+                    }
+                }
+            }
+        }
+    }
+
+    private func entryRow(_ entry: ParsedEntry) -> some View {
+        let label = [entry.event, entry.detail]
+            .compactMap { $0?.isEmpty == false ? $0 : nil }
+            .joined(separator: " ")
+        return HStack(alignment: .firstTextBaseline, spacing: 8) {
+            Text(entry.time)
+                .font(TerminalStyle.mono(11))
+                .foregroundStyle(TerminalStyle.inkDim)
+            Text(label)
+                .font(TerminalStyle.mono(11))
+                .foregroundStyle(TerminalStyle.ink.opacity(0.92))
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .lineLimit(1)
+                .truncationMode(.tail)
         }
     }
 }
