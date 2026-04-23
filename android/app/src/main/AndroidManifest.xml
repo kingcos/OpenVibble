@@ -54,5 +54,9 @@
             android:name="com.openvibble.nusperipheral.BuddyPeripheralService"
             android:exported="false"
             android:foregroundServiceType="connectedDevice"/>
+
+        <receiver
+            android:name="com.openvibble.notifications.PromptActionReceiver"
+            android:exported="false"/>
     </application>
 </manifest>

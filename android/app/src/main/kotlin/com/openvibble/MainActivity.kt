@@ -4,10 +4,13 @@
 
 package com.openvibble
 
+import android.Manifest
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -26,8 +29,13 @@ import androidx.compose.ui.platform.LocalContext
 import com.openvibble.bridge.BridgeAppModel
 import com.openvibble.home.HomeScreen
 import com.openvibble.nav.NavigationCoordinator
+import com.openvibble.notifications.BuddyNotificationCenter
+import com.openvibble.notifications.BuddyNotificationsBridge
+import com.openvibble.notifications.PromptDecision
+import com.openvibble.notifications.PromptDecisionStore
 import com.openvibble.onboarding.OnboardingScreen
 import com.openvibble.persona.PersonaController
+import com.openvibble.protocol.PermissionDecision
 import com.openvibble.settings.AppSettings
 import com.openvibble.settings.SettingsScreen
 
@@ -46,28 +54,70 @@ class MainActivity : ComponentActivity() {
         BridgeAppModel.Factory(applicationContext)
     }
 
+    private val decisionStore by lazy { PromptDecisionStore(applicationContext) }
+
+    private val requestNotificationPermission =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { /* no-op */ }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         handleDeepLink(intent)
 
+        BuddyNotificationCenter.configure(applicationContext)
+        model.notifications = BuddyNotificationsBridge(applicationContext)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requestNotificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
+
         setContent {
             OpenVibbleTheme {
                 Surface(modifier = Modifier.fillMaxSize(), color = Color.Black) {
-                    RootFlow(model = model, navigation = navigation)
+                    RootFlow(
+                        model = model,
+                        navigation = navigation,
+                        onRequestNotificationPermission = ::askForNotificationPermission,
+                    )
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        drainPendingPromptDecision()
     }
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
         handleDeepLink(intent)
+        drainPendingPromptDecision()
     }
 
     private fun handleDeepLink(intent: Intent?) {
         val uri = intent?.data ?: return
         navigation.handle(uri)
+    }
+
+    /**
+     * Consumes one pending notification-action decision and forwards it into
+     * [BridgeAppModel.respondPermission]. Runs on every resume — cheap no-op
+     * when nothing's queued.
+     */
+    private fun drainPendingPromptDecision() {
+        val pending = decisionStore.drainPending() ?: return
+        val bridgeDecision = when (pending.decision) {
+            PromptDecision.APPROVE -> PermissionDecision.ONCE
+            PromptDecision.DENY -> PermissionDecision.DENY
+        }
+        model.respondPermission(bridgeDecision)
+    }
+
+    private fun askForNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requestNotificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
+        }
     }
 }
 
@@ -93,6 +143,7 @@ private fun OpenVibbleTheme(content: @Composable () -> Unit) {
 private fun RootFlow(
     model: BridgeAppModel,
     navigation: NavigationCoordinator,
+    onRequestNotificationPermission: () -> Unit,
 ) {
     val context = LocalContext.current
     val settings = remember { AppSettings(context) }
@@ -112,6 +163,7 @@ private fun RootFlow(
         OnboardingScreen(onFinish = {
             settings.hasOnboarded = true
             hasOnboarded = true
+            onRequestNotificationPermission()
         })
         return
     }
@@ -137,7 +189,7 @@ private fun RootFlow(
             model = model,
             settings = settings,
             onDone = { showSettings = false },
-            onRequestNotificationPermission = { /* wired with Task #4 */ },
+            onRequestNotificationPermission = onRequestNotificationPermission,
             onShowOnboarding = {
                 settings.hasOnboarded = false
                 hasOnboarded = false
