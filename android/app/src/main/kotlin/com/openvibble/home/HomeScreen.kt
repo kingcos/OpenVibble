@@ -1,0 +1,817 @@
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+package com.openvibble.home
+
+import android.content.Intent
+import android.provider.Settings
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.border
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.openvibble.bridge.BridgeAppModel
+import com.openvibble.nav.NavigationCoordinator
+import com.openvibble.nusperipheral.BluetoothPowerState
+import com.openvibble.nusperipheral.NusConnectionState
+import com.openvibble.persona.PersonaController
+import com.openvibble.persona.PersonaSpeciesId
+import com.openvibble.persona.PersonaState
+import com.openvibble.settings.SharedPreferencesPersonaSelectionStore
+import com.openvibble.protocol.PermissionDecision
+import com.openvibble.runtime.PromptRequest
+import com.openvibble.settings.AppSettings
+import com.openvibble.ui.species.AsciiBuddyView
+import com.openvibble.ui.species.SpeciesRegistry
+import com.openvibble.ui.terminal.ScanlineOverlay
+import com.openvibble.ui.terminal.TerminalFonts
+import com.openvibble.ui.terminal.TerminalPalette
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+
+/**
+ * Android parity with iOS `HomeScreen` (OpenVibbleApp/Home/HomeScreen.swift).
+ *
+ * Layout mirrors the handheld-style "the phone screen is the dev-board
+ * screen" treatment:
+ *
+ *   ┌──────────────────────────┐
+ *   │ ● BLE:conn          ⚙    │
+ *   │        [pet area]        │
+ *   ├──────────────────────────┤
+ *   │  NORMAL / PET / INFO     │
+ *   ├──────────────────────────┤
+ *   │  A  B          [≣ Log]   │
+ *   └──────────────────────────┘
+ *
+ * A short-press cycles NORMAL → PET → INFO. B short-presses:
+ *   - NORMAL with prompt: deny
+ *   - PET / INFO: next internal page
+ *   - otherwise: ignored
+ * Horizontal swipe also pages PET/INFO. PET/INFO bodies are stubbed in this
+ * skeleton — richer porting happens in follow-up commits.
+ */
+@Composable
+fun HomeScreen(
+    model: BridgeAppModel,
+    persona: PersonaController,
+    navigation: NavigationCoordinator,
+    settings: AppSettings,
+    onOpenSettings: () -> Unit,
+    onOpenLogs: () -> Unit = {},
+    onLongPressA: () -> Unit = {},
+) {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+
+    var mode by remember { mutableStateOf(DisplayMode.NORMAL) }
+    var petPage by remember { mutableIntStateOf(0) }
+    var infoPage by remember { mutableIntStateOf(0) }
+
+    val snapshot by model.snapshot.collectAsState()
+    val prompt by model.prompt.collectAsState()
+    val responseSent by model.responseSent.collectAsState()
+    val connectionState by model.connectionState.collectAsState()
+    val powerState by model.bluetoothPowerState.collectAsState()
+    val pendingRoute by navigation.pendingRoute.collectAsState()
+    val personaState by persona.state.collectAsState()
+
+    var showPowerButton by remember { mutableStateOf(settings.showPowerButton) }
+
+    // Prompt-waited timer — ticks every 1s while prompt is pending so the
+    // "waited Ns" label counts up without the whole screen recomposing from
+    // other state sources.
+    var promptArrivedAtMs by remember { mutableStateOf<Long?>(null) }
+    var frozenWaitedSeconds by remember { mutableStateOf<Int?>(null) }
+    var promptTickNow by remember { mutableStateOf(System.currentTimeMillis()) }
+
+    LaunchedEffect(prompt?.id) {
+        if (prompt != null) {
+            promptArrivedAtMs = System.currentTimeMillis()
+            frozenWaitedSeconds = null
+        } else {
+            promptArrivedAtMs = null
+            frozenWaitedSeconds = null
+        }
+    }
+    LaunchedEffect(responseSent, promptArrivedAtMs) {
+        if (responseSent && frozenWaitedSeconds == null && promptArrivedAtMs != null) {
+            frozenWaitedSeconds = waitedSeconds(promptArrivedAtMs, System.currentTimeMillis())
+        }
+    }
+    LaunchedEffect(promptArrivedAtMs) {
+        while (promptArrivedAtMs != null) {
+            promptTickNow = System.currentTimeMillis()
+            delay(1_000L)
+        }
+    }
+
+    // Deep-link: openvibble://status forces NORMAL mode.
+    LaunchedEffect(pendingRoute) {
+        val route = pendingRoute ?: return@LaunchedEffect
+        when (route) {
+            NavigationCoordinator.Route.Status -> mode = DisplayMode.NORMAL
+        }
+        navigation.clearPending()
+    }
+
+    // Kick the advertiser once on entry if BLE is permitted. A dedicated
+    // permission watcher lives in the caller (MainActivity) — here we just
+    // call start(); the peripheral service no-ops if permissions are missing.
+    LaunchedEffect(Unit) { model.start() }
+
+    val waited: Int = frozenWaitedSeconds
+        ?: waitedSeconds(promptArrivedAtMs, promptTickNow)
+
+    Box(modifier = Modifier.fillMaxSize().background(Color.Black)) {
+        ScanlineOverlay()
+
+        BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
+            val availableHeightPx = constraints.maxHeight.toFloat()
+            val petAreaDp = computePetAreaHeightDp(availableHeightPx)
+            Column(modifier = Modifier.fillMaxSize()) {
+                TopBar(
+                    connectionState = connectionState,
+                    powerState = powerState,
+                    onOpenSettings = onOpenSettings,
+                    onStartAdvertising = { model.start() },
+                    onRestartAdvertising = {
+                        scope.launch {
+                            model.stop()
+                            delay(220L)
+                            model.start()
+                        }
+                    },
+                    onOpenSystemBluetoothSettings = {
+                        context.startActivity(
+                            Intent(Settings.ACTION_BLUETOOTH_SETTINGS)
+                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+                        )
+                    },
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .padding(top = 4.dp, bottom = 8.dp),
+                )
+
+                PetArea(
+                    mode = mode,
+                    personaState = personaState,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(petAreaDp),
+                )
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(1.dp)
+                        .padding(horizontal = 14.dp)
+                        .background(TerminalPalette.lcdDivider),
+                )
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f)
+                        .padding(horizontal = 16.dp)
+                        .padding(top = 10.dp)
+                        .pointerInput(mode) {
+                            detectHorizontalDragGestures { _, drag ->
+                                if (drag > 40f) swipe(mode, -1, { petPage = wrap(petPage + it, PET_PAGE_COUNT) }, { infoPage = wrap(infoPage + it, INFO_PAGE_COUNT) })
+                                else if (drag < -40f) swipe(mode, 1, { petPage = wrap(petPage + it, PET_PAGE_COUNT) }, { infoPage = wrap(infoPage + it, INFO_PAGE_COUNT) })
+                            }
+                        },
+                ) {
+                    when (mode) {
+                        DisplayMode.NORMAL -> NormalBody(
+                            snapshot = snapshot,
+                            prompt = prompt,
+                            responseSent = responseSent,
+                            promptWaitedSeconds = waited,
+                            onApprove = { model.respondPermission(PermissionDecision.ONCE) },
+                            onDeny = { model.respondPermission(PermissionDecision.DENY) },
+                        )
+                        DisplayMode.PET -> PetBodyStub(page = petPage)
+                        DisplayMode.INFO -> InfoBodyStub(page = infoPage)
+                    }
+                }
+
+                BottomBar(
+                    showPowerButton = showPowerButton,
+                    onPressA = {
+                        if (mode == DisplayMode.NORMAL && prompt != null && !responseSent) {
+                            model.respondPermission(PermissionDecision.ONCE)
+                        } else {
+                            mode = mode.next()
+                            if (mode == DisplayMode.PET) petPage = 0
+                            if (mode == DisplayMode.INFO) infoPage = 0
+                        }
+                    },
+                    onLongPressA = onLongPressA,
+                    onPressB = {
+                        if (mode == DisplayMode.NORMAL && prompt != null && !responseSent) {
+                            model.respondPermission(PermissionDecision.DENY)
+                        } else when (mode) {
+                            DisplayMode.PET -> petPage = wrap(petPage + 1, PET_PAGE_COUNT)
+                            DisplayMode.INFO -> infoPage = wrap(infoPage + 1, INFO_PAGE_COUNT)
+                            DisplayMode.NORMAL -> Unit
+                        }
+                    },
+                    onPressPower = { /* Screen-off menu deferred — no-op for now. */ },
+                    onOpenLogs = onOpenLogs,
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .padding(top = 8.dp, bottom = 14.dp),
+                )
+            }
+        }
+    }
+}
+
+enum class DisplayMode {
+    NORMAL, PET, INFO;
+
+    fun next(): DisplayMode = when (this) {
+        NORMAL -> PET
+        PET -> INFO
+        INFO -> NORMAL
+    }
+
+    val label: String
+        get() = when (this) {
+            NORMAL -> "NORMAL"
+            PET -> "PET"
+            INFO -> "INFO"
+        }
+}
+
+private const val PET_PAGE_COUNT = 2
+private const val INFO_PAGE_COUNT = 4
+
+private inline fun wrap(value: Int, count: Int): Int =
+    if (count <= 0) 0 else ((value % count) + count) % count
+
+private inline fun swipe(
+    mode: DisplayMode,
+    step: Int,
+    pagePet: (Int) -> Unit,
+    pageInfo: (Int) -> Unit,
+) {
+    when (mode) {
+        DisplayMode.PET -> pagePet(step)
+        DisplayMode.INFO -> pageInfo(step)
+        DisplayMode.NORMAL -> Unit
+    }
+}
+
+private fun waitedSeconds(arrivedAtMs: Long?, nowMs: Long): Int {
+    if (arrivedAtMs == null) return 0
+    val elapsed = (nowMs - arrivedAtMs) / 1000L
+    return if (elapsed < 0) 0 else elapsed.toInt()
+}
+
+private fun computePetAreaHeightDp(availableHeightPx: Float): androidx.compose.ui.unit.Dp {
+    // 36% of the available height, clamped to [220, 320]dp — same envelope
+    // iOS uses to keep ASCII/GIF renderers near 1:1.
+    val densityIndependent = availableHeightPx / 3f
+    val clamped = densityIndependent.coerceIn(220f, 320f)
+    return clamped.dp
+}
+
+// MARK: - Top bar -----------------------------------------------------------
+
+@Composable
+private fun TopBar(
+    connectionState: NusConnectionState,
+    powerState: BluetoothPowerState,
+    onOpenSettings: () -> Unit,
+    onStartAdvertising: () -> Unit,
+    onRestartAdvertising: () -> Unit,
+    onOpenSystemBluetoothSettings: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(6.dp),
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            StatusIndicator(
+                connectionState = connectionState,
+                powerState = powerState,
+                onStartAdvertising = onStartAdvertising,
+                onOpenSystemBluetoothSettings = onOpenSystemBluetoothSettings,
+            )
+            Spacer(Modifier.weight(1f))
+            Box(
+                modifier = Modifier
+                    .size(32.dp)
+                    .background(TerminalPalette.lcdPanel.copy(alpha = 0.7f), CircleShape)
+                    .border(1.dp, TerminalPalette.inkDim.copy(alpha = 0.45f), CircleShape)
+                    .clickable(onClick = onOpenSettings),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(
+                    text = "⚙",
+                    color = TerminalPalette.ink,
+                    fontSize = 15.sp,
+                    fontWeight = FontWeight.SemiBold,
+                )
+            }
+        }
+
+        if (connectionState is NusConnectionState.Advertising) {
+            AdvertisingActionBar(onRestartAdvertising = onRestartAdvertising)
+        }
+
+        Text(
+            text = "OpenVibble",
+            color = TerminalPalette.ink,
+            fontSize = 24.sp,
+            fontWeight = FontWeight.ExtraBold,
+            style = TextStyle(fontFamily = TerminalFonts.display, letterSpacing = 2.sp),
+        )
+    }
+}
+
+@Composable
+private fun StatusIndicator(
+    connectionState: NusConnectionState,
+    powerState: BluetoothPowerState,
+    onStartAdvertising: () -> Unit,
+    onOpenSystemBluetoothSettings: () -> Unit,
+) {
+    val label = statusLabel(connectionState, powerState)
+    val color = statusColor(connectionState, powerState)
+    val actionable = powerState == BluetoothPowerState.OFF ||
+        (connectionState is NusConnectionState.Stopped && powerState == BluetoothPowerState.ON)
+    val strokeColor = if (actionable) color.copy(alpha = 0.55f) else TerminalPalette.inkDim.copy(alpha = 0.4f)
+
+    val onClick: (() -> Unit)? = when {
+        powerState == BluetoothPowerState.OFF -> onOpenSystemBluetoothSettings
+        connectionState is NusConnectionState.Stopped && powerState == BluetoothPowerState.ON -> onStartAdvertising
+        else -> null
+    }
+
+    Row(
+        modifier = Modifier
+            .background(TerminalPalette.lcdPanel.copy(alpha = 0.65f), shape = RoundedCornerShape(20.dp))
+            .border(1.dp, strokeColor, RoundedCornerShape(20.dp))
+            .let { if (onClick != null) it.clickable(onClick = onClick) else it }
+            .padding(horizontal = 10.dp, vertical = 6.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        BreathingLed(color = color)
+        Text(
+            text = label,
+            color = TerminalPalette.ink,
+            fontSize = 11.sp,
+            fontWeight = FontWeight.SemiBold,
+            style = TextStyle(fontFamily = TerminalFonts.mono),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+        )
+    }
+}
+
+@Composable
+private fun AdvertisingActionBar(onRestartAdvertising: () -> Unit) {
+    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+        Row(
+            modifier = Modifier
+                .background(TerminalPalette.lcdPanel.copy(alpha = 0.7f), RoundedCornerShape(20.dp))
+                .border(1.dp, TerminalPalette.accentSoft.copy(alpha = 0.55f), RoundedCornerShape(20.dp))
+                .clickable(onClick = onRestartAdvertising)
+                .padding(horizontal = 10.dp, vertical = 7.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+        ) {
+            Text(
+                text = "↻",
+                color = TerminalPalette.ink,
+                fontSize = 11.sp,
+                fontWeight = FontWeight.Bold,
+            )
+            Text(
+                text = "RESTART",
+                color = TerminalPalette.ink,
+                fontSize = 11.sp,
+                fontWeight = FontWeight.SemiBold,
+                style = TextStyle(fontFamily = TerminalFonts.mono),
+            )
+        }
+    }
+}
+
+@Composable
+private fun BreathingLed(color: Color) {
+    // Static glow for the skeleton — a proper breathing animation will land
+    // with the rest of the HUD polish pass.
+    Box(
+        modifier = Modifier
+            .size(10.dp)
+            .background(color, CircleShape),
+    )
+}
+
+private fun statusLabel(connection: NusConnectionState, power: BluetoothPowerState): String = when {
+    power == BluetoothPowerState.OFF -> "BLE:off"
+    power == BluetoothPowerState.UNSUPPORTED -> "BLE:unsupported"
+    connection is NusConnectionState.Connected -> if (connection.centralCount > 1) {
+        "BLE:conn(${connection.centralCount})"
+    } else {
+        "BLE:conn"
+    }
+    connection is NusConnectionState.Advertising -> "BLE:adv"
+    else -> "BLE:idle"
+}
+
+private fun statusColor(connection: NusConnectionState, power: BluetoothPowerState): Color = when {
+    power == BluetoothPowerState.OFF || power == BluetoothPowerState.UNSUPPORTED -> TerminalPalette.bad
+    connection is NusConnectionState.Connected -> TerminalPalette.good
+    connection is NusConnectionState.Advertising -> TerminalPalette.accentSoft
+    else -> TerminalPalette.inkDim
+}
+
+// MARK: - Pet area ---------------------------------------------------------
+
+@Composable
+private fun PetArea(
+    mode: DisplayMode,
+    personaState: PersonaState,
+    modifier: Modifier = Modifier,
+) {
+    val context = LocalContext.current
+    val selection = remember { SharedPreferencesPersonaSelectionStore(context).load() }
+    val speciesIdx = remember(selection) { resolveSpeciesIdx(selection) }
+    Box(modifier = modifier.background(Color.Black)) {
+        AsciiBuddyView(
+            state = personaState,
+            speciesIdx = speciesIdx,
+            modifier = Modifier
+                .align(Alignment.Center)
+                .widthIn(max = 200.dp)
+                .heightIn(max = 200.dp)
+                .padding(horizontal = 24.dp),
+        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 12.dp, vertical = 6.dp)
+                .align(Alignment.TopCenter),
+        ) {
+            Text(
+                text = mode.label,
+                color = TerminalPalette.inkDim,
+                fontSize = 10.sp,
+                fontWeight = FontWeight.SemiBold,
+                style = TextStyle(fontFamily = TerminalFonts.mono, letterSpacing = 1.sp),
+            )
+            Spacer(Modifier.weight(1f))
+            Text(
+                text = personaState.slug.uppercase(),
+                color = TerminalPalette.inkDim,
+                fontSize = 10.sp,
+                fontWeight = FontWeight.SemiBold,
+                style = TextStyle(fontFamily = TerminalFonts.mono, letterSpacing = 1.sp),
+            )
+        }
+    }
+}
+
+private fun resolveSpeciesIdx(selection: PersonaSpeciesId): Int = when (selection) {
+    is PersonaSpeciesId.AsciiCat -> SpeciesRegistry.defaultIdx()
+    is PersonaSpeciesId.AsciiSpecies -> selection.idx
+    is PersonaSpeciesId.Builtin -> SpeciesRegistry.defaultIdx()
+    is PersonaSpeciesId.Installed -> SpeciesRegistry.defaultIdx()
+}
+
+// MARK: - Mode bodies ------------------------------------------------------
+
+@Composable
+private fun PetBodyStub(page: Int) {
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Text(
+            text = "PET · p${page + 1}",
+            color = TerminalPalette.inkDim,
+            fontSize = 13.sp,
+            style = TextStyle(fontFamily = TerminalFonts.mono),
+        )
+    }
+}
+
+@Composable
+private fun InfoBodyStub(page: Int) {
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Text(
+            text = "INFO · p${page + 1}",
+            color = TerminalPalette.inkDim,
+            fontSize = 13.sp,
+            style = TextStyle(fontFamily = TerminalFonts.mono),
+        )
+    }
+}
+
+// MARK: - Bottom bar -------------------------------------------------------
+
+@Composable
+private fun BottomBar(
+    showPowerButton: Boolean,
+    onPressA: () -> Unit,
+    onLongPressA: () -> Unit,
+    onPressB: () -> Unit,
+    onPressPower: () -> Unit,
+    onOpenLogs: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+    ) {
+        HandheldButton(label = "A", accent = TerminalPalette.good, onPress = onPressA, onLongPress = onLongPressA)
+        HandheldButton(label = "B", accent = TerminalPalette.bad, onPress = onPressB, onLongPress = null)
+        Spacer(Modifier.weight(1f))
+        if (showPowerButton) {
+            Box(
+                modifier = Modifier
+                    .size(36.dp)
+                    .background(TerminalPalette.lcdPanel.copy(alpha = 0.85f), CircleShape)
+                    .border(1.dp, TerminalPalette.inkDim.copy(alpha = 0.5f), CircleShape)
+                    .clickable(onClick = onPressPower),
+                contentAlignment = Alignment.Center,
+            ) {
+                Text(
+                    text = "⏻",
+                    color = TerminalPalette.accentSoft,
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.Bold,
+                )
+            }
+        }
+        Row(
+            modifier = Modifier
+                .background(TerminalPalette.lcdPanel.copy(alpha = 0.85f), RoundedCornerShape(10.dp))
+                .border(1.dp, TerminalPalette.inkDim.copy(alpha = 0.5f), RoundedCornerShape(10.dp))
+                .clickable(onClick = onOpenLogs)
+                .padding(horizontal = 14.dp, vertical = 10.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+        ) {
+            Text(
+                text = "≡",
+                color = TerminalPalette.ink,
+                fontSize = 13.sp,
+                fontWeight = FontWeight.Bold,
+            )
+            Text(
+                text = "LOG",
+                color = TerminalPalette.ink,
+                fontSize = 11.sp,
+                fontWeight = FontWeight.Bold,
+                style = TextStyle(fontFamily = TerminalFonts.mono, letterSpacing = 1.sp),
+            )
+        }
+    }
+}
+
+@Composable
+private fun HandheldButton(
+    label: String,
+    accent: Color,
+    onPress: () -> Unit,
+    onLongPress: (() -> Unit)?,
+) {
+    Box(
+        modifier = Modifier
+            .size(54.dp)
+            .background(accent, CircleShape)
+            .border(2.dp, Color.Black.copy(alpha = 0.6f), CircleShape)
+            .pointerInput(onLongPress) {
+                detectTapGestures(
+                    onTap = { onPress() },
+                    onLongPress = { onLongPress?.invoke() },
+                )
+            },
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(
+            text = label,
+            color = Color.White,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Black,
+        )
+    }
+}
+
+// MARK: - NORMAL body ------------------------------------------------------
+
+@Composable
+private fun NormalBody(
+    snapshot: com.openvibble.runtime.BridgeSnapshot,
+    prompt: PromptRequest?,
+    responseSent: Boolean,
+    promptWaitedSeconds: Int,
+    onApprove: () -> Unit,
+    onDeny: () -> Unit,
+) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        if (prompt != null) {
+            PromptPanel(
+                prompt = prompt,
+                waitedSeconds = promptWaitedSeconds,
+                responseSent = responseSent,
+                onApprove = onApprove,
+                onDeny = onDeny,
+            )
+        } else {
+            StatusLine(snapshot = snapshot)
+        }
+
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Text(
+                text = "· no log ·",
+                color = TerminalPalette.inkDim.copy(alpha = 0.6f),
+                fontSize = 11.sp,
+                style = TextStyle(fontFamily = TerminalFonts.mono),
+                textAlign = TextAlign.Center,
+            )
+        }
+    }
+}
+
+@Composable
+private fun StatusLine(snapshot: com.openvibble.runtime.BridgeSnapshot) {
+    val msg = if (snapshot.msg.isBlank()) "waiting for claude" else snapshot.msg
+    Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+        Text(
+            text = msg,
+            color = TerminalPalette.ink,
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Bold,
+            style = TextStyle(fontFamily = TerminalFonts.mono),
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+        )
+        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            StatusPill(label = "sess", value = snapshot.total.toString())
+            StatusPill(label = "run", value = snapshot.running.toString())
+            StatusPill(label = "wait", value = snapshot.waiting.toString())
+            StatusPill(label = "tok/d", value = formatTokensShort(snapshot.tokensToday))
+        }
+    }
+}
+
+@Composable
+private fun StatusPill(label: String, value: String) {
+    Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+        Text(
+            text = label,
+            color = TerminalPalette.inkDim,
+            fontSize = 10.sp,
+            fontWeight = FontWeight.SemiBold,
+            style = TextStyle(fontFamily = TerminalFonts.mono),
+        )
+        Text(
+            text = value,
+            color = TerminalPalette.ink,
+            fontSize = 10.sp,
+            fontWeight = FontWeight.SemiBold,
+            style = TextStyle(fontFamily = TerminalFonts.mono),
+        )
+    }
+}
+
+@Composable
+private fun PromptPanel(
+    prompt: PromptRequest,
+    waitedSeconds: Int,
+    responseSent: Boolean,
+    onApprove: () -> Unit,
+    onDeny: () -> Unit,
+) {
+    val timerColor = if (waitedSeconds >= 10) TerminalPalette.accent else TerminalPalette.accentSoft
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(TerminalPalette.lcdPanel.copy(alpha = 0.9f), RoundedCornerShape(10.dp))
+            .border(1.dp, TerminalPalette.accent.copy(alpha = 0.6f), RoundedCornerShape(10.dp))
+            .padding(12.dp),
+        verticalArrangement = Arrangement.spacedBy(6.dp),
+    ) {
+        Text(
+            text = "waited ${waitedSeconds}s",
+            color = timerColor,
+            fontSize = 11.sp,
+            fontWeight = FontWeight.SemiBold,
+            style = TextStyle(fontFamily = TerminalFonts.mono),
+        )
+        Text(
+            text = prompt.tool,
+            color = TerminalPalette.ink,
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Bold,
+            style = TextStyle(fontFamily = TerminalFonts.mono),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+        )
+        if (prompt.hint.isNotEmpty()) {
+            Text(
+                text = prompt.hint,
+                color = TerminalPalette.inkDim,
+                fontSize = 11.sp,
+                style = TextStyle(fontFamily = TerminalFonts.mono),
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
+        Row(horizontalArrangement = Arrangement.spacedBy(14.dp)) {
+            if (responseSent) {
+                Text(
+                    text = "SENT",
+                    color = TerminalPalette.good,
+                    fontSize = 11.sp,
+                    fontWeight = FontWeight.Bold,
+                    style = TextStyle(fontFamily = TerminalFonts.mono, letterSpacing = 1.sp),
+                )
+            } else {
+                PromptActionChip(label = "APPROVE", key = "A", tint = TerminalPalette.good, onClick = onApprove)
+                PromptActionChip(label = "DENY", key = "B", tint = TerminalPalette.bad, onClick = onDeny)
+            }
+        }
+    }
+}
+
+@Composable
+private fun PromptActionChip(label: String, key: String, tint: Color, onClick: () -> Unit) {
+    Row(
+        modifier = Modifier
+            .background(tint.copy(alpha = 0.15f), RoundedCornerShape(8.dp))
+            .border(1.dp, tint.copy(alpha = 0.7f), RoundedCornerShape(8.dp))
+            .clickable(onClick = onClick)
+            .padding(horizontal = 10.dp, vertical = 6.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(6.dp),
+    ) {
+        Text(
+            text = "[$key]",
+            color = tint,
+            fontSize = 10.sp,
+            fontWeight = FontWeight.Bold,
+            style = TextStyle(fontFamily = TerminalFonts.mono),
+        )
+        Text(
+            text = label,
+            color = TerminalPalette.ink,
+            fontSize = 11.sp,
+            fontWeight = FontWeight.Bold,
+            style = TextStyle(fontFamily = TerminalFonts.mono, letterSpacing = 1.sp),
+        )
+    }
+}
+
+private fun formatTokensShort(n: Int): String = when {
+    n >= 1_000_000 -> "${n / 1_000_000}M"
+    n >= 1_000 -> "${n / 1_000}K"
+    else -> n.toString()
+}
