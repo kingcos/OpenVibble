@@ -87,23 +87,22 @@ struct ClaudeSessionsView: View {
         .buttonStyle(.plain)
     }
 
-    @ViewBuilder
     private func trailing(for project: ProjectSummary) -> AnyView? {
         if project.hasPendingPrompt {
-            AnyView(
+            return AnyView(
                 Text("!")
                     .font(TerminalStyle.mono(10, weight: .bold))
                     .foregroundStyle(TerminalStyle.bad)
             )
-        } else if project.isActive {
-            AnyView(
+        }
+        if project.isActive {
+            return AnyView(
                 Circle()
                     .fill(TerminalStyle.good)
                     .frame(width: 6, height: 6)
             )
-        } else {
-            nil
         }
+        return nil
     }
 
     // MARK: - ALL overview (unchanged semantics from the old CLAUDE page)

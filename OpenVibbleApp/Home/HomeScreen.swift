@@ -1264,12 +1264,16 @@ private struct InfoBody: View {
                 .foregroundStyle(TerminalStyle.accentSoft)
             Divider().background(TerminalStyle.lcdDivider)
 
-            VStack(alignment: .leading, spacing: 4) {
-                ForEach(Array(rows(for: title).enumerated()), id: \.offset) { _, row in
-                    rowView(row)
+            if title == "CLAUDE" {
+                ClaudeSessionsView(model: model, persona: persona)
+            } else {
+                VStack(alignment: .leading, spacing: 4) {
+                    ForEach(Array(rows(for: title).enumerated()), id: \.offset) { _, row in
+                        rowView(row)
+                    }
                 }
+                Spacer(minLength: 0)
             }
-            Spacer(minLength: 0)
         }
     }
 
@@ -1310,13 +1314,6 @@ private struct InfoBody: View {
             .body("info.buttons.line4"),
             .body("info.buttons.line5")
         ]
-        case "CLAUDE": return [
-            .pair("info.claude.sessions", "\(model.snapshot.total)"),
-            .pair("info.claude.running", "\(model.snapshot.running)"),
-            .pair("info.claude.waiting", "\(model.snapshot.waiting)"),
-            .pair("info.claude.state", localizedPersonaState(persona.state)),
-            .pair("info.claude.tokPerDay", "\(model.snapshot.tokensToday)")
-        ]
         case "DEVICE":
             let uptime = Int(Date().timeIntervalSince(appStart))
             let device = UIDevice.current
@@ -1343,18 +1340,6 @@ private struct InfoBody: View {
             .body("info.credits.line4")
         ]
         default: return []
-        }
-    }
-
-    private func localizedPersonaState(_ state: PersonaState) -> String {
-        switch state {
-        case .sleep: return String(localized: "state.sleep")
-        case .idle: return String(localized: "state.idle")
-        case .busy: return String(localized: "state.busy")
-        case .attention: return String(localized: "state.attention")
-        case .celebrate: return String(localized: "state.celebrate")
-        case .dizzy: return String(localized: "state.dizzy")
-        case .heart: return String(localized: "state.heart")
         }
     }
 

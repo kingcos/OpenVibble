@@ -11,6 +11,7 @@
 		071D192A3A75DACF6FDA80E8 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF76EBF276FBAD084D5F62C /* HomeScreen.swift */; };
 		0D63FE5BE7ACEC64AFE7BD16 /* BuddyPersona in Frameworks */ = {isa = PBXBuildFile; productRef = E64C391922BD2DC616D86DB4 /* BuddyPersona */; };
 		0D8BA2FB4E2F32AAA97BB4B7 /* BridgeAppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2382F18941BE0950209AA0E /* BridgeAppModel.swift */; };
+		E9467DDAD601E65E0D1A7DC0 /* ClaudeSessionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63AD958587211A795A6EEAE /* ClaudeSessionsView.swift */; };
 		0E27D88C26F57BDC185ADCDD /* OverviewTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA02992DB8BE1A55CC5220E7 /* OverviewTab.swift */; };
 		10C4552150806CEAB534178E /* OpenVibbleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3453FEFE9D00261494A6F /* OpenVibbleApp.swift */; };
 		13C8A0B1E0DAF9363AB87328 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC3459B4E6022FBD263A1B98 /* Assets.xcassets */; };
@@ -100,6 +101,7 @@
 
 /* Begin PBXFileReference section */
 		01E8E5139CD9C5AD027E891B /* OpenVibbleLiveActivity.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenVibbleLiveActivity.entitlements; sourceTree = "<group>"; };
+		C63AD958587211A795A6EEAE /* ClaudeSessionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeSessionsView.swift; sourceTree = "<group>"; };
 		02A2C706FC0D1C2E7EE4A449 /* BuddyLiveActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddyLiveActivityAttributes.swift; sourceTree = "<group>"; };
 		04A40F865CF51C1BCDAA4390 /* PromptIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptIntents.swift; sourceTree = "<group>"; };
 		05EBBCA4BE5024998B9168B4 /* OpenVibbleDesktopApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenVibbleDesktopApp.swift; sourceTree = "<group>"; };
@@ -288,6 +290,7 @@
 		8DCB1A32783E284EF6E7C5F0 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				C63AD958587211A795A6EEAE /* ClaudeSessionsView.swift */,
 				B675ED379CED64D51EE4671A /* DeviceMenuOverlay.swift */,
 				BD1CFB277C64078012E3D244 /* DeviceMenuState.swift */,
 				FAF76EBF276FBAD084D5F62C /* HomeScreen.swift */,
@@ -582,6 +585,7 @@
 			files = (
 				0D8BA2FB4E2F32AAA97BB4B7 /* BridgeAppModel.swift in Sources */,
 				2158028287496A33D4016ACC /* BuddyLiveActivityAttributes.swift in Sources */,
+				E9467DDAD601E65E0D1A7DC0 /* ClaudeSessionsView.swift in Sources */,
 				9F0FA349BABFFC3F2DD69485 /* BuddyLiveActivityManager.swift in Sources */,
 				C9AC58D301BD3C5F6DEA3BC2 /* BuddyNotificationCenter.swift in Sources */,
 				2DC91727EEFE338A37F532DA /* DeviceMenuOverlay.swift in Sources */,
