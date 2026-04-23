@@ -20,7 +20,13 @@ object SpeciesOverlays {
         "cactus" to CactusOverlays.all,
         "owl" to OwlOverlays.all,
         "ghost" to GhostOverlays.all,
-        // remaining: snail, robot, axolotl, blob, chonk, dragon, octopus.
+        "snail" to SnailOverlays.all,
+        "robot" to RobotOverlays.all,
+        "axolotl" to AxolotlOverlays.all,
+        "blob" to BlobOverlays.all,
+        "chonk" to ChonkOverlays.all,
+        "dragon" to DragonOverlays.all,
+        "octopus" to OctopusOverlays.all,
     )
 
     fun overlays(name: String, state: PersonaState): List<Overlay> =
