@@ -42,7 +42,8 @@ import kotlinx.coroutines.delay
 
 /**
  * Android parity with iOS `InfoBody`. Six paged reference cards — ABOUT,
- * BUTTONS, CLAUDE (stubbed, see Phase 4d-CLAUDE), DEVICE, BLE, CREDITS.
+ * BUTTONS, CLAUDE, DEVICE, BLE, CREDITS. CLAUDE delegates to
+ * `ClaudeSessionsView` so the chip-row + detail pane matches iOS 1:1.
  *
  * DEVICE page reads battery via sticky ACTION_BATTERY_CHANGED broadcast
  * (same intent BridgeAppModel's battery receiver consumes).

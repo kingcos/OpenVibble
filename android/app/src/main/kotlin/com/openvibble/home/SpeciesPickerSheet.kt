@@ -49,8 +49,8 @@ import java.util.Locale
  * Android parity with iOS `SpeciesPickerSheet`. Shows a preview of the
  * selected species at the top and two collapsible panels below — the 18
  * built-in ASCII species (+ any builtin GIF personas) and any user-installed
- * GIF personas. GIF-based preview is not yet ported, so preview for non-ASCII
- * selections falls back to a placeholder card.
+ * GIF personas. Non-ASCII selections render via [GifBuddyView]; ASCII
+ * fallbacks cover the case where the manifest can't be found on disk.
  */
 @Composable
 fun SpeciesPickerSheet(

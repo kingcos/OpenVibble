@@ -97,8 +97,7 @@ import kotlinx.coroutines.launch
  *   - NORMAL with prompt: deny
  *   - PET / INFO: next internal page
  *   - otherwise: ignored
- * Horizontal swipe also pages PET/INFO. PET/INFO bodies are stubbed in this
- * skeleton — richer porting happens in follow-up commits.
+ * Horizontal swipe also pages PET/INFO (fires once per gesture on release).
  */
 @Composable
 fun HomeScreen(
