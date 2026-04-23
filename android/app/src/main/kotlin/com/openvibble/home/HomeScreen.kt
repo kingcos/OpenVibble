@@ -101,6 +101,7 @@ fun HomeScreen(
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
+    val appStartMs = remember { System.currentTimeMillis() }
     var mode by remember { mutableStateOf(DisplayMode.NORMAL) }
     var petPage by remember { mutableIntStateOf(0) }
     var infoPage by remember { mutableIntStateOf(0) }
@@ -214,8 +215,8 @@ fun HomeScreen(
                         .padding(top = 10.dp)
                         .pointerInput(mode) {
                             detectHorizontalDragGestures { _, drag ->
-                                if (drag > 40f) swipe(mode, -1, { petPage = wrap(petPage + it, PET_PAGE_COUNT) }, { infoPage = wrap(infoPage + it, INFO_PAGE_COUNT) })
-                                else if (drag < -40f) swipe(mode, 1, { petPage = wrap(petPage + it, PET_PAGE_COUNT) }, { infoPage = wrap(infoPage + it, INFO_PAGE_COUNT) })
+                                if (drag > 40f) swipe(mode, -1, { petPage = wrap(petPage + it, PET_PAGES) }, { infoPage = wrap(infoPage + it, INFO_PAGES.size) })
+                                else if (drag < -40f) swipe(mode, 1, { petPage = wrap(petPage + it, PET_PAGES) }, { infoPage = wrap(infoPage + it, INFO_PAGES.size) })
                             }
                         },
                 ) {
@@ -228,8 +229,16 @@ fun HomeScreen(
                             onApprove = { model.respondPermission(PermissionDecision.ONCE) },
                             onDeny = { model.respondPermission(PermissionDecision.DENY) },
                         )
-                        DisplayMode.PET -> PetBodyStub(page = petPage)
-                        DisplayMode.INFO -> InfoBodyStub(page = infoPage)
+                        DisplayMode.PET -> PetBody(
+                            model = model,
+                            stats = model.statsStore,
+                            page = petPage,
+                        )
+                        DisplayMode.INFO -> InfoBody(
+                            model = model,
+                            page = infoPage,
+                            appStartMs = appStartMs,
+                        )
                     }
                 }
 
@@ -249,8 +258,8 @@ fun HomeScreen(
                         if (mode == DisplayMode.NORMAL && prompt != null && !responseSent) {
                             model.respondPermission(PermissionDecision.DENY)
                         } else when (mode) {
-                            DisplayMode.PET -> petPage = wrap(petPage + 1, PET_PAGE_COUNT)
-                            DisplayMode.INFO -> infoPage = wrap(infoPage + 1, INFO_PAGE_COUNT)
+                            DisplayMode.PET -> petPage = wrap(petPage + 1, PET_PAGES)
+                            DisplayMode.INFO -> infoPage = wrap(infoPage + 1, INFO_PAGES.size)
                             DisplayMode.NORMAL -> Unit
                         }
                     },
@@ -282,8 +291,6 @@ enum class DisplayMode {
         }
 }
 
-private const val PET_PAGE_COUNT = 2
-private const val INFO_PAGE_COUNT = 4
 
 private inline fun wrap(value: Int, count: Int): Int =
     if (count <= 0) 0 else ((value % count) + count) % count
@@ -524,30 +531,6 @@ private fun resolveSpeciesIdx(selection: PersonaSpeciesId): Int = when (selectio
 }
 
 // MARK: - Mode bodies ------------------------------------------------------
-
-@Composable
-private fun PetBodyStub(page: Int) {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text(
-            text = "PET · p${page + 1}",
-            color = TerminalPalette.inkDim,
-            fontSize = 13.sp,
-            style = TextStyle(fontFamily = TerminalFonts.mono),
-        )
-    }
-}
-
-@Composable
-private fun InfoBodyStub(page: Int) {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text(
-            text = "INFO · p${page + 1}",
-            color = TerminalPalette.inkDim,
-            fontSize = 13.sp,
-            style = TextStyle(fontFamily = TerminalFonts.mono),
-        )
-    }
-}
 
 // MARK: - Bottom bar -------------------------------------------------------
 
