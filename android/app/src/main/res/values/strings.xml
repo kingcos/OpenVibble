@@ -1,4 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">OpenVibble</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_prompt">$ openvibble --init</string>
+    <string name="onboarding_welcome_title">OPENVIBBLE</string>
+    <string name="onboarding_welcome_body">配对你的 Claude 宠物硬件，现在只需两步。允许 BLE + 通知权限后即可进入主界面。</string>
+    <string name="onboarding_step_permission_title">授予蓝牙与通知权限</string>
+    <string name="onboarding_step_permission_body">App 需要蓝牙广播权限与 Claude 桌面握手；通知用于在你不在 App 内时提醒权限请求。</string>
+    <string name="onboarding_step_help_title">熟悉硬件按键</string>
+    <string name="onboarding_step_help_body">硬件支持 A/B 短按与长按、电源、日志、设置四个按键。</string>
+    <string name="onboarding_permission_ble">BLE 蓝牙</string>
+    <string name="onboarding_permission_notification">通知</string>
+    <string name="onboarding_permission_status_not_determined">未决定</string>
+    <string name="onboarding_permission_status_allowed">已允许</string>
+    <string name="onboarding_permission_status_denied">已拒绝</string>
+    <string name="onboarding_permission_request">申请权限</string>
+    <string name="onboarding_permission_granted">已授权</string>
+    <string name="onboarding_permission_open_settings">前往系统设置</string>
+    <string name="onboarding_cta_enter">进入 OpenVibble</string>
+    <string name="onboarding_cta_needs_permission">请先授予 BLE 权限</string>
+    <string name="onboarding_cta_skip">暂时跳过</string>
+    <string name="onboarding_help_a">按 A 键在主页切换 Claude/Info 面板</string>
+    <string name="onboarding_help_a_long">长按 A · 快速触发一次权限回复</string>
+    <string name="onboarding_help_b">按 B 键返回或关闭当前菜单</string>
+    <string name="onboarding_help_power">按电源键翻转睡眠</string>
+    <string name="onboarding_help_log">按日志键查看最近事件</string>
+    <string name="onboarding_help_gear">按齿轮键进入设置</string>
 </resources>
