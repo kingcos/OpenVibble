@@ -15,6 +15,8 @@ struct ScanSheet: View {
         VStack(spacing: 0) {
             header
 
+            filterBar
+
             Divider()
 
             content
@@ -26,7 +28,39 @@ struct ScanSheet: View {
         .frame(minWidth: 460, minHeight: 420)
         .onAppear { state.startScan() }
         .onDisappear { state.stopScan() }
+        .onChange(of: state.useCustomScanPrefix) { _, _ in
+            state.startScan()
+        }
         .environment(\.localizationBundle, l10n.bundle)
+    }
+
+    private var filterBar: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(alignment: .center, spacing: 10) {
+                Toggle(isOn: $state.useCustomScanPrefix) {
+                    LText("desktop.scan.filter.custom")
+                }
+                .toggleStyle(.checkbox)
+
+                if state.useCustomScanPrefix {
+                    TextField(
+                        l10n.bundle.l("desktop.scan.filter.placeholder"),
+                        text: $state.customScanPrefix
+                    )
+                    .textFieldStyle(.roundedBorder)
+                    .disableAutocorrection(true)
+                    .onSubmit { state.startScan() }
+                }
+            }
+            if state.useCustomScanPrefix {
+                LText("desktop.scan.filter.help")
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .padding(.horizontal, 16)
+        .padding(.bottom, 10)
     }
 
     private var header: some View {
