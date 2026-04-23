@@ -13,8 +13,11 @@ import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -44,6 +47,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalClipboardManager
+import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
@@ -114,6 +121,7 @@ fun HomeScreen(
     val snapshot by model.snapshot.collectAsState()
     val prompt by model.prompt.collectAsState()
     val responseSent by model.responseSent.collectAsState()
+    val parsedEntries by model.parsedEntries.collectAsState()
     val connectionState by model.connectionState.collectAsState()
     val powerState by model.bluetoothPowerState.collectAsState()
     val pendingRoute by navigation.pendingRoute.collectAsState()
@@ -235,6 +243,7 @@ fun HomeScreen(
                             prompt = prompt,
                             responseSent = responseSent,
                             promptWaitedSeconds = waited,
+                            parsedEntries = parsedEntries,
                             onApprove = { model.respondPermission(PermissionDecision.ONCE) },
                             onDeny = { model.respondPermission(PermissionDecision.DENY) },
                         )
@@ -724,6 +733,7 @@ private fun NormalBody(
     prompt: PromptRequest?,
     responseSent: Boolean,
     promptWaitedSeconds: Int,
+    parsedEntries: List<String>,
     onApprove: () -> Unit,
     onDeny: () -> Unit,
 ) {
@@ -743,6 +753,18 @@ private fun NormalBody(
             StatusLine(snapshot = snapshot)
         }
 
+        ParsedLogList(entries = parsedEntries)
+    }
+}
+
+/**
+ * NORMAL tab's "解析后日志" — mirrors iOS HomeScreen parsedLogRow.
+ * Caps at 64 entries (same as iOS prefix) so the list stays snappy. Raw BLE
+ * wire events intentionally live behind HomeLogSheet, not here.
+ */
+@Composable
+private fun ParsedLogList(entries: List<String>) {
+    if (entries.isEmpty()) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Text(
                 text = "· no log ·",
@@ -752,7 +774,72 @@ private fun NormalBody(
                 textAlign = TextAlign.Center,
             )
         }
+        return
     }
+    val lines = remember(entries) { entries.take(64).map(::parseLogLine) }
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(3.dp),
+    ) {
+        items(lines) { line -> ParsedLogRow(line) }
+    }
+}
+
+@Composable
+private fun ParsedLogRow(line: LogLine) {
+    val clipboard = LocalClipboardManager.current
+    val haptic = LocalHapticFeedback.current
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .combinedClickable(
+                onClick = {},
+                onLongClick = {
+                    clipboard.setText(AnnotatedString("${line.time} ${line.message}"))
+                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                },
+            ),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+    ) {
+        Text(
+            text = line.time,
+            color = TerminalPalette.inkDim,
+            fontSize = 10.sp,
+            style = TextStyle(fontFamily = TerminalFonts.mono),
+            modifier = Modifier.widthIn(min = 58.dp),
+        )
+        Text(
+            text = line.message,
+            color = TerminalPalette.ink,
+            fontSize = 11.sp,
+            style = TextStyle(fontFamily = TerminalFonts.mono),
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+        )
+    }
+}
+
+internal data class LogLine(val time: String, val message: String)
+
+/**
+ * Parses a parsedEntries line into time + message. The bridge already prefixes
+ * entries with `HH:mm:ss ` in most cases, but fall back to the wall clock
+ * when the prefix is missing (same defensive split as iOS).
+ */
+internal fun parseLogLine(entry: String): LogLine {
+    val spaceIdx = entry.indexOf(' ')
+    if (spaceIdx > 0) {
+        val head = entry.substring(0, spaceIdx)
+        if (head.contains(':')) {
+            return LogLine(time = head, message = entry.substring(spaceIdx + 1))
+        }
+    }
+    return LogLine(time = currentClock(), message = entry)
+}
+
+private fun currentClock(): String {
+    val f = java.text.SimpleDateFormat("HH:mm:ss", java.util.Locale.US)
+    return f.format(java.util.Date())
 }
 
 @Composable
