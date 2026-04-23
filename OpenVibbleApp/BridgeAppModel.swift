@@ -423,10 +423,12 @@ final class BridgeAppModel: ObservableObject {
     }
 
     private func resolvedDisplayName(_ requested: String?) -> String {
-        // Claude Desktop 文档要求以 Claude 开头；这里强制固定成 Claude，
-        // 最大化发现兼容性（避免因扩展名长度或过滤规则导致扫不到）。
+        // OpenVibble Desktop 做大小写无关前缀匹配（"claude"），所以广播用
+        // 全小写 "claude.openvibble" 让 OpenVibble 设备在扫描列表里可被一眼
+        // 辨识。Claude Desktop 官方是大小写敏感的 "Claude" 前缀，要走它需要
+        // 用户把 iPhone 系统名改成 Claude 开头后在后台运行（help sheet 说明）。
         _ = requested
-        return "Claude"
+        return "claude.openvibble"
     }
 
     private var notificationsEnabled: Bool {

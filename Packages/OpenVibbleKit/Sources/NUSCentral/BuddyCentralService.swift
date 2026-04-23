@@ -271,7 +271,11 @@ extension BuddyCentralService: CBCentralManagerDelegate {
         let advertisedName = (advertisementData[CBAdvertisementDataLocalNameKey] as? String)
             ?? peripheral.name
             ?? ""
-        guard advertisedName.hasPrefix(nameFilter) else { return }
+        // Case-insensitive prefix match: iOS peripheral advertises
+        // "claude.openvibble" (lowercase) while users who fall back on the
+        // system bluetooth name usually have it capitalized as "Claude-…".
+        // Matching both keeps discovery robust regardless of foreground state.
+        guard advertisedName.lowercased().hasPrefix(nameFilter.lowercased()) else { return }
         let entry = DiscoveredPeripheral(
             id: peripheral.identifier,
             name: advertisedName,
