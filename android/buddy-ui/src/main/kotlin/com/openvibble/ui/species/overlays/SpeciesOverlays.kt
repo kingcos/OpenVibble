@@ -13,7 +13,14 @@ object SpeciesOverlays {
         "duck" to DuckOverlays.all,
         "goose" to GooseOverlays.all,
         "capybara" to CapybaraOverlays.all,
-        // future: more species ported incrementally per Ralph-loop batch.
+        "turtle" to TurtleOverlays.all,
+        "rabbit" to RabbitOverlays.all,
+        "penguin" to PenguinOverlays.all,
+        "mushroom" to MushroomOverlays.all,
+        "cactus" to CactusOverlays.all,
+        "owl" to OwlOverlays.all,
+        "ghost" to GhostOverlays.all,
+        // remaining: snail, robot, axolotl, blob, chonk, dragon, octopus.
     )
 
     fun overlays(name: String, state: PersonaState): List<Overlay> =
