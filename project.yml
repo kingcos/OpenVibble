@@ -141,12 +141,12 @@ targets:
     info:
       path: OpenVibbleDesktop/Info.plist
       properties:
-        CFBundleDisplayName: OpenVibbleDesktop
+        CFBundleDisplayName: OpenVibble Desktop
         CFBundleShortVersionString: "0.1.0"
         LSUIElement: YES
         LSApplicationCategoryType: public.app-category.developer-tools
         LSMinimumSystemVersion: "14.0"
-        NSBluetoothAlwaysUsageDescription: OpenVibbleDesktop uses Bluetooth to connect to your OpenVibble device.
+        NSBluetoothAlwaysUsageDescription: OpenVibble Desktop uses Bluetooth to connect to your OpenVibble device.
         ITSAppUsesNonExemptEncryption: NO
 schemes:
   OpenVibbleApp:
