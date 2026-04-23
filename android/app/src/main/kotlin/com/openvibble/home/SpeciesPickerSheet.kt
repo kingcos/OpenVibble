@@ -219,7 +219,11 @@ private fun PreviewSpeciesView(
         is PersonaSpeciesId.Builtin -> {
             val persona = builtin.firstOrNull { it.name == selection.name }
             if (persona != null) {
-                GifPreviewPlaceholder(persona.manifest.name)
+                GifBuddyView(
+                    persona = persona,
+                    state = PersonaState.IDLE,
+                    modifier = Modifier.scale(0.72f),
+                )
             } else {
                 AsciiBuddyView(state = PersonaState.IDLE, modifier = Modifier.scale(0.72f))
             }
@@ -227,39 +231,15 @@ private fun PreviewSpeciesView(
         is PersonaSpeciesId.Installed -> {
             val persona = installed.firstOrNull { it.name == selection.name }
             if (persona != null) {
-                GifPreviewPlaceholder(persona.manifest.name)
+                GifBuddyView(
+                    persona = persona,
+                    state = PersonaState.IDLE,
+                    modifier = Modifier.scale(0.72f),
+                )
             } else {
                 AsciiBuddyView(state = PersonaState.IDLE, modifier = Modifier.scale(0.72f))
             }
         }
-    }
-}
-
-@Composable
-private fun GifPreviewPlaceholder(name: String) {
-    Column(
-        verticalArrangement = Arrangement.spacedBy(4.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Text(
-            text = "[GIF]",
-            color = TerminalPalette.accentSoft,
-            fontSize = 14.sp,
-            fontWeight = FontWeight.Bold,
-            style = TextStyle(fontFamily = TerminalFonts.mono, letterSpacing = 1.sp),
-        )
-        Text(
-            text = name,
-            color = TerminalPalette.ink,
-            fontSize = 12.sp,
-            style = TextStyle(fontFamily = TerminalFonts.mono),
-        )
-        Text(
-            text = "GIF 预览尚未接入",
-            color = TerminalPalette.inkDim,
-            fontSize = 10.sp,
-            style = TextStyle(fontFamily = TerminalFonts.mono),
-        )
     }
 }
 

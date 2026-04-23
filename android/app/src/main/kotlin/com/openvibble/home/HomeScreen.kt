@@ -211,6 +211,7 @@ fun HomeScreen(
                 PetArea(
                     mode = mode,
                     personaState = personaState,
+                    charactersRoot = model.charactersRoot,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(petAreaDp),
@@ -584,21 +585,40 @@ private fun statusColor(connection: NusConnectionState, power: BluetoothPowerSta
 private fun PetArea(
     mode: DisplayMode,
     personaState: PersonaState,
+    charactersRoot: java.io.File,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
     val selection = remember { SharedPreferencesPersonaSelectionStore(context).load() }
     val speciesIdx = remember(selection) { resolveSpeciesIdx(selection) }
+    // iOS ports render installed/builtin personas as GIFs; ASCII fallbacks
+    // only kick in for AsciiCat/AsciiSpecies selections or when the manifest
+    // can't be found on disk.
+    val installed = remember(selection, charactersRoot) {
+        resolveInstalledPersona(selection, charactersRoot)
+    }
     Box(modifier = modifier.background(Color.Black)) {
-        AsciiBuddyView(
-            state = personaState,
-            speciesIdx = speciesIdx,
-            modifier = Modifier
-                .align(Alignment.Center)
-                .widthIn(max = 200.dp)
-                .heightIn(max = 200.dp)
-                .padding(horizontal = 24.dp),
-        )
+        if (installed != null) {
+            GifBuddyView(
+                persona = installed,
+                state = personaState,
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .widthIn(max = 200.dp)
+                    .heightIn(max = 200.dp)
+                    .padding(horizontal = 24.dp),
+            )
+        } else {
+            AsciiBuddyView(
+                state = personaState,
+                speciesIdx = speciesIdx,
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .widthIn(max = 200.dp)
+                    .heightIn(max = 200.dp)
+                    .padding(horizontal = 24.dp),
+            )
+        }
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -629,6 +649,23 @@ private fun resolveSpeciesIdx(selection: PersonaSpeciesId): Int = when (selectio
     is PersonaSpeciesId.AsciiSpecies -> selection.idx
     is PersonaSpeciesId.Builtin -> SpeciesRegistry.defaultIdx()
     is PersonaSpeciesId.Installed -> SpeciesRegistry.defaultIdx()
+}
+
+/**
+ * Resolves the current persona selection to an on-disk [InstalledPersona] or
+ * null if the selection isn't a GIF-backed pack (ASCII track) or the pack's
+ * manifest can't be located in [charactersRoot].
+ */
+private fun resolveInstalledPersona(
+    selection: PersonaSpeciesId,
+    charactersRoot: java.io.File,
+): com.openvibble.persona.InstalledPersona? {
+    val name = when (selection) {
+        is PersonaSpeciesId.Builtin -> selection.name
+        is PersonaSpeciesId.Installed -> selection.name
+        else -> return null
+    }
+    return com.openvibble.persona.PersonaCatalog(charactersRoot).load(name)
 }
 
 // MARK: - Mode bodies ------------------------------------------------------
