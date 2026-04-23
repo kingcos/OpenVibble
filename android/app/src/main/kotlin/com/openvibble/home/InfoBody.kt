@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.openvibble.bridge.BridgeAppModel
 import com.openvibble.nusperipheral.NusConnectionState
+import com.openvibble.persona.PersonaController
 import com.openvibble.ui.terminal.TerminalFonts
 import com.openvibble.ui.terminal.TerminalPalette
 import kotlinx.coroutines.delay
@@ -53,6 +54,7 @@ internal val INFO_PAGES: List<String> = listOf(
 @Composable
 internal fun InfoBody(
     model: BridgeAppModel,
+    persona: PersonaController,
     page: Int,
     appStartMs: Long,
     modifier: Modifier = Modifier,
@@ -93,7 +95,7 @@ internal fun InfoBody(
         )
 
         when (title) {
-            "CLAUDE" -> ClaudePageStub()
+            "CLAUDE" -> ClaudeSessionsView(model = model, persona = persona)
             else -> TextRows(rows = rowsFor(title, model = model, appStartMs = appStartMs))
         }
     }
@@ -136,18 +138,6 @@ private fun TextRows(rows: List<InfoRow>) {
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun ClaudePageStub() {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text(
-            text = "CLAUDE sessions — coming next iteration",
-            color = TerminalPalette.inkDim,
-            fontSize = 12.sp,
-            style = TextStyle(fontFamily = TerminalFonts.mono),
-        )
     }
 }
 

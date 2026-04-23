@@ -236,6 +236,7 @@ fun HomeScreen(
                         )
                         DisplayMode.INFO -> InfoBody(
                             model = model,
+                            persona = persona,
                             page = infoPage,
                             appStartMs = appStartMs,
                         )
