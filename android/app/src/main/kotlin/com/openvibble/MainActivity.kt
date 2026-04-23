@@ -105,12 +105,30 @@ private fun RootFlow(
 
     var hasOnboarded by remember { mutableStateOf(settings.hasOnboarded) }
     var showSettings by remember { mutableStateOf(false) }
+    var showSpeciesPicker by remember { mutableStateOf(false) }
+    val personaStore = remember { com.openvibble.settings.SharedPreferencesPersonaSelectionStore(context) }
 
     if (!hasOnboarded) {
         OnboardingScreen(onFinish = {
             settings.hasOnboarded = true
             hasOnboarded = true
         })
+        return
+    }
+
+    if (showSpeciesPicker) {
+        val builtin = emptyList<com.openvibble.persona.InstalledPersona>()
+        val installed = remember(model) {
+            com.openvibble.persona.PersonaCatalog(model.charactersRoot).listInstalled()
+        }
+        com.openvibble.home.SpeciesPickerSheet(
+            selection = personaStore.load(),
+            store = personaStore,
+            builtin = builtin,
+            installed = installed,
+            onSelect = { /* persisted by the sheet itself */ },
+            onClose = { showSpeciesPicker = false },
+        )
         return
     }
 
@@ -125,7 +143,10 @@ private fun RootFlow(
                 hasOnboarded = false
                 showSettings = false
             },
-            onPickSpecies = { /* species picker arrives in Phase 4d-4 */ },
+            onPickSpecies = {
+                showSettings = false
+                showSpeciesPicker = true
+            },
         )
         return
     }
