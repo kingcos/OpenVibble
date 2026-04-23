@@ -14,6 +14,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.openvibble.nusperipheral.BuddyPeripheralService
 import com.openvibble.nusperipheral.NusConnectionState
+import com.openvibble.persona.AssetManagerBuiltinSource
+import com.openvibble.persona.BuiltinAssetsBootstrapper
 import com.openvibble.persona.PersonaSelectionStore
 import com.openvibble.persona.PersonaSpeciesCatalog
 import com.openvibble.persona.PersonaSpeciesId
@@ -56,6 +58,7 @@ class BridgeAppModel(
     private val peripheral: BuddyPeripheralService,
     val statsStore: PersonaStatsStore,
     private val settings: AppSettings,
+    val builtinCharactersRoot: File,
 ) : ViewModel() {
 
     // Re-expose runtime/peripheral state flows directly — UI just binds to these.
@@ -324,6 +327,11 @@ class BridgeAppModel(
                 "Unsupported ViewModel: $modelClass"
             }
             val charactersRoot = File(applicationContext.filesDir, "characters").apply { mkdirs() }
+            val builtinCharactersRoot = File(applicationContext.filesDir, "builtin-characters").apply { mkdirs() }
+            BuiltinAssetsBootstrapper.install(
+                source = AssetManagerBuiltinSource(applicationContext.assets),
+                destRoot = builtinCharactersRoot,
+            )
             val transferStore = CharacterTransferStore(rootDirectory = charactersRoot)
             val personaSelection = SharedPreferencesPersonaSelectionStore(applicationContext)
             val runtime = BridgeRuntime(
@@ -340,6 +348,7 @@ class BridgeAppModel(
                 peripheral = peripheral,
                 statsStore = statsStore,
                 settings = settings,
+                builtinCharactersRoot = builtinCharactersRoot,
             ) as T
         }
     }

@@ -181,7 +181,9 @@ private fun RootFlow(
     }
 
     if (showSpeciesPicker) {
-        val builtin = emptyList<com.openvibble.persona.InstalledPersona>()
+        val builtin = remember(model) {
+            com.openvibble.persona.PersonaCatalog(model.builtinCharactersRoot).listInstalled()
+        }
         val installed = remember(model) {
             com.openvibble.persona.PersonaCatalog(model.charactersRoot).listInstalled()
         }

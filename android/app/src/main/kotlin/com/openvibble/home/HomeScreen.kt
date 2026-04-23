@@ -212,6 +212,7 @@ fun HomeScreen(
                     mode = mode,
                     personaState = personaState,
                     charactersRoot = model.charactersRoot,
+                    builtinCharactersRoot = model.builtinCharactersRoot,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(petAreaDp),
@@ -586,6 +587,7 @@ private fun PetArea(
     mode: DisplayMode,
     personaState: PersonaState,
     charactersRoot: java.io.File,
+    builtinCharactersRoot: java.io.File,
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
@@ -594,8 +596,8 @@ private fun PetArea(
     // iOS ports render installed/builtin personas as GIFs; ASCII fallbacks
     // only kick in for AsciiCat/AsciiSpecies selections or when the manifest
     // can't be found on disk.
-    val installed = remember(selection, charactersRoot) {
-        resolveInstalledPersona(selection, charactersRoot)
+    val installed = remember(selection, charactersRoot, builtinCharactersRoot) {
+        resolveInstalledPersona(selection, charactersRoot, builtinCharactersRoot)
     }
     Box(modifier = modifier.background(Color.Black)) {
         if (installed != null) {
@@ -654,18 +656,21 @@ private fun resolveSpeciesIdx(selection: PersonaSpeciesId): Int = when (selectio
 /**
  * Resolves the current persona selection to an on-disk [InstalledPersona] or
  * null if the selection isn't a GIF-backed pack (ASCII track) or the pack's
- * manifest can't be located in [charactersRoot].
+ * manifest can't be located. `Builtin` looks in [builtinCharactersRoot] (app
+ * assets bootstrapped on first launch); `Installed` looks in [charactersRoot]
+ * (user-transferred packs).
  */
 private fun resolveInstalledPersona(
     selection: PersonaSpeciesId,
     charactersRoot: java.io.File,
+    builtinCharactersRoot: java.io.File,
 ): com.openvibble.persona.InstalledPersona? {
-    val name = when (selection) {
-        is PersonaSpeciesId.Builtin -> selection.name
-        is PersonaSpeciesId.Installed -> selection.name
+    val (name, root) = when (selection) {
+        is PersonaSpeciesId.Builtin -> selection.name to builtinCharactersRoot
+        is PersonaSpeciesId.Installed -> selection.name to charactersRoot
         else -> return null
     }
-    return com.openvibble.persona.PersonaCatalog(charactersRoot).load(name)
+    return com.openvibble.persona.PersonaCatalog(root).load(name)
 }
 
 // MARK: - Mode bodies ------------------------------------------------------
