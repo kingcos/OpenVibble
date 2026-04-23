@@ -29,9 +29,29 @@ class AppSettings(private val prefs: SharedPreferences) {
         get() = prefs.getBoolean(KEY_NOTIFICATIONS_ENABLED, true)
         set(value) { prefs.edit().putBoolean(KEY_NOTIFICATIONS_ENABLED, value).apply() }
 
+    var foregroundNotificationsEnabled: Boolean
+        get() = prefs.getBoolean(KEY_FOREGROUND_NOTIFICATIONS_ENABLED, true)
+        set(value) { prefs.edit().putBoolean(KEY_FOREGROUND_NOTIFICATIONS_ENABLED, value).apply() }
+
+    var showPowerButton: Boolean
+        get() = prefs.getBoolean(KEY_SHOW_POWER_BUTTON, true)
+        set(value) { prefs.edit().putBoolean(KEY_SHOW_POWER_BUTTON, value).apply() }
+
+    /** Clear all keys this facade owns; used by the settings "factory reset". */
+    fun clearAll() {
+        prefs.edit()
+            .remove(KEY_HAS_ONBOARDED)
+            .remove(KEY_NOTIFICATIONS_ENABLED)
+            .remove(KEY_FOREGROUND_NOTIFICATIONS_ENABLED)
+            .remove(KEY_SHOW_POWER_BUTTON)
+            .apply()
+    }
+
     companion object {
         const val PREFS_NAME: String = SharedPreferencesPersonaSelectionStore.PREFS_NAME
         const val KEY_HAS_ONBOARDED: String = "buddy.hasOnboarded"
         const val KEY_NOTIFICATIONS_ENABLED: String = "buddy.notificationsEnabled"
+        const val KEY_FOREGROUND_NOTIFICATIONS_ENABLED: String = "buddy.foregroundNotificationsEnabled"
+        const val KEY_SHOW_POWER_BUTTON: String = "home.showPowerButton"
     }
 }

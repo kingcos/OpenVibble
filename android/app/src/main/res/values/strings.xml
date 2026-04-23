@@ -27,4 +27,45 @@
     <string name="onboarding_help_power">按电源键翻转睡眠</string>
     <string name="onboarding_help_log">按日志键查看最近事件</string>
     <string name="onboarding_help_gear">按齿轮键进入设置</string>
+
+    <!-- Settings -->
+    <string name="settings_title">SETTINGS</string>
+    <string name="common_done">完成</string>
+    <string name="common_cancel">取消</string>
+    <string name="common_ok">好的</string>
+    <string name="common_notice">提示</string>
+    <string name="settings_section_pet">pet</string>
+    <string name="settings_section_interface">interface</string>
+    <string name="settings_section_alerts">alerts</string>
+    <string name="settings_section_about">about</string>
+    <string name="settings_section_guide">guide</string>
+    <string name="settings_section_danger">danger</string>
+    <string name="settings_species">当前宠物</string>
+    <string name="settings_interface_show_power_button">显示电源按钮</string>
+    <string name="settings_interface_show_power_button_hint">关闭后，主页右上角不再显示电源快捷按钮。</string>
+    <string name="settings_notifications_label">通知</string>
+    <string name="settings_notifications_foreground_label">App 位于前台时也提醒</string>
+    <string name="settings_notifications_foreground_hint">关闭后 App 处于前台时不会弹出通知，仅后台会触发。</string>
+    <string name="settings_notifications_request">申请通知权限</string>
+    <string name="settings_notifications_status_enabled">已允许</string>
+    <string name="settings_notifications_status_denied">已拒绝</string>
+    <string name="settings_notifications_status_not_determined">未决定</string>
+    <string name="settings_help_reconnect_hint">若蓝牙无法连接，建议重启蓝牙或检查 BLE 权限。</string>
+    <string name="settings_guide_show">重新查看引导页</string>
+    <string name="settings_about_app">App 名称</string>
+    <string name="settings_about_version">版本</string>
+    <string name="settings_about_author">作者</string>
+    <string name="settings_about_language">当前语言</string>
+    <string name="settings_github">前往 GitHub 仓库</string>
+    <string name="pet_reset">重置 Claude 宠物数据</string>
+    <string name="pet_reset_confirm">重置宠物？</string>
+    <string name="pet_reset_message">此操作会清空所有 Claude 宠物的统计数据和设置，App 将回到首次使用状态。</string>
+    <string name="pet_reset_do_it">重置</string>
+    <string name="pet_stats_reset_ok">已重置。</string>
+    <string name="pet_delete">删除已安装的宠物角色</string>
+    <string name="pet_delete_confirm">删除已安装角色？</string>
+    <string name="pet_delete_message">此操作会删除所有通过 BLE 推送安装的 Claude 宠物资源。</string>
+    <string name="pet_delete_do_it">删除</string>
+    <string name="pet_stats_delete_ok">已删除所有角色。</string>
+    <string name="pet_stats_delete_fail">删除失败。</string>
 </resources>
