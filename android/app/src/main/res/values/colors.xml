@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="terminal_black">#FF000000</color>
+    <color name="terminal_pink">#FFC2A6C2</color>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Safe area is centered 72x72 box inside 108x108 viewport. -->
+    <!-- Terminal prompt glyph: ">_" in pink on black, monospace bold. -->
+    <path
+        android:pathData="M40,48 L52,54 L40,60 Z"
+        android:fillColor="#FFC2A6C2"/>
+    <path
+        android:pathData="M54,62 H68 V66 H54 Z"
+        android:fillColor="#FFC2A6C2"/>
+</vector>
