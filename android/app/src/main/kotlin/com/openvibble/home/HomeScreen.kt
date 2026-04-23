@@ -233,10 +233,25 @@ fun HomeScreen(
                         .padding(horizontal = 16.dp)
                         .padding(top = 10.dp)
                         .pointerInput(mode) {
-                            detectHorizontalDragGestures { _, drag ->
-                                if (drag > 40f) swipe(mode, -1, { petPage = wrap(petPage + it, PET_PAGES) }, { infoPage = wrap(infoPage + it, INFO_PAGES.size) })
-                                else if (drag < -40f) swipe(mode, 1, { petPage = wrap(petPage + it, PET_PAGES) }, { infoPage = wrap(infoPage + it, INFO_PAGES.size) })
-                            }
+                            // Accumulate the full drag so we page at most once
+                            // per gesture — iOS semantics, not on each delta.
+                            var accumulatedX = 0f
+                            detectHorizontalDragGestures(
+                                onDragStart = { accumulatedX = 0f },
+                                onDragEnd = {
+                                    if (accumulatedX > SWIPE_THRESHOLD_PX) {
+                                        swipe(mode, -1,
+                                            { petPage = wrap(petPage + it, PET_PAGES) },
+                                            { infoPage = wrap(infoPage + it, INFO_PAGES.size) })
+                                    } else if (accumulatedX < -SWIPE_THRESHOLD_PX) {
+                                        swipe(mode, 1,
+                                            { petPage = wrap(petPage + it, PET_PAGES) },
+                                            { infoPage = wrap(infoPage + it, INFO_PAGES.size) })
+                                    }
+                                    accumulatedX = 0f
+                                },
+                                onDragCancel = { accumulatedX = 0f },
+                            ) { _, drag -> accumulatedX += drag }
                         },
                 ) {
                     when (mode) {
@@ -940,6 +955,13 @@ private fun rememberSpinGlyph(): String {
 
 private val SPIN_GLYPHS = listOf("·", "•", "·", "•")
 private const val SPIN_PERIOD_MS = 450L
+
+/**
+ * Min horizontal drag (raw pixels, not dp) before a swipe counts as a page
+ * flip. iOS uses 30pt; at 3x density that is ~90px, so ~60–90px is a natural
+ * envelope. We land at 80 for a clear intentional-swipe feel.
+ */
+private const val SWIPE_THRESHOLD_PX = 80f
 
 @Composable
 private fun StatusPill(label: String, value: String) {
