@@ -17,6 +17,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -28,6 +29,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import com.openvibble.bridge.BridgeAppModel
 import com.openvibble.home.HomeScreen
+import com.openvibble.motion.MotionSensor
+import com.openvibble.motion.createMotionSensor
 import com.openvibble.nav.NavigationCoordinator
 import com.openvibble.notifications.BuddyNotificationCenter
 import com.openvibble.notifications.BuddyNotificationsBridge
@@ -152,6 +155,15 @@ private fun RootFlow(
 
     LaunchedEffect(Unit) {
         persona.bind(model, model.statsStore)
+    }
+
+    DisposableEffect(persona) {
+        val listener = object : MotionSensor.MotionListener {
+            override fun onShake() { persona.notifyShake() }
+            override fun onFaceDownChanged(faceDown: Boolean) { persona.setFaceDown(faceDown) }
+        }
+        val sensor = createMotionSensor(context, listener)?.also { it.start() }
+        onDispose { sensor?.stop() }
     }
 
     var hasOnboarded by remember { mutableStateOf(settings.hasOnboarded) }
