@@ -66,6 +66,14 @@ final class BridgeAppModel: ObservableObject {
 
     var charactersRootURL: URL { runtime.charactersRootURL }
 
+    /// Per-project grouping of the rolling heartbeat entries, used by the
+    /// INFO > CLAUDE page. Recomputed on every read — SwiftUI diffs the
+    /// resulting list, and the input (`parsedEntries` + `prompt`) already
+    /// triggers view invalidation via `@Published`.
+    var projects: [ProjectSummary] {
+        ProjectSummaryBuilder.build(entries: parsedEntries, hasPrompt: prompt != nil)
+    }
+
     init(statsStore: PersonaStatsStore = PersonaStatsStore()) {
         self.statsStore = statsStore
         runtime.onCharacterInstalled = { [weak self] name in
