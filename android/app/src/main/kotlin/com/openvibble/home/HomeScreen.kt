@@ -845,16 +845,30 @@ private fun currentClock(): String {
 @Composable
 private fun StatusLine(snapshot: com.openvibble.runtime.BridgeSnapshot) {
     val msg = if (snapshot.msg.isBlank()) "waiting for claude" else snapshot.msg
+    val glyph = rememberSpinGlyph()
     Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-        Text(
-            text = msg,
-            color = TerminalPalette.ink,
-            fontSize = 14.sp,
-            fontWeight = FontWeight.Bold,
-            style = TextStyle(fontFamily = TerminalFonts.mono),
-            maxLines = 2,
-            overflow = TextOverflow.Ellipsis,
-        )
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            verticalAlignment = Alignment.Top,
+        ) {
+            Text(
+                text = msg,
+                color = TerminalPalette.ink,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
+                style = TextStyle(fontFamily = TerminalFonts.mono),
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.weight(1f, fill = false),
+            )
+            Text(
+                text = glyph,
+                color = TerminalPalette.accentSoft,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
+                style = TextStyle(fontFamily = TerminalFonts.mono),
+            )
+        }
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             StatusPill(label = "sess", value = snapshot.total.toString())
             StatusPill(label = "run", value = snapshot.running.toString())
@@ -863,6 +877,27 @@ private fun StatusLine(snapshot: com.openvibble.runtime.BridgeSnapshot) {
         }
     }
 }
+
+/**
+ * Mirrors iOS's `spinTimer` on HomeScreen.swift:855 — a 450ms cycle through
+ * `· • · •` that sits next to the status message so the user can tell the app
+ * is alive even when nothing's arriving from Claude. Exposed as its own
+ * composable so recomposition is scoped to the glyph cell.
+ */
+@Composable
+private fun rememberSpinGlyph(): String {
+    var phase by remember { mutableIntStateOf(0) }
+    LaunchedEffect(Unit) {
+        while (true) {
+            kotlinx.coroutines.delay(SPIN_PERIOD_MS)
+            phase = (phase + 1) % SPIN_GLYPHS.size
+        }
+    }
+    return SPIN_GLYPHS[phase]
+}
+
+private val SPIN_GLYPHS = listOf("·", "•", "·", "•")
+private const val SPIN_PERIOD_MS = 450L
 
 @Composable
 private fun StatusPill(label: String, value: String) {
