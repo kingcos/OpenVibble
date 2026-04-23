@@ -19,6 +19,11 @@ struct MainView: View {
             TopBar(showScanSheet: $showScanSheet)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 12)
+            if let detail = state.lastErrorDetail {
+                ErrorBanner(detail: detail) { state.clearLastError() }
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 8)
+            }
             Divider()
             TabView(selection: $selection) {
                 HooksTab()
@@ -94,5 +99,69 @@ private struct TopBar: View {
         case .error, .poweredOff, .unauthorized, .unsupported: return .red
         default: return .gray
         }
+    }
+}
+
+private struct ErrorBanner: View {
+    let detail: String
+    let onDismiss: () -> Void
+    @State private var expanded = false
+    @ObservedObject private var l10n = LocalizationManager.shared
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(spacing: 8) {
+                Image(systemName: "exclamationmark.triangle.fill")
+                    .foregroundStyle(.orange)
+                LText("desktop.error.banner.title")
+                    .font(.callout.weight(.medium))
+                Spacer()
+                Button(action: { expanded.toggle() }) {
+                    LText(expanded ? "desktop.error.banner.hide" : "desktop.error.banner.show")
+                }
+                .buttonStyle(.borderless)
+                Button(action: copy) { LText("desktop.error.banner.copy") }
+                    .buttonStyle(.borderless)
+                Button(action: onDismiss) {
+                    Image(systemName: "xmark.circle.fill")
+                        .foregroundStyle(.secondary)
+                }
+                .buttonStyle(.borderless)
+            }
+            Text(headline)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+                .lineLimit(1)
+                .truncationMode(.tail)
+            if expanded {
+                ScrollView {
+                    Text(detail)
+                        .font(.system(.caption, design: .monospaced))
+                        .textSelection(.enabled)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .frame(maxHeight: 140)
+                .padding(8)
+                .background(Color.secondary.opacity(0.08))
+                .clipShape(RoundedRectangle(cornerRadius: 6))
+            }
+        }
+        .padding(10)
+        .background(Color.orange.opacity(0.08))
+        .overlay(
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(Color.orange.opacity(0.35), lineWidth: 1)
+        )
+        .clipShape(RoundedRectangle(cornerRadius: 8))
+    }
+
+    private var headline: String {
+        detail.split(separator: "\n").first.map(String.init) ?? detail
+    }
+
+    private func copy() {
+        let pb = NSPasteboard.general
+        pb.clearContents()
+        pb.setString(detail, forType: .string)
     }
 }

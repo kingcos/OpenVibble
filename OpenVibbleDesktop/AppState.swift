@@ -33,6 +33,7 @@ final class AppState: ObservableObject {
     @Published var discovered: [DiscoveredPeripheral] = []
     @Published var diagnostics: [String] = []
     @Published var connectedName: String?
+    @Published var lastErrorDetail: String?
 
     @Published var heartbeat: HeartbeatSnapshot?
     @Published var lastAck: BridgeAck?
@@ -134,6 +135,9 @@ final class AppState: ObservableObject {
         central.$connectedPeripheralName
             .receive(on: DispatchQueue.main)
             .assign(to: &$connectedName)
+        central.$lastErrorDetail
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$lastErrorDetail)
 
         central.onMessage = { [weak self] message in
             Task { @MainActor in
@@ -174,6 +178,10 @@ final class AppState: ObservableObject {
     func stopScan() {
         central.stopScan()
         appendLog("[scan] stopped")
+    }
+
+    func clearLastError() {
+        central.clearLastError()
     }
 
     func connect(_ peripheral: DiscoveredPeripheral) {

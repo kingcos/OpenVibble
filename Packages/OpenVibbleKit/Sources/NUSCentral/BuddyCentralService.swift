@@ -16,6 +16,15 @@ public final class BuddyCentralService: NSObject, ObservableObject {
     @Published public private(set) var connectedPeripheralName: String?
     @Published public private(set) var connectedPeripheralID: UUID?
 
+    /// Multi-line, copy-friendly expansion of the last connect/disconnect
+    /// error — includes NSError domain/code, CBError code name (e.g.
+    /// `peerRemovedPairingInformation`), localizedFailureReason and
+    /// localizedRecoverySuggestion when the system provides them. Cleared
+    /// when a new connect starts or succeeds. The compact
+    /// `connectionState.error` only carries `localizedDescription`, which is
+    /// often too terse to diagnose iOS 18 bonding issues.
+    @Published public private(set) var lastErrorDetail: String?
+
     /// Called on the delegate queue for every decoded inbound line.
     public var onMessage: ((CentralInboundMessage) -> Void)?
 
@@ -71,6 +80,7 @@ public final class BuddyCentralService: NSObject, ObservableObject {
             log("CONNECT blocked: no manager")
             return
         }
+        lastErrorDetail = nil
         let candidate: CBPeripheral?
         if let existing = peripheral, existing.identifier == id {
             candidate = existing
@@ -88,6 +98,54 @@ public final class BuddyCentralService: NSObject, ObservableObject {
         connectionState = .connecting
         manager.connect(target, options: nil)
         log("CONNECT requested id=\(id)")
+    }
+
+    public func clearLastError() {
+        lastErrorDetail = nil
+    }
+
+    private static func cbErrorName(_ code: CBError.Code) -> String {
+        switch code {
+        case .unknown: return "unknown"
+        case .invalidParameters: return "invalidParameters"
+        case .invalidHandle: return "invalidHandle"
+        case .notConnected: return "notConnected"
+        case .outOfSpace: return "outOfSpace"
+        case .operationCancelled: return "operationCancelled"
+        case .connectionTimeout: return "connectionTimeout"
+        case .peripheralDisconnected: return "peripheralDisconnected"
+        case .uuidNotAllowed: return "uuidNotAllowed"
+        case .alreadyAdvertising: return "alreadyAdvertising"
+        case .connectionFailed: return "connectionFailed"
+        case .connectionLimitReached: return "connectionLimitReached"
+        case .unkownDevice: return "unknownDevice"
+        case .operationNotSupported: return "operationNotSupported"
+        case .peerRemovedPairingInformation: return "peerRemovedPairingInformation"
+        case .encryptionTimedOut: return "encryptionTimedOut"
+        case .tooManyLEPairedDevices: return "tooManyLEPairedDevices"
+        @unknown default: return "case#\(code.rawValue)"
+        }
+    }
+
+    /// Renders an NSError into a human-readable multi-line description,
+    /// surfacing details CoreBluetooth hides behind `localizedDescription`.
+    private func describeError(_ error: Error) -> String {
+        let ns = error as NSError
+        var lines: [String] = []
+        lines.append("domain=\(ns.domain) code=\(ns.code)")
+        if let cb = error as? CBError {
+            lines.append("CBError=\(BuddyCentralService.cbErrorName(cb.code)) (raw=\(cb.code.rawValue))")
+        } else if let att = error as? CBATTError {
+            lines.append("CBATTError=\(att.code.rawValue)")
+        }
+        lines.append("description=\(ns.localizedDescription)")
+        if let reason = ns.localizedFailureReason {
+            lines.append("reason=\(reason)")
+        }
+        if let sug = ns.localizedRecoverySuggestion {
+            lines.append("suggestion=\(sug)")
+        }
+        return lines.joined(separator: "\n")
     }
 
     public func disconnect() {
@@ -230,6 +288,7 @@ extension BuddyCentralService: CBCentralManagerDelegate {
 
     public func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
         log("CONNECTED id=\(peripheral.identifier)")
+        lastErrorDetail = nil
         connectedPeripheralID = peripheral.identifier
         connectedPeripheralName = peripheral.name
         peripheral.discoverServices([NUSCentralUUIDs.service])
@@ -240,8 +299,15 @@ extension BuddyCentralService: CBCentralManagerDelegate {
         didFailToConnect peripheral: CBPeripheral,
         error: Error?
     ) {
-        log("CONNECT failed error=\(error?.localizedDescription ?? "nil")")
-        connectionState = .error(error?.localizedDescription ?? "connect failed")
+        if let error {
+            let detail = describeError(error)
+            lastErrorDetail = detail
+            log("CONNECT failed \(detail.replacingOccurrences(of: "\n", with: " | "))")
+            connectionState = .error(error.localizedDescription)
+        } else {
+            log("CONNECT failed error=nil")
+            connectionState = .error("connect failed")
+        }
         resetPeripheralState()
     }
 
@@ -250,7 +316,13 @@ extension BuddyCentralService: CBCentralManagerDelegate {
         didDisconnectPeripheral peripheral: CBPeripheral,
         error: Error?
     ) {
-        log("DISCONNECTED error=\(error?.localizedDescription ?? "nil")")
+        if let error {
+            let detail = describeError(error)
+            lastErrorDetail = detail
+            log("DISCONNECTED \(detail.replacingOccurrences(of: "\n", with: " | "))")
+        } else {
+            log("DISCONNECTED error=nil")
+        }
         resetPeripheralState()
         connectionState = .idle
     }
