@@ -6,6 +6,11 @@ package com.openvibble.home
 
 import android.content.Intent
 import android.provider.Settings
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
@@ -162,6 +167,7 @@ fun HomeScreen(
         ?: waitedSeconds(promptArrivedAtMs, promptTickNow)
 
     val deviceMenu = remember { DeviceMenuState(context) }
+    var showAdvertisingHelp by remember { mutableStateOf(false) }
 
     Box(modifier = Modifier.fillMaxSize().background(Color.Black)) {
         ScanlineOverlay()
@@ -182,6 +188,7 @@ fun HomeScreen(
                             model.start()
                         }
                     },
+                    onShowAdvertisingHelp = { showAdvertisingHelp = true },
                     onOpenSystemBluetoothSettings = {
                         context.startActivity(
                             Intent(Settings.ACTION_BLUETOOTH_SETTINGS)
@@ -316,6 +323,10 @@ fun HomeScreen(
         if (deviceMenu.screenOff) {
             ScreenOffMask(onWake = { deviceMenu.wakeScreen() })
         }
+
+        if (showAdvertisingHelp) {
+            AdvertisingHelpSheet(onDismiss = { showAdvertisingHelp = false })
+        }
     }
 }
 
@@ -376,6 +387,7 @@ private fun TopBar(
     onOpenSettings: () -> Unit,
     onStartAdvertising: () -> Unit,
     onRestartAdvertising: () -> Unit,
+    onShowAdvertisingHelp: () -> Unit,
     onOpenSystemBluetoothSettings: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -409,7 +421,10 @@ private fun TopBar(
         }
 
         if (connectionState is NusConnectionState.Advertising) {
-            AdvertisingActionBar(onRestartAdvertising = onRestartAdvertising)
+            AdvertisingActionBar(
+                onRestartAdvertising = onRestartAdvertising,
+                onShowHelp = onShowAdvertisingHelp,
+            )
         }
 
         Text(
@@ -464,42 +479,74 @@ private fun StatusIndicator(
 }
 
 @Composable
-private fun AdvertisingActionBar(onRestartAdvertising: () -> Unit) {
+private fun AdvertisingActionBar(
+    onRestartAdvertising: () -> Unit,
+    onShowHelp: () -> Unit,
+) {
     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-        Row(
-            modifier = Modifier
-                .background(TerminalPalette.lcdPanel.copy(alpha = 0.7f), RoundedCornerShape(20.dp))
-                .border(1.dp, TerminalPalette.accentSoft.copy(alpha = 0.55f), RoundedCornerShape(20.dp))
-                .clickable(onClick = onRestartAdvertising)
-                .padding(horizontal = 10.dp, vertical = 7.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
-        ) {
-            Text(
-                text = "↻",
-                color = TerminalPalette.ink,
-                fontSize = 11.sp,
-                fontWeight = FontWeight.Bold,
-            )
-            Text(
-                text = "RESTART",
-                color = TerminalPalette.ink,
-                fontSize = 11.sp,
-                fontWeight = FontWeight.SemiBold,
-                style = TextStyle(fontFamily = TerminalFonts.mono),
-            )
-        }
+        AdvertisingActionChip(
+            icon = "↻",
+            text = "RESTART",
+            stroke = TerminalPalette.accentSoft.copy(alpha = 0.55f),
+            onClick = onRestartAdvertising,
+        )
+        AdvertisingActionChip(
+            icon = "?",
+            text = "HELP",
+            stroke = TerminalPalette.inkDim.copy(alpha = 0.55f),
+            onClick = onShowHelp,
+        )
+    }
+}
+
+@Composable
+private fun AdvertisingActionChip(
+    icon: String,
+    text: String,
+    stroke: Color,
+    onClick: () -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .background(TerminalPalette.lcdPanel.copy(alpha = 0.7f), RoundedCornerShape(20.dp))
+            .border(1.dp, stroke, RoundedCornerShape(20.dp))
+            .clickable(onClick = onClick)
+            .padding(horizontal = 10.dp, vertical = 7.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(6.dp),
+    ) {
+        Text(
+            text = icon,
+            color = TerminalPalette.ink,
+            fontSize = 11.sp,
+            fontWeight = FontWeight.Bold,
+        )
+        Text(
+            text = text,
+            color = TerminalPalette.ink,
+            fontSize = 11.sp,
+            fontWeight = FontWeight.SemiBold,
+            style = TextStyle(fontFamily = TerminalFonts.mono),
+        )
     }
 }
 
 @Composable
 private fun BreathingLed(color: Color) {
-    // Static glow for the skeleton — a proper breathing animation will land
-    // with the rest of the HUD polish pass.
+    val transition = rememberInfiniteTransition(label = "breathing-led")
+    val alpha by transition.animateFloat(
+        initialValue = 0.55f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 1100),
+            repeatMode = RepeatMode.Reverse,
+        ),
+        label = "breathing-led-alpha",
+    )
     Box(
         modifier = Modifier
             .size(10.dp)
-            .background(color, CircleShape),
+            .background(color.copy(alpha = alpha), CircleShape),
     )
 }
 
