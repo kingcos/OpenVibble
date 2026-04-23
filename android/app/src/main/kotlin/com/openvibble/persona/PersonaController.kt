@@ -6,10 +6,12 @@ package com.openvibble.persona
 
 import com.openvibble.bridge.BridgeAppModel
 import com.openvibble.nusperipheral.NusConnectionState
+import com.openvibble.runtime.BridgeSnapshot
 import com.openvibble.stats.PersonaStatsStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -50,17 +52,35 @@ class PersonaController(
     private var faceDownSinceMs: Long? = null
 
     fun bind(model: BridgeAppModel, stats: PersonaStatsStore) {
+        bind(
+            snapshot = model.snapshot,
+            connectionState = model.connectionState,
+            recentLevelUp = model.recentLevelUp,
+            lastQuickApprovalAt = model.lastQuickApprovalAt,
+            lastCompletedAt = model.lastCompletedAt,
+            stats = stats,
+        )
+    }
+
+    fun bind(
+        snapshot: Flow<BridgeSnapshot>,
+        connectionState: Flow<NusConnectionState>,
+        recentLevelUp: Flow<Boolean>,
+        lastQuickApprovalAt: Flow<Long?>,
+        lastCompletedAt: Flow<Long?>,
+        stats: PersonaStatsStore,
+    ) {
         unbind()
         this.statsStore = stats
 
         jobs += scope.launch {
             combine(
-                model.snapshot,
-                model.connectionState,
-                model.recentLevelUp,
-                model.lastQuickApprovalAt,
-            ) { snapshot, connection, leveled, quickApproval ->
-                Inputs(snapshot.running, snapshot.waiting, connection, leveled, quickApproval)
+                snapshot,
+                connectionState,
+                recentLevelUp,
+                lastQuickApprovalAt,
+            ) { snap, connection, leveled, quickApproval ->
+                Inputs(snap.running, snap.waiting, connection, leveled, quickApproval)
             }.collect { inputs ->
                 connected = inputs.connection is NusConnectionState.Connected
                 running = inputs.running
@@ -72,7 +92,7 @@ class PersonaController(
         }
 
         jobs += scope.launch {
-            model.lastCompletedAt.filterNotNull().collect { at ->
+            lastCompletedAt.filterNotNull().collect { at ->
                 celebrateUntilMs = at + CELEBRATE_DURATION_MS
                 recompute()
             }
