@@ -17,6 +17,37 @@ import com.openvibble.settings.SharedPreferencesPersonaSelectionStore
 import kotlin.reflect.KProperty
 
 /**
+ * Minimal key/value surface the menu state needs — lets unit tests swap in
+ * an in-memory fake without implementing the full SharedPreferences API.
+ */
+interface DeviceMenuPrefs {
+    fun getInt(key: String, default: Int): Int
+    fun putInt(key: String, value: Int)
+    fun getBoolean(key: String, default: Boolean): Boolean
+    fun putBoolean(key: String, value: Boolean)
+}
+
+class SharedPreferencesDeviceMenuPrefs(private val prefs: SharedPreferences) : DeviceMenuPrefs {
+    override fun getInt(key: String, default: Int): Int = prefs.getInt(key, default)
+    override fun putInt(key: String, value: Int) {
+        prefs.edit().putInt(key, value).apply()
+    }
+    override fun getBoolean(key: String, default: Boolean): Boolean = prefs.getBoolean(key, default)
+    override fun putBoolean(key: String, value: Boolean) {
+        prefs.edit().putBoolean(key, value).apply()
+    }
+}
+
+class InMemoryDeviceMenuPrefs : DeviceMenuPrefs {
+    private val ints = mutableMapOf<String, Int>()
+    private val bools = mutableMapOf<String, Boolean>()
+    override fun getInt(key: String, default: Int): Int = ints[key] ?: default
+    override fun putInt(key: String, value: Int) { ints[key] = value }
+    override fun getBoolean(key: String, default: Boolean): Boolean = bools[key] ?: default
+    override fun putBoolean(key: String, value: Boolean) { bools[key] = value }
+}
+
+/**
  * Android parity with iOS `DeviceMenuState`. Holds the firmware-mimicking
  * in-device menu tree (MENU → SETTINGS → RESET) plus the persisted local
  * settings (brightness / sound / bt / wifi / led / hud / clockRot).
@@ -25,10 +56,12 @@ import kotlin.reflect.KProperty
  * recomposes automatically. Persisted values write through to
  * SharedPreferences under the same keys iOS uses in @AppStorage.
  */
-class DeviceMenuState(private val prefs: SharedPreferences) {
+class DeviceMenuState(private val prefs: DeviceMenuPrefs) {
 
     constructor(context: Context) : this(
-        context.applicationContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE),
+        SharedPreferencesDeviceMenuPrefs(
+            context.applicationContext.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE),
+        ),
     )
 
     // Navigation.
@@ -165,7 +198,7 @@ class DeviceMenuState(private val prefs: SharedPreferences) {
         operator fun getValue(thisRef: Any?, property: KProperty<*>): Int = state.value
         operator fun setValue(thisRef: Any?, property: KProperty<*>, value: Int) {
             state.value = value
-            prefs.edit().putInt(key, value).apply()
+            prefs.putInt(key, value)
         }
     }
 
@@ -174,7 +207,7 @@ class DeviceMenuState(private val prefs: SharedPreferences) {
         operator fun getValue(thisRef: Any?, property: KProperty<*>): Boolean = state.value
         operator fun setValue(thisRef: Any?, property: KProperty<*>, value: Boolean) {
             state.value = value
-            prefs.edit().putBoolean(key, value).apply()
+            prefs.putBoolean(key, value)
         }
     }
 
