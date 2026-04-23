@@ -130,11 +130,22 @@ private fun RootFlow(
         return
     }
 
+    var showLogs by remember { mutableStateOf(false) }
+
+    if (showLogs) {
+        com.openvibble.home.HomeLogSheet(
+            model = model,
+            onDismiss = { showLogs = false },
+        )
+        return
+    }
+
     HomeScreen(
         model = model,
         persona = persona,
         navigation = navigation,
         settings = settings,
         onOpenSettings = { showSettings = true },
+        onOpenLogs = { showLogs = true },
     )
 }
