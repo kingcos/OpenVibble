@@ -43,10 +43,10 @@ struct HomeScreen: View {
     @State private var showSettings = false
     @State private var showLogs = false
     @State private var showDeviceMenuSheet = false
+    @State private var showAdvertisingHelp = false
     @State private var promptArrivedAt: Date?
     @State private var promptTick: Int = 0
     @State private var frozenWaitedSeconds: Int?
-    @State private var showAdvertisingActions = false
     @StateObject private var deviceMenu = DeviceMenuState()
 
     @AppStorage("bridge.displayName") private var persistedDisplayName = ""
@@ -142,6 +142,12 @@ struct HomeScreen: View {
             .presentationBackground(.ultraThinMaterial)
             .presentationDragIndicator(.visible)
         }
+        .sheet(isPresented: $showAdvertisingHelp) {
+            AdvertisingHelpSheet()
+                .presentationDetents([.large])
+                .presentationBackground(.ultraThinMaterial)
+                .presentationDragIndicator(.visible)
+        }
         .onAppear {
             startBLEIfAllowed()
         }
@@ -150,12 +156,6 @@ struct HomeScreen: View {
             // already skipping past onboarding — onAppear won't fire again
             // but this will, so advertising kicks in as soon as they return.
             startBLEIfAllowed()
-        }
-        .onChange(of: model.connectionState) { _, state in
-            if case .advertising = state {
-                return
-            }
-            showAdvertisingActions = false
         }
         .onReceive(promptTimer) { _ in
             if promptArrivedAt != nil { promptTick &+= 1 }
@@ -206,7 +206,7 @@ struct HomeScreen: View {
                 }
                 .accessibilityLabel(Text("settings.title"))
             }
-            if showAdvertisingActions, case .advertising = model.connectionState {
+            if case .advertising = model.connectionState {
                 advertisingActionBar
             }
 
@@ -221,42 +221,55 @@ struct HomeScreen: View {
     }
 
     private var advertisingActionBar: some View {
-        HStack {
+        HStack(spacing: 8) {
             Button {
                 restartAdvertising()
             } label: {
-                HStack(spacing: 6) {
-                    Image(systemName: "arrow.clockwise")
-                        .font(.system(size: 11, weight: .bold))
-                    Text(verbatim: "重启蓝牙广播")
-                        .font(TerminalStyle.mono(11, weight: .semibold))
-                }
-                .foregroundStyle(TerminalStyle.ink)
-                .padding(.horizontal, 10)
-                .padding(.vertical, 7)
-                .background(TerminalStyle.lcdPanel.opacity(0.7), in: Capsule())
-                .overlay(
-                    Capsule()
-                        .stroke(TerminalStyle.accentSoft.opacity(0.55), lineWidth: 1)
+                advertisingActionLabel(
+                    icon: "arrow.clockwise",
+                    text: "home.advertising.restart",
+                    stroke: TerminalStyle.accentSoft.opacity(0.55)
                 )
             }
             .buttonStyle(.plain)
+
+            Button {
+                UIImpactFeedbackGenerator(style: .soft).impactOccurred()
+                showAdvertisingHelp = true
+            } label: {
+                advertisingActionLabel(
+                    icon: "questionmark.circle",
+                    text: "home.advertising.help",
+                    stroke: TerminalStyle.inkDim.opacity(0.55)
+                )
+            }
+            .buttonStyle(.plain)
+
             Spacer(minLength: 0)
         }
+    }
+
+    private func advertisingActionLabel(
+        icon: String,
+        text: LocalizedStringKey,
+        stroke: Color
+    ) -> some View {
+        HStack(spacing: 6) {
+            Image(systemName: icon)
+                .font(.system(size: 11, weight: .bold))
+            Text(text)
+                .font(TerminalStyle.mono(11, weight: .semibold))
+        }
+        .foregroundStyle(TerminalStyle.ink)
+        .padding(.horizontal, 10)
+        .padding(.vertical, 7)
+        .background(TerminalStyle.lcdPanel.opacity(0.7), in: Capsule())
+        .overlay(Capsule().stroke(stroke, lineWidth: 1))
     }
 
     private var statusIndicator: some View {
         let action = statusAction
         let actionable = action != nil
-        let chevronName: String = {
-            guard let action else { return "chevron.right" }
-            switch action {
-            case .toggleAdvertisingActions:
-                return showAdvertisingActions ? "chevron.down" : "chevron.right"
-            case .openURL, .startAdvertising:
-                return "chevron.right"
-            }
-        }()
         let content = HStack(spacing: 8) {
             BreathingLED(color: statusColor)
             Text(statusLabel)
@@ -265,7 +278,7 @@ struct HomeScreen: View {
                 .lineLimit(1)
                 .truncationMode(.tail)
             if actionable {
-                Image(systemName: chevronName)
+                Image(systemName: "chevron.right")
                     .font(.system(size: 9, weight: .bold))
                     .foregroundStyle(TerminalStyle.inkDim)
             }
@@ -291,11 +304,11 @@ struct HomeScreen: View {
     }
 
     /// Actions surfaced by the status pill. The pill is only interactive when
-    /// the user can actually do something.
+    /// the user can actually do something. Restart / help while advertising
+    /// live in `advertisingActionBar` underneath the pill instead.
     private enum StatusAction {
         case openURL(URL)
         case startAdvertising
-        case toggleAdvertisingActions
     }
 
     private var statusAction: StatusAction? {
@@ -323,9 +336,6 @@ struct HomeScreen: View {
            model.bluetoothPowerState != .unauthorized {
             return .startAdvertising
         }
-        if case .advertising = model.connectionState {
-            return .toggleAdvertisingActions
-        }
         return nil
     }
 
@@ -333,22 +343,17 @@ struct HomeScreen: View {
         switch action {
         case .openURL(let url):
             UIApplication.shared.open(url)
-            showAdvertisingActions = false
         case .startAdvertising:
             UIImpactFeedbackGenerator(style: .soft).impactOccurred()
             model.start(
                 displayName: effectiveDisplayName,
                 includeServiceUUIDInAdvertisement: true
             )
-            showAdvertisingActions = false
-        case .toggleAdvertisingActions:
-            showAdvertisingActions.toggle()
         }
     }
 
     private func restartAdvertising() {
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
-        showAdvertisingActions = false
         Task { @MainActor in
             model.stop()
             try? await Task.sleep(for: .milliseconds(220))
@@ -1380,6 +1385,241 @@ private struct InfoBody: View {
         if h > 0 { return String(format: "%dh%02dm", h, m) }
         if m > 0 { return String(format: "%dm%02ds", m, s) }
         return "\(s)s"
+    }
+}
+
+// MARK: - Advertising help sheet
+
+/// Bottom sheet behind the "帮助" chip on the advertising action bar. Three
+/// stacked sections, in order of likelihood:
+///   1. Pair with OpenVibble Desktop when using Claude Code (link to releases).
+///   2. If Claude Desktop can't find the iPhone, rename it — copies the
+///      flow that used to live in onboarding step 2.
+///   3. The red "多次尝试后仍无法连接" reminder from Settings.
+private struct AdvertisingHelpSheet: View {
+    @Environment(\.dismiss) private var dismiss
+
+    @State private var suggestedName: String = AdvertisingHelpSheet.makeSuggestedName()
+    @State private var copied: Bool = false
+    @State private var copyResetTask: Task<Void, Never>?
+
+    private static let desktopReleasesURL = URL(string: "https://github.com/kingcos/OpenVibble/releases")!
+
+    var body: some View {
+        ZStack {
+            TerminalStyle.lcdBg.ignoresSafeArea()
+
+            ScrollView {
+                VStack(alignment: .leading, spacing: 16) {
+                    header
+                    claudeCodeSection
+                    renameSection
+                    reconnectHint
+                    Spacer(minLength: 12)
+                }
+                .padding(.horizontal, 20)
+                .padding(.top, 20)
+                .padding(.bottom, 40)
+            }
+            .scrollIndicators(.hidden)
+        }
+        .preferredColorScheme(.dark)
+    }
+
+    // MARK: Header
+
+    private var header: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text("$ openvibble --help")
+                .font(TerminalStyle.mono(12, weight: .semibold))
+                .foregroundStyle(TerminalStyle.inkDim)
+            Text("home.help.title")
+                .font(TerminalStyle.display(28))
+                .tracking(2)
+                .foregroundStyle(TerminalStyle.ink)
+                .shadow(color: TerminalStyle.accent.opacity(0.5), radius: 0, x: 1.5, y: 1.5)
+        }
+    }
+
+    // MARK: Claude Code section
+
+    private var claudeCodeSection: some View {
+        helpCard(title: "home.help.claudeCode.title") {
+            VStack(alignment: .leading, spacing: 10) {
+                Text("home.help.claudeCode.body")
+                    .font(TerminalStyle.mono(12))
+                    .foregroundStyle(TerminalStyle.ink)
+                    .fixedSize(horizontal: false, vertical: true)
+
+                Link(destination: Self.desktopReleasesURL) {
+                    HStack(spacing: 6) {
+                        Image(systemName: "arrow.down.circle")
+                            .font(.system(size: 12, weight: .bold))
+                        Text("home.help.claudeCode.link")
+                            .font(TerminalStyle.mono(12, weight: .semibold))
+                        Spacer(minLength: 0)
+                        Image(systemName: "arrow.up.right")
+                            .font(.system(size: 11, weight: .bold))
+                    }
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 10)
+                    .background(TerminalStyle.accent.opacity(0.85), in: RoundedRectangle(cornerRadius: 8))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.black.opacity(0.3), lineWidth: 1)
+                    )
+                }
+            }
+        }
+    }
+
+    // MARK: Rename section
+
+    private var renameSection: some View {
+        helpCard(title: "home.help.rename.title") {
+            VStack(alignment: .leading, spacing: 10) {
+                Text("home.help.rename.body")
+                    .font(TerminalStyle.mono(12))
+                    .foregroundStyle(TerminalStyle.ink)
+                    .fixedSize(horizontal: false, vertical: true)
+
+                HStack(spacing: 8) {
+                    Text(suggestedName)
+                        .font(TerminalStyle.mono(14, weight: .bold))
+                        .foregroundStyle(TerminalStyle.ink)
+                        .lineLimit(1)
+                        .truncationMode(.middle)
+                    Spacer(minLength: 0)
+                    Button {
+                        suggestedName = Self.makeSuggestedName()
+                    } label: {
+                        Image(systemName: "arrow.clockwise")
+                            .font(.system(size: 12, weight: .bold))
+                    }
+                    .buttonStyle(TerminalHeaderButtonStyle())
+                    .accessibilityLabel(Text("onboarding.rename.shuffle"))
+
+                    Button(action: copyName) {
+                        HStack(spacing: 4) {
+                            Image(systemName: copied ? "checkmark" : "doc.on.doc")
+                                .font(.system(size: 11, weight: .bold))
+                            Text(copied ? "onboarding.rename.copied" : "onboarding.rename.copy")
+                                .font(TerminalStyle.mono(11, weight: .semibold))
+                        }
+                    }
+                    .buttonStyle(TerminalHeaderButtonStyle(fill: false))
+                }
+                .padding(10)
+                .background(TerminalStyle.lcdPanel.opacity(0.7), in: RoundedRectangle(cornerRadius: 8))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(TerminalStyle.inkDim.opacity(0.5), lineWidth: 1)
+                )
+
+                Button(action: openSettings) {
+                    HStack {
+                        Image(systemName: "gear")
+                        Text("onboarding.rename.openSettings")
+                    }
+                    .frame(maxWidth: .infinity)
+                    .font(TerminalStyle.mono(12, weight: .semibold))
+                    .foregroundStyle(.white)
+                    .padding(.vertical, 9)
+                    .padding(.horizontal, 12)
+                    .background(TerminalStyle.accent.opacity(0.85), in: RoundedRectangle(cornerRadius: 8))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.black.opacity(0.3), lineWidth: 1)
+                    )
+                }
+
+                HStack(alignment: .top, spacing: 8) {
+                    Image(systemName: "info.circle")
+                        .foregroundStyle(TerminalStyle.accentSoft)
+                    Text("onboarding.rename.manualHint")
+                        .font(TerminalStyle.mono(11))
+                        .foregroundStyle(TerminalStyle.inkDim)
+                    Spacer(minLength: 0)
+                }
+                .padding(10)
+                .background(TerminalStyle.lcdPanel.opacity(0.5), in: RoundedRectangle(cornerRadius: 8))
+            }
+        }
+    }
+
+    // MARK: Reconnect hint
+
+    private var reconnectHint: some View {
+        Text("settings.help.reconnectHint")
+            .font(TerminalStyle.mono(11, weight: .bold))
+            .foregroundStyle(TerminalStyle.bad)
+            .fixedSize(horizontal: false, vertical: true)
+            .padding(12)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(TerminalStyle.lcdPanel.opacity(0.6), in: RoundedRectangle(cornerRadius: 10))
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(TerminalStyle.bad.opacity(0.5), lineWidth: 1)
+            )
+    }
+
+    // MARK: Helpers
+
+    @ViewBuilder
+    private func helpCard<Content: View>(
+        title: LocalizedStringKey,
+        @ViewBuilder content: () -> Content
+    ) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text(title)
+                .font(TerminalStyle.mono(13, weight: .bold))
+                .foregroundStyle(TerminalStyle.ink)
+            content()
+        }
+        .padding(14)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(TerminalStyle.lcdPanel.opacity(0.85), in: RoundedRectangle(cornerRadius: 12))
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(TerminalStyle.inkDim.opacity(0.4), lineWidth: 1)
+        )
+    }
+
+    private func copyName() {
+        UIPasteboard.general.string = suggestedName
+        copied = true
+        copyResetTask?.cancel()
+        copyResetTask = Task { @MainActor in
+            try? await Task.sleep(for: .seconds(2))
+            guard !Task.isCancelled else { return }
+            copied = false
+        }
+    }
+
+    private func openSettings() {
+        // Seed clipboard so the user can paste once Settings is open — iOS
+        // blocks deep-linking to General → About → Name, so the breadcrumb
+        // below tells them where to go.
+        UIPasteboard.general.string = suggestedName
+        copied = true
+        copyResetTask?.cancel()
+        copyResetTask = Task { @MainActor in
+            try? await Task.sleep(for: .seconds(2))
+            guard !Task.isCancelled else { return }
+            copied = false
+        }
+        if let url = URL(string: UIApplication.openSettingsURLString) {
+            UIApplication.shared.open(url)
+        }
+    }
+
+    /// `claude.xxxxx` with 5 hex chars — short enough to survive iOS's 29-byte
+    /// advertisement-name cap.
+    static func makeSuggestedName() -> String {
+        let chars = "0123456789abcdef"
+        let suffix = String((0..<5).compactMap { _ in chars.randomElement() })
+        return "claude.\(suffix)"
     }
 }
 

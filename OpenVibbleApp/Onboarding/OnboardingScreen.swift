@@ -7,11 +7,14 @@ import UIKit
 @preconcurrency import UserNotifications
 import CoreBluetooth
 
-/// Single-page guided setup. Three stacked step cards the user walks through
+/// Single-page guided setup. Two stacked step cards the user walks through
 /// top-to-bottom:
 ///   1. Grant BLE + notification permission (explicit tap — no auto-prompt)
-///   2. Rename the iPhone in Settings (copy a generated `claude.xxxx` name)
-///   3. Skim the button cheat-sheet
+///   2. Skim the button cheat-sheet
+///
+/// The iPhone-rename advice lives behind the home-screen "帮助" button now —
+/// most devices are discovered via the BLE `LocalName` alone, so we don't
+/// force every user through a rename step up front.
 ///
 /// The "Enter" CTA is disabled until BLE authorization reaches a usable state
 /// (notDetermined resolved). Notification opt-in is encouraged but not gating.
@@ -20,12 +23,7 @@ struct OnboardingScreen: View {
     let onFinish: () -> Void
 
     @State private var notificationStatus: UNAuthorizationStatus = .notDetermined
-    @State private var suggestedName: String = OnboardingScreen.makeSuggestedName()
-    @State private var copied: Bool = false
-    @State private var copyResetTask: Task<Void, Never>?
-    @State private var renameAcknowledged: Bool = false
     @Environment(\.scenePhase) private var scenePhase
-    @AppStorage("bridge.displayName") private var persistedDisplayName = ""
 
     var body: some View {
         ZStack {
@@ -35,7 +33,6 @@ struct OnboardingScreen: View {
                 VStack(alignment: .leading, spacing: 16) {
                     header
                     stepPermission
-                    stepRename
                     stepHelp
                     Spacer(minLength: 8)
                 }
@@ -161,89 +158,14 @@ struct OnboardingScreen: View {
         }
     }
 
-    // MARK: - Step 2 — Rename device
-
-    private var stepRename: some View {
-        OnboardingStepCard(
-            index: 2,
-            title: "onboarding.step.rename.title",
-            subtitle: "onboarding.step.rename.body",
-            active: permissionStepComplete && !renameAcknowledged,
-            done: renameAcknowledged
-        ) {
-            VStack(alignment: .leading, spacing: 10) {
-                HStack(spacing: 8) {
-                    Text(suggestedName)
-                        .font(TerminalStyle.mono(14, weight: .bold))
-                        .foregroundStyle(TerminalStyle.ink)
-                        .lineLimit(1)
-                        .truncationMode(.middle)
-                    Spacer(minLength: 0)
-                    Button {
-                        suggestedName = OnboardingScreen.makeSuggestedName()
-                    } label: {
-                        Image(systemName: "arrow.clockwise")
-                            .font(.system(size: 12, weight: .bold))
-                    }
-                    .buttonStyle(TerminalHeaderButtonStyle())
-                    .accessibilityLabel(Text("onboarding.rename.shuffle"))
-
-                    Button(action: copyName) {
-                        HStack(spacing: 4) {
-                            Image(systemName: copied ? "checkmark" : "doc.on.doc")
-                                .font(.system(size: 11, weight: .bold))
-                            Text(copied ? "onboarding.rename.copied" : "onboarding.rename.copy")
-                                .font(TerminalStyle.mono(11, weight: .semibold))
-                        }
-                    }
-                    .buttonStyle(TerminalHeaderButtonStyle(fill: false))
-                }
-                .padding(10)
-                .background(TerminalStyle.lcdPanel.opacity(0.7), in: RoundedRectangle(cornerRadius: 8))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 8)
-                        .stroke(TerminalStyle.inkDim.opacity(0.5), lineWidth: 1)
-                )
-
-                if canOpenSystemSettings {
-                    Button(action: openSettings) {
-                        HStack {
-                            Image(systemName: "gear")
-                            Text("onboarding.rename.openSettings")
-                        }
-                        .frame(maxWidth: .infinity)
-                    }
-                    .buttonStyle(OnboardingFilledButtonStyle(
-                        foreground: .white,
-                        background: TerminalStyle.accent.opacity(0.85)
-                    ))
-                }
-
-                // Always show the navigation breadcrumb — iOS can't deep-link
-                // into General → About → Name, so users need to know where to
-                // go once the Settings app opens.
-                HStack(alignment: .top, spacing: 8) {
-                    Image(systemName: "info.circle")
-                        .foregroundStyle(TerminalStyle.accentSoft)
-                    Text("onboarding.rename.manualHint")
-                        .font(TerminalStyle.mono(11))
-                        .foregroundStyle(TerminalStyle.inkDim)
-                    Spacer(minLength: 0)
-                }
-                .padding(10)
-                .background(TerminalStyle.lcdPanel.opacity(0.5), in: RoundedRectangle(cornerRadius: 8))
-            }
-        }
-    }
-
-    // MARK: - Step 3 — Button cheat-sheet
+    // MARK: - Step 2 — Button cheat-sheet
 
     private var stepHelp: some View {
         OnboardingStepCard(
-            index: 3,
+            index: 2,
             title: "onboarding.step.help.title",
             subtitle: "onboarding.step.help.body",
-            active: permissionStepComplete && renameAcknowledged,
+            active: permissionStepComplete,
             done: false
         ) {
             ButtonCheatSheet()
@@ -317,55 +239,7 @@ struct OnboardingScreen: View {
         }
     }
 
-    private func copyName() {
-        UIPasteboard.general.string = suggestedName
-        copied = true
-        acknowledgeRename()
-        copyResetTask?.cancel()
-        copyResetTask = Task { @MainActor in
-            try? await Task.sleep(for: .seconds(2))
-            guard !Task.isCancelled else { return }
-            copied = false
-        }
-    }
-
-    private func openSettings() {
-        // Seed the clipboard so the user can paste the name right into the
-        // iPhone name field without having to jump back to the app.
-        UIPasteboard.general.string = suggestedName
-        copied = true
-        copyResetTask?.cancel()
-        copyResetTask = Task { @MainActor in
-            try? await Task.sleep(for: .seconds(2))
-            guard !Task.isCancelled else { return }
-            copied = false
-        }
-        acknowledgeRename()
-        // iOS 10+ blocks the legacy App-prefs:root= scheme, so the Settings
-        // app can't be deep-linked to General → About → Name. Land on the
-        // app's own entry instead; the manualHint breadcrumb tells the user
-        // where to go from there.
-        if let url = URL(string: UIApplication.openSettingsURLString) {
-            UIApplication.shared.open(url)
-        }
-    }
-
-    /// Step 2 counts as handled once the user copies the suggested name or
-    /// jumps out to Settings — either action means they've engaged with the
-    /// rename flow, so the help step can light up.
-    private func acknowledgeRename() {
-        guard !renameAcknowledged else { return }
-        withAnimation(.easeInOut(duration: 0.25)) {
-            renameAcknowledged = true
-        }
-    }
-
     private func finalizeAndEnter() {
-        // Persist the suggested name only if the user hasn't set one yet —
-        // don't overwrite a value they typed in Settings.
-        if persistedDisplayName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            persistedDisplayName = suggestedName
-        }
         onFinish()
     }
 
@@ -461,23 +335,6 @@ struct OnboardingScreen: View {
         }
     }
 
-    private var canOpenSystemSettings: Bool {
-        if let url = URL(string: UIApplication.openSettingsURLString) {
-            return UIApplication.shared.canOpenURL(url)
-        }
-        return false
-    }
-
-    // MARK: - Helpers
-
-    /// `claude.xxxxx` with 5 hex chars — short enough to survive iOS's 29-byte
-    /// advertisement-name cap even after the `Claude-` sanitization in
-    /// `BridgeAppModel.sanitizedDisplayName`.
-    static func makeSuggestedName() -> String {
-        let chars = "0123456789abcdef"
-        let suffix = String((0..<5).compactMap { _ in chars.randomElement() })
-        return "claude.\(suffix)"
-    }
 }
 
 // MARK: - Reusable step card
