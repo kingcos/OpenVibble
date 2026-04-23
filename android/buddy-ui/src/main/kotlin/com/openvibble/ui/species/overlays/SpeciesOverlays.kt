@@ -10,6 +10,9 @@ import com.openvibble.ui.species.Overlay
 object SpeciesOverlays {
     private val byNameAndState: Map<String, Map<PersonaState, List<Overlay>>> = mapOf(
         "cat" to CatOverlays.all,
+        "duck" to DuckOverlays.all,
+        "goose" to GooseOverlays.all,
+        "capybara" to CapybaraOverlays.all,
         // future: more species ported incrementally per Ralph-loop batch.
     )
 
