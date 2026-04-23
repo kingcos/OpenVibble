@@ -161,6 +161,8 @@ fun HomeScreen(
     val waited: Int = frozenWaitedSeconds
         ?: waitedSeconds(promptArrivedAtMs, promptTickNow)
 
+    val deviceMenu = remember { DeviceMenuState(context) }
+
     Box(modifier = Modifier.fillMaxSize().background(Color.Black)) {
         ScanlineOverlay()
 
@@ -246,31 +248,73 @@ fun HomeScreen(
                 BottomBar(
                     showPowerButton = showPowerButton,
                     onPressA = {
-                        if (mode == DisplayMode.NORMAL && prompt != null && !responseSent) {
-                            model.respondPermission(PermissionDecision.ONCE)
-                        } else {
-                            mode = mode.next()
-                            if (mode == DisplayMode.PET) petPage = 0
-                            if (mode == DisplayMode.INFO) infoPage = 0
+                        when {
+                            deviceMenu.isAnyMenuVisible -> deviceMenu.advanceCursor()
+                            mode == DisplayMode.NORMAL && prompt != null && !responseSent ->
+                                model.respondPermission(PermissionDecision.ONCE)
+                            else -> {
+                                mode = mode.next()
+                                if (mode == DisplayMode.PET) petPage = 0
+                                if (mode == DisplayMode.INFO) infoPage = 0
+                            }
                         }
                     },
-                    onLongPressA = onLongPressA,
+                    onLongPressA = {
+                        deviceMenu.toggleMenu()
+                        onLongPressA()
+                    },
                     onPressB = {
-                        if (mode == DisplayMode.NORMAL && prompt != null && !responseSent) {
-                            model.respondPermission(PermissionDecision.DENY)
-                        } else when (mode) {
-                            DisplayMode.PET -> petPage = wrap(petPage + 1, PET_PAGES)
-                            DisplayMode.INFO -> infoPage = wrap(infoPage + 1, INFO_PAGES.size)
-                            DisplayMode.NORMAL -> Unit
+                        when {
+                            deviceMenu.isAnyMenuVisible -> {
+                                deviceMenu.applyCurrentSelection(
+                                    cycleAsciiSpecies = {
+                                        AsciiPetCycler.next(
+                                            SharedPreferencesPersonaSelectionStore(context),
+                                        )
+                                    },
+                                    onReset = { model.statsStore.reset() },
+                                    onTurnOff = { /* handled by screenOff flip inside state */ },
+                                    onDemo = { /* demo hook not wired on Android */ },
+                                    onHelp = { /* help hook not wired on Android */ },
+                                    onAbout = { /* about hook not wired on Android */ },
+                                    onBluetoothChanged = { on ->
+                                        if (on) model.start() else model.stop()
+                                    },
+                                )
+                            }
+                            mode == DisplayMode.NORMAL && prompt != null && !responseSent ->
+                                model.respondPermission(PermissionDecision.DENY)
+                            else -> when (mode) {
+                                DisplayMode.PET -> petPage = wrap(petPage + 1, PET_PAGES)
+                                DisplayMode.INFO -> infoPage = wrap(infoPage + 1, INFO_PAGES.size)
+                                DisplayMode.NORMAL -> Unit
+                            }
                         }
                     },
-                    onPressPower = { /* Screen-off menu deferred — no-op for now. */ },
+                    onPressPower = { deviceMenu.toggleScreen() },
                     onOpenLogs = onOpenLogs,
                     modifier = Modifier
                         .padding(horizontal = 16.dp)
                         .padding(top = 8.dp, bottom = 14.dp),
                 )
             }
+        }
+
+        if (deviceMenu.isAnyMenuVisible && !deviceMenu.screenOff) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(TerminalPalette.lcdBg.copy(alpha = 0.92f)),
+            ) {
+                DeviceMenuOverlay(
+                    state = deviceMenu,
+                    bottomReservedHeight = 80.dp,
+                )
+            }
+        }
+
+        if (deviceMenu.screenOff) {
+            ScreenOffMask(onWake = { deviceMenu.wakeScreen() })
         }
     }
 }
