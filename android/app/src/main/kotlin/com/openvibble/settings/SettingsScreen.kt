@@ -573,9 +573,9 @@ private fun defaultCheatRows(): List<CheatRow> = listOf(
     CheatRow(CheatBadge.Text("A"), stringResource(R.string.onboarding_help_a)),
     CheatRow(CheatBadge.LongPress("A"), stringResource(R.string.onboarding_help_a_long)),
     CheatRow(CheatBadge.Text("B"), stringResource(R.string.onboarding_help_b)),
-    CheatRow(CheatBadge.Text("PWR"), stringResource(R.string.onboarding_help_power)),
-    CheatRow(CheatBadge.Text("LOG"), stringResource(R.string.onboarding_help_log)),
-    CheatRow(CheatBadge.Text("SET"), stringResource(R.string.onboarding_help_gear)),
+    CheatRow(CheatBadge.Text(stringResource(R.string.control_badge_power)), stringResource(R.string.onboarding_help_power)),
+    CheatRow(CheatBadge.Text(stringResource(R.string.control_badge_log)), stringResource(R.string.onboarding_help_log)),
+    CheatRow(CheatBadge.Text(stringResource(R.string.control_badge_settings)), stringResource(R.string.onboarding_help_gear)),
 )
 
 private fun speciesLabel(selection: PersonaSpeciesId): String = when (selection) {

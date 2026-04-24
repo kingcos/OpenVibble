@@ -27,6 +27,9 @@
     <string name="onboarding_help_power">Power - turn off the screen - tap anywhere to wake</string>
     <string name="onboarding_help_log">Open the raw log drawer</string>
     <string name="onboarding_help_gear">Settings - species picker - notification toggle</string>
+    <string name="control_badge_power">PWR</string>
+    <string name="control_badge_log">LOG</string>
+    <string name="control_badge_settings">SET</string>
 
     <!-- Settings -->
     <string name="settings_title">SETTINGS</string>
@@ -123,6 +126,17 @@
     <string name="home_log_delete">DEL</string>
     <string name="home_log_close">CLOSE</string>
     <string name="home_log_empty">- no log -</string>
+    <string name="home_settings">Settings</string>
+    <string name="home_power">Power</string>
+    <string name="home_mode_normal">NORMAL</string>
+    <string name="home_mode_pet">PET</string>
+    <string name="home_mode_info">INFO</string>
+    <string name="home_ble_off">BLE:off</string>
+    <string name="home_ble_unsupported">BLE:unsupported</string>
+    <string name="home_ble_connected">BLE:conn</string>
+    <string name="home_ble_connected_count">BLE:conn(%1$d)</string>
+    <string name="home_ble_advertising">BLE:adv</string>
+    <string name="home_ble_idle">BLE:idle</string>
     <string name="home_status_waiting_for_claude">waiting for claude</string>
     <string name="home_prompt_waited">waited %1$ds</string>
     <string name="home_prompt_sent">SENT</string>
@@ -140,16 +154,18 @@
     <string name="home_status_idle">idle</string>
     <string name="home_status_running">running</string>
     <string name="home_status_waiting">waiting</string>
+    <string name="home_state_sleep">sleep</string>
+    <string name="home_state_busy">busy</string>
+    <string name="home_state_attention">attention</string>
+    <string name="home_state_celebrate">celebrate</string>
+    <string name="home_state_dizzy">dizzy</string>
+    <string name="home_state_heart">heart</string>
 
     <!-- Advertising help -->
     <string name="home_help_title">Help</string>
     <string name="home_help_claude_code_title">If you are using Claude Code</string>
     <string name="home_help_claude_code_body">Claude Code needs to be paired with OpenVibble Desktop to bridge into your Android device.</string>
     <string name="home_help_claude_code_link">Download OpenVibble Desktop</string>
-    <string name="home_help_rename_title">If Claude Desktop cannot find this device</string>
-    <string name="home_help_rename_body">Claude Desktop scans for names starting with Claude. Copy the suggested handle and paste it into the device name in Bluetooth settings. On some systems, this lives under About phone -> Device name.</string>
-    <string name="home_help_rename_open_settings">Open Bluetooth Settings</string>
-    <string name="home_help_rename_manual_hint">Open Bluetooth settings and paste the handle above as this device name, or use About phone -> Device name if your system exposes it there.</string>
 
     <!-- Info / Pet / Species -->
     <string name="info_title">INFO</string>
@@ -191,6 +207,11 @@
     <string name="pet_metric_napped">napped</string>
     <string name="pet_metric_tokens">tokens</string>
     <string name="pet_metric_today">today</string>
+    <string name="pet_tag_mood">MOOD</string>
+    <string name="pet_tag_fed">FED</string>
+    <string name="pet_tag_energy">ENERGY</string>
+    <string name="pet_tag_shake">SHAKE</string>
+    <string name="pet_tag_idle">IDLE</string>
     <string name="pet_how_mood">One heart per day. Denials lower mood; steady approvals recover it.</string>
     <string name="pet_how_fed">Stable hardware reply rhythm keeps satiety high.</string>
     <string name="pet_how_energy">High during the day; idle time or face-down sleep rests the pet.</string>

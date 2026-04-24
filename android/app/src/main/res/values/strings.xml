@@ -27,6 +27,9 @@
     <string name="onboarding_help_power">电源 - 关闭屏幕，轻触任意位置唤醒</string>
     <string name="onboarding_help_log">打开原始日志面板</string>
     <string name="onboarding_help_gear">设置 - 选择宠物 - 通知开关</string>
+    <string name="control_badge_power">熄屏</string>
+    <string name="control_badge_log">日志</string>
+    <string name="control_badge_settings">设置</string>
 
     <!-- Settings -->
     <string name="settings_title">设置</string>
@@ -125,6 +128,17 @@
     <string name="home_log_delete">清空</string>
     <string name="home_log_close">关闭</string>
     <string name="home_log_empty">- 暂无日志 -</string>
+    <string name="home_settings">设置</string>
+    <string name="home_power">熄屏</string>
+    <string name="home_mode_normal">普通</string>
+    <string name="home_mode_pet">宠物</string>
+    <string name="home_mode_info">信息</string>
+    <string name="home_ble_off">蓝牙:关闭</string>
+    <string name="home_ble_unsupported">蓝牙:不支持</string>
+    <string name="home_ble_connected">蓝牙:已连</string>
+    <string name="home_ble_connected_count">蓝牙:已连(%1$d)</string>
+    <string name="home_ble_advertising">蓝牙:广播</string>
+    <string name="home_ble_idle">蓝牙:待机</string>
     <string name="home_status_waiting_for_claude">等待 Claude 接入</string>
     <string name="home_prompt_waited">已等待 %1$d 秒</string>
     <string name="home_prompt_sent">已发送</string>
@@ -142,16 +156,18 @@
     <string name="home_status_idle">空闲</string>
     <string name="home_status_running">运行中</string>
     <string name="home_status_waiting">等待</string>
+    <string name="home_state_sleep">休眠</string>
+    <string name="home_state_busy">忙碌</string>
+    <string name="home_state_attention">待应</string>
+    <string name="home_state_celebrate">庆祝</string>
+    <string name="home_state_dizzy">眩晕</string>
+    <string name="home_state_heart">喜爱</string>
 
     <!-- Advertising help -->
     <string name="home_help_title">帮助</string>
     <string name="home_help_claude_code_title">如果使用 Claude Code</string>
     <string name="home_help_claude_code_body">Claude Code 需要配合 OpenVibble Desktop 才能桥接到手机。</string>
     <string name="home_help_claude_code_link">下载 OpenVibble Desktop</string>
-    <string name="home_help_rename_title">如果 Claude Desktop 无法搜索到</string>
-    <string name="home_help_rename_body">Claude Desktop 只会扫描以 Claude 开头的设备名。复制下方建议名称，粘贴到「设置 -> 蓝牙」的本机蓝牙名称（部分系统在「关于本机 -> 设备名」）。</string>
-    <string name="home_help_rename_open_settings">打开蓝牙设置</string>
-    <string name="home_help_rename_manual_hint">请前往「设置 -> 蓝牙」修改本机蓝牙名称，或在「关于本机 -> 设备名」中粘贴上方名称。</string>
 
     <!-- Info / Pet / Species -->
     <string name="info_title">信息</string>
@@ -193,6 +209,11 @@
     <string name="pet_metric_napped">小憩</string>
     <string name="pet_metric_tokens">Token</string>
     <string name="pet_metric_today">今日</string>
+    <string name="pet_tag_mood">心情</string>
+    <string name="pet_tag_fed">饱腹</string>
+    <string name="pet_tag_energy">精力</string>
+    <string name="pet_tag_shake">摇动</string>
+    <string name="pet_tag_idle">空闲</string>
     <string name="pet_how_mood">一日一心。被拒绝会扣心，审批稳会恢复。</string>
     <string name="pet_how_fed">硬件的回复节奏越稳，填饱度越高。</string>
     <string name="pet_how_energy">白天高；晚上静置或翻过来会进入休眠。</string>

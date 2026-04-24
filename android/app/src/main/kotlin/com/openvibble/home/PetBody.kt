@@ -140,11 +140,11 @@ private fun MetricRow(label: String, value: String) {
 @Composable
 private fun HowPage() {
     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-        HowLine(tag = "MOOD", body = stringResource(R.string.pet_how_mood))
-        HowLine(tag = "FED", body = stringResource(R.string.pet_how_fed))
-        HowLine(tag = "ENERGY", body = stringResource(R.string.pet_how_energy))
-        HowLine(tag = "SHAKE", body = stringResource(R.string.pet_how_shake))
-        HowLine(tag = "IDLE", body = stringResource(R.string.pet_how_idle))
+        HowLine(tag = stringResource(R.string.pet_tag_mood), body = stringResource(R.string.pet_how_mood))
+        HowLine(tag = stringResource(R.string.pet_tag_fed), body = stringResource(R.string.pet_how_fed))
+        HowLine(tag = stringResource(R.string.pet_tag_energy), body = stringResource(R.string.pet_how_energy))
+        HowLine(tag = stringResource(R.string.pet_tag_shake), body = stringResource(R.string.pet_how_shake))
+        HowLine(tag = stringResource(R.string.pet_tag_idle), body = stringResource(R.string.pet_how_idle))
         HowLine(tag = "A", body = stringResource(R.string.pet_how_a))
         HowLine(tag = "B", body = stringResource(R.string.pet_how_b))
     }

@@ -366,17 +366,10 @@ enum class DisplayMode {
         PET -> INFO
         INFO -> NORMAL
     }
-
-    val label: String
-        get() = when (this) {
-            NORMAL -> "NORMAL"
-            PET -> "PET"
-            INFO -> "INFO"
-        }
 }
 
 
-private inline fun wrap(value: Int, count: Int): Int =
+private fun wrap(value: Int, count: Int): Int =
     if (count <= 0) 0 else ((value % count) + count) % count
 
 private inline fun swipe(
@@ -431,18 +424,20 @@ private fun TopBar(
                 onOpenSystemBluetoothSettings = onOpenSystemBluetoothSettings,
             )
             Spacer(Modifier.weight(1f))
-            Box(
+            Row(
                 modifier = Modifier
-                    .size(32.dp)
-                    .background(TerminalPalette.lcdPanel.copy(alpha = 0.7f), CircleShape)
-                    .border(1.dp, TerminalPalette.inkDim.copy(alpha = 0.45f), CircleShape)
-                    .clickable(onClick = onOpenSettings),
-                contentAlignment = Alignment.Center,
+                    .height(40.dp)
+                    .background(TerminalPalette.lcdPanel.copy(alpha = 0.7f), RoundedCornerShape(20.dp))
+                    .border(1.dp, TerminalPalette.inkDim.copy(alpha = 0.45f), RoundedCornerShape(20.dp))
+                    .clickable(onClick = onOpenSettings)
+                    .padding(horizontal = 14.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center,
             ) {
                 Text(
-                    text = "SET",
+                    text = stringResource(R.string.home_settings),
                     color = TerminalPalette.ink,
-                    fontSize = 10.sp,
+                    fontSize = 11.sp,
                     fontWeight = FontWeight.SemiBold,
                     style = TextStyle(fontFamily = TerminalFonts.mono),
                 )
@@ -579,16 +574,17 @@ private fun BreathingLed(color: Color) {
     )
 }
 
+@Composable
 private fun statusLabel(connection: NusConnectionState, power: BluetoothPowerState): String = when {
-    power == BluetoothPowerState.OFF -> "BLE:off"
-    power == BluetoothPowerState.UNSUPPORTED -> "BLE:unsupported"
+    power == BluetoothPowerState.OFF -> stringResource(R.string.home_ble_off)
+    power == BluetoothPowerState.UNSUPPORTED -> stringResource(R.string.home_ble_unsupported)
     connection is NusConnectionState.Connected -> if (connection.centralCount > 1) {
-        "BLE:conn(${connection.centralCount})"
+        stringResource(R.string.home_ble_connected_count, connection.centralCount)
     } else {
-        "BLE:conn"
+        stringResource(R.string.home_ble_connected)
     }
-    connection is NusConnectionState.Advertising -> "BLE:adv"
-    else -> "BLE:idle"
+    connection is NusConnectionState.Advertising -> stringResource(R.string.home_ble_advertising)
+    else -> stringResource(R.string.home_ble_idle)
 }
 
 private fun statusColor(connection: NusConnectionState, power: BluetoothPowerState): Color = when {
@@ -646,7 +642,7 @@ private fun PetArea(
                 .align(Alignment.TopCenter),
         ) {
             Text(
-                text = mode.label,
+                text = modeLabel(mode),
                 color = TerminalPalette.inkDim,
                 fontSize = 10.sp,
                 fontWeight = FontWeight.SemiBold,
@@ -654,7 +650,7 @@ private fun PetArea(
             )
             Spacer(Modifier.weight(1f))
             Text(
-                text = personaState.slug.uppercase(),
+                text = personaStateLabel(personaState),
                 color = TerminalPalette.inkDim,
                 fontSize = 10.sp,
                 fontWeight = FontWeight.SemiBold,
@@ -669,6 +665,24 @@ private fun resolveSpeciesIdx(selection: PersonaSpeciesId): Int = when (selectio
     is PersonaSpeciesId.AsciiSpecies -> selection.idx
     is PersonaSpeciesId.Builtin -> SpeciesRegistry.defaultIdx()
     is PersonaSpeciesId.Installed -> SpeciesRegistry.defaultIdx()
+}
+
+@Composable
+private fun modeLabel(mode: DisplayMode): String = when (mode) {
+    DisplayMode.NORMAL -> stringResource(R.string.home_mode_normal)
+    DisplayMode.PET -> stringResource(R.string.home_mode_pet)
+    DisplayMode.INFO -> stringResource(R.string.home_mode_info)
+}
+
+@Composable
+private fun personaStateLabel(state: PersonaState): String = when (state) {
+    PersonaState.SLEEP -> stringResource(R.string.home_state_sleep)
+    PersonaState.IDLE -> stringResource(R.string.home_status_idle)
+    PersonaState.BUSY -> stringResource(R.string.home_state_busy)
+    PersonaState.ATTENTION -> stringResource(R.string.home_state_attention)
+    PersonaState.CELEBRATE -> stringResource(R.string.home_state_celebrate)
+    PersonaState.DIZZY -> stringResource(R.string.home_state_dizzy)
+    PersonaState.HEART -> stringResource(R.string.home_state_heart)
 }
 
 /**
@@ -716,14 +730,14 @@ private fun BottomBar(
         if (showPowerButton) {
             Box(
                 modifier = Modifier
-                    .size(36.dp)
-                    .background(TerminalPalette.lcdPanel.copy(alpha = 0.85f), CircleShape)
-                    .border(1.dp, TerminalPalette.inkDim.copy(alpha = 0.5f), CircleShape)
+                    .size(width = 48.dp, height = 36.dp)
+                    .background(TerminalPalette.lcdPanel.copy(alpha = 0.85f), RoundedCornerShape(18.dp))
+                    .border(1.dp, TerminalPalette.inkDim.copy(alpha = 0.5f), RoundedCornerShape(18.dp))
                     .clickable(onClick = onPressPower),
                 contentAlignment = Alignment.Center,
             ) {
                 Text(
-                    text = "PWR",
+                    text = stringResource(R.string.home_power),
                     color = TerminalPalette.accentSoft,
                     fontSize = 9.sp,
                     fontWeight = FontWeight.Bold,
