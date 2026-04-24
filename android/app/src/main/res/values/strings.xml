@@ -41,6 +41,9 @@
     <string name="settings_section_guide">guide</string>
     <string name="settings_section_danger">danger</string>
     <string name="settings_species">当前宠物</string>
+    <string name="settings_interface_theme">主题</string>
+    <string name="settings_interface_theme_eink">墨水屏</string>
+    <string name="settings_interface_theme_classic">经典 LCD</string>
     <string name="settings_interface_show_power_button">显示电源按钮</string>
     <string name="settings_interface_show_power_button_hint">关闭后，主页右上角不再显示电源快捷按钮。</string>
     <string name="settings_notifications_label">通知</string>

@@ -6,6 +6,7 @@ package com.openvibble.settings
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.openvibble.ui.terminal.TerminalThemeMode
 
 /**
  * Lightweight settings facade backed by a single [SharedPreferences] instance.
@@ -37,6 +38,12 @@ class AppSettings(private val prefs: SharedPreferences) {
         get() = prefs.getBoolean(KEY_SHOW_POWER_BUTTON, true)
         set(value) { prefs.edit().putBoolean(KEY_SHOW_POWER_BUTTON, value).apply() }
 
+    var terminalTheme: TerminalThemeMode
+        get() = runCatching {
+            TerminalThemeMode.valueOf(prefs.getString(KEY_TERMINAL_THEME, null) ?: TerminalThemeMode.EInk.name)
+        }.getOrDefault(TerminalThemeMode.EInk)
+        set(value) { prefs.edit().putString(KEY_TERMINAL_THEME, value.name).apply() }
+
     /** Clear all keys this facade owns; used by the settings "factory reset". */
     fun clearAll() {
         prefs.edit()
@@ -44,6 +51,7 @@ class AppSettings(private val prefs: SharedPreferences) {
             .remove(KEY_NOTIFICATIONS_ENABLED)
             .remove(KEY_FOREGROUND_NOTIFICATIONS_ENABLED)
             .remove(KEY_SHOW_POWER_BUTTON)
+            .remove(KEY_TERMINAL_THEME)
             .apply()
     }
 
@@ -53,5 +61,6 @@ class AppSettings(private val prefs: SharedPreferences) {
         const val KEY_NOTIFICATIONS_ENABLED: String = "buddy.notificationsEnabled"
         const val KEY_FOREGROUND_NOTIFICATIONS_ENABLED: String = "buddy.foregroundNotificationsEnabled"
         const val KEY_SHOW_POWER_BUTTON: String = "home.showPowerButton"
+        const val KEY_TERMINAL_THEME: String = "interface.terminalTheme"
     }
 }

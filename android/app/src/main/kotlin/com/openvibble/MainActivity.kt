@@ -25,7 +25,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import com.openvibble.bridge.BridgeAppModel
 import com.openvibble.home.HomeScreen
@@ -41,6 +40,7 @@ import com.openvibble.persona.PersonaController
 import com.openvibble.protocol.PermissionDecision
 import com.openvibble.settings.AppSettings
 import com.openvibble.settings.SettingsScreen
+import com.openvibble.ui.terminal.TerminalPalette
 
 /**
  * Android app entry. Hosts the Onboarding → Home → Settings navigation flow
@@ -75,7 +75,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             OpenVibbleTheme {
-                Surface(modifier = Modifier.fillMaxSize(), color = Color.Black) {
+                Surface(modifier = Modifier.fillMaxSize(), color = TerminalPalette.lcdBg) {
                     RootFlow(
                         model = model,
                         navigation = navigation,
@@ -128,10 +128,10 @@ class MainActivity : ComponentActivity() {
 private fun OpenVibbleTheme(content: @Composable () -> Unit) {
     MaterialTheme(
         colorScheme = darkColorScheme(
-            background = Color.Black,
-            surface = Color.Black,
-            onBackground = Color.White,
-            onSurface = Color.White,
+            background = TerminalPalette.lcdBg,
+            surface = TerminalPalette.lcdPanel,
+            onBackground = TerminalPalette.ink,
+            onSurface = TerminalPalette.ink,
         ),
         content = content,
     )
@@ -150,8 +150,11 @@ private fun RootFlow(
 ) {
     val context = LocalContext.current
     val settings = remember { AppSettings(context) }
+    var terminalTheme by remember { mutableStateOf(settings.terminalTheme) }
     val scope = rememberCoroutineScope()
     val persona = remember { PersonaController(scope) }
+
+    TerminalPalette.mode = terminalTheme
 
     LaunchedEffect(Unit) {
         persona.bind(model, model.statsStore)
@@ -202,6 +205,11 @@ private fun RootFlow(
         SettingsScreen(
             model = model,
             settings = settings,
+            terminalTheme = terminalTheme,
+            onTerminalThemeChange = { theme ->
+                settings.terminalTheme = theme
+                terminalTheme = theme
+            },
             onDone = { showSettings = false },
             onRequestNotificationPermission = onRequestNotificationPermission,
             onShowOnboarding = {

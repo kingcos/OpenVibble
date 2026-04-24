@@ -56,6 +56,7 @@ import com.openvibble.ui.terminal.TerminalFonts
 import com.openvibble.ui.terminal.TerminalHeaderButton
 import com.openvibble.ui.terminal.TerminalPalette
 import com.openvibble.ui.terminal.TerminalPanel
+import com.openvibble.ui.terminal.TerminalThemeMode
 import java.util.Locale
 
 /**
@@ -67,6 +68,8 @@ import java.util.Locale
 fun SettingsScreen(
     model: BridgeAppModel,
     settings: AppSettings,
+    terminalTheme: TerminalThemeMode,
+    onTerminalThemeChange: (TerminalThemeMode) -> Unit,
     onDone: () -> Unit,
     onRequestNotificationPermission: () -> Unit,
     onShowOnboarding: () -> Unit,
@@ -106,7 +109,11 @@ fun SettingsScreen(
             }
 
             TerminalPanel(title = stringResource(R.string.settings_section_interface)) {
-                Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                    ThemeModeRow(
+                        selected = terminalTheme,
+                        onSelect = onTerminalThemeChange,
+                    )
                     TerminalToggleRow(
                         label = stringResource(R.string.settings_interface_show_power_button),
                         checked = showPowerButton,
@@ -234,6 +241,7 @@ fun SettingsScreen(
                 stats.reset()
                 settings.clearAll()
                 PersonaSelectionStoreFactory(context).save(PersonaSelection.defaultSpecies)
+                onTerminalThemeChange(TerminalThemeMode.EInk)
                 infoMessage = context.getString(R.string.pet_stats_reset_ok)
                 confirmResetStats = false
             },
@@ -267,6 +275,69 @@ fun SettingsScreen(
                     Text(stringResource(R.string.common_ok))
                 }
             },
+        )
+    }
+}
+
+@Composable
+private fun ThemeModeRow(
+    selected: TerminalThemeMode,
+    onSelect: (TerminalThemeMode) -> Unit,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+        Text(
+            text = stringResource(R.string.settings_interface_theme),
+            color = TerminalPalette.ink,
+            fontFamily = TerminalFonts.mono,
+            fontSize = 12.sp,
+        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            ThemeModeButton(
+                label = stringResource(R.string.settings_interface_theme_eink),
+                selected = selected == TerminalThemeMode.EInk,
+                onClick = { onSelect(TerminalThemeMode.EInk) },
+                modifier = Modifier.weight(1f),
+            )
+            ThemeModeButton(
+                label = stringResource(R.string.settings_interface_theme_classic),
+                selected = selected == TerminalThemeMode.ClassicLcd,
+                onClick = { onSelect(TerminalThemeMode.ClassicLcd) },
+                modifier = Modifier.weight(1f),
+            )
+        }
+    }
+}
+
+@Composable
+private fun ThemeModeButton(
+    label: String,
+    selected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val bg = if (selected) TerminalPalette.ink else TerminalPalette.lcdPanel.copy(alpha = 0.65f)
+    val fg = if (selected) TerminalPalette.lcdBg else TerminalPalette.ink
+    Row(
+        modifier = modifier
+            .background(bg, RoundedCornerShape(8.dp))
+            .border(
+                BorderStroke(1.dp, TerminalPalette.inkDim.copy(alpha = 0.55f)),
+                RoundedCornerShape(8.dp),
+            )
+            .clickable(onClick = onClick)
+            .padding(horizontal = 10.dp, vertical = 10.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center,
+    ) {
+        Text(
+            text = label,
+            color = fg,
+            fontFamily = TerminalFonts.mono,
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 11.sp,
         )
     }
 }
