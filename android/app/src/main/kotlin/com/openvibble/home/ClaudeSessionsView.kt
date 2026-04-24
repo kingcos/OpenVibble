@@ -33,11 +33,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.openvibble.R
 import com.openvibble.bridge.BridgeAppModel
 import com.openvibble.persona.PersonaController
 import com.openvibble.persona.PersonaState
@@ -196,11 +198,11 @@ private fun AllOverview(
     tokensToday: Int,
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-        OverviewRow(label = "sessions", value = total.toString())
-        OverviewRow(label = "running", value = running.toString())
-        OverviewRow(label = "waiting", value = waiting.toString())
-        OverviewRow(label = "state", value = personaStateLabel(personaState))
-        OverviewRow(label = "tok/day", value = tokensToday.toString())
+        OverviewRow(label = stringResource(R.string.home_metric_sessions), value = total.toString())
+        OverviewRow(label = stringResource(R.string.home_metric_running), value = running.toString())
+        OverviewRow(label = stringResource(R.string.home_metric_waiting), value = waiting.toString())
+        OverviewRow(label = stringResource(R.string.home_metric_state), value = personaStateLabel(personaState))
+        OverviewRow(label = stringResource(R.string.home_metric_tok_day), value = tokensToday.toString())
     }
 }
 
@@ -239,16 +241,16 @@ private fun ProjectDetailView(project: ProjectSummary, prompt: PromptRequest?) {
 @Composable
 private fun StatusRow(project: ProjectSummary) {
     val (label, color) = when {
-        project.hasPendingPrompt -> "waiting" to TerminalPalette.bad
-        project.isActive -> "running" to TerminalPalette.good
-        else -> "idle" to TerminalPalette.inkDim
+        project.hasPendingPrompt -> stringResource(R.string.home_status_waiting) to TerminalPalette.bad
+        project.isActive -> stringResource(R.string.home_status_running) to TerminalPalette.good
+        else -> stringResource(R.string.home_status_idle) to TerminalPalette.inkDim
     }
     Row(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.Top,
     ) {
         Text(
-            text = "status",
+            text = stringResource(R.string.home_metric_state),
             color = TerminalPalette.inkDim,
             fontSize = 12.sp,
             style = TextStyle(fontFamily = TerminalFonts.mono),
@@ -290,7 +292,7 @@ private fun PromptRow(prompt: PromptRequest) {
 @Composable
 private fun RecentHeader() {
     Text(
-        text = "RECENT",
+        text = stringResource(R.string.home_recent),
         color = TerminalPalette.accentSoft,
         fontSize = 11.sp,
         fontWeight = FontWeight.SemiBold,
@@ -303,7 +305,7 @@ private fun RecentHeader() {
 private fun RecentList(entries: List<ParsedEntry>) {
     if (entries.isEmpty()) {
         Text(
-            text = "· nothing yet ·",
+            text = stringResource(R.string.home_recent_empty),
             color = TerminalPalette.inkDim,
             fontSize = 11.sp,
             style = TextStyle(fontFamily = TerminalFonts.mono),
@@ -356,9 +358,10 @@ private fun formatPrompt(prompt: PromptRequest): String {
     }
 }
 
+@Composable
 private fun personaStateLabel(state: PersonaState): String = when (state) {
     PersonaState.SLEEP -> "sleep"
-    PersonaState.IDLE -> "idle"
+    PersonaState.IDLE -> stringResource(R.string.home_status_idle)
     PersonaState.BUSY -> "busy"
     PersonaState.ATTENTION -> "attention"
     PersonaState.CELEBRATE -> "celebrate"

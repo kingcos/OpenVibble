@@ -21,10 +21,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.openvibble.R
 import com.openvibble.bridge.BridgeAppModel
 import com.openvibble.stats.PersonaStats
 import com.openvibble.stats.PersonaStatsStore
@@ -88,16 +90,16 @@ private fun StatsPage(model: BridgeAppModel, stats: PersonaStatsStore) {
     val displayLevel = maxOf(bridgeLevel, s.level)
 
     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-        IndicatorRow(label = "MOOD") { MoodRow(tier = s.moodTier) }
-        IndicatorRow(label = "FED") { FedRow(filled = s.fedProgress) }
-        IndicatorRow(label = "ENERGY") { EnergyRow(tier = stats.energyTier()) }
+        IndicatorRow(label = stringResource(R.string.pet_metric_mood)) { MoodRow(tier = s.moodTier) }
+        IndicatorRow(label = stringResource(R.string.pet_metric_fed)) { FedRow(filled = s.fedProgress) }
+        IndicatorRow(label = stringResource(R.string.pet_metric_energy)) { EnergyRow(tier = stats.energyTier()) }
         LevelBadge(level = displayLevel)
         Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
-            MetricRow(label = "approved", value = s.approvals.toString())
-            MetricRow(label = "denied", value = s.denials.toString())
-            MetricRow(label = "napped", value = formatNap(s.napSeconds))
-            MetricRow(label = "tokens", value = formatTokens(snapshot.tokens.coerceAtLeast(0)))
-            MetricRow(label = "today", value = formatTokens(snapshot.tokensToday.coerceAtLeast(0)))
+            MetricRow(label = stringResource(R.string.pet_metric_approved), value = s.approvals.toString())
+            MetricRow(label = stringResource(R.string.pet_metric_denied), value = s.denials.toString())
+            MetricRow(label = stringResource(R.string.pet_metric_napped), value = formatNap(s.napSeconds))
+            MetricRow(label = stringResource(R.string.pet_metric_tokens), value = formatTokens(snapshot.tokens.coerceAtLeast(0)))
+            MetricRow(label = stringResource(R.string.pet_metric_today), value = formatTokens(snapshot.tokensToday.coerceAtLeast(0)))
         }
     }
 }
@@ -138,13 +140,13 @@ private fun MetricRow(label: String, value: String) {
 @Composable
 private fun HowPage() {
     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-        HowLine(tag = "MOOD", body = "一日一心。被拒绝会扣心，审批稳会恢复。")
-        HowLine(tag = "FED", body = "硬件的回复节奏越稳，填饱度越高。")
-        HowLine(tag = "ENERGY", body = "白天高；晚上静置或翻过来会进入休眠。")
-        HowLine(tag = "SHAKE", body = "晃一晃手机/硬件，宠物会眩晕一下。")
-        HowLine(tag = "IDLE", body = "连不上或无会话时，宠物会休息。")
-        HowLine(tag = "A", body = "主页：在 NORMAL / PET / INFO 之间循环。")
-        HowLine(tag = "B", body = "NORMAL 有 prompt 时拒绝；PET/INFO 下一页。")
+        HowLine(tag = "MOOD", body = stringResource(R.string.pet_how_mood))
+        HowLine(tag = "FED", body = stringResource(R.string.pet_how_fed))
+        HowLine(tag = "ENERGY", body = stringResource(R.string.pet_how_energy))
+        HowLine(tag = "SHAKE", body = stringResource(R.string.pet_how_shake))
+        HowLine(tag = "IDLE", body = stringResource(R.string.pet_how_idle))
+        HowLine(tag = "A", body = stringResource(R.string.pet_how_a))
+        HowLine(tag = "B", body = stringResource(R.string.pet_how_b))
     }
 }
 

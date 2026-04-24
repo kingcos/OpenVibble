@@ -5,6 +5,7 @@
 package com.openvibble.settings
 
 import android.content.Intent
+import android.os.Build
 import android.net.Uri
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -567,13 +568,14 @@ private fun ConfirmAlert(
     )
 }
 
+@Composable
 private fun defaultCheatRows(): List<CheatRow> = listOf(
-    CheatRow(CheatBadge.Text("A"), "按 A 键在主页切换 Claude/Info 面板"),
-    CheatRow(CheatBadge.LongPress("A"), "长按 A · 快速触发一次权限回复"),
-    CheatRow(CheatBadge.Text("B"), "按 B 键返回或关闭当前菜单"),
-    CheatRow(CheatBadge.Icon("⏻"), "按电源键翻转睡眠"),
-    CheatRow(CheatBadge.Icon("≡"), "按日志键查看最近事件"),
-    CheatRow(CheatBadge.Icon("⚙"), "按齿轮键进入设置"),
+    CheatRow(CheatBadge.Text("A"), stringResource(R.string.onboarding_help_a)),
+    CheatRow(CheatBadge.LongPress("A"), stringResource(R.string.onboarding_help_a_long)),
+    CheatRow(CheatBadge.Text("B"), stringResource(R.string.onboarding_help_b)),
+    CheatRow(CheatBadge.Icon("⏻"), stringResource(R.string.onboarding_help_power)),
+    CheatRow(CheatBadge.Icon("≡"), stringResource(R.string.onboarding_help_log)),
+    CheatRow(CheatBadge.Icon("⚙"), stringResource(R.string.onboarding_help_gear)),
 )
 
 private fun speciesLabel(selection: PersonaSpeciesId): String = when (selection) {
@@ -591,13 +593,23 @@ private fun appVersion(context: android.content.Context): String {
     val pm = context.packageManager
     val info = pm.getPackageInfo(context.packageName, 0)
     val version = info.versionName ?: "—"
-    val code = info.longVersionCode
+    val code = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+        info.longVersionCode
+    } else {
+        @Suppress("DEPRECATION")
+        info.versionCode.toLong()
+    }
     return if (code > 0L) "$version ($code)" else version
 }
 
+@Composable
 private fun currentLanguageLabel(): String {
     val code = Locale.getDefault().language
-    return if (code.startsWith("zh")) "中文" else "English"
+    return if (code.startsWith("zh")) {
+        stringResource(R.string.settings_language_zh)
+    } else {
+        stringResource(R.string.settings_language_en)
+    }
 }
 
 private fun PersonaSelectionStoreFactory(context: android.content.Context): SharedPreferencesPersonaSelectionStore =

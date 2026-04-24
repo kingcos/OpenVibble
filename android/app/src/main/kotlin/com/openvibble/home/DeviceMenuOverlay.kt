@@ -70,19 +70,23 @@ fun DeviceMenuOverlay(
                 landscape = stringResource(R.string.device_menu_clock_rot_landscape),
                 auto = stringResource(R.string.device_menu_clock_rot_auto),
             )
+            val onOffLabels = OnOffLabels(
+                on = stringResource(R.string.device_menu_value_on),
+                off = stringResource(R.string.device_menu_value_off),
+            )
             when {
                 state.resetOpen -> SectionList(
-                    titleLabel = "RESET",
+                    titleLabel = stringResource(R.string.device_menu_section_reset),
                     rows = resetRows(ctx),
                     selected = state.resetIndex,
                 )
                 state.settingsOpen -> SectionList(
-                    titleLabel = "SETTINGS",
-                    rows = settingsRows(ctx, state, clockRotLabels),
+                    titleLabel = stringResource(R.string.device_menu_section_settings),
+                    rows = settingsRows(ctx, state, clockRotLabels, onOffLabels),
                     selected = state.settingsIndex,
                 )
                 state.menuOpen -> SectionList(
-                    titleLabel = "MENU",
+                    titleLabel = stringResource(R.string.device_menu_section_menu),
                     rows = menuRows(ctx),
                     selected = state.menuIndex,
                 )
@@ -98,13 +102,13 @@ fun DeviceMenuOverlay(
 @Composable
 private fun Header(state: DeviceMenuState) {
     val crumb = when {
-        state.resetOpen -> "RESET"
-        state.settingsOpen -> "SETTINGS"
-        else -> "MENU"
+        state.resetOpen -> stringResource(R.string.device_menu_section_reset)
+        state.settingsOpen -> stringResource(R.string.device_menu_section_settings)
+        else -> stringResource(R.string.device_menu_section_menu)
     }
     Row(verticalAlignment = Alignment.CenterVertically) {
         Text(
-            text = "设备菜单",
+            text = stringResource(R.string.device_menu_title),
             color = TerminalPalette.ink,
             fontSize = 18.sp,
             fontWeight = FontWeight.ExtraBold,
@@ -124,6 +128,7 @@ private fun Header(state: DeviceMenuState) {
 private data class DisplayRow(val label: String, val trailing: String?)
 
 private data class ClockRotLabels(val portrait: String, val landscape: String, val auto: String)
+private data class OnOffLabels(val on: String, val off: String)
 
 private fun menuRows(ctx: android.content.Context): List<DisplayRow> =
     DeviceMenuState.MENU_ITEMS.map { DisplayRow(DeviceMenuState.menuItemLabel(ctx, it), null) }
@@ -132,11 +137,12 @@ private fun settingsRows(
     ctx: android.content.Context,
     state: DeviceMenuState,
     clockRot: ClockRotLabels,
+    onOff: OnOffLabels,
 ): List<DisplayRow> =
     DeviceMenuState.SETTINGS_ITEMS.map { id ->
         DisplayRow(
             DeviceMenuState.settingsItemLabel(ctx, id),
-            settingsTrailing(id, state, clockRot),
+            settingsTrailing(id, state, clockRot, onOff),
         )
     }
 
@@ -152,13 +158,14 @@ private fun settingsTrailing(
     id: String,
     state: DeviceMenuState,
     clockRot: ClockRotLabels,
+    onOff: OnOffLabels,
 ): String? = when (id) {
     "brightness" -> "${state.brightness}/4"
-    "sound" -> onOff(state.sound)
-    "bluetooth" -> onOff(state.bt)
-    "wifi" -> onOff(state.wifi)
-    "led" -> onOff(state.led)
-    "transcript" -> onOff(state.hud)
+    "sound" -> boolLabel(state.sound, onOff)
+    "bluetooth" -> boolLabel(state.bt, onOff)
+    "wifi" -> boolLabel(state.wifi, onOff)
+    "led" -> boolLabel(state.led, onOff)
+    "transcript" -> boolLabel(state.hud, onOff)
     "clock rot" -> when (state.clockRot) {
         1 -> clockRot.portrait
         2 -> clockRot.landscape
@@ -170,7 +177,7 @@ private fun settingsTrailing(
     else -> null
 }
 
-private fun onOff(v: Boolean): String = if (v) "开" else "关"
+private fun boolLabel(v: Boolean, labels: OnOffLabels): String = if (v) labels.on else labels.off
 
 @Composable
 private fun SectionList(
@@ -245,12 +252,12 @@ private fun Footer() {
             horizontalArrangement = Arrangement.spacedBy(14.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            FooterHint("A长按", "关闭")
-            FooterHint("A短按", "下一项")
-            FooterHint("B短按", "应用")
+            FooterHint(stringResource(R.string.device_menu_hint_a_long), stringResource(R.string.device_menu_hint_close))
+            FooterHint(stringResource(R.string.device_menu_hint_a_short), stringResource(R.string.device_menu_hint_next))
+            FooterHint(stringResource(R.string.device_menu_hint_b_short), stringResource(R.string.device_menu_hint_apply))
         }
         Text(
-            text = "本菜单仅演示本机设置，不影响 BLE",
+            text = stringResource(R.string.device_menu_notice_demo_only),
             color = TerminalPalette.inkDim,
             fontSize = 10.sp,
             fontWeight = FontWeight.SemiBold,
@@ -294,7 +301,7 @@ fun ScreenOffMask(onWake: () -> Unit, modifier: Modifier = Modifier) {
         contentAlignment = Alignment.Center,
     ) {
         Text(
-            text = "屏幕已关闭 · 点击唤醒",
+            text = stringResource(R.string.device_menu_screen_off),
             color = TerminalPalette.inkDim.copy(alpha = 0.35f),
             fontSize = 10.sp,
             fontWeight = FontWeight.SemiBold,

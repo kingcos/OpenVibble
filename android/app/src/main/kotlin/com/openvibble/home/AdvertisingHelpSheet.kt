@@ -36,10 +36,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.openvibble.R
 import com.openvibble.ui.terminal.TerminalFonts
 import com.openvibble.ui.terminal.TerminalPalette
 import kotlinx.coroutines.delay
@@ -88,7 +90,7 @@ fun AdvertisingHelpSheet(
             horizontalArrangement = Arrangement.spacedBy(10.dp),
         ) {
             Text(
-                text = "帮助",
+                text = stringResource(R.string.home_help_title),
                 color = TerminalPalette.ink,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.ExtraBold,
@@ -139,7 +141,7 @@ private fun Header() {
             style = TextStyle(fontFamily = TerminalFonts.mono),
         )
         Text(
-            text = "帮助",
+            text = stringResource(R.string.home_help_title),
             color = TerminalPalette.ink,
             fontSize = 28.sp,
             fontWeight = FontWeight.ExtraBold,
@@ -150,16 +152,16 @@ private fun Header() {
 
 @Composable
 private fun ClaudeCodeSection(onOpenLink: () -> Unit) {
-    HelpCard(title = "如果使用 Claude Code") {
+    HelpCard(title = stringResource(R.string.home_help_claude_code_title)) {
         Text(
-            text = "Claude Code 需要配合 OpenVibble Desktop 才能桥接到手机。",
+            text = stringResource(R.string.home_help_claude_code_body),
             color = TerminalPalette.ink,
             fontSize = 12.sp,
             style = TextStyle(fontFamily = TerminalFonts.mono),
         )
         PrimaryButton(
             leading = "↓",
-            text = "下载 OpenVibble Desktop",
+            text = stringResource(R.string.home_help_claude_code_link),
             trailing = "↗",
             onClick = onOpenLink,
         )
@@ -174,10 +176,9 @@ private fun RenameSection(
     onCopy: () -> Unit,
     onOpenSettings: () -> Unit,
 ) {
-    HelpCard(title = "如果 Claude Desktop 无法搜索到") {
+    HelpCard(title = stringResource(R.string.home_help_rename_title)) {
         Text(
-            text = "Claude Desktop 只会扫描以 Claude 开头的设备名。复制下方建议名称，" +
-                "粘贴到「设置 → 蓝牙」的本机蓝牙名称（部分系统在「关于本机 → 设备名」）。",
+            text = stringResource(R.string.home_help_rename_body),
             color = TerminalPalette.ink,
             fontSize = 12.sp,
             style = TextStyle(fontFamily = TerminalFonts.mono),
@@ -190,12 +191,12 @@ private fun RenameSection(
         )
         PrimaryButton(
             leading = "⚙",
-            text = "打开蓝牙设置",
+            text = stringResource(R.string.home_help_rename_open_settings),
             trailing = null,
             onClick = onOpenSettings,
         )
         InfoHint(
-            text = "请前往「设置 → 蓝牙」修改本机蓝牙名称，或在「关于本机 → 设备名」中粘贴上方名称。",
+            text = stringResource(R.string.home_help_rename_manual_hint),
         )
     }
 }
@@ -203,8 +204,7 @@ private fun RenameSection(
 @Composable
 private fun ReconnectHint() {
     Text(
-        text = "如果 Claude Desktop 多次尝试后仍无法正常连接，可重启 Claude Desktop 客户端，" +
-            "或配合使用 OpenVibble Desktop 连接。",
+        text = stringResource(R.string.settings_help_reconnect_hint),
         color = TerminalPalette.bad,
         fontSize = 11.sp,
         fontWeight = FontWeight.Bold,
@@ -290,7 +290,11 @@ private fun NameRow(
             onClick = onShuffle,
         )
         HeaderButton(
-            label = if (copied) "✓ 已复制" else "⧉ 复制",
+            label = if (copied) {
+                "✓ ${stringResource(R.string.common_copied)}"
+            } else {
+                "⧉ ${stringResource(R.string.common_copy)}"
+            },
             fill = false,
             onClick = onCopy,
         )

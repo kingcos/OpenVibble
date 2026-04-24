@@ -74,11 +74,22 @@ class MainActivity : ComponentActivity() {
         }
 
         setContent {
+            val context = LocalContext.current
+            val settings = remember { AppSettings(context) }
+            var terminalTheme by remember { mutableStateOf(settings.terminalTheme) }
+            TerminalPalette.mode = terminalTheme
+
             OpenVibbleTheme {
                 Surface(modifier = Modifier.fillMaxSize(), color = TerminalPalette.lcdBg) {
                     RootFlow(
                         model = model,
                         navigation = navigation,
+                        settings = settings,
+                        terminalTheme = terminalTheme,
+                        onTerminalThemeChange = { theme ->
+                            settings.terminalTheme = theme
+                            terminalTheme = theme
+                        },
                         onRequestNotificationPermission = ::askForNotificationPermission,
                     )
                 }
@@ -146,15 +157,14 @@ private fun OpenVibbleTheme(content: @Composable () -> Unit) {
 private fun RootFlow(
     model: BridgeAppModel,
     navigation: NavigationCoordinator,
+    settings: AppSettings,
+    terminalTheme: com.openvibble.ui.terminal.TerminalThemeMode,
+    onTerminalThemeChange: (com.openvibble.ui.terminal.TerminalThemeMode) -> Unit,
     onRequestNotificationPermission: () -> Unit,
 ) {
     val context = LocalContext.current
-    val settings = remember { AppSettings(context) }
-    var terminalTheme by remember { mutableStateOf(settings.terminalTheme) }
     val scope = rememberCoroutineScope()
     val persona = remember { PersonaController(scope) }
-
-    TerminalPalette.mode = terminalTheme
 
     LaunchedEffect(Unit) {
         persona.bind(model, model.statsStore)
@@ -206,10 +216,7 @@ private fun RootFlow(
             model = model,
             settings = settings,
             terminalTheme = terminalTheme,
-            onTerminalThemeChange = { theme ->
-                settings.terminalTheme = theme
-                terminalTheme = theme
-            },
+            onTerminalThemeChange = onTerminalThemeChange,
             onDone = { showSettings = false },
             onRequestNotificationPermission = onRequestNotificationPermission,
             onShowOnboarding = {

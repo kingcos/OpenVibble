@@ -15,6 +15,7 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import com.openvibble.R
 
 /**
  * Android parity with iOS `BuddyNotificationCenter`. Owns an actionable
@@ -45,18 +46,18 @@ object BuddyNotificationCenter {
 
         val prompt = NotificationChannel(
             CHANNEL_PROMPT,
-            "权限请求",
+            context.getString(R.string.notification_channel_prompt),
             NotificationManager.IMPORTANCE_HIGH,
         ).apply {
-            description = "Claude Desktop 发来的权限请求，支持直接在通知上允许或拒绝。"
+            description = context.getString(R.string.notification_channel_prompt_desc)
             enableVibration(true)
         }
         val level = NotificationChannel(
             CHANNEL_LEVEL,
-            "升级通知",
+            context.getString(R.string.notification_channel_level),
             NotificationManager.IMPORTANCE_DEFAULT,
         ).apply {
-            description = "桌宠升级时的提醒。"
+            description = context.getString(R.string.notification_channel_level_desc)
         }
 
         nm.createNotificationChannel(prompt)
@@ -79,14 +80,14 @@ object BuddyNotificationCenter {
 
         val notification = NotificationCompat.Builder(context, CHANNEL_PROMPT)
             .setSmallIcon(context.applicationInfo.icon)
-            .setContentTitle("Claude 需要权限")
-            .setContentText("工具：$tool")
-            .setStyle(NotificationCompat.BigTextStyle().bigText("Claude Desktop 请求使用工具「$tool」"))
+            .setContentTitle(context.getString(R.string.notification_prompt_title))
+            .setContentText(context.getString(R.string.notification_prompt_text, tool))
+            .setStyle(NotificationCompat.BigTextStyle().bigText(context.getString(R.string.notification_prompt_big_text, tool)))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setCategory(NotificationCompat.CATEGORY_CALL)
             .setAutoCancel(true)
-            .addAction(NotificationCompat.Action.Builder(0, "允许", approveIntent).build())
-            .addAction(NotificationCompat.Action.Builder(0, "拒绝", denyIntent).build())
+            .addAction(NotificationCompat.Action.Builder(0, context.getString(R.string.notification_action_approve), approveIntent).build())
+            .addAction(NotificationCompat.Action.Builder(0, context.getString(R.string.notification_action_deny), denyIntent).build())
             .build()
 
         runCatching {
@@ -106,8 +107,8 @@ object BuddyNotificationCenter {
 
         val notification = NotificationCompat.Builder(context, CHANNEL_LEVEL)
             .setSmallIcon(context.applicationInfo.icon)
-            .setContentTitle("升级！")
-            .setContentText("桌宠升到了 LV $level")
+            .setContentTitle(context.getString(R.string.notification_level_title))
+            .setContentText(context.getString(R.string.notification_level_text, level))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setAutoCancel(true)
             .build()

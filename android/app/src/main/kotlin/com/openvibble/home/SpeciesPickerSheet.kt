@@ -29,10 +29,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.openvibble.R
 import com.openvibble.persona.InstalledPersona
 import com.openvibble.persona.PersonaSelectionStore
 import com.openvibble.persona.PersonaSpeciesCatalog
@@ -75,7 +77,7 @@ fun SpeciesPickerSheet(
             item { Header(onClose = onClose) }
 
             item {
-                TerminalPanel(title = "species.panel.preview") {
+                TerminalPanel(title = stringResource(R.string.species_panel_preview)) {
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -89,7 +91,7 @@ fun SpeciesPickerSheet(
 
             item {
                 TerminalPanel(
-                    title = "species.panel.builtin",
+                    title = stringResource(R.string.species_panel_builtin),
                     collapsible = true,
                     collapsedByDefault = true,
                 ) {
@@ -97,7 +99,7 @@ fun SpeciesPickerSheet(
                         PersonaSpeciesCatalog.names.forEachIndexed { idx, name ->
                             SpeciesRow(
                                 title = "ASCII (${name.replaceFirstChar { it.titlecase(Locale.getDefault()) }})",
-                                subtitle = if (idx == ASCII_DEFAULT_IDX) "默认形态" else "idx $idx",
+                                subtitle = if (idx == ASCII_DEFAULT_IDX) stringResource(R.string.species_default) else "idx $idx",
                                 selected = matches(current, asciiIdFor(idx)),
                                 onClick = {
                                     val id = asciiIdFor(idx)
@@ -111,7 +113,7 @@ fun SpeciesPickerSheet(
                             val id = PersonaSpeciesId.Builtin(persona.name)
                             SpeciesRow(
                                 title = persona.manifest.name.replaceFirstChar { it.titlecase(Locale.getDefault()) },
-                                subtitle = statesSubtitle(persona.manifest.states.size),
+                                subtitle = stringResource(R.string.species_subtitle_states, persona.manifest.states.size),
                                 selected = matches(current, id),
                                 onClick = {
                                     current = id
@@ -126,13 +128,13 @@ fun SpeciesPickerSheet(
 
             item {
                 TerminalPanel(
-                    title = "species.panel.installed",
+                    title = stringResource(R.string.species_panel_installed),
                     collapsible = true,
                     collapsedByDefault = true,
                 ) {
                     if (installed.isEmpty()) {
                         Text(
-                            text = "未安装其他角色包",
+                            text = stringResource(R.string.species_empty_installed),
                             color = TerminalPalette.inkDim,
                             fontSize = 12.sp,
                             style = TextStyle(fontFamily = TerminalFonts.mono),
@@ -143,7 +145,7 @@ fun SpeciesPickerSheet(
                                 val id = PersonaSpeciesId.Installed(persona.name)
                                 SpeciesRow(
                                     title = persona.manifest.name,
-                                    subtitle = statesSubtitle(persona.manifest.states.size),
+                                    subtitle = stringResource(R.string.species_subtitle_states, persona.manifest.states.size),
                                     selected = matches(current, id),
                                     onClick = {
                                         current = id
@@ -169,7 +171,7 @@ private fun Header(onClose: () -> Unit) {
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            text = "角色选择",
+            text = stringResource(R.string.species_title),
             color = TerminalPalette.ink,
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
@@ -304,5 +306,3 @@ private fun asciiIdFor(idx: Int): PersonaSpeciesId =
 
 private fun matches(current: PersonaSpeciesId, candidate: PersonaSpeciesId): Boolean =
     current.rawValue == candidate.rawValue
-
-private fun statesSubtitle(count: Int): String = "$count 个状态帧"

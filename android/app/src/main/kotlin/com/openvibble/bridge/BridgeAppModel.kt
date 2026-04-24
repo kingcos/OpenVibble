@@ -12,6 +12,7 @@ import android.os.BatteryManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.openvibble.R
 import com.openvibble.nusperipheral.BuddyPeripheralService
 import com.openvibble.nusperipheral.NusConnectionState
 import com.openvibble.persona.AssetManagerBuiltinSource
@@ -131,23 +132,25 @@ class BridgeAppModel(
     init {
         runtime.onCharacterInstalled = { name ->
             _lastInstalledCharacter.value = name
-            recordEvent("系统 已安装宠物：$name")
+            recordEvent(context.getString(R.string.event_system_installed_pet, name))
         }
         runtime.onSpeciesChanged = { idx ->
             val line = when {
-                idx == PersonaSpeciesCatalog.GIF_SENTINEL -> "系统 切换宠物 → GIF"
-                else -> PersonaSpeciesCatalog.nameAt(idx)?.let { "系统 切换宠物 → $it (idx=$idx)" }
+                idx == PersonaSpeciesCatalog.GIF_SENTINEL -> context.getString(R.string.event_system_switch_pet_gif)
+                else -> PersonaSpeciesCatalog.nameAt(idx)?.let {
+                    context.getString(R.string.event_system_switch_pet, it, idx)
+                }
             }
             if (line != null) recordEvent(line)
         }
         runtime.onTaskCompleted = { _lastCompletedAt.value = System.currentTimeMillis() }
 
         peripheral.onLineReceived = { line ->
-            recordEvent("接收  $line")
+            recordEvent(context.getString(R.string.event_received, line))
             val outbound = runtime.ingestLine(line)
             refreshFromRuntime()
             for (response in outbound) {
-                recordEvent("发送  ${response.trim()}")
+                recordEvent(context.getString(R.string.event_sent, response.trim()))
                 peripheral.sendLine(response)
             }
         }
@@ -170,7 +173,7 @@ class BridgeAppModel(
         _activeDisplayName.value = name
         peripheral.setAdvertisementMode(includeServiceUuidInAdvertisement)
         peripheral.start(name)
-        recordEvent("系统 请求启动广播：$name")
+        recordEvent(context.getString(R.string.event_start_advertising, name))
         refreshFromRuntime()
         started = true
     }
@@ -178,7 +181,7 @@ class BridgeAppModel(
     fun stop() {
         if (!started) return
         peripheral.stop()
-        recordEvent("系统 BLE 外设已停止")
+        recordEvent(context.getString(R.string.event_ble_stopped))
         started = false
     }
 
@@ -186,8 +189,12 @@ class BridgeAppModel(
     fun respondPermission(decision: PermissionDecision): Long? {
         val answeredId = runtime.prompt.value?.id
         val line = runtime.respondPermission(decision) ?: return null
-        val direction = if (decision == PermissionDecision.ONCE) "允许" else "拒绝"
-        recordEvent("发送  权限$direction")
+        val direction = if (decision == PermissionDecision.ONCE) {
+            context.getString(R.string.event_permission_approve)
+        } else {
+            context.getString(R.string.event_permission_deny)
+        }
+        recordEvent(context.getString(R.string.event_permission_sent, direction))
         peripheral.sendLine(line)
 
         val elapsedMs = lastPromptAtMs?.let { System.currentTimeMillis() - it }
@@ -214,7 +221,7 @@ class BridgeAppModel(
     }
 
     fun logDeviceMenuEvent(description: String) {
-        recordEvent("设备 $description")
+        recordEvent(context.getString(R.string.event_device, description))
     }
 
     private fun mergeParsedEntries(incoming: List<String>) {
@@ -255,7 +262,7 @@ class BridgeAppModel(
         if (leveled) {
             _recentLevelUp.value = true
             val level = statsStore.stats.value.level
-            recordEvent("系统 升级！等级 $level")
+            recordEvent(context.getString(R.string.event_level_up, level.toInt()))
             notifications?.notifyLevelUpIfNeeded(level = level.toInt(), enabled = settings.notificationsEnabled)
             viewModelScope.launch {
                 kotlinx.coroutines.delay(3_000L)

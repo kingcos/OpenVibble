@@ -51,6 +51,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
@@ -60,6 +61,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.openvibble.R
 import com.openvibble.bridge.BridgeAppModel
 import com.openvibble.nav.NavigationCoordinator
 import com.openvibble.nusperipheral.BluetoothPowerState
@@ -177,7 +179,7 @@ fun HomeScreen(
     val deviceMenu = remember { DeviceMenuState(context) }
     var showAdvertisingHelp by remember { mutableStateOf(false) }
 
-    Box(modifier = Modifier.fillMaxSize().background(Color.Black)) {
+    Box(modifier = Modifier.fillMaxSize().background(TerminalPalette.lcdBg)) {
         ScanlineOverlay()
 
         BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
@@ -512,13 +514,13 @@ private fun AdvertisingActionBar(
     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         AdvertisingActionChip(
             icon = "↻",
-            text = "RESTART",
+            text = stringResource(R.string.home_advertising_restart),
             stroke = TerminalPalette.accentSoft.copy(alpha = 0.55f),
             onClick = onRestartAdvertising,
         )
         AdvertisingActionChip(
             icon = "?",
-            text = "HELP",
+            text = stringResource(R.string.home_advertising_help),
             stroke = TerminalPalette.inkDim.copy(alpha = 0.55f),
             onClick = onShowHelp,
         )
@@ -614,7 +616,7 @@ private fun PetArea(
     val installed = remember(selection, charactersRoot, builtinCharactersRoot) {
         resolveInstalledPersona(selection, charactersRoot, builtinCharactersRoot)
     }
-    Box(modifier = modifier.background(Color.Black)) {
+    Box(modifier = modifier.background(TerminalPalette.lcdPanel)) {
         if (installed != null) {
             GifBuddyView(
                 persona = installed,
@@ -824,7 +826,7 @@ private fun ParsedLogList(entries: List<String>) {
     if (entries.isEmpty()) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Text(
-                text = "· no log ·",
+                text = stringResource(R.string.home_log_empty),
                 color = TerminalPalette.inkDim.copy(alpha = 0.6f),
                 fontSize = 11.sp,
                 style = TextStyle(fontFamily = TerminalFonts.mono),
@@ -902,7 +904,7 @@ private fun currentClock(): String {
 
 @Composable
 private fun StatusLine(snapshot: com.openvibble.runtime.BridgeSnapshot) {
-    val msg = if (snapshot.msg.isBlank()) "waiting for claude" else snapshot.msg
+    val msg = if (snapshot.msg.isBlank()) stringResource(R.string.home_status_waiting_for_claude) else snapshot.msg
     val glyph = rememberSpinGlyph()
     Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
         Row(
@@ -928,10 +930,10 @@ private fun StatusLine(snapshot: com.openvibble.runtime.BridgeSnapshot) {
             )
         }
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            StatusPill(label = "sess", value = snapshot.total.toString())
-            StatusPill(label = "run", value = snapshot.running.toString())
-            StatusPill(label = "wait", value = snapshot.waiting.toString())
-            StatusPill(label = "tok/d", value = formatTokensShort(snapshot.tokensToday))
+            StatusPill(label = stringResource(R.string.home_metric_sessions), value = snapshot.total.toString())
+            StatusPill(label = stringResource(R.string.home_metric_running), value = snapshot.running.toString())
+            StatusPill(label = stringResource(R.string.home_metric_waiting), value = snapshot.waiting.toString())
+            StatusPill(label = stringResource(R.string.home_metric_tok_day), value = formatTokensShort(snapshot.tokensToday))
         }
     }
 }
@@ -1002,7 +1004,7 @@ private fun PromptPanel(
         verticalArrangement = Arrangement.spacedBy(6.dp),
     ) {
         Text(
-            text = "waited ${waitedSeconds}s",
+            text = stringResource(R.string.home_prompt_waited, waitedSeconds),
             color = timerColor,
             fontSize = 11.sp,
             fontWeight = FontWeight.SemiBold,
@@ -1030,15 +1032,15 @@ private fun PromptPanel(
         Row(horizontalArrangement = Arrangement.spacedBy(14.dp)) {
             if (responseSent) {
                 Text(
-                    text = "SENT",
+                    text = stringResource(R.string.home_prompt_sent),
                     color = TerminalPalette.good,
                     fontSize = 11.sp,
                     fontWeight = FontWeight.Bold,
                     style = TextStyle(fontFamily = TerminalFonts.mono, letterSpacing = 1.sp),
                 )
             } else {
-                PromptActionChip(label = "APPROVE", key = "A", tint = TerminalPalette.good, onClick = onApprove)
-                PromptActionChip(label = "DENY", key = "B", tint = TerminalPalette.bad, onClick = onDeny)
+                PromptActionChip(label = stringResource(R.string.home_prompt_approve), key = "A", tint = TerminalPalette.good, onClick = onApprove)
+                PromptActionChip(label = stringResource(R.string.home_prompt_deny), key = "B", tint = TerminalPalette.bad, onClick = onDeny)
             }
         }
     }

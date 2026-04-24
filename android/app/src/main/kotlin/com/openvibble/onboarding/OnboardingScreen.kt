@@ -451,13 +451,14 @@ private fun FooterCta(
     }
 }
 
+@Composable
 private fun defaultCheatRows(): List<CheatRow> = listOf(
-    CheatRow(CheatBadge.Text("A"), "按 A 键在主页切换 Claude/Info 面板"),
-    CheatRow(CheatBadge.LongPress("A"), "长按 A · 快速触发一次权限回复"),
-    CheatRow(CheatBadge.Text("B"), "按 B 键返回或关闭当前菜单"),
-    CheatRow(CheatBadge.Icon("⏻"), "按电源键翻转睡眠"),
-    CheatRow(CheatBadge.Icon("≡"), "按日志键查看最近事件"),
-    CheatRow(CheatBadge.Icon("⚙"), "按齿轮键进入设置"),
+    CheatRow(CheatBadge.Text("A"), stringResource(R.string.onboarding_help_a)),
+    CheatRow(CheatBadge.LongPress("A"), stringResource(R.string.onboarding_help_a_long)),
+    CheatRow(CheatBadge.Text("B"), stringResource(R.string.onboarding_help_b)),
+    CheatRow(CheatBadge.Icon("⏻"), stringResource(R.string.onboarding_help_power)),
+    CheatRow(CheatBadge.Icon("≡"), stringResource(R.string.onboarding_help_log)),
+    CheatRow(CheatBadge.Icon("⚙"), stringResource(R.string.onboarding_help_gear)),
 )
 
 private fun openAppSettings(context: Context) {

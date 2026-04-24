@@ -29,10 +29,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.openvibble.R
 import com.openvibble.bridge.BridgeAppModel
 import com.openvibble.nusperipheral.NusConnectionState
 import com.openvibble.persona.PersonaController
@@ -67,7 +69,7 @@ internal fun InfoBody(
     ) {
         Row(verticalAlignment = Alignment.Bottom) {
             Text(
-                text = "INFO",
+                text = stringResource(R.string.info_title),
                 color = TerminalPalette.ink,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.ExtraBold,
@@ -142,13 +144,14 @@ private fun TextRows(rows: List<InfoRow>) {
     }
 }
 
+@Composable
 private fun titleLabel(title: String): String = when (title) {
-    "ABOUT" -> "关于 OpenVibble"
-    "BUTTONS" -> "硬件按键说明"
-    "CLAUDE" -> "Claude 会话快览"
-    "DEVICE" -> "设备状态"
-    "BLE" -> "BLE 外设状态"
-    "CREDITS" -> "致谢"
+    "ABOUT" -> stringResource(R.string.info_page_about)
+    "BUTTONS" -> stringResource(R.string.info_page_buttons)
+    "CLAUDE" -> stringResource(R.string.info_page_claude)
+    "DEVICE" -> stringResource(R.string.info_page_device)
+    "BLE" -> stringResource(R.string.info_page_ble)
+    "CREDITS" -> stringResource(R.string.info_page_credits)
     else -> title
 }
 
@@ -157,27 +160,31 @@ private fun rowsFor(title: String, model: BridgeAppModel, appStartMs: Long): Lis
     val context = LocalContext.current
     return when (title) {
         "ABOUT" -> listOf(
-            InfoRow.Body("OpenVibble 是 Claude Desktop Buddy 硬件桌搭的陪伴 App。"),
-            InfoRow.Body("顶部显示 BLE 状态，中部显示像素宠物，底部 A/B 模拟实体按键。"),
-            InfoRow.Body("收到 Claude Desktop 的权限请求后，A=允许 / B=拒绝。"),
-            InfoRow.Body("源码 MPL-2.0，详见 GitHub。"),
+            InfoRow.Body(stringResource(R.string.info_about_body1)),
+            InfoRow.Body(stringResource(R.string.info_about_body2)),
+            InfoRow.Body(stringResource(R.string.info_about_body3)),
+            InfoRow.Body(stringResource(R.string.info_about_body4)),
         )
         "BUTTONS" -> listOf(
-            InfoRow.Body("A · 短按：NORMAL → PET → INFO 循环。"),
-            InfoRow.Body("A · 短按 · NORMAL 有 prompt：允许一次。"),
-            InfoRow.Body("A · 长按：开关设备菜单（亮度/声音/重置）。"),
-            InfoRow.Body("B · 短按 · NORMAL 有 prompt：拒绝。"),
-            InfoRow.Body("B · 短按 · PET/INFO：翻页。左右滑动亦可。"),
+            InfoRow.Body(stringResource(R.string.info_buttons_body1)),
+            InfoRow.Body(stringResource(R.string.info_buttons_body2)),
+            InfoRow.Body(stringResource(R.string.info_buttons_body3)),
+            InfoRow.Body(stringResource(R.string.info_buttons_body4)),
+            InfoRow.Body(stringResource(R.string.info_buttons_body5)),
         )
         "DEVICE" -> {
             val battery = readBatteryLabel(context)
-            val charging = readChargingLabel(context)
+            val charging = readChargingLabel(
+                context = context,
+                on = stringResource(R.string.device_menu_value_on),
+                off = stringResource(R.string.device_menu_value_off),
+            )
             val uptime = rememberUptimeLabel(appStartMs)
             listOf(
-                InfoRow.Pair("battery", battery),
-                InfoRow.Pair("usb", charging),
-                InfoRow.Pair("uptime", uptime),
-                InfoRow.Pair("pet", "Buddy"),
+                InfoRow.Pair(stringResource(R.string.info_device_battery), battery),
+                InfoRow.Pair(stringResource(R.string.info_device_usb), charging),
+                InfoRow.Pair(stringResource(R.string.info_device_uptime), uptime),
+                InfoRow.Pair(stringResource(R.string.info_device_pet), "Buddy"),
             )
         }
         "BLE" -> {
@@ -185,16 +192,16 @@ private fun rowsFor(title: String, model: BridgeAppModel, appStartMs: Long): Lis
             val adv by model.advertisingNote.collectAsState()
             val name by model.activeDisplayName.collectAsState()
             listOf(
-                InfoRow.Pair("link", linkLabel(conn)),
-                InfoRow.Pair("adv", adv),
-                InfoRow.Pair("name", name),
-                InfoRow.Pair("uuid", "6e400001-...e9d6"),
+                InfoRow.Pair(stringResource(R.string.info_ble_link), linkLabel(conn)),
+                InfoRow.Pair(stringResource(R.string.info_ble_adv), adv),
+                InfoRow.Pair(stringResource(R.string.info_ble_name), name),
+                InfoRow.Pair(stringResource(R.string.info_ble_uuid), "6e400001-...e9d6"),
             )
         }
         "CREDITS" -> listOf(
-            InfoRow.Body("Claude 是 Anthropic 的产品，本项目与其无从属关系。"),
-            InfoRow.Body("ASCII 字符源于 @Kenney 的 ASCII pet kit 再创作。"),
-            InfoRow.Body("感谢所有在 issue 区留过反馈的朋友。"),
+            InfoRow.Body(stringResource(R.string.info_credits_body1)),
+            InfoRow.Body(stringResource(R.string.info_credits_body2)),
+            InfoRow.Body(stringResource(R.string.info_credits_body3)),
         )
         else -> emptyList()
     }
@@ -212,10 +219,11 @@ private fun rememberUptimeLabel(appStartMs: Long): String {
     return formatUptime(((now - appStartMs) / 1000L).toInt().coerceAtLeast(0))
 }
 
+@Composable
 private fun linkLabel(state: NusConnectionState): String = when (state) {
-    is NusConnectionState.Stopped -> "off"
-    is NusConnectionState.Advertising -> "advertising"
-    is NusConnectionState.Connected -> "connected(${state.centralCount})"
+    is NusConnectionState.Stopped -> stringResource(R.string.info_ble_link_off)
+    is NusConnectionState.Advertising -> stringResource(R.string.info_ble_link_advertising)
+    is NusConnectionState.Connected -> stringResource(R.string.info_ble_link_connected, state.centralCount)
 }
 
 private fun readBatteryLabel(context: Context): String {
@@ -227,11 +235,11 @@ private fun readBatteryLabel(context: Context): String {
     return "${pct}%"
 }
 
-private fun readChargingLabel(context: Context): String {
-    val intent = context.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED)) ?: return "off"
+private fun readChargingLabel(context: Context, on: String, off: String): String {
+    val intent = context.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED)) ?: return off
     val status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, BatteryManager.BATTERY_STATUS_UNKNOWN)
     val charging = status == BatteryManager.BATTERY_STATUS_CHARGING || status == BatteryManager.BATTERY_STATUS_FULL
-    return if (charging) "on" else "off"
+    return if (charging) on else off
 }
 
 private fun formatUptime(seconds: Int): String {
