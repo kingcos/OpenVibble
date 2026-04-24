@@ -19,9 +19,11 @@ private fun gridRow(px: Int): Double = (px - 30) / 8.0
  * "o"/"*" char alternation instead of "."/"*".
  */
 object CactusOverlays {
-    val all: Map<PersonaState, List<Overlay>> = CapybaraOverlays.all.toMutableMap().apply {
+    val all: Map<PersonaState, List<Overlay>> by lazy {
+        CapybaraOverlays.all.toMutableMap().apply {
         this[PersonaState.BUSY] = busy
         this[PersonaState.CELEBRATE] = celebrate
+        }
     }
 
     private val busy: List<Overlay> = run {

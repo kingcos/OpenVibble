@@ -18,10 +18,8 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.weight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -74,6 +72,7 @@ fun TerminalPanel(
                         interactionSource = interaction,
                         indication = null,
                     ) { isExpanded = !isExpanded },
+                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
@@ -83,7 +82,6 @@ fun TerminalPanel(
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 12.sp,
                 )
-                Spacer(Modifier.weight(1f))
                 Text(
                     text = if (isExpanded) "v" else ">",
                     color = accent,

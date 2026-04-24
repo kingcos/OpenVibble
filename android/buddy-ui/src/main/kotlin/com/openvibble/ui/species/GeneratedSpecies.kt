@@ -10,27 +10,6 @@ package com.openvibble.ui.species
 import com.openvibble.persona.PersonaState
 
 object GeneratedSpecies {
-    val all: Map<String, Map<PersonaState, SpeciesStateData>> = mapOf(
-        "axolotl" to axolotl,
-        "blob" to blob,
-        "cactus" to cactus,
-        "capybara" to capybara,
-        "cat" to cat,
-        "chonk" to chonk,
-        "dragon" to dragon,
-        "duck" to duck,
-        "ghost" to ghost,
-        "goose" to goose,
-        "mushroom" to mushroom,
-        "octopus" to octopus,
-        "owl" to owl,
-        "penguin" to penguin,
-        "rabbit" to rabbit,
-        "robot" to robot,
-        "snail" to snail,
-        "turtle" to turtle,
-    )
-
     private val axolotl: Map<PersonaState, SpeciesStateData> = mapOf(
         PersonaState.SLEEP to SpeciesStateData(
             frames = listOf(
@@ -1637,4 +1616,24 @@ object GeneratedSpecies {
         ),
     )
 
+    val all: Map<String, Map<PersonaState, SpeciesStateData>> = mapOf(
+        "axolotl" to axolotl,
+        "blob" to blob,
+        "cactus" to cactus,
+        "capybara" to capybara,
+        "cat" to cat,
+        "chonk" to chonk,
+        "dragon" to dragon,
+        "duck" to duck,
+        "ghost" to ghost,
+        "goose" to goose,
+        "mushroom" to mushroom,
+        "octopus" to octopus,
+        "owl" to owl,
+        "penguin" to penguin,
+        "rabbit" to rabbit,
+        "robot" to robot,
+        "snail" to snail,
+        "turtle" to turtle,
+    )
 }

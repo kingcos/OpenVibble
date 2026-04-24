@@ -15,7 +15,7 @@ private fun gridCol(px: Int): Double = (px - 31) / 6.0
 private fun gridRow(px: Int): Double = (px - 30) / 8.0
 
 object SnailOverlays {
-    val all: Map<PersonaState, List<Overlay>> = mapOf(
+    val all: Map<PersonaState, List<Overlay>> by lazy { mapOf(
         PersonaState.SLEEP to sleep,
         PersonaState.IDLE to idle,
         PersonaState.BUSY to busy,
@@ -23,7 +23,7 @@ object SnailOverlays {
         PersonaState.CELEBRATE to celebrate,
         PersonaState.DIZZY to dizzy,
         PersonaState.HEART to heart,
-    )
+    ) }
 
     // SLEEP: three Z-streams drift up-LEFT over 12 ticks (snails sleep slowly).
     private val sleep: List<Overlay> = listOf(

@@ -16,7 +16,7 @@ import java.io.InputStream
  * [com.openvibble.persona.PersonaCatalog] loader works off real `java.io.File`
  * paths (so Coil's `ImageDecoderDecoder` can seek the GIF frames). Android
  * assets aren't normal files, so on first launch we stream each pack out of
- * `assets/BuiltinCharacters/*` into `filesDir/builtin-characters/*`.
+ * `assets/BuiltinCharacters/<persona>` into `filesDir/builtin-characters/<persona>`.
  *
  * The source/destination split keeps the copy logic testable on the host JVM
  * without an [AssetManager] — tests inject a [FileBuiltinAssetSource] backed

@@ -13,8 +13,10 @@ import com.openvibble.ui.species.OverlayTint
  * uses CYAN for the cold-tint effect.
  */
 object PenguinOverlays {
-    val all: Map<PersonaState, List<Overlay>> = CapybaraOverlays.all.toMutableMap().apply {
+    val all: Map<PersonaState, List<Overlay>> by lazy {
+        CapybaraOverlays.all.toMutableMap().apply {
         this[PersonaState.SLEEP] = penguinSleep
+        }
     }
 
     private val penguinSleep: List<Overlay> = run {

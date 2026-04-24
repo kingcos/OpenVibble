@@ -176,11 +176,7 @@ def emit_kotlin(species: list[tuple[str, list[tuple[str, list[list[str]], list[i
         "import com.openvibble.persona.PersonaState\n"
         "\n"
         "object GeneratedSpecies {\n"
-        "    val all: Map<String, Map<PersonaState, SpeciesStateData>> = mapOf(\n"
     )
-    for name, _ in species:
-        lines.append(f'        "{name}" to {name},\n')
-    lines.append("    )\n\n")
 
     for name, states in species:
         lines.append(f"    private val {name}: Map<PersonaState, SpeciesStateData> = mapOf(\n")
@@ -197,6 +193,10 @@ def emit_kotlin(species: list[tuple[str, list[tuple[str, list[list[str]], list[i
             lines.append(f"            colorRGB565 = {color},\n")
             lines.append("        ),\n")
         lines.append("    )\n\n")
+    lines.append("    val all: Map<String, Map<PersonaState, SpeciesStateData>> = mapOf(\n")
+    for name, _ in species:
+        lines.append(f'        "{name}" to {name},\n')
+    lines.append("    )\n")
     lines.append("}\n")
     return "".join(lines)
 

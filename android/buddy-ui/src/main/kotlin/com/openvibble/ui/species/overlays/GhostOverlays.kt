@@ -14,14 +14,14 @@ private fun gridCol(px: Int): Double = (px - 31) / 6.0
 private fun gridRow(px: Int): Double = (px - 30) / 8.0
 
 object GhostOverlays {
-    val all: Map<PersonaState, List<Overlay>> = mapOf(
+    val all: Map<PersonaState, List<Overlay>> by lazy { mapOf(
         PersonaState.SLEEP to sleep,
         PersonaState.BUSY to busy,
         PersonaState.ATTENTION to attention,
         PersonaState.CELEBRATE to celebrate,
         PersonaState.DIZZY to CapybaraOverlays.all[PersonaState.DIZZY]!!,
         PersonaState.HEART to CapybaraOverlays.all[PersonaState.HEART]!!,
-    )
+    ) }
 
     // SLEEP: three Z-streams drift up-right over 12 ticks (identical shape to cat, different phases).
     private val sleep: List<Overlay> = listOf(

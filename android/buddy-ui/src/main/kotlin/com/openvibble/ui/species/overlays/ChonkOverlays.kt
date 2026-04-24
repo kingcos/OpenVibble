@@ -15,14 +15,14 @@ private fun gridCol(px: Int): Double = (px - 31) / 6.0
 private fun gridRow(px: Int): Double = (px - 30) / 8.0
 
 object ChonkOverlays {
-    val all: Map<PersonaState, List<Overlay>> = mapOf(
+    val all: Map<PersonaState, List<Overlay>> by lazy { mapOf(
         PersonaState.SLEEP to sleep,
         PersonaState.BUSY to busy,
         PersonaState.ATTENTION to attention,
         PersonaState.CELEBRATE to celebrate,
         PersonaState.DIZZY to dizzy,
         PersonaState.HEART to heart,
-    )
+    ) }
 
     // SLEEP: three lazy Z-streams drift up-right over 12 ticks.
     private val sleep: List<Overlay> = listOf(
