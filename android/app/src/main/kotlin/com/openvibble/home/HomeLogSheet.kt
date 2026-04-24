@@ -35,10 +35,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.openvibble.R
 import com.openvibble.bridge.BridgeAppModel
 import com.openvibble.ui.terminal.TerminalFonts
 import com.openvibble.ui.terminal.TerminalPalette
@@ -79,7 +81,7 @@ fun HomeLogSheet(
             LogTab.BLE -> buildList {
                 addAll(recentEvents.take(80))
                 if (diagnostics.isNotEmpty()) {
-                    add("— diagnostics —")
+                    add("-- diagnostics --")
                     addAll(diagnostics)
                 }
             }
@@ -119,7 +121,7 @@ fun HomeLogSheet(
             }
             Spacer(Modifier.weight(1f))
             IconChip(
-                label = if (copied) "OK" else "COPY",
+                label = if (copied) stringResource(R.string.home_log_copied) else stringResource(R.string.home_log_copy),
                 tint = if (copied) TerminalPalette.good else TerminalPalette.ink,
                 onClick = {
                     val text = currentLog.joinToString("\n")
@@ -130,13 +132,13 @@ fun HomeLogSheet(
                 },
             )
             IconChip(
-                label = "DEL",
+                label = stringResource(R.string.home_log_delete),
                 tint = TerminalPalette.bad,
                 enabled = currentLog.isNotEmpty(),
                 onClick = { model.clearLogs() },
             )
             IconChip(
-                label = "X",
+                label = stringResource(R.string.home_log_close),
                 tint = TerminalPalette.inkDim,
                 onClick = onDismiss,
             )
@@ -145,7 +147,7 @@ fun HomeLogSheet(
         if (currentLog.isEmpty()) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 Text(
-                    text = "· no log ·",
+                    text = stringResource(R.string.home_log_empty),
                     color = TerminalPalette.inkDim,
                     fontSize = 11.sp,
                     style = TextStyle(fontFamily = TerminalFonts.mono),
@@ -219,7 +221,7 @@ private fun IconChip(
 ) {
     Box(
         modifier = Modifier
-            .size(width = 40.dp, height = 26.dp)
+            .size(width = 54.dp, height = 26.dp)
             .background(TerminalPalette.lcdPanel.copy(alpha = 0.6f), RoundedCornerShape(14.dp))
             .border(1.dp, TerminalPalette.inkDim.copy(alpha = 0.45f), RoundedCornerShape(14.dp))
             .alpha(if (enabled) 1f else 0.4f)

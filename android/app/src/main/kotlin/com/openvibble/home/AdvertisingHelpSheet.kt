@@ -160,9 +160,9 @@ private fun ClaudeCodeSection(onOpenLink: () -> Unit) {
             style = TextStyle(fontFamily = TerminalFonts.mono),
         )
         PrimaryButton(
-            leading = "↓",
+            leading = "GET",
             text = stringResource(R.string.home_help_claude_code_link),
-            trailing = "↗",
+            trailing = null,
             onClick = onOpenLink,
         )
     }
@@ -190,7 +190,7 @@ private fun RenameSection(
             onCopy = onCopy,
         )
         PrimaryButton(
-            leading = "⚙",
+            leading = "BT",
             text = stringResource(R.string.home_help_rename_open_settings),
             trailing = null,
             onClick = onOpenSettings,
@@ -285,15 +285,15 @@ private fun NameRow(
             modifier = Modifier.weight(1f),
         )
         HeaderButton(
-            label = "↻",
+            label = "NEW",
             fill = false,
             onClick = onShuffle,
         )
         HeaderButton(
             label = if (copied) {
-                "✓ ${stringResource(R.string.common_copied)}"
+                "OK ${stringResource(R.string.common_copied)}"
             } else {
-                "⧉ ${stringResource(R.string.common_copy)}"
+                stringResource(R.string.common_copy)
             },
             fill = false,
             onClick = onCopy,
@@ -396,7 +396,7 @@ private fun InfoHint(text: String) {
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Text(
-            text = "ⓘ",
+            text = "i",
             color = TerminalPalette.accentSoft,
             fontSize = 12.sp,
             fontWeight = FontWeight.Bold,

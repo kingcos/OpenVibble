@@ -160,7 +160,7 @@ class DeviceMenuState(private val prefs: DeviceMenuPrefs) {
             "help" -> onHelp()
             "about" -> onAbout()
         }
-        return "menu → $item"
+        return "menu -> $item"
     }
 
     private fun applySettings(
@@ -180,7 +180,7 @@ class DeviceMenuState(private val prefs: DeviceMenuPrefs) {
             "reset" -> { resetOpen = true; resetIndex = 1 /* default cancel */ }
             "back" -> { settingsOpen = false; settingsIndex = 0 }
         }
-        return "settings → $item"
+        return "settings -> $item"
     }
 
     private fun applyReset(onReset: () -> Unit): String {
@@ -189,7 +189,7 @@ class DeviceMenuState(private val prefs: DeviceMenuPrefs) {
             "confirm" -> { onReset(); resetOpen = false; settingsOpen = false; menuOpen = false }
             "cancel" -> resetOpen = false
         }
-        return "reset → $item"
+        return "reset -> $item"
     }
 
     // -- SharedPreferences-backed property delegates --

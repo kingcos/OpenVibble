@@ -23,8 +23,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 /**
- * Android parity with iOS `PetIndicator.MoodRow`. 4 hearts, filled tier drives
- * color: >=3 hot, >=2 warm, else dim.
+ * Android parity with iOS `PetIndicator.MoodRow`. Drawn as blocks instead of
+ * heart glyphs so stripped-down Android fonts still render it correctly.
  */
 @Composable
 fun MoodRow(tier: Int, modifier: Modifier = Modifier) {
@@ -36,11 +36,15 @@ fun MoodRow(tier: Int, modifier: Modifier = Modifier) {
     Row(modifier = modifier, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
         for (i in 0 until 4) {
             val on = i < tier
-            Text(
-                text = if (on) "♥" else "♡",
-                color = if (on) color else TerminalPalette.moodDim,
-                fontWeight = FontWeight.Bold,
-                fontSize = 13.sp,
+            Box(
+                modifier = Modifier
+                    .size(width = 11.dp, height = 8.dp)
+                    .background(if (on) color else Color.Transparent, RoundedCornerShape(2.dp))
+                    .border(
+                        width = 1.dp,
+                        color = if (on) color else TerminalPalette.moodDim,
+                        shape = RoundedCornerShape(2.dp),
+                    ),
             )
         }
     }

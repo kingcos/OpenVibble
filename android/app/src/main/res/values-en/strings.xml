@@ -21,12 +21,12 @@
     <string name="onboarding_cta_enter">Enter</string>
     <string name="onboarding_cta_needs_permission">Grant Bluetooth to continue</string>
     <string name="onboarding_cta_skip">Skip for now</string>
-    <string name="onboarding_help_a">Cycle NORMAL → PET → INFO · approve a pending prompt</string>
-    <string name="onboarding_help_a_long">Long-press · open device menu</string>
-    <string name="onboarding_help_b">Flip page in PET / INFO · deny a pending prompt</string>
-    <string name="onboarding_help_power">Power · turn off the screen · tap anywhere to wake</string>
+    <string name="onboarding_help_a">Cycle NORMAL -> PET -> INFO - approve a pending prompt</string>
+    <string name="onboarding_help_a_long">Long-press - open device menu</string>
+    <string name="onboarding_help_b">Flip page in PET / INFO - deny a pending prompt</string>
+    <string name="onboarding_help_power">Power - turn off the screen - tap anywhere to wake</string>
     <string name="onboarding_help_log">Open the raw log drawer</string>
-    <string name="onboarding_help_gear">Settings · species picker · notification toggle</string>
+    <string name="onboarding_help_gear">Settings - species picker - notification toggle</string>
 
     <!-- Settings -->
     <string name="settings_title">SETTINGS</string>
@@ -64,7 +64,7 @@
     <string name="settings_about_language">Language</string>
     <string name="settings_language_zh">中文</string>
     <string name="settings_language_en">English</string>
-    <string name="settings_github">GitHub →</string>
+    <string name="settings_github">GitHub</string>
     <string name="pet_reset">Reset</string>
     <string name="pet_reset_confirm">Reset this app?</string>
     <string name="pet_reset_message">Preferences, pet selection, cached stats, and the onboarding flag will be cleared. The app returns to its first-launch state.</string>
@@ -112,24 +112,31 @@
     <string name="device_menu_hint_next">next</string>
     <string name="device_menu_hint_apply">apply</string>
     <string name="device_menu_notice_demo_only">Some features in this menu are for display only and do not affect BLE.</string>
-    <string name="device_menu_screen_off">screen off · tap to wake</string>
+    <string name="device_menu_screen_off">screen off - tap to wake</string>
 
     <!-- Home -->
     <string name="home_advertising_restart">RESTART</string>
     <string name="home_advertising_help">HELP</string>
-    <string name="home_log_empty">· no log ·</string>
+    <string name="home_log">LOG</string>
+    <string name="home_log_copy">COPY</string>
+    <string name="home_log_copied">OK</string>
+    <string name="home_log_delete">DEL</string>
+    <string name="home_log_close">CLOSE</string>
+    <string name="home_log_empty">- no log -</string>
     <string name="home_status_waiting_for_claude">waiting for claude</string>
     <string name="home_prompt_waited">waited %1$ds</string>
     <string name="home_prompt_sent">SENT</string>
     <string name="home_prompt_approve">APPROVE</string>
     <string name="home_prompt_deny">DENY</string>
+    <string name="home_project_all">ALL</string>
+    <string name="home_prompt_label">prompt</string>
     <string name="home_metric_sessions">sessions</string>
     <string name="home_metric_running">running</string>
     <string name="home_metric_waiting">waiting</string>
     <string name="home_metric_state">state</string>
     <string name="home_metric_tok_day">tok/d</string>
     <string name="home_recent">RECENT</string>
-    <string name="home_recent_empty">· nothing yet ·</string>
+    <string name="home_recent_empty">- nothing yet -</string>
     <string name="home_status_idle">idle</string>
     <string name="home_status_running">running</string>
     <string name="home_status_waiting">waiting</string>
@@ -140,9 +147,9 @@
     <string name="home_help_claude_code_body">Claude Code needs to be paired with OpenVibble Desktop to bridge into your Android device.</string>
     <string name="home_help_claude_code_link">Download OpenVibble Desktop</string>
     <string name="home_help_rename_title">If Claude Desktop cannot find this device</string>
-    <string name="home_help_rename_body">Claude Desktop scans for names starting with Claude. Copy the suggested handle and paste it into the device name in Bluetooth settings. On some systems, this lives under About phone → Device name.</string>
+    <string name="home_help_rename_body">Claude Desktop scans for names starting with Claude. Copy the suggested handle and paste it into the device name in Bluetooth settings. On some systems, this lives under About phone -> Device name.</string>
     <string name="home_help_rename_open_settings">Open Bluetooth Settings</string>
-    <string name="home_help_rename_manual_hint">Open Bluetooth settings and paste the handle above as this device name, or use About phone → Device name if your system exposes it there.</string>
+    <string name="home_help_rename_manual_hint">Open Bluetooth settings and paste the handle above as this device name, or use About phone -> Device name if your system exposes it there.</string>
 
     <!-- Info / Pet / Species -->
     <string name="info_title">INFO</string>
@@ -156,11 +163,11 @@
     <string name="info_about_body2">The top shows BLE status, the middle shows your pixel pet, and the bottom simulates A/B hardware buttons.</string>
     <string name="info_about_body3">When Claude Desktop requests permission, A approves and B denies.</string>
     <string name="info_about_body4">Source code is MPL-2.0; see GitHub for details.</string>
-    <string name="info_buttons_body1">A · short press: cycle NORMAL → PET → INFO.</string>
-    <string name="info_buttons_body2">A · short press · NORMAL with prompt: approve once.</string>
-    <string name="info_buttons_body3">A · long press: toggle device menu.</string>
-    <string name="info_buttons_body4">B · short press · NORMAL with prompt: deny.</string>
-    <string name="info_buttons_body5">B · short press · PET/INFO: flip page. Horizontal swipes work too.</string>
+    <string name="info_buttons_body1">A - short press: cycle NORMAL -> PET -> INFO.</string>
+    <string name="info_buttons_body2">A - short press - NORMAL with prompt: approve once.</string>
+    <string name="info_buttons_body3">A - long press: toggle device menu.</string>
+    <string name="info_buttons_body4">B - short press - NORMAL with prompt: deny.</string>
+    <string name="info_buttons_body5">B - short press - PET/INFO: flip page. Horizontal swipes work too.</string>
     <string name="info_credits_body1">Claude is an Anthropic product; this project is not affiliated with Anthropic.</string>
     <string name="info_credits_body2">ASCII sprites are adapted from Kenney ASCII pet kit.</string>
     <string name="info_credits_body3">Thanks to everyone who has shared feedback in issues.</string>
@@ -175,6 +182,7 @@
     <string name="info_ble_link_off">off</string>
     <string name="info_ble_link_advertising">advertising</string>
     <string name="info_ble_link_connected">connected(%1$d)</string>
+    <string name="pet_title">PET</string>
     <string name="pet_metric_mood">MOOD</string>
     <string name="pet_metric_fed">FED</string>
     <string name="pet_metric_energy">ENERGY</string>
@@ -211,8 +219,8 @@
     <string name="notification_level_title">Level up!</string>
     <string name="notification_level_text">Your pet reached LV %1$d</string>
     <string name="event_system_installed_pet">system installed pet: %1$s</string>
-    <string name="event_system_switch_pet_gif">system switched pet → GIF</string>
-    <string name="event_system_switch_pet">system switched pet → %1$s (idx=%2$d)</string>
+    <string name="event_system_switch_pet_gif">system switched pet -> GIF</string>
+    <string name="event_system_switch_pet">system switched pet -> %1$s (idx=%2$d)</string>
     <string name="event_received">recv  %1$s</string>
     <string name="event_sent">send  %1$s</string>
     <string name="event_start_advertising">system requested advertising: %1$s</string>

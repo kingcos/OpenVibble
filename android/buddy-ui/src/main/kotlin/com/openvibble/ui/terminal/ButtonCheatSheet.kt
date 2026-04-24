@@ -91,7 +91,7 @@ private fun BadgeView(badge: CheatBadge) {
 private fun FilledBadge(text: String) {
     Box(
         modifier = Modifier
-            .size(width = 28.dp, height = 24.dp)
+            .size(width = 38.dp, height = 24.dp)
             .background(TerminalPalette.ink, RoundedCornerShape(5.dp)),
         contentAlignment = Alignment.Center,
     ) {
@@ -109,7 +109,7 @@ private fun FilledBadge(text: String) {
 private fun DashedBadge(text: String) {
     Box(
         modifier = Modifier
-            .size(width = 28.dp, height = 24.dp)
+            .size(width = 38.dp, height = 24.dp)
             .background(TerminalPalette.lcdPanel.copy(alpha = 0.8f), RoundedCornerShape(5.dp)),
         contentAlignment = Alignment.Center,
     ) {

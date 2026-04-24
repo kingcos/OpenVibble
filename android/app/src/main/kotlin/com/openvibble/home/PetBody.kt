@@ -58,7 +58,7 @@ internal fun PetBody(
     ) {
         Row(verticalAlignment = Alignment.Bottom) {
             Text(
-                text = "PET",
+                text = stringResource(R.string.pet_title),
                 color = TerminalPalette.ink,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.ExtraBold,

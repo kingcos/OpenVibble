@@ -399,7 +399,7 @@ private fun SpeciesRow(label: String, onClick: () -> Unit) {
         )
         Spacer(Modifier.padding(end = 4.dp))
         Text(
-            text = ">",
+            text = "OPEN",
             color = TerminalPalette.inkDim,
             fontFamily = TerminalFonts.mono,
             fontWeight = FontWeight.Bold,
@@ -485,7 +485,7 @@ private fun AuthorRow() {
             )
             Spacer(Modifier.padding(end = 4.dp))
             Text(
-                text = "↗",
+                text = "OPEN",
                 color = TerminalPalette.ink,
                 fontFamily = TerminalFonts.mono,
                 fontWeight = FontWeight.Bold,
@@ -501,7 +501,7 @@ private fun ExternalLinkRow(label: String, url: String) {
     ActionRow(
         label = label,
         tint = TerminalPalette.ink,
-        trailing = "↗",
+        trailing = "OPEN",
         onClick = {
             context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
         },
@@ -573,9 +573,9 @@ private fun defaultCheatRows(): List<CheatRow> = listOf(
     CheatRow(CheatBadge.Text("A"), stringResource(R.string.onboarding_help_a)),
     CheatRow(CheatBadge.LongPress("A"), stringResource(R.string.onboarding_help_a_long)),
     CheatRow(CheatBadge.Text("B"), stringResource(R.string.onboarding_help_b)),
-    CheatRow(CheatBadge.Icon("⏻"), stringResource(R.string.onboarding_help_power)),
-    CheatRow(CheatBadge.Icon("≡"), stringResource(R.string.onboarding_help_log)),
-    CheatRow(CheatBadge.Icon("⚙"), stringResource(R.string.onboarding_help_gear)),
+    CheatRow(CheatBadge.Text("PWR"), stringResource(R.string.onboarding_help_power)),
+    CheatRow(CheatBadge.Text("LOG"), stringResource(R.string.onboarding_help_log)),
+    CheatRow(CheatBadge.Text("SET"), stringResource(R.string.onboarding_help_gear)),
 )
 
 private fun speciesLabel(selection: PersonaSpeciesId): String = when (selection) {
@@ -592,7 +592,7 @@ private fun speciesLabel(selection: PersonaSpeciesId): String = when (selection)
 private fun appVersion(context: android.content.Context): String {
     val pm = context.packageManager
     val info = pm.getPackageInfo(context.packageName, 0)
-    val version = info.versionName ?: "—"
+    val version = info.versionName ?: "-"
     val code = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
         info.longVersionCode
     } else {

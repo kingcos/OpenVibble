@@ -440,10 +440,11 @@ private fun TopBar(
                 contentAlignment = Alignment.Center,
             ) {
                 Text(
-                    text = "⚙",
+                    text = "SET",
                     color = TerminalPalette.ink,
-                    fontSize = 15.sp,
+                    fontSize = 10.sp,
                     fontWeight = FontWeight.SemiBold,
+                    style = TextStyle(fontFamily = TerminalFonts.mono),
                 )
             }
         }
@@ -513,7 +514,7 @@ private fun AdvertisingActionBar(
 ) {
     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         AdvertisingActionChip(
-            icon = "↻",
+            icon = "R",
             text = stringResource(R.string.home_advertising_restart),
             stroke = TerminalPalette.accentSoft.copy(alpha = 0.55f),
             onClick = onRestartAdvertising,
@@ -722,10 +723,11 @@ private fun BottomBar(
                 contentAlignment = Alignment.Center,
             ) {
                 Text(
-                    text = "⏻",
+                    text = "PWR",
                     color = TerminalPalette.accentSoft,
-                    fontSize = 13.sp,
+                    fontSize = 9.sp,
                     fontWeight = FontWeight.Bold,
+                    style = TextStyle(fontFamily = TerminalFonts.mono),
                 )
             }
         }
@@ -736,16 +738,10 @@ private fun BottomBar(
                 .clickable(onClick = onOpenLogs)
                 .padding(horizontal = 14.dp, vertical = 10.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            horizontalArrangement = Arrangement.Center,
         ) {
             Text(
-                text = "≡",
-                color = TerminalPalette.ink,
-                fontSize = 13.sp,
-                fontWeight = FontWeight.Bold,
-            )
-            Text(
-                text = "LOG",
+                text = stringResource(R.string.home_log),
                 color = TerminalPalette.ink,
                 fontSize = 11.sp,
                 fontWeight = FontWeight.Bold,
@@ -956,7 +952,7 @@ private fun rememberSpinGlyph(): String {
     return SPIN_GLYPHS[phase]
 }
 
-private val SPIN_GLYPHS = listOf("·", "•", "·", "•")
+private val SPIN_GLYPHS = listOf(".", "*", ".", "*")
 private const val SPIN_PERIOD_MS = 450L
 
 /**

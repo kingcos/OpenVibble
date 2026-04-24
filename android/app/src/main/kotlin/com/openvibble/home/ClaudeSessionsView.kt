@@ -127,7 +127,7 @@ private fun ChipRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         Chip(
-            title = "ALL",
+            title = stringResource(R.string.home_project_all),
             isSelected = selected == null,
             onClick = { onSelect(null) },
         )
@@ -272,7 +272,7 @@ private fun PromptRow(prompt: PromptRequest) {
         verticalAlignment = Alignment.Top,
     ) {
         Text(
-            text = "prompt",
+            text = stringResource(R.string.home_prompt_label),
             color = TerminalPalette.inkDim,
             fontSize = 12.sp,
             style = TextStyle(fontFamily = TerminalFonts.mono),
@@ -351,7 +351,7 @@ private fun formatPrompt(prompt: PromptRequest): String {
     val tool = prompt.tool.trim()
     val hint = prompt.hint.trim()
     return when {
-        tool.isEmpty() && hint.isEmpty() -> "—"
+        tool.isEmpty() && hint.isEmpty() -> "-"
         hint.isEmpty() -> tool
         tool.isEmpty() -> hint
         else -> "$tool: $hint"

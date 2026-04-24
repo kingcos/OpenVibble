@@ -193,7 +193,7 @@ private fun Header(onClose: () -> Unit) {
                 .padding(horizontal = 14.dp, vertical = 6.dp),
         ) {
             Text(
-                text = "DONE",
+                text = stringResource(R.string.common_done),
                 color = TerminalPalette.ink,
                 fontSize = 11.sp,
                 fontWeight = FontWeight.SemiBold,
@@ -289,7 +289,7 @@ private fun SpeciesRow(
         }
         if (selected) {
             Text(
-                text = "✓",
+                text = "OK",
                 color = TerminalPalette.ink,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,

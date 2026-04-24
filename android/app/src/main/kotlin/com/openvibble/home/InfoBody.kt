@@ -227,10 +227,10 @@ private fun linkLabel(state: NusConnectionState): String = when (state) {
 }
 
 private fun readBatteryLabel(context: Context): String {
-    val intent = context.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED)) ?: return "—"
+    val intent = context.registerReceiver(null, IntentFilter(Intent.ACTION_BATTERY_CHANGED)) ?: return "-"
     val level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
     val scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
-    if (level < 0 || scale <= 0) return "—"
+    if (level < 0 || scale <= 0) return "-"
     val pct = ((level.toFloat() / scale.toFloat()) * 100f).toInt()
     return "${pct}%"
 }

@@ -150,7 +150,7 @@ private fun resetRows(ctx: android.content.Context): List<DisplayRow> =
     DeviceMenuState.RESET_ITEMS.map { id ->
         DisplayRow(
             label = DeviceMenuState.resetItemLabel(ctx, id),
-            trailing = if (id == "confirm") "⚠" else null,
+            trailing = if (id == "confirm") "!" else null,
         )
     }
 
@@ -171,9 +171,9 @@ private fun settingsTrailing(
         2 -> clockRot.landscape
         else -> clockRot.auto
     }
-    "ascii pet" -> "▸"
-    "reset" -> "▸"
-    "back" -> "◂"
+    "ascii pet" -> ">"
+    "reset" -> ">"
+    "back" -> "<"
     else -> null
 }
 
@@ -207,7 +207,7 @@ private fun RowView(row: DisplayRow, isSelected: Boolean) {
         horizontalArrangement = Arrangement.spacedBy(6.dp),
     ) {
         Text(
-            text = if (isSelected) "▶" else " ",
+            text = if (isSelected) ">" else " ",
             color = if (isSelected) TerminalPalette.accent else TerminalPalette.inkDim,
             fontSize = 13.sp,
             fontWeight = FontWeight.Bold,

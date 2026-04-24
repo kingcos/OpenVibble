@@ -252,7 +252,7 @@ private fun OnboardingStepCard(
             ) {
                 if (done) {
                     Text(
-                        text = "✓",
+                        text = "OK",
                         color = TerminalPalette.lcdBg,
                         fontFamily = TerminalFonts.mono,
                         fontWeight = FontWeight.Bold,
@@ -456,9 +456,9 @@ private fun defaultCheatRows(): List<CheatRow> = listOf(
     CheatRow(CheatBadge.Text("A"), stringResource(R.string.onboarding_help_a)),
     CheatRow(CheatBadge.LongPress("A"), stringResource(R.string.onboarding_help_a_long)),
     CheatRow(CheatBadge.Text("B"), stringResource(R.string.onboarding_help_b)),
-    CheatRow(CheatBadge.Icon("⏻"), stringResource(R.string.onboarding_help_power)),
-    CheatRow(CheatBadge.Icon("≡"), stringResource(R.string.onboarding_help_log)),
-    CheatRow(CheatBadge.Icon("⚙"), stringResource(R.string.onboarding_help_gear)),
+    CheatRow(CheatBadge.Text("PWR"), stringResource(R.string.onboarding_help_power)),
+    CheatRow(CheatBadge.Text("LOG"), stringResource(R.string.onboarding_help_log)),
+    CheatRow(CheatBadge.Text("SET"), stringResource(R.string.onboarding_help_gear)),
 )
 
 private fun openAppSettings(context: Context) {
