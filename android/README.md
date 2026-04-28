@@ -2,6 +2,8 @@
 
 Android port of the OpenVibble iOS app. Targets Android 8.0+ (API 26) with BLE 5.0 support. Implements the Claude Desktop "Hardware Buddy" BLE NUS peripheral protocol so an Android phone can stand in for the M5Stack dev board.
 
+The Android app is part of the OpenVibble 1.0.2 release line. It includes the phone-side buddy runtime, bilingual English / Simplified Chinese resources, an e-ink friendly default terminal theme, actionable prompt notifications, GIF persona packs, and parity-focused Compose screens for onboarding, home, settings, logs, help, and species selection.
+
 ## Project layout
 
 Each Gradle module mirrors an iOS `OpenVibbleKit` target:
@@ -31,7 +33,9 @@ cd android
 ./gradlew test
 ```
 
-A physical Android 8+ device is required — the emulator cannot advertise BLE.
+The debug APK is generated at `app/build/outputs/apk/debug/app-debug.apk`. A physical Android 8+ device is required for end-to-end BLE testing — the emulator cannot advertise BLE.
+
+Release signing is not committed to the repository. Configure your local Android Studio / Gradle signing config before distributing a release APK or AAB.
 
 ## Not ported
 

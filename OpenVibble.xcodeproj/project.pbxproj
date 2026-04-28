@@ -11,7 +11,6 @@
 		071D192A3A75DACF6FDA80E8 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF76EBF276FBAD084D5F62C /* HomeScreen.swift */; };
 		0D63FE5BE7ACEC64AFE7BD16 /* BuddyPersona in Frameworks */ = {isa = PBXBuildFile; productRef = E64C391922BD2DC616D86DB4 /* BuddyPersona */; };
 		0D8BA2FB4E2F32AAA97BB4B7 /* BridgeAppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2382F18941BE0950209AA0E /* BridgeAppModel.swift */; };
-		E9467DDAD601E65E0D1A7DC0 /* ClaudeSessionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C63AD958587211A795A6EEAE /* ClaudeSessionsView.swift */; };
 		0E27D88C26F57BDC185ADCDD /* OverviewTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA02992DB8BE1A55CC5220E7 /* OverviewTab.swift */; };
 		10C4552150806CEAB534178E /* OpenVibbleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77B3453FEFE9D00261494A6F /* OpenVibbleApp.swift */; };
 		13C8A0B1E0DAF9363AB87328 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC3459B4E6022FBD263A1B98 /* Assets.xcassets */; };
@@ -19,6 +18,7 @@
 		2158028287496A33D4016ACC /* BuddyLiveActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A2C706FC0D1C2E7EE4A449 /* BuddyLiveActivityAttributes.swift */; };
 		2461AD8BB652D66EC53FB324 /* TerminalStyleLite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D1CD2BA270744D1E216FCFA /* TerminalStyleLite.swift */; };
 		24C74540F6F5CDED17A61CCD /* BuddyUI in Frameworks */ = {isa = PBXBuildFile; productRef = 95466985313AEFA5924180FD /* BuddyUI */; };
+		268B25C9661BB78F6D127C9D /* ClaudeSessionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E9CA6FEA964AD18EB91106B /* ClaudeSessionsView.swift */; };
 		2DC91727EEFE338A37F532DA /* DeviceMenuOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = B675ED379CED64D51EE4671A /* DeviceMenuOverlay.swift */; };
 		3BA24AC74AB2651F48704C01 /* MiniBuddyGlyphTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07B87E2C93760C9540A014BD /* MiniBuddyGlyphTests.swift */; };
 		3E730B9291448CF2115FA322 /* BuddyLiveActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A2C706FC0D1C2E7EE4A449 /* BuddyLiveActivityAttributes.swift */; };
@@ -101,7 +101,6 @@
 
 /* Begin PBXFileReference section */
 		01E8E5139CD9C5AD027E891B /* OpenVibbleLiveActivity.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenVibbleLiveActivity.entitlements; sourceTree = "<group>"; };
-		C63AD958587211A795A6EEAE /* ClaudeSessionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeSessionsView.swift; sourceTree = "<group>"; };
 		02A2C706FC0D1C2E7EE4A449 /* BuddyLiveActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuddyLiveActivityAttributes.swift; sourceTree = "<group>"; };
 		04A40F865CF51C1BCDAA4390 /* PromptIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptIntents.swift; sourceTree = "<group>"; };
 		05EBBCA4BE5024998B9168B4 /* OpenVibbleDesktopApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenVibbleDesktopApp.swift; sourceTree = "<group>"; };
@@ -118,6 +117,7 @@
 		3081794479729D37C708A0A4 /* SpeciesPickerSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeciesPickerSheet.swift; sourceTree = "<group>"; };
 		3638EB48505CF446D806C25A /* OnboardingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingScreen.swift; sourceTree = "<group>"; };
 		3DF98B7ED2F83C830B316236 /* TestPanelTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestPanelTab.swift; sourceTree = "<group>"; };
+		4E9CA6FEA964AD18EB91106B /* ClaudeSessionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeSessionsView.swift; sourceTree = "<group>"; };
 		5F4F84865792A7D52BF73EDD /* SmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokeTests.swift; sourceTree = "<group>"; };
 		5FFF5757CB966F2F1570C019 /* OpenVibbleAppTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = OpenVibbleAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D1CD2BA270744D1E216FCFA /* TerminalStyleLite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalStyleLite.swift; sourceTree = "<group>"; };
@@ -290,7 +290,7 @@
 		8DCB1A32783E284EF6E7C5F0 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				C63AD958587211A795A6EEAE /* ClaudeSessionsView.swift */,
+				4E9CA6FEA964AD18EB91106B /* ClaudeSessionsView.swift */,
 				B675ED379CED64D51EE4671A /* DeviceMenuOverlay.swift */,
 				BD1CFB277C64078012E3D244 /* DeviceMenuState.swift */,
 				FAF76EBF276FBAD084D5F62C /* HomeScreen.swift */,
@@ -585,9 +585,9 @@
 			files = (
 				0D8BA2FB4E2F32AAA97BB4B7 /* BridgeAppModel.swift in Sources */,
 				2158028287496A33D4016ACC /* BuddyLiveActivityAttributes.swift in Sources */,
-				E9467DDAD601E65E0D1A7DC0 /* ClaudeSessionsView.swift in Sources */,
 				9F0FA349BABFFC3F2DD69485 /* BuddyLiveActivityManager.swift in Sources */,
 				C9AC58D301BD3C5F6DEA3BC2 /* BuddyNotificationCenter.swift in Sources */,
+				268B25C9661BB78F6D127C9D /* ClaudeSessionsView.swift in Sources */,
 				2DC91727EEFE338A37F532DA /* DeviceMenuOverlay.swift in Sources */,
 				D344CC6B9180B1E621663DC0 /* DeviceMenuState.swift in Sources */,
 				071D192A3A75DACF6FDA80E8 /* HomeScreen.swift in Sources */,
@@ -702,7 +702,7 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_ENTITLEMENTS = OpenVibbleLiveActivity/OpenVibbleLiveActivity.entitlements;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = OpenVibbleLiveActivity/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
@@ -711,7 +711,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = kingcos.me.openvibble.liveactivity;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -724,7 +724,7 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_ENTITLEMENTS = OpenVibbleLiveActivity/OpenVibbleLiveActivity.entitlements;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = OpenVibbleLiveActivity/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
@@ -733,7 +733,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = kingcos.me.openvibble.liveactivity;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -781,13 +781,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = OpenVibbleApp/OpenVibbleApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				INFOPLIST_FILE = OpenVibbleApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -799,7 +799,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = OpenVibbleDesktop/OpenVibbleDesktop.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = OpenVibbleDesktop/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -807,7 +807,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = kingcos.me.openvibble.desktop;
 				PRODUCT_NAME = OpenVibbleDesktop;
 				SDKROOT = macosx;
@@ -821,7 +821,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = OpenVibbleDesktop/OpenVibbleDesktop.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = OpenVibbleDesktop/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -829,7 +829,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = kingcos.me.openvibble.desktop;
 				PRODUCT_NAME = OpenVibbleDesktop;
 				SDKROOT = macosx;
@@ -901,13 +901,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = OpenVibbleApp/OpenVibbleApp.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				INFOPLIST_FILE = OpenVibbleApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

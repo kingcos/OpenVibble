@@ -10,15 +10,16 @@
 
 <p align="center">
   <img alt="Swift" src="https://img.shields.io/badge/Swift-6.0-FA7343" />
+  <img alt="Android" src="https://img.shields.io/badge/Android-8.0%2B-3DDC84" />
   <img alt="License" src="https://img.shields.io/badge/License-MPL--2.0-brightgreen" />
   <a href="https://github.com/kingcos/OpenVibble/actions/workflows/build.yml">
     <img alt="Build" src="https://github.com/kingcos/OpenVibble/actions/workflows/build.yml/badge.svg?branch=main" />
   </a>
 </p>
 
-OpenVibble 基于 Claude Desktop Buddy 蓝牙协议实现，让 iPhone 直接与 Claude Desktop 配对，复刻原版 M5Stack 固件能力；搭配配套的 macOS 应用 **OpenVibble Desktop**，还能进一步桥接 Claude Code 等 Agent。
+OpenVibble 基于 Claude Desktop Buddy 蓝牙协议实现，让 iPhone 或 Android 手机直接与 Claude Desktop 配对，复刻原版 M5Stack 固件能力；搭配配套的 macOS 应用 **OpenVibble Desktop**，还能进一步桥接 Claude Code 等 Agent。
 
-它是 [Claude Desktop Buddy](https://github.com/anthropics/claude-desktop-buddy) 的 iOS 配套应用，提供原生交互与运行时支持。
+它基于 [Claude Desktop Buddy](https://github.com/anthropics/claude-desktop-buddy)，提供 iOS、Android 与 macOS 桌面端的原生交互与运行时支持。
 
 ## 效果图
 
@@ -33,22 +34,25 @@ OpenVibble 基于 Claude Desktop Buddy 蓝牙协议实现，让 iPhone 直接与
 - 基于传感器的互动（摇一摇、设备朝下）
 - 内置与桌面端下发的 GIF 角色包
 - 灵动岛与实时活动（Live Activity）状态展示与交互
+- Android 墨水屏友好的终端主题，以及中英文双语资源
 
 ## 环境要求
 
-- macOS + Xcode 17+
-- iOS 最低版本：18.0+
-- [XcodeGen](https://github.com/yonaskolb/XcodeGen)
-- 必须使用真机 —— iOS 模拟器不支持 BLE 外设广播
+- iOS：macOS + Xcode 17+、iOS 18.0+、[XcodeGen](https://github.com/yonaskolb/XcodeGen)，并需要 iPhone 真机。
+- Android：Android Studio Ladybug 或更新版本、JDK 17、Android 8.0+（API 26），并需要支持 BLE 5.0 的真机。
+- 桌面桥接：**OpenVibble Desktop** 需要 macOS 14+。
+- 模拟器适合检查 UI，但 BLE 外设广播必须使用真机。
 
 ## 快速开始
+
+构建 iOS/macOS 工程：
 
 ```sh
 make bootstrap
 open OpenVibble.xcodeproj
 ```
 
-命令行构建：
+命令行构建 iOS App：
 
 ```sh
 make build
@@ -60,14 +64,24 @@ make build
 make test
 ```
 
+构建 Android App：
+
+```sh
+cd android
+./gradlew :app:assembleDebug
+./gradlew test
+```
+
+debug APK 会输出到 `android/app/build/outputs/apk/debug/app-debug.apk`。正式 release 签名请使用你本地的 Android Studio / Gradle signing 配置。
+
 ## 与 Claude Desktop 配对
 
 1. 在 Claude Desktop 通过 `Help -> Troubleshooting -> Enable Developer Mode` 开启开发者模式。
-2. 打开 `Developer -> Open Hardware Buddy...`，点击 `Connect`，然后选择你的 iOS 设备。
-3. 在 iOS 设备上启动 OpenVibble，并在提示时授权蓝牙。
+2. 打开 `Developer -> Open Hardware Buddy...`，点击 `Connect`，然后选择你的 iOS 或 Android 设备。
+3. 在手机上启动 OpenVibble，并在提示时授权蓝牙。
 
 说明：
-- iOS 对 BLE/GAP 有系统级限制，部分 MCU 固件中的底层能力无法直接映射。
+- iOS 和 Android 对 BLE/GAP 都有系统级限制，部分 MCU 固件中的底层能力无法直接映射。
 - 桌面端下发的角色包会保存在 App 沙盒目录，并自动出现在角色 / 物种选择中。
 
 ## 与 Claude Code 配对（通过 OpenVibble Desktop）
@@ -76,7 +90,7 @@ OpenVibble Desktop 是一个 macOS 配套应用，把 OpenVibble 桥接到 Claud
 
 1. 在同一个 Xcode 工程中构建并运行 **OpenVibbleDesktop**。
 2. 在 OpenVibble Desktop 打开 **Hooks** 标签页，注册 Claude Code hooks（会写入 `~/.claude/settings.json`，可随时撤销）。
-3. 连接 iOS 设备后，Claude Code 的会话事件（启动 / 终止、权限请求、回复完成、用户消息等）会实时转发到桌宠端。
+3. 连接 iOS 或 Android 设备后，Claude Code 的会话事件（启动 / 终止、权限请求、回复完成、用户消息等）会实时转发到桌宠端。
 
 ## 贡献
 
@@ -84,7 +98,7 @@ OpenVibble Desktop 是一个 macOS 配套应用，把 OpenVibble 桥接到 Claud
 
 ## 本地化
 
-当前提供英文（`en`）与简体中文（`zh-Hans`）资源。
+iOS 与 Android 当前均提供英文（`en`）与简体中文（`zh-Hans` / `zh`）资源。
 
 ## 许可证
 

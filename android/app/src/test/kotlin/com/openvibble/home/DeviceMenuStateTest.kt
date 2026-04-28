@@ -79,7 +79,7 @@ class DeviceMenuStateTest {
             cycleAsciiSpecies = {}, onReset = {}, onTurnOff = {},
             onDemo = {}, onHelp = {}, onAbout = {}, onBluetoothChanged = {},
         )
-        assertEquals("menu → settings", desc)
+        assertEquals("menu -> settings", desc)
         assertTrue(s.settingsOpen)
         assertEquals(0, s.settingsIndex)
     }
