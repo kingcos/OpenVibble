@@ -30,7 +30,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
@@ -52,6 +51,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalClipboardManager
@@ -93,6 +94,8 @@ private val BottomActionHeight = 42.dp
 private val BottomActionCorner = 21.dp
 private val BottomButtonSize = 56.dp
 private val BottomBarReservedHeight = 92.dp
+private val PetViewportSize = 200.dp
+private val PetViewportHorizontalPadding = 24.dp
 
 /**
  * Android parity with iOS `HomeScreen` (OpenVibbleApp/Home/HomeScreen.swift).
@@ -633,26 +636,33 @@ private fun PetArea(
         resolveInstalledPersona(selection, charactersRoot, builtinCharactersRoot)
     }
     Box(modifier = modifier.background(TerminalPalette.lcdPanel)) {
-        if (installed != null) {
-            GifBuddyView(
-                persona = installed,
-                state = personaState,
+        Box(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .size(PetViewportSize)
+                .clipToBounds(),
+            contentAlignment = Alignment.Center,
+        ) {
+            Box(
                 modifier = Modifier
-                    .align(Alignment.Center)
-                    .widthIn(max = 200.dp)
-                    .heightIn(max = 200.dp)
-                    .padding(horizontal = 24.dp),
-            )
-        } else {
-            AsciiBuddyView(
-                state = personaState,
-                speciesIdx = speciesIdx,
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .widthIn(max = 200.dp)
-                    .heightIn(max = 200.dp)
-                    .padding(horizontal = 24.dp),
-            )
+                    .fillMaxSize()
+                    .padding(horizontal = PetViewportHorizontalPadding),
+                contentAlignment = Alignment.Center,
+            ) {
+                if (installed != null) {
+                    GifBuddyView(
+                        persona = installed,
+                        state = personaState,
+                        modifier = Modifier.fillMaxSize(),
+                    )
+                } else {
+                    AsciiBuddyView(
+                        state = personaState,
+                        speciesIdx = speciesIdx,
+                        modifier = Modifier.scale(0.95f),
+                    )
+                }
+            }
         }
         Row(
             modifier = Modifier
