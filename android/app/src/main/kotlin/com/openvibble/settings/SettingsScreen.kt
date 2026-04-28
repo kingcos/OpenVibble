@@ -7,6 +7,7 @@ package com.openvibble.settings
 import android.content.Intent
 import android.os.Build
 import android.net.Uri
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -78,6 +79,8 @@ fun SettingsScreen(
 ) {
     val context = LocalContext.current
     val stats: PersonaStatsStore = model.statsStore
+
+    BackHandler(onBack = onDone)
 
     var notificationsEnabled by remember { mutableStateOf(settings.notificationsEnabled) }
     var foregroundNotificationsEnabled by remember { mutableStateOf(settings.foregroundNotificationsEnabled) }

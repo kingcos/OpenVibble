@@ -6,6 +6,7 @@ package com.openvibble.home
 
 import android.content.Intent
 import android.provider.Settings
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
@@ -194,6 +195,13 @@ fun HomeScreen(
 
     val deviceMenu = remember { DeviceMenuState(context) }
     var showAdvertisingHelp by remember { mutableStateOf(false) }
+
+    BackHandler(enabled = deviceMenu.screenOff) {
+        deviceMenu.wakeScreen()
+    }
+    BackHandler(enabled = deviceMenu.isAnyMenuVisible && !deviceMenu.screenOff) {
+        deviceMenu.closeMenus()
+    }
 
     Box(modifier = Modifier.fillMaxSize().background(TerminalPalette.lcdBg)) {
         ScanlineOverlay()

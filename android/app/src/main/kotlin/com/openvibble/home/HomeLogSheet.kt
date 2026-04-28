@@ -7,6 +7,7 @@ package com.openvibble.home
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -67,6 +68,8 @@ fun HomeLogSheet(
     val context = LocalContext.current
     var tab by remember { mutableStateOf(LogTab.RUN) }
     var copied by remember { mutableStateOf(false) }
+
+    BackHandler(onBack = onDismiss)
 
     val snapshot by model.snapshot.collectAsState()
     val parsedEntries by model.parsedEntries.collectAsState()
