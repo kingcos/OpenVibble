@@ -7,6 +7,7 @@ package com.openvibble.settings
 import android.content.Intent
 import android.os.Build
 import android.net.Uri
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -38,6 +39,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.openvibble.R
@@ -419,14 +421,37 @@ private fun AboutRow(label: String, value: String) {
 @Composable
 private fun AuthorRow() {
     val context = LocalContext.current
-    ActionRow(
-        label = stringResource(R.string.settings_about_author),
-        secondaryLabel = "kingcos",
-        trailing = "OPEN",
-        onClick = {
-            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/kingcos")))
-        },
-    )
+    Row(modifier = Modifier.fillMaxWidth()) {
+        Text(
+            text = stringResource(R.string.settings_about_author),
+            color = TerminalPalette.inkDim,
+            fontFamily = TerminalFonts.mono,
+            fontSize = 12.sp,
+        )
+        Spacer(Modifier.weight(1f))
+        Row(
+            modifier = Modifier.clickable {
+                context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/kingcos")))
+            },
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(4.dp),
+        ) {
+            Text(
+                text = "kingcos",
+                color = TerminalPalette.ink,
+                fontFamily = TerminalFonts.mono,
+                fontSize = 12.sp,
+                textDecoration = TextDecoration.Underline,
+            )
+            Text(
+                text = "↗",
+                color = TerminalPalette.ink,
+                fontFamily = TerminalFonts.mono,
+                fontWeight = FontWeight.Bold,
+                fontSize = 10.sp,
+            )
+        }
+    }
 }
 
 @Composable
@@ -434,7 +459,7 @@ private fun ExternalLinkRow(label: String, url: String) {
     val context = LocalContext.current
     ActionRow(
         label = label,
-        trailing = "OPEN",
+        trailing = "↗",
         onClick = {
             context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
         },
