@@ -25,13 +25,18 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.border
@@ -59,6 +64,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.openvibble.R
@@ -80,6 +86,13 @@ import com.openvibble.ui.terminal.TerminalFonts
 import com.openvibble.ui.terminal.TerminalPalette
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+
+private val HomePanelMaxWidth = 560.dp
+private val CompactChipHeight = 40.dp
+private val BottomActionHeight = 42.dp
+private val BottomActionCorner = 21.dp
+private val BottomButtonSize = 56.dp
+private val BottomBarReservedHeight = 92.dp
 
 /**
  * Android parity with iOS `HomeScreen` (OpenVibbleApp/Home/HomeScreen.swift).
@@ -182,10 +195,19 @@ fun HomeScreen(
     Box(modifier = Modifier.fillMaxSize().background(TerminalPalette.lcdBg)) {
         ScanlineOverlay()
 
-        BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
-            val availableHeightPx = constraints.maxHeight.toFloat()
-            val petAreaDp = computePetAreaHeightDp(availableHeightPx)
-            Column(modifier = Modifier.fillMaxSize()) {
+        BoxWithConstraints(
+            modifier = Modifier
+                .fillMaxSize()
+                .windowInsetsPadding(WindowInsets.safeDrawing),
+        ) {
+            val panelWidth = if (maxWidth > HomePanelMaxWidth) HomePanelMaxWidth else maxWidth
+            val petAreaDp = computePetAreaHeightDp(maxHeight, panelWidth)
+            Column(
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .fillMaxHeight()
+                    .width(panelWidth),
+            ) {
                 TopBar(
                     connectionState = connectionState,
                     powerState = powerState,
@@ -207,7 +229,7 @@ fun HomeScreen(
                     },
                     modifier = Modifier
                         .padding(horizontal = 16.dp)
-                        .padding(top = 4.dp, bottom = 8.dp),
+                        .padding(top = 10.dp, bottom = 8.dp),
                 )
 
                 PetArea(
@@ -330,20 +352,17 @@ fun HomeScreen(
                     onOpenLogs = onOpenLogs,
                     modifier = Modifier
                         .padding(horizontal = 16.dp)
-                        .padding(top = 8.dp, bottom = 14.dp),
+                        .padding(top = 8.dp, bottom = 12.dp),
                 )
             }
         }
 
         if (deviceMenu.isAnyMenuVisible && !deviceMenu.screenOff) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(TerminalPalette.lcdBg.copy(alpha = 0.92f)),
-            ) {
+            Box(modifier = Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing)) {
                 DeviceMenuOverlay(
                     state = deviceMenu,
-                    bottomReservedHeight = 80.dp,
+                    bottomReservedHeight = BottomBarReservedHeight,
+                    maxPanelWidth = HomePanelMaxWidth,
                 )
             }
         }
@@ -391,12 +410,10 @@ private fun waitedSeconds(arrivedAtMs: Long?, nowMs: Long): Int {
     return if (elapsed < 0) 0 else elapsed.toInt()
 }
 
-private fun computePetAreaHeightDp(availableHeightPx: Float): androidx.compose.ui.unit.Dp {
-    // 36% of the available height, clamped to [220, 320]dp — same envelope
-    // iOS uses to keep ASCII/GIF renderers near 1:1.
-    val densityIndependent = availableHeightPx / 3f
-    val clamped = densityIndependent.coerceIn(220f, 320f)
-    return clamped.dp
+private fun computePetAreaHeightDp(availableHeight: Dp, availableWidth: Dp): Dp {
+    val target = availableHeight * 0.32f
+    val wideCap = if (availableWidth >= 520.dp) 300.dp else 260.dp
+    return target.coerceIn(180.dp, wideCap)
 }
 
 // MARK: - Top bar -----------------------------------------------------------
@@ -426,7 +443,7 @@ private fun TopBar(
             Spacer(Modifier.weight(1f))
             Row(
                 modifier = Modifier
-                    .height(40.dp)
+                    .height(CompactChipHeight)
                     .background(TerminalPalette.lcdPanel.copy(alpha = 0.7f), RoundedCornerShape(20.dp))
                     .border(1.dp, TerminalPalette.inkDim.copy(alpha = 0.45f), RoundedCornerShape(20.dp))
                     .clickable(onClick = onOpenSettings)
@@ -482,10 +499,11 @@ private fun StatusIndicator(
 
     Row(
         modifier = Modifier
+            .height(CompactChipHeight)
             .background(TerminalPalette.lcdPanel.copy(alpha = 0.65f), shape = RoundedCornerShape(20.dp))
             .border(1.dp, strokeColor, RoundedCornerShape(20.dp))
             .let { if (onClick != null) it.clickable(onClick = onClick) else it }
-            .padding(horizontal = 10.dp, vertical = 6.dp),
+            .padding(horizontal = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
     ) {
@@ -532,10 +550,11 @@ private fun AdvertisingActionChip(
 ) {
     Row(
         modifier = Modifier
+            .height(CompactChipHeight)
             .background(TerminalPalette.lcdPanel.copy(alpha = 0.7f), RoundedCornerShape(20.dp))
             .border(1.dp, stroke, RoundedCornerShape(20.dp))
             .clickable(onClick = onClick)
-            .padding(horizontal = 10.dp, vertical = 7.dp),
+            .padding(horizontal = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(6.dp),
     ) {
@@ -728,40 +747,48 @@ private fun BottomBar(
         HandheldButton(label = "B", accent = TerminalPalette.bad, onPress = onPressB, onLongPress = null)
         Spacer(Modifier.weight(1f))
         if (showPowerButton) {
-            Box(
-                modifier = Modifier
-                    .size(width = 48.dp, height = 36.dp)
-                    .background(TerminalPalette.lcdPanel.copy(alpha = 0.85f), RoundedCornerShape(18.dp))
-                    .border(1.dp, TerminalPalette.inkDim.copy(alpha = 0.5f), RoundedCornerShape(18.dp))
-                    .clickable(onClick = onPressPower),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(
-                    text = stringResource(R.string.home_power),
-                    color = TerminalPalette.accentSoft,
-                    fontSize = 9.sp,
-                    fontWeight = FontWeight.Bold,
-                    style = TextStyle(fontFamily = TerminalFonts.mono),
-                )
-            }
-        }
-        Row(
-            modifier = Modifier
-                .background(TerminalPalette.lcdPanel.copy(alpha = 0.85f), RoundedCornerShape(10.dp))
-                .border(1.dp, TerminalPalette.inkDim.copy(alpha = 0.5f), RoundedCornerShape(10.dp))
-                .clickable(onClick = onOpenLogs)
-                .padding(horizontal = 14.dp, vertical = 10.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
-        ) {
-            Text(
-                text = stringResource(R.string.home_log),
-                color = TerminalPalette.ink,
-                fontSize = 11.sp,
-                fontWeight = FontWeight.Bold,
-                style = TextStyle(fontFamily = TerminalFonts.mono, letterSpacing = 1.sp),
+            BottomActionChip(
+                label = stringResource(R.string.home_power),
+                color = TerminalPalette.accentSoft,
+                minWidth = 56.dp,
+                onClick = onPressPower,
             )
         }
+        BottomActionChip(
+            label = stringResource(R.string.home_log),
+            color = TerminalPalette.ink,
+            minWidth = 74.dp,
+            onClick = onOpenLogs,
+        )
+    }
+}
+
+@Composable
+private fun BottomActionChip(
+    label: String,
+    color: Color,
+    minWidth: Dp,
+    onClick: () -> Unit,
+) {
+    Row(
+        modifier = Modifier
+            .height(BottomActionHeight)
+            .widthIn(min = minWidth)
+            .background(TerminalPalette.lcdPanel.copy(alpha = 0.85f), RoundedCornerShape(BottomActionCorner))
+            .border(1.dp, TerminalPalette.inkDim.copy(alpha = 0.5f), RoundedCornerShape(BottomActionCorner))
+            .clickable(onClick = onClick)
+            .padding(horizontal = 14.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center,
+    ) {
+        Text(
+            text = label,
+            color = color,
+            fontSize = 11.sp,
+            fontWeight = FontWeight.Bold,
+            style = TextStyle(fontFamily = TerminalFonts.mono, letterSpacing = 1.sp),
+            maxLines = 1,
+        )
     }
 }
 
@@ -774,7 +801,7 @@ private fun HandheldButton(
 ) {
     Box(
         modifier = Modifier
-            .size(54.dp)
+            .size(BottomButtonSize)
             .background(accent, CircleShape)
             .border(2.dp, Color.Black.copy(alpha = 0.6f), CircleShape)
             .pointerInput(onLongPress) {

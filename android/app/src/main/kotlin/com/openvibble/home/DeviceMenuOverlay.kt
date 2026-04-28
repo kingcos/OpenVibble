@@ -8,6 +8,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -44,15 +46,32 @@ import com.openvibble.ui.terminal.TerminalPalette
 fun DeviceMenuOverlay(
     state: DeviceMenuState,
     bottomReservedHeight: Dp,
+    maxPanelWidth: Dp,
     modifier: Modifier = Modifier,
 ) {
-    Column(
+    BoxWithConstraints(
         modifier = modifier.fillMaxSize(),
     ) {
+        val availableHeight = if (maxHeight > bottomReservedHeight) maxHeight - bottomReservedHeight else maxHeight
+        val panelWidth = if (maxWidth > maxPanelWidth) maxPanelWidth else maxWidth
+        val preferredHeight = availableHeight * 0.58f
+        val panelHeight = when {
+            availableHeight < 260.dp -> availableHeight
+            preferredHeight < 260.dp -> 260.dp
+            preferredHeight > 420.dp -> 420.dp
+            else -> preferredHeight
+        }
+
         Column(
             modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .padding(bottom = bottomReservedHeight)
+                .width(panelWidth)
+                .height(panelHeight)
+                .background(
+                    TerminalPalette.lcdBg.copy(alpha = 0.96f),
+                    RoundedCornerShape(topStart = 18.dp, topEnd = 18.dp),
+                )
                 .padding(horizontal = 18.dp)
                 .padding(top = 16.dp, bottom = 14.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -94,8 +113,6 @@ fun DeviceMenuOverlay(
             Spacer(Modifier.weight(1f))
             Footer()
         }
-        // Transparent reserve so the handheld bar stays tappable.
-        Spacer(Modifier.height(bottomReservedHeight))
     }
 }
 
