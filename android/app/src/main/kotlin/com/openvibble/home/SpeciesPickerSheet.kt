@@ -4,9 +4,6 @@
 
 package com.openvibble.home
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,7 +18,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -31,7 +27,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -44,6 +39,8 @@ import com.openvibble.persona.PersonaSpeciesCatalog
 import com.openvibble.persona.PersonaSpeciesId
 import com.openvibble.persona.PersonaState
 import com.openvibble.ui.species.AsciiBuddyView
+import com.openvibble.ui.terminal.TerminalActionButton
+import com.openvibble.ui.terminal.TerminalActionButtonRole
 import com.openvibble.ui.terminal.TerminalBackground
 import com.openvibble.ui.terminal.TerminalFonts
 import com.openvibble.ui.terminal.TerminalPalette
@@ -183,28 +180,10 @@ private fun Header(onClose: () -> Unit) {
             style = TextStyle(fontFamily = TerminalFonts.mono),
         )
         Spacer(Modifier.weight(1f))
-        Box(
-            modifier = Modifier
-                .background(
-                    TerminalPalette.lcdPanel.copy(alpha = 0.6f),
-                    RoundedCornerShape(14.dp),
-                )
-                .border(
-                    1.dp,
-                    TerminalPalette.inkDim.copy(alpha = 0.5f),
-                    RoundedCornerShape(14.dp),
-                )
-                .clickable(onClick = onClose)
-                .padding(horizontal = 14.dp, vertical = 6.dp),
-        ) {
-            Text(
-                text = stringResource(R.string.common_done),
-                color = TerminalPalette.ink,
-                fontSize = 11.sp,
-                fontWeight = FontWeight.SemiBold,
-                style = TextStyle(fontFamily = TerminalFonts.mono, letterSpacing = 1.sp),
-            )
-        }
+        TerminalActionButton(
+            label = stringResource(R.string.common_done),
+            onClick = onClose,
+        )
     }
 }
 
@@ -257,51 +236,14 @@ private fun SpeciesRow(
     selected: Boolean,
     onClick: () -> Unit,
 ) {
-    val panelBg = TerminalPalette.lcdPanel.copy(alpha = if (selected) 0.9f else 0.55f)
-    val strokeColor: Color =
-        if (selected) TerminalPalette.accent.copy(alpha = 0.85f)
-        else TerminalPalette.inkDim.copy(alpha = 0.35f)
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(44.dp)
-            .background(panelBg, RoundedCornerShape(8.dp))
-            .border(1.dp, strokeColor, RoundedCornerShape(8.dp))
-            .clickable(onClick = onClick)
-            .padding(horizontal = 12.dp, vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Column(
-            modifier = Modifier.weight(1f),
-            verticalArrangement = Arrangement.spacedBy(2.dp),
-        ) {
-            Text(
-                text = title,
-                color = TerminalPalette.ink,
-                fontSize = 13.sp,
-                fontWeight = FontWeight.SemiBold,
-                style = TextStyle(fontFamily = TerminalFonts.mono),
-            )
-            if (!subtitle.isNullOrEmpty()) {
-                Text(
-                    text = subtitle,
-                    color = TerminalPalette.inkDim,
-                    fontSize = 10.sp,
-                    style = TextStyle(fontFamily = TerminalFonts.mono),
-                )
-            }
-        }
-        if (selected) {
-            Text(
-                text = "OK",
-                color = TerminalPalette.ink,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Bold,
-                style = TextStyle(fontFamily = TerminalFonts.mono),
-            )
-        }
-    }
+    TerminalActionButton(
+        label = title,
+        secondaryLabel = subtitle,
+        trailing = if (selected) "OK" else null,
+        fill = true,
+        role = if (selected) TerminalActionButtonRole.Selected else TerminalActionButtonRole.Neutral,
+        onClick = onClick,
+    )
 }
 
 private const val ASCII_DEFAULT_IDX = 4

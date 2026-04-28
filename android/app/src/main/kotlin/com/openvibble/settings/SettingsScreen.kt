@@ -7,10 +7,6 @@ package com.openvibble.settings
 import android.content.Intent
 import android.os.Build
 import android.net.Uri
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,7 +20,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Switch
@@ -43,7 +38,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.openvibble.R
@@ -56,8 +50,9 @@ import com.openvibble.ui.terminal.ButtonCheatSheet
 import com.openvibble.ui.terminal.CheatBadge
 import com.openvibble.ui.terminal.CheatRow
 import com.openvibble.ui.terminal.TerminalBackground
+import com.openvibble.ui.terminal.TerminalActionButton
+import com.openvibble.ui.terminal.TerminalActionButtonRole
 import com.openvibble.ui.terminal.TerminalFonts
-import com.openvibble.ui.terminal.TerminalHeaderButton
 import com.openvibble.ui.terminal.TerminalPalette
 import com.openvibble.ui.terminal.TerminalPanel
 import com.openvibble.ui.terminal.TerminalThemeMode
@@ -161,8 +156,9 @@ fun SettingsScreen(
                         fontFamily = TerminalFonts.mono,
                         fontSize = 10.sp,
                     )
-                    TerminalHeaderButton(
+                    TerminalActionButton(
                         label = stringResource(R.string.settings_notifications_request),
+                        role = TerminalActionButtonRole.Primary,
                         fill = true,
                         onClick = onRequestNotificationPermission,
                     )
@@ -208,7 +204,6 @@ fun SettingsScreen(
                     )
                     ActionRow(
                         label = stringResource(R.string.settings_guide_show),
-                        tint = TerminalPalette.ink,
                         onClick = onShowOnboarding,
                     )
                 }
@@ -223,12 +218,12 @@ fun SettingsScreen(
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     ActionRow(
                         label = stringResource(R.string.pet_reset),
-                        tint = TerminalPalette.bad,
+                        role = TerminalActionButtonRole.Danger,
                         onClick = { confirmResetStats = true },
                     )
                     ActionRow(
                         label = stringResource(R.string.pet_delete),
-                        tint = if (installedCount == 0) TerminalPalette.inkDim else TerminalPalette.bad,
+                        role = TerminalActionButtonRole.Danger,
                         enabled = installedCount > 0,
                         onClick = { confirmDeleteChars = true },
                     )
@@ -323,28 +318,13 @@ private fun ThemeModeButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val bg = if (selected) TerminalPalette.ink else TerminalPalette.lcdPanel.copy(alpha = 0.65f)
-    val fg = if (selected) TerminalPalette.lcdBg else TerminalPalette.ink
-    Row(
-        modifier = modifier
-            .background(bg, RoundedCornerShape(8.dp))
-            .border(
-                BorderStroke(1.dp, TerminalPalette.inkDim.copy(alpha = 0.55f)),
-                RoundedCornerShape(8.dp),
-            )
-            .clickable(onClick = onClick)
-            .padding(horizontal = 10.dp, vertical = 10.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center,
-    ) {
-        Text(
-            text = label,
-            color = fg,
-            fontFamily = TerminalFonts.mono,
-            fontWeight = FontWeight.SemiBold,
-            fontSize = 11.sp,
-        )
-    }
+    TerminalActionButton(
+        label = label,
+        modifier = modifier,
+        fill = true,
+        role = if (selected) TerminalActionButtonRole.Selected else TerminalActionButtonRole.Neutral,
+        onClick = onClick,
+    )
 }
 
 @Composable
@@ -367,7 +347,7 @@ private fun HeaderBar(onDone: () -> Unit) {
             letterSpacing = 2.sp,
         )
         Spacer(Modifier.weight(1f))
-        TerminalHeaderButton(
+        TerminalActionButton(
             label = stringResource(R.string.common_done),
             onClick = onDone,
         )
@@ -376,40 +356,13 @@ private fun HeaderBar(onDone: () -> Unit) {
 
 @Composable
 private fun SpeciesRow(label: String, onClick: () -> Unit) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(TerminalPalette.lcdPanel.copy(alpha = 0.7f), RoundedCornerShape(8.dp))
-            .border(
-                BorderStroke(1.dp, TerminalPalette.inkDim.copy(alpha = 0.5f)),
-                RoundedCornerShape(8.dp),
-            )
-            .clickable(onClick = onClick)
-            .padding(horizontal = 10.dp, vertical = 8.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Text(
-            text = stringResource(R.string.settings_species),
-            color = TerminalPalette.ink,
-            fontFamily = TerminalFonts.mono,
-            fontSize = 12.sp,
-        )
-        Spacer(Modifier.weight(1f))
-        Text(
-            text = label,
-            color = TerminalPalette.inkDim,
-            fontFamily = TerminalFonts.mono,
-            fontSize = 12.sp,
-        )
-        Spacer(Modifier.padding(end = 4.dp))
-        Text(
-            text = "OPEN",
-            color = TerminalPalette.inkDim,
-            fontFamily = TerminalFonts.mono,
-            fontWeight = FontWeight.Bold,
-            fontSize = 11.sp,
-        )
-    }
+    TerminalActionButton(
+        label = stringResource(R.string.settings_species),
+        secondaryLabel = label,
+        trailing = "OPEN",
+        fill = true,
+        onClick = onClick,
+    )
 }
 
 @Composable
@@ -466,37 +419,14 @@ private fun AboutRow(label: String, value: String) {
 @Composable
 private fun AuthorRow() {
     val context = LocalContext.current
-    Row(modifier = Modifier.fillMaxWidth()) {
-        Text(
-            text = stringResource(R.string.settings_about_author),
-            color = TerminalPalette.inkDim,
-            fontFamily = TerminalFonts.mono,
-            fontSize = 12.sp,
-        )
-        Spacer(Modifier.weight(1f))
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.clickable {
-                context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/kingcos")))
-            },
-        ) {
-            Text(
-                text = "kingcos",
-                color = TerminalPalette.ink,
-                fontFamily = TerminalFonts.mono,
-                fontSize = 12.sp,
-                textDecoration = TextDecoration.Underline,
-            )
-            Spacer(Modifier.padding(end = 4.dp))
-            Text(
-                text = "OPEN",
-                color = TerminalPalette.ink,
-                fontFamily = TerminalFonts.mono,
-                fontWeight = FontWeight.Bold,
-                fontSize = 10.sp,
-            )
-        }
-    }
+    ActionRow(
+        label = stringResource(R.string.settings_about_author),
+        secondaryLabel = "kingcos",
+        trailing = "OPEN",
+        onClick = {
+            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/kingcos")))
+        },
+    )
 }
 
 @Composable
@@ -504,7 +434,6 @@ private fun ExternalLinkRow(label: String, url: String) {
     val context = LocalContext.current
     ActionRow(
         label = label,
-        tint = TerminalPalette.ink,
         trailing = "OPEN",
         onClick = {
             context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
@@ -515,36 +444,21 @@ private fun ExternalLinkRow(label: String, url: String) {
 @Composable
 private fun ActionRow(
     label: String,
-    tint: Color,
+    secondaryLabel: String? = null,
     trailing: String = ">",
+    role: TerminalActionButtonRole = TerminalActionButtonRole.Neutral,
     enabled: Boolean = true,
     onClick: () -> Unit,
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(TerminalPalette.lcdPanel.copy(alpha = 0.6f), RoundedCornerShape(8.dp))
-            .border(BorderStroke(1.dp, tint.copy(alpha = 0.4f)), RoundedCornerShape(8.dp))
-            .clickable(enabled = enabled, onClick = onClick)
-            .padding(horizontal = 10.dp, vertical = 12.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Text(
-            text = label,
-            color = tint,
-            fontFamily = TerminalFonts.mono,
-            fontWeight = FontWeight.SemiBold,
-            fontSize = 12.sp,
-            modifier = Modifier.weight(1f),
-        )
-        Text(
-            text = trailing,
-            color = tint,
-            fontFamily = TerminalFonts.mono,
-            fontWeight = FontWeight.Bold,
-            fontSize = 12.sp,
-        )
-    }
+    TerminalActionButton(
+        label = label,
+        secondaryLabel = secondaryLabel,
+        trailing = trailing,
+        fill = true,
+        role = role,
+        enabled = enabled,
+        onClick = onClick,
+    )
 }
 
 @Composable

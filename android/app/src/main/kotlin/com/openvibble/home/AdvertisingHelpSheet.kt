@@ -10,9 +10,7 @@ import android.net.Uri
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -21,7 +19,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -30,7 +27,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -38,6 +34,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.openvibble.R
+import com.openvibble.ui.terminal.TerminalActionButton
+import com.openvibble.ui.terminal.TerminalActionButtonRole
 import com.openvibble.ui.terminal.TerminalFonts
 import com.openvibble.ui.terminal.TerminalPalette
 
@@ -78,7 +76,10 @@ fun AdvertisingHelpSheet(
                 style = TextStyle(fontFamily = TerminalFonts.display, letterSpacing = 2.sp),
             )
             Spacer(Modifier.weight(1f))
-            CloseChip(onClick = onDismiss)
+            TerminalActionButton(
+                label = stringResource(R.string.common_close),
+                onClick = onDismiss,
+            )
         }
 
         val scroll = rememberScrollState()
@@ -126,10 +127,11 @@ private fun ClaudeCodeSection(onOpenLink: () -> Unit) {
             fontSize = 12.sp,
             style = TextStyle(fontFamily = TerminalFonts.mono),
         )
-        PrimaryButton(
+        TerminalActionButton(
             leading = "GET",
-            text = stringResource(R.string.home_help_claude_code_link),
-            trailing = null,
+            label = stringResource(R.string.home_help_claude_code_link),
+            role = TerminalActionButtonRole.Primary,
+            fill = true,
             onClick = onOpenLink,
         )
     }
@@ -183,84 +185,6 @@ private fun HelpCard(title: String, body: @Composable () -> Unit) {
             style = TextStyle(fontFamily = TerminalFonts.mono),
         )
         body()
-    }
-}
-
-@Composable
-private fun PrimaryButton(
-    leading: String,
-    text: String,
-    trailing: String?,
-    onClick: () -> Unit,
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(
-                TerminalPalette.accent.copy(alpha = 0.85f),
-                RoundedCornerShape(8.dp),
-            )
-            .border(
-                1.dp,
-                Color.Black.copy(alpha = 0.3f),
-                RoundedCornerShape(8.dp),
-            )
-            .clickable(onClick = onClick)
-            .padding(horizontal = 12.dp, vertical = 10.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(6.dp),
-    ) {
-        Text(
-            text = leading,
-            color = Color.White,
-            fontSize = 12.sp,
-            fontWeight = FontWeight.Bold,
-            style = TextStyle(fontFamily = TerminalFonts.mono),
-        )
-        Text(
-            text = text,
-            color = Color.White,
-            fontSize = 12.sp,
-            fontWeight = FontWeight.SemiBold,
-            style = TextStyle(fontFamily = TerminalFonts.mono),
-            modifier = Modifier.weight(1f),
-        )
-        if (trailing != null) {
-            Text(
-                text = trailing,
-                color = Color.White,
-                fontSize = 11.sp,
-                fontWeight = FontWeight.Bold,
-                style = TextStyle(fontFamily = TerminalFonts.mono),
-            )
-        }
-    }
-}
-
-@Composable
-private fun CloseChip(onClick: () -> Unit) {
-    Box(
-        modifier = Modifier
-            .size(width = 64.dp, height = 34.dp)
-            .background(
-                TerminalPalette.lcdPanel.copy(alpha = 0.6f),
-                RoundedCornerShape(14.dp),
-            )
-            .border(
-                1.dp,
-                TerminalPalette.inkDim.copy(alpha = 0.45f),
-                RoundedCornerShape(14.dp),
-            )
-            .clickable(onClick = onClick),
-        contentAlignment = Alignment.Center,
-    ) {
-        Text(
-            text = stringResource(R.string.common_close),
-            color = TerminalPalette.inkDim,
-            fontSize = 11.sp,
-            fontWeight = FontWeight.Bold,
-            style = TextStyle(fontFamily = TerminalFonts.mono),
-        )
     }
 }
 
